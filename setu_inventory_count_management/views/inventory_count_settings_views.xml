@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="inventory_count_settings_view_form" model="ir.ui.view">
+        <field name="name">inventory.count.settings.view.form</field>
+        <field name="model">inventory.count.settings</field>
+        <field name="arch" type="xml">
+            <form create="false" delete="false">
+                <sheet>
+                    <div class="app_settings_block" data-string="Inventory Count Configuration"
+                         string="Inventory Count Configuration"
+                         data-key="setu_inventory_count_management">
+                        <div class="row mt16 o_settings_container" name="auto_inventory_adjustment_container">
+                            <div class="col-12 col-lg-6 o_setting_box">
+                                <div class="o_setting_left_pane">
+                                    <field name="auto_inventory_adjustment"/>
+                                </div>
+                                <div class="o_setting_right_pane">
+                                    <label for="auto_inventory_adjustment"/>
+                                    <div class="text-muted">
+                                        By doing this while the user Validate the inventory, the stock will be
+                                        automatically
+                                        updated Realtime.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt16"></div>
+                        <h6 style="background-color:#e7e9ed">Damage and Expiry Configuration</h6>
+                        <div class="row mt16 o_settings_container" name="expiry_and_damage_container">
+                            <div class="col-12 col-lg-6 o_setting_box">
+                                <div class="o_setting_left_pane">
+                                    <field name="group_include_expiry_counting" force_save="1"/>
+                                </div>
+                                <div class="o_setting_right_pane">
+                                    <label for="group_include_expiry_counting"/>
+                                    <div class="text-muted">
+                                        Enable to include expired products and lot/serial numbers in counting
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6 o_setting_box" >
+                                <!--                                <label for="expiry_location_id"/>-->
+                                <group>
+                                    <field name="expiry_location_id" force_save="1"
+                                           required="group_include_expiry_counting" options="{'no_create_edit':True}"/>
+                                </group>
+                            </div>
+                            <div class="col-12 col-lg-6 o_setting_box">
+                                <div class="o_setting_left_pane">
+                                    <field name="group_include_damage_counting" force_save="1"/>
+                                </div>
+                                <div class="o_setting_right_pane">
+                                    <label for="group_include_damage_counting"/>
+                                    <div class="text-muted">
+                                        Enable to include damaged products and lot/serial numbers in counting
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6 o_setting_box">
+                                <group>
+                                    <field name="damage_location_id" force_save="1"
+                                           required="group_include_damage_counting" options="{'no_create_edit':True}"/>
+                                </group>
+                            </div>
+                        </div>
+                        <div class="row mt16"></div>
+                        <h6 style="background-color:#e7e9ed">Auto Inventory Count</h6>
+                        <div class="row mt16 o_settings_container" name="expiry_and_damage_container">
+                            <div class="col-12 col-lg-6 o_setting_box">
+                                <div class="col-12 col-lg-6 o_setting_box">
+                                    <div class="o_setting_right_pane">
+                                        <group>
+                                            <field name="inventory_count_days" force_save="1"/>
+                                        </group>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6 o_setting_box">
+                                <div class="o_setting_right_pane">
+                                    <group>
+                                        <field name="approver_id" force_save="1"/>
+                                    </group>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6 o_setting_box">
+                                <div class="o_setting_left_pane">
+                                    <field name="use_barcode_scanner" force_save="1"/>
+                                </div>
+                                <div class="o_setting_right_pane">
+                                    <label for="use_barcode_scanner"/>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6 o_setting_box">
+                                <div class="o_setting_right_pane">
+                                    <group>
+                                        <field name="session_user_ids" widget="many2many_tags" force_save="1"/>
+                                    </group>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_inventory_count_settings" model="ir.actions.server">
+        <field name="name">Settings - Inventory Count</field>
+        <field name="model_id" ref="model_inventory_count_settings"/>
+        <field name="binding_view_types">form</field>
+        <field name="state">code</field>
+        <field name="code">
+            action = model.open_record_action()
+        </field>
+    </record>
+
+    <menuitem sequence="1"
+              name="Settings - Inventory Count"
+              id="inventory_count_settings_menu"
+              parent="setu_inventory_count_management.main_configuration_menu"
+              groups="setu_inventory_count_management.group_setu_inventory_count_manager"
+              action="action_inventory_count_settings"/>
+</odoo>

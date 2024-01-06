@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem name="Top Product Report"
+              id="top_product_report"
+              parent="sale.menu_sale_report"
+              action="most_sold_product_wizard_action"/>
+</odoo>

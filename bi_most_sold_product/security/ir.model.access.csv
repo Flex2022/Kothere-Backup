@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+bi_most_sold_product.access_sold_product_wizard,access_sold_product_wizard,bi_most_sold_product.model_sold_product_wizard,base.group_user,1,1,1,1
+bi_most_sold_product.access_excel_report,access_excel_report,bi_most_sold_product.model_excel_report,base.group_user,1,1,1,1

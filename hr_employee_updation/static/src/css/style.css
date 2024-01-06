@@ -1,0 +1,56 @@
+.first {
+    width: 100%;
+    height: 50px;
+    border: 1px solid black;
+    margin: auto;
+    font-family: "Calibri", sans-serif;
+    font-size: 19px;
+    padding-top: 5px;
+
+}
+
+.secou {
+    width: 100%;
+    height: 50px;
+    border: 1px solid black;
+    margin: auto;
+    font-family: "Calibri", sans-serif;
+    font-size: 19px;
+    padding-top: 5px;
+
+}
+
+
+.third {
+    width: 100%;
+    height: 100px;
+    border: 1px solid black;
+    margin: auto;
+    font-family: "Calibri", sans-serif;
+    font-size: 13px;
+    padding-top: 5px;
+
+}
+
+.se {
+
+    margin-left: 200px;
+    vertical-align: middle;
+}
+
+
+table, tr, td {
+    border: 1px solid #000000;
+    border-collapse: collapse;
+    margin: auto;
+    width: 100%;
+    height: 27px;
+    table-layout: fixed;
+    vertical-align: middle;
+    justify-content: center;
+    font-size: 15px;
+
+
+    /*text-shadow: 0px 0px 1px black;*/
+}
+

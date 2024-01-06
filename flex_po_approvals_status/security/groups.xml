@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record model="ir.module.category" id="flex_po_approvals_status_access_category">
+            <field name="name">PO Approval Status Access</field>
+            <field name="sequence">1</field>
+        </record>
+
+
+        <record id="flex_po_approvals_status_access_po_man" model="res.groups">
+            <field name="name">PO Approval || PO Manager Approval</field>
+            <field name="category_id"
+                   ref="flex_po_approvals_status_access_category"/>
+        </record>
+
+        <record id="flex_po_approvals_status_access_fa_man" model="res.groups">
+            <field name="name">PO Approval || Factory Manager Approval</field>
+            <field name="category_id"
+                   ref="flex_po_approvals_status_access_category"/>
+        </record>
+
+
+        <record id="flex_po_approvals_status_access_fin_man" model="res.groups">
+            <field name="name">PO Approval || Financial Manager Approval</field>
+            <field name="category_id"
+                   ref="flex_po_approvals_status_access_category"/>
+        </record>
+
+    </data>
+</odoo>

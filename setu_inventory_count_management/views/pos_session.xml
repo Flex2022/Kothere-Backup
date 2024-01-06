@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_inv_count_pos_session_form" model="ir.ui.view">
+        <field name="name">inv.count.pos.session</field>
+        <field name="model">pos.session</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_session_form"/>
+        <field name="arch" type="xml">
+            <button name="action_pos_session_closing_control" position="after">
+                <field name="inventory_count_id" invisible="1"/>
+                <button name="create_count_from_session_end"
+                        string="Create Inventory Count"
+                        type="object"
+                        invisible="inventory_count_id"/>
+            </button>
+            <button name="show_cash_register" position="after">
+                <button name="show_inv_count" type="object" class="oe_stat_button" icon="fa-bars"
+                        invisible="not inventory_count_id">
+                    <div class="o_stat_info">
+                        <span class="o_stat_text">Inventory Count</span>
+                    </div>
+                </button>
+            </button>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+	    <report id="report_saudi_contract"
+				string="Contract"
+				model="hr.contract"
+				report_type="qweb-pdf"
+				file="hr_employee_updation.hr_employee_saudi_contract_template"
+				name="hr_employee_updation.hr_employee_saudi_contract_template"/>
+
+        <template id="hr_employee_saudi_contract_template_view">
+			<t t-call="hr_employee_updation.internal_layout_without_header">
+                <t t-set="o" t-value="o.with_context({'lang':o.employee_id.user_id.partner_id.lang})"/>
+				<span t-field="o.contract_template"/>
+            </t>
+		</template>
+
+		<template id="hr_employee_saudi_contract_template">
+			<t t-call="web.html_container">
+				<t t-foreach="docs" t-as="o">
+					<t t-call="hr_employee_updation.hr_employee_saudi_contract_template_view"  t-lang="o.employee_id.user_id.partner_id.lang"/>
+				</t>
+			</t>
+		</template>
+	</data>
+</odoo>

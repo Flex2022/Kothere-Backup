@@ -1,0 +1,34 @@
+from odoo import models, api, fields
+
+
+class SaleOrder(models.Model):
+    _inherit = 'sale.order'
+
+    # sale_order_cancel_reason.py
+    def action_cancel(self):
+        # Call the original cancel action
+        result = super(SaleOrder, self).action_cancel()
+
+        # Open your custom wizard
+        return {
+            'name': 'Cancel Reason',
+            'type': 'ir.actions.act_window',
+            'res_model': 'sale.order.cancel.reason.wizard',
+            'view_mode': 'form',
+            'view_id': self.env.ref('flex_sale.view_sale_order_cancel_reason_wizard').id,
+            'context': {
+                'default_order_id': self.id,
+            },
+            'target': 'new',
+        }
+
+
+class SaleOrderLine(models.Model):
+    _inherit = 'sale.order.line'
+
+    product_id_arabic = fields.Char(string='Arabic Name', compute="compute_product_id_arabic")
+
+    @api.depends('product_id')
+    def compute_product_id_arabic(self):
+        for line in self:
+            line.product_id_arabic = line.product_id.with_context(lang='ar_001').name

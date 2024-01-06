@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_partner_form_flex" model="ir.ui.view">
+            <field name="name">res.partner.form.flex</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <field name="industry_id" position="attributes">
+                    <attribute name="attrs">{'required': [('company_type', '=', 'company')]}</attribute>
+                </field>
+                <xpath expr="//field[@id='company']/.." position="after">
+                    <label for="name_ar"/>
+                    <h2>
+                        <field class="text-break" name="name_ar" placeholder="مثلاً: براندن فريمان"/>
+                    </h2>
+                </xpath>
+                <field name="function" position="after">
+                    <field name="fax"/>
+                </field>
+                <field name="website" position="after">
+                    <field name="linkedin"/>
+                </field>
+            </field>
+        </record>
+        <record id="view_partner_is_customer_is_vendor_tree_flex" model="ir.ui.view">
+            <field name="name">res.partner.is_customer.is_vendor.tree.flex</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_tree"/>
+            <field name="arch" type="xml">
+                <field name="company_id" position="after">
+                    <field name="supplier" invisible="1"/>
+                    <field name="vendor_type" attrs="{'invisible': [('supplier', '=', False)]}"/>
+                </field>
+
+            </field>
+        </record>
+        <record id="view_partner_is_customer_is_vendor_form_flex" model="ir.ui.view">
+            <field name="name">res.partner.is_customer.is_vendor.form.flex</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="is_customer_is_vendor.view_partner_is_customer_is_vendor_form"/>
+            <field name="arch" type="xml">
+                <field name="supplier" position="replace">
+                    <label for="supplier"/>
+                    <div class="o_row">
+                        <field name="supplier"/>
+                        <field name="vendor_type" attrs="{'required': True}"/>
+                        <!--                               attrs="{'required': [('supplier', '=', True)], 'invisible': [('supplier', '=', False)]}"-->
+
+                    </div>
+                </field>
+            </field>
+        </record>
+
+        <record id="view_res_partner_filter_flex" model="ir.ui.view">
+            <field name="name">view.res.partner.filter.flex</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_res_partner_filter"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="name_ar"/>
+                    <field name="fax"/>
+                </field>
+                <group name="group_by" position="inside">
+                    <filter name="by_vendor_type" string="Vendor Type" domain="[('supplier', '=', True)]"
+                            context="{'group_by' : 'vendor_type'}"/>
+                </group>
+            </field>
+        </record>
+
+    </data>
+</odoo>

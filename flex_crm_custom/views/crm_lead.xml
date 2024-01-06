@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Inherit crm.lead form view -->
+        <record id="crm_lead_form_view_inherit" model="ir.ui.view">
+            <field name="name">crm.lead.form.inherit</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+            <field name="arch" type="xml">
+                <!-- Add a notebook page for Order lines -->
+                <page name="internal_notes" position="before">
+                    <page string="Order Lines">
+                        <field name="order_line_ids" widget="section_and_note_one2many" mode="tree">
+                            <!--                               readonly="state == 'cancel' or locked">-->
+                            <tree string="Sales Order Lines" editable="bottom" limit="200">
+                                <field name="company_id" column_invisible="1"/>
+                                <field name="currency_id" column_invisible="1"/>
+                                <field name="tax_country_id" column_invisible="1"/>
+                                <field name="product_id"
+                                       domain="[('sale_ok', '=', True), '|', ('company_id', '=', False), ('company_id', '=', company_id)]"
+                                />
+                                <field name="name"/>
+                                <field name="analytic_distribution" widget="analytic_distribution"
+                                       groups="analytic.group_analytic_accounting"
+                                       options="{'product_field': 'product_id', 'business_domain': 'sale_order'}"/>
+                                <field name="quantity"/>
+                                <field name="product_uom" column_invisible="1" groups="!uom.group_uom"/>
+                                <field name="product_uom"
+                                       force_save="1"
+                                       groups="uom.group_uom"
+                                       class="oe_no_button"
+                                       required="1"/>
+
+                                <field name="price_unit"/>
+                                <field name="discount" widget="percentage" groups="product.group_discount_per_so_line"/>
+                                <field name="tax_ids"
+                                       widget="many2many_tags"
+                                       domain="[('type_tax_use','=','sale'), ('company_id','=',parent.company_id), ('country_id', '=', tax_country_id)]"
+                                />
+                                <field name="price_subtotal"/>
+                                <field name="price_total"/>
+                            </tree>
+                        </field>
+                    </page>
+                </page>
+
+                <xpath expr="//div[@id='probability']/.." position="before">
+                    <field name="probability_order_line_active" invisible="True"/>
+                </xpath>
+
+                <xpath expr="//div[@id='probability']/.." position="attributes">
+                    <attribute name="invisible">probability_order_line_active==True</attribute>
+                </xpath>
+                <xpath expr="//label[@for='expected_revenue']/.." position="attributes">
+                    <attribute name="invisible">probability_order_line_active==True</attribute>
+                </xpath>
+
+                <xpath expr="//div[@id='probability']/.." position="after">
+                    <div class="col-auto" invisible="probability_order_line_active==False">
+                        <label for="probability" class="d-inline-block"/>
+                        <div id="probability" class="d-flex align-items-baseline mt-2">
+                            <field name="is_automated_probability" invisible="1"/>
+                            <field name="total_order_line_ids" class="oe_inline o_input_6ch"/>
+                        </div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

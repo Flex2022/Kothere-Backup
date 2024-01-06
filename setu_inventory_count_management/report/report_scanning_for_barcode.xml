@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_scanning_for_barcode">
+            <t t-call="web.basic_layout">
+                <t t-call="web.html_container">
+                    <div class="oe_structure" style="padding:0; margin:0px; padding-top:100px;">
+                        <table class="my-0 table table-sm table-borderless" style="margin:200px;">
+                            <tr>
+                                <td>
+                                    <div style="height:30mm; width:85mm; padding-top:0px; padding-bottom:5px;border: 1px solid black;">
+                                        <div style="padding:0; margin:0px; padding-top:10px; padding-bottom:10px; text-align:center;">
+                                            <img t-att-src="'/report/barcode/Code128/'+'normal'"
+                                                 style="width:300px;height:75px"
+                                                 alt="Barcode"/>
+                                            <div>normal</div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div style="height:30mm; width:85mm; padding-top:0px; padding-bottom:5px;border: 1px solid black;">
+                                        <div style="padding:0; margin:0px; padding-top:10px; padding-bottom:10px; text-align:center;">
+                                            <img t-att-src="'/report/barcode/Code128/'+'damage'"
+                                                 style="width:300px;height:75px"
+                                                 alt="Barcode"/>
+                                            <div>damage</div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div style="height:30mm; width:85mm; padding-top:0px; padding-bottom:5px;border: 1px solid black;">
+                                        <div style="padding:0; margin:0px; padding-top:10px; padding-bottom:10px; text-align:center;">
+                                            <img t-att-src="'/report/barcode/Code128/'+'expiry'"
+                                                 style="width:300px;height:75px"
+                                                 alt="Barcode"/>
+                                            <div>expiry</div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </template>
+
+        <template id="report_scanning_barcode">
+            <t t-set="title">Scanning For Normal,Damage and Expiry</t>
+            <t t-call="setu_inventory_count_management.report_scanning_for_barcode"/>
+        </template>
+    </data>
+
+    <data>
+        <record id="action_report_scanning_for_barcode" model="ir.actions.report">
+            <field name="name">Scanning Barcode</field>
+            <field name="model">setu.inventory.count.session</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">setu_inventory_count_management.report_scanning_barcode</field>
+            <field name="report_file">setu_inventory_count_management.report_scanning_for_barcode</field>
+            <field name="paperformat_id" ref="product.paperformat_label_sheet"/>
+            <field name="print_report_name">'normal_damage_expiry_barcode'</field>
+            <field name="binding_model_id" ref="model_setu_inventory_count_session"/>
+            <field name="binding_type">report</field>
+        </record>
+    </data>
+</odoo>

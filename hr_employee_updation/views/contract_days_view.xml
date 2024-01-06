@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--    <record id="hr_contract_view_tree_currency" model="ir.ui.view">-->
+    <!--        <field name="model">hr.contract</field>-->
+    <!--        <field name="inherit_id" ref="hr_contract.hr_contract_view_tree"/>-->
+    <!--        <field name="arch" type="xml">-->
+    <!--            <field name="wage" position="after">-->
+    <!--                <field name="currency_id" invisible="1"/>-->
+    <!--            </field>-->
+    <!--        </field>-->
+    <!--    </record>-->
+
+    <record id="hr_contract_notice_period" model="ir.ui.view">
+        <field name="name">hr.contract.notice.period</field>
+        <field name="model">hr.contract</field>
+        <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+        <field name="arch" type="xml">
+            <!--            <xpath expr="//label[@for='wage']" position="before">-->
+            <!--                <field name="currency_id" options="{'no_create': True}"/>-->
+            <!--            </xpath>-->
+            <!--            <field name="employee_id" position="attributes">-->
+            <!--                <attribute name="options">{'no_create_edit': True, 'no_create': True, 'no_open': True}</attribute>-->
+            <!--            </field>-->
+            <!--            <field name="hr_responsible_id" position="after">-->
+            <!--                <field name="stop_daily_notification"/>-->
+            <!--            </field>-->
+            <!--            <field name="struct_id" position="after">-->
+            <!--                <field name="contract_type_sel"/>-->
+            <!--            </field>-->
+            <!--            <xpath expr="//field[@name='trial_date_end']" position="after">-->
+            <!--                <field name="contract_period_type"/>-->
+            <!--                <field name="hr_user_id" invisible="1"/>-->
+            <!--                <label for="notice_days"/>-->
+            <!--                <div class="o_row">-->
+            <!--                    <field name="notice_days"/>-->
+            <!--                    <span>days</span>-->
+            <!--                </div>-->
+            <!--            </xpath>-->
+            <!--            <xpath expr="//group[@name='salary_and_advantages']" position="after">-->
+            <!--                <group string="Allowances">-->
+            <!--                    <label for="transportation_allowance_type"/>-->
+            <!--                    <div class="o_row" name="wage">-->
+            <!--                        <field name="transportation_allowance_type" nolabel="1"/>-->
+            <!--                        <span>-->
+            <!--                            <field name="transportation_allowance_value" groups="hr.group_hr_user"/>-->
+            <!--                        </span>-->
+            <!--                    </div>-->
+            <!--                    <label for="housing_allowance_type"/>-->
+            <!--                    <div class="o_row" name="wage">-->
+            <!--                        <field name="housing_allowance_type" nolabel="1"/>-->
+            <!--                        <span>-->
+            <!--                            <field name="housing_allowance_value" groups="hr.group_hr_user"/>-->
+            <!--                        </span>-->
+            <!--                    </div>-->
+
+            <!--                    <label for="mobile_allowance_type"/>-->
+            <!--                    <div class="o_row" name="wage">-->
+            <!--                        <field name="mobile_allowance_type" nolabel="1"/>-->
+            <!--                        <span>-->
+            <!--                            <field name="mobile_allowance_value" groups="hr.group_hr_user"/>-->
+            <!--                        </span>-->
+            <!--                    </div>-->
+
+            <!--                    <label for="other_allowance_type"/>-->
+            <!--                    <div class="o_row" name="wage">-->
+            <!--                        <field name="other_allowance_type" nolabel="1"/>-->
+            <!--                        <span>-->
+            <!--                            <field name="other_allowance_value" groups="hr.group_hr_user"/>-->
+            <!--                        </span>-->
+            <!--                    </div>-->
+
+
+            <!--                </group>-->
+            <!--            </xpath>-->
+            <!--            <xpath expr="//group[@name='salary_and_advantages']" position="inside">-->
+            <!--                <field name="total_salary"/>-->
+            <!--                <field name="total_with_variable_increase" readonly="1" force_save="1"/>-->
+            <!--                <field name="with_gosi"/>-->
+            <!--            </xpath>-->
+            <!--            <xpath expr="//group[@name='main_info']" position="after">-->
+            <!--                <group>-->
+            <!--                    <group string="Variable Increase">-->
+            <!--                        <field name="variable_increase"/>-->
+            <!--                        <field name="increase_schedule"/>-->
+            <!--                        <field name="increase_start_date"/>-->
+            <!--                        <field name="attached"/>-->
+            <!--                    </group>-->
+            <!--                </group>-->
+            <!--            </xpath>-->
+            <!--            <xpath expr="//group[@name='duration_group']" position="after">-->
+            <!--                <group string="Service Period">-->
+            <!--                    <field name="service_year"/>-->
+            <!--                    <field name="service_month"/>-->
+            <!--                    <field name="service_day"/>-->
+            <!--                </group>-->
+            <!--            </xpath>-->
+            <!--            <xpath expr="//notebook" position="inside">-->
+            <!--                <page string="Contract Template">-->
+            <!--                    <field name="contract_template"/>-->
+            <!--                </page>-->
+            <!--            </xpath>-->
+
+            <xpath expr="//page[@name='information']" position="after">
+                <page string="End of service liquidation form" name="end_of_service_liquidation_form">
+                    <group>
+                        <group string="End of service liquidation form">
+                            <field name="payroll_days"/>
+                            <field name="days_of_the_month"/>
+                            <field name="number_od_days_off"/>
+                            <field name="reason_end_service"/>
+                            <field name="salary_if_any"/>
+                            <field name="overtime"/>
+                            <field name="vacation_benefits"/>
+                            <field name="end_of_service"/>
+                            <field name="other_benefits"/>
+                            <field name="total_amount_due"/>
+                            <field name="his_predecessor_is_due"/>
+                            <field name="covenant_deductions"/>
+                            <field name="vacations_paid_deductions"/>
+                            <field name="loan_deductions"/>
+                            <field name="other_deductions"/>
+                            <field name="total_amount_deductions"/>
+                            <field name="net_receivables"/>
+                        </group>
+                    </group>
+
+                </page>
+            </xpath>
+
+
+            <xpath expr="//page[@name='end_of_service_liquidation_form']" position="after">
+                <page string="End Of Service Benefits"
+                      name="calculation_of_end_of_service_benefits">
+
+                    <group>
+                        <group string="End Of Service Benefits">
+
+                            <field name="types_of_end_services"/>
+                            <field name="bonus_amount"/>
+
+
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+
+        </field>
+    </record>
+</odoo>

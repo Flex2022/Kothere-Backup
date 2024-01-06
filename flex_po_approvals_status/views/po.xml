@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="purchase_order_form_inherit22" model="ir.ui.view">
+            <field name="name">purchase.order.form.inherit22</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header" position="replace">
+                    <header>
+                        <button name="action_rfq_send" invisible="state != 'draft'" string="Send by Email" type="object"
+                                context="{'send_rfq':True}" class="oe_highlight" data-hotkey="g"/>
+                        <button name="print_quotation" string="Print RFQ" type="object" invisible="state != 'draft'"
+                                class="oe_highlight" groups="base.group_user" data-hotkey="k"/>
+                        <button name="button_confirm" type="object" invisible="state != 'factory_aproved'" string="Confirm Order"
+                                groups="flex_po_approvals_status.flex_po_approvals_status_access_fin_man"
+                                context="{'validate_analytic': True}" class="oe_highlight" id="bid_confirm"
+                                data-hotkey="q"/>
+                        <button name="button_submit_to_po" type="object" invisible="state not in ('draft', 'sent')" string="Submit To PO"
+                                context="{'validate_analytic': True}" class="oe_highlight" id="bid_confirm"
+                                data-hotkey="q"/>
+                        <button name="button_submit_to_factory" type="object" invisible="state != 'po'" string="Approve"
+                                groups="flex_po_approvals_status.flex_po_approvals_status_access_po_man"
+                                context="{'validate_analytic': True}" class="oe_highlight" id="bid_confirm"
+                                data-hotkey="q"/>
+                        <button name="button_reject_to_draft" type="object" invisible="state != 'po'" string="Reject"
+                                groups="flex_po_approvals_status.flex_po_approvals_status_access_po_man"
+                                context="{'validate_analytic': True}" class="oe_highlight" id="bid_confirm"
+                                data-hotkey="q"/>
+                        <button name="button_submit_to_financial" type="object" invisible="state != 'factory'" string="Approve"
+                                groups="flex_po_approvals_status.flex_po_approvals_status_access_fa_man"
+                                context="{'validate_analytic': True}" class="oe_highlight" id="bid_confirm"
+                                data-hotkey="q"/>
+                        <button name="button_reject_to_po" type="object" invisible="state != 'factory'" string="Reject"
+                                groups="flex_po_approvals_status.flex_po_approvals_status_access_fa_man"
+                                context="{'validate_analytic': True}" class="oe_highlight" id="bid_confirm"
+                                data-hotkey="q"/>
+                        <button name="button_reject_to_factory" type="object" invisible="state != 'factory_aproved'" string="Reject Order"
+                                groups="flex_po_approvals_status.flex_po_approvals_status_access_fin_man"
+                                context="{'validate_analytic': True}" class="oe_highlight" id="bid_confirm"
+                                data-hotkey="q"/>
+                        <button name="button_approve" type="object" invisible="state != 'to approve'"
+                                string="Approve Order" class="oe_highlight" groups="purchase.group_purchase_manager"
+                                data-hotkey="z"/>
+                        <button name="action_create_invoice" string="Create Bill" type="object" class="oe_highlight"
+                                context="{'create_bill':True}"
+                                invisible="state not in ('purchase', 'done') or invoice_status in ('no', 'invoiced')"
+                                data-hotkey="w"/>
+                        <button name="action_rfq_send" invisible="state != 'sent'" string="Re-Send by Email"
+                                type="object" context="{'send_rfq':True}" data-hotkey="g"/>
+                        <button name="print_quotation" string="Print RFQ" type="object" invisible="state != 'sent'"
+                                groups="base.group_user" data-hotkey="k"/>
+                        <button name="action_rfq_send" invisible="state != 'purchase'" string="Send PO by Email"
+                                type="object" context="{'send_rfq':False}" data-hotkey="g"/>
+                        <button name="confirm_reminder_mail" string="Confirm Receipt Date" type="object"
+                                invisible="state not in ('purchase', 'done') or mail_reminder_confirmed or not date_planned"
+                                groups="base.group_no_one" data-hotkey="o"/>
+                        <button name="action_create_invoice" string="Create Bill" type="object"
+                                context="{'create_bill':True}"
+                                invisible="state not in ('purchase', 'done') or invoice_status not in ('no', 'invoiced') or not order_line"
+                                data-hotkey="w"/>
+                        <button name="button_draft" invisible="state != 'cancel'" string="Set to Draft" type="object"
+                                data-hotkey="o"/>
+                        <button name="button_cancel"
+                                invisible="state not in ('draft', 'to approve', 'sent', 'purchase')" string="Cancel"
+                                type="object" data-hotkey="x"/>
+                        <button name="button_done" type="object" string="Lock" invisible="state != 'purchase'"
+                                data-hotkey="l"/>
+                        <button name="button_unlock" type="object" string="Unlock" invisible="state != 'done'"
+                                groups="purchase.group_purchase_manager" data-hotkey="l"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,sent,po,factory,factory_aproved,purchase" readonly="1"/>
+                    </header>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.ui.view" id="payroll_adjust_request_form">
+        <field name="name">payroll.adjust.request.form</field>
+        <field name="model">payroll.adjust.request</field>
+        <field name="arch" type="xml">
+            <form string="Payroll Adjust Request">
+                <h3>Please enter your notes</h3>
+                <field name="note" required="True"/>
+                <footer>
+                    <button name="payroll_adjust_request" string="Confirm" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="variable_adjust_request_form">
+        <field name="name">adjust.variable.increase.form</field>
+        <field name="model">adjust.variable.increase</field>
+        <field name="arch" type="xml">
+            <form string="Variable Increase Adjust Request">
+                <h3>Please enter your notes</h3>
+                <field name="note" required="True"/>
+                <footer>
+                    <button name="variable_adjust_request" string="Confirm" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

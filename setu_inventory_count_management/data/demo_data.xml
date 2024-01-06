@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="inventory_count_settings" model="inventory.count.settings">
+            <field name="auto_inventory_adjustment" eval="False"/>
+        </record>
+    </data>
+</odoo>

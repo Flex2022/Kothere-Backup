@@ -1,0 +1,24 @@
+@mixin setu_list_width($list-max-width: 150px,$list-width:150px) {
+    max-width: $list-max-width !important;
+    width: $list-width !important;
+}
+.o_list_view{
+    &.setu_inventory_count_management{
+        [data-name='product_id'],[data-name='lot_id'],[data-name='location_id']
+        {
+             @include setu_list_width($list-max-width: 110px,$list-width:110px);
+        }
+        [data-name='theoretical_qty'],[data-name='scanned_qty'],[data-name='counted_expired_qty'],[data-name='counted_damaged_qty'],[data-name='user_calculation_mistake'],[data-name='product_scanned']
+        {
+             @include setu_list_width($list-max-width: 90px,$list-width:90px);
+        }
+        [data-name='counted_qty'],[data-name='is_discrepancy_found'],[data-name="state"]{
+             @include setu_list_width($list-max-width: 150px,$list-width:150px);
+        }
+        [data-name='serial_number_ids'],[data-name='expired_serial_number_ids'],[data-name='damaged_serial_number_ids'],[data-name='not_found_serial_number_ids'],[data-name='expired_lot_id'],
+        [data-name='damaged_lot_id'],[data-name='qty_in_stock']
+        {
+             @include setu_list_width($list-max-width: 150px,$list-width:150px);
+        }
+    }
+}

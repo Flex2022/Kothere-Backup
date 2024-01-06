@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_stock_location_form_inherit" model="ir.ui.view">
+        <field name="name">stock.location.form.inherit.barcode</field>
+        <field name="model">stock.location</field>
+        <field name="inherit_id" ref="stock.view_location_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='return_location']" position="after">
+                <field name="barcode" invisible="check_stock_barcode_installed"/>
+                <field name="check_stock_barcode_installed" invisible="1"/>
+                <field name="is_damage_location"/>
+                <field name="is_expiry_location"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
