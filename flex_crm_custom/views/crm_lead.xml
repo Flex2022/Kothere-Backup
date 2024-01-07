@@ -61,7 +61,7 @@
                         <label for="probability" class="d-inline-block"/>
                         <div id="probability" class="d-flex align-items-baseline mt-2">
                             <field name="is_automated_probability" invisible="1"/>
-                            <field name="total_order_line_ids" class="oe_inline o_input_6ch"/>
+<!--                            <field name="total_order_line_ids" class="oe_inline o_input_6ch"/>-->
                         </div>
                     </div>
                 </xpath>
