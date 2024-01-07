@@ -32,6 +32,8 @@ class CrmOrderLine(models.Model):
     name = fields.Char(string='Description')
     analytic_distribution_text = fields.Text(company_dependent=True)
     analytic_distribution = fields.Json(inverse="_inverse_analytic_distribution", store=False, precompute=False)
+    analytic_account_ids = fields.Many2many('account.analytic.account', compute="_compute_analytic_account_ids", copy=True)
+
     tax_ids = fields.Many2many('account.tax', string='Taxes')
     discount = fields.Float(string='Discount (%)')
     quantity = fields.Float(string='Quantity', default=1)
@@ -55,6 +57,11 @@ class CrmOrderLine(models.Model):
     def _inverse_analytic_distribution(self):
         for record in self:
             record.analytic_distribution_text = json.dumps(record.analytic_distribution)
+
+    @api.depends('analytic_distribution')
+    def _compute_analytic_account_ids(self):
+        for record in self:
+            record.analytic_account_ids = list(map(int, record.analytic_distribution.keys())) if record.analytic_distribution else []
 
     @api.onchange('product_id')
     def _onchange_product_id(self):
