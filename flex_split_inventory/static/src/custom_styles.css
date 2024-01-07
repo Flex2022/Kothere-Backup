@@ -1,0 +1,21 @@
+.no-border-no-color {
+    border: none !important;
+    background-color: transparent !important;
+    color: inherit !important; /* This will make the icon inherit the color of its parent element */
+}
+.no-border-no-color:hover {
+    background-color: transparent !important;
+    color: inherit !important; /* This will make the icon inherit the color of its parent element */
+}
+.no-border-no-color:focus {
+    background-color: transparent !important;
+    color: inherit !important; /* This will make the icon inherit the color of its parent element */
+}
+.no-border-no-color:active {
+    background-color: transparent !important;
+    color: inherit !important; /* This will make the icon inherit the color of its parent element */
+}
+.no-border-no-color:visited {
+    background-color: transparent !important;
+    color: inherit !important; /* This will make the icon inherit the color of its parent element */
+}

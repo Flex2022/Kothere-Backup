@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="flex_split_inventory_view_picking_form_inherit" model="ir.ui.view">
+            <field name="name">flex_split_inventory.stock.picking.form</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/header" position="inside">
+                    <button string="SPLIT" type="object" name="action_stock_picking_wizard"
+                            groups="flex_split_inventory.group_flex_split_inventory_access"
+                            class="btn-primary"/>
+                </xpath>
+                <xpath expr="//sheet/div[@name='button_box']" position="inside">
+                    <button class="oe_stat_button" type="object"
+                            name="action_view_related_pickings"
+                            icon="fa-scissors" invisible="not count_picking">
+                        <field name="count_picking" widget="statinfo"/>
+                    </button>
+                </xpath>
+                <xpath expr="//page[@name='operations']/field[@name='move_ids_without_package']/tree/field[@name='product_id']"
+                       position="before">
+                    <field name="split" groups="flex_split_inventory.group_flex_split_inventory_access"/>
+                </xpath>
+                <xpath expr="//page[@name='operations']/field[@name='move_ids_without_package']" position="before">
+                    <button type="object" name="select_all_moves" icon="fa-check-square-o"
+                            class="no-border-no-color" groups="flex_split_inventory.group_flex_split_inventory_access"/>
+                    <button type="object" name="deselect_all_moves" icon="fa-square-o" class="no-border-no-color"
+                            groups="flex_split_inventory.group_flex_split_inventory_access"/>
+                    <field name="sourse_picking_id"/>
+                </xpath>
+            </field>
+        </record>
+
+
+        <record id="view_stock_picking_wizard_form" model="ir.ui.view">
+            <field name="name">stock.picking.wizard.form</field>
+            <field name="model">stock.picking.wizard</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="status_selection"/>
+                        <field name="existing_picking_id"
+                               domain="[('state', '=', 'draft'), ('picking_type_id', '=', context.get('default_picking_type_id', False))]"
+                               invisible="status_selection != 'exist_transfer'"
+                               options="{'no_create': True, 'no_create_edit': True}"/>
+                    </group>
+                    <footer>
+                        <button string="Apply" type="object" name="apply_action" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_stock_picking_wizard" model="ir.actions.act_window">
+            <field name="name">Stock Picking Wizard</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">stock.picking.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+    </data>
+</odoo>

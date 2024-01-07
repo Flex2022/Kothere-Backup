@@ -1,0 +1,17 @@
+{
+    'name': 'flex split inventory',
+    'version': '0.1',
+    'summary': 'flex split inventory',
+    'description': 'flex split inventory',
+    'category': 'Uncategorized',
+    'author': 'Abdalrahman Shahrour',
+    'website': 'https://www.flex-ops.com',
+    'license': 'LGPL-3',
+    'depends': ['base', 'stock'],
+    'data': ['security/ir.model.access.csv',
+             'security/groups.xml',
+             'views/stock_picking.xml'],
+    'installable': True,
+    'auto_install': False,
+    'qweb': ['static/src/custom_styles.css'],
+}
