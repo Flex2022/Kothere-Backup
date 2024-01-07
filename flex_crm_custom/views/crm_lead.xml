@@ -21,9 +21,9 @@
                                        domain="[('sale_ok', '=', True), '|', ('company_id', '=', False), ('company_id', '=', company_id)]"
                                 />
                                 <field name="name"/>
-                                <field name="analytic_distribution" widget="analytic_distribution"
-                                       groups="analytic.group_analytic_accounting"
-                                       options="{'product_field': 'product_id', 'business_domain': 'sale_order'}"/>
+<!--                                <field name="analytic_distribution" widget="analytic_distribution"-->
+<!--                                       groups="analytic.group_analytic_accounting"-->
+<!--                                       options="{'product_field': 'product_id', 'business_domain': 'sale_order'}"/>-->
                                 <field name="quantity"/>
                                 <field name="product_uom" column_invisible="1" groups="!uom.group_uom"/>
                                 <field name="product_uom"
