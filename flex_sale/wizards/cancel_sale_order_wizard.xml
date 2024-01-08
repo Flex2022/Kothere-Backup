@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_sale_order_cancel_reason_wizard" model="ir.ui.view">
+        <field name="name">sale.order.cancel.reason.wizard.form</field>
+        <field name="model">sale.order.cancel.reason.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="cancel_reason" widget="text" string="Cancellation Reason" no_label="1"/>
+                </group>
+                <footer>
+                    <button string="Submit" class="oe_highlight" type="object" name="submit_cancel_reason"
+                            data-hotkey="s"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel" data-hotkey="x"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

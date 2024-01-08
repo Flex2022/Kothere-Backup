@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="most_sold_product_report_template">
+		<t t-call="web.html_container">
+			<t t-call="web.external_layout">
+				<div class="page">						
+					<div class="oe_structure"/>
+					<div class="text-center">
+						<h2><strong><span><i>Most Sold Products</i></span></strong></h2>
+					</div>
+					<table class="table table-sm table-striped mt-4">
+						<tr>
+							<td><strong>From</strong> </td>
+							<td>:</td>
+							<td>
+								<t t-if="form_data.get('start_date')">
+									<t t-esc="form_data['start_date']"/>
+								</t>							
+							</td>	
+							<td><strong>To</strong></td>
+							<td>:</td>
+							<td>
+								<t t-if="form_data.get('end_date')">
+									<t t-esc="form_data['end_date']"/>
+								</t>							
+							</td>
+						</tr>
+					</table>
+					<br/>
+					<table class="table table-bordered mt32">
+						<t t-if="form_data.get('selection') == 'product'">
+							<thead>
+								<tr>
+									<th name="th_product" class="text-center">
+										<span><strong>Product</strong></span>
+									</th>
+									<th name="th_qty" class="text-center">
+										<span><strong>Qty</strong></span>
+									</th>
+								</tr>
+							</thead>
+							<t t-foreach="product_list" t-as="line">
+								<tr>
+									<td>
+										<span t-esc="line['product_name']"/>
+									</td>
+									<td class="text-center">
+										<span t-esc="line['product_qty']"/>
+									</td>
+								</tr>
+							</t>
+						</t>
+								
+						<t t-if="form_data.get('selection') == 'category'">
+							<thead>
+								<tr>
+									<th name="th_product_category" class="text-center">
+										<span><strong>Product Category</strong></span>
+									</th>
+									<th name="th_product" class="text-center">
+										<span><strong>Product</strong></span>
+									</th>
+									<th name="th_qty" class="text-center">
+										<span><strong>Qty</strong></span>
+									</th>
+								</tr>
+							</thead>
+							<t t-foreach="product_list" t-as="rec">
+								<tr>
+									<td>
+										<span t-esc="rec['product_category']"/>
+									</td>
+									<td>
+										<span t-esc="rec['product_name']"/>
+									</td>
+									
+									<td class="text-center">
+										<span t-esc="rec['product_qty']"/>
+									</td>
+								</tr>
+							</t>
+						</t>
+
+						<t t-if="form_data.get('selection') == 'sales amount'">
+							<thead>
+								<tr>
+									<th name="th_product" class="text-center">
+										<span><strong>Product</strong></span>
+									</th>
+									<th name="th_qty" class="text-center">
+										<span><strong>Qty</strong></span>
+									</th>
+									<th name="th_price" class="text-center">
+										<span><strong>Total Price</strong></span>
+									</th>
+								</tr>
+							</thead>
+							<t t-foreach="product_list" t-as="rec">
+								<tr>
+									<td>
+										<span t-esc="rec['product_name']"/>
+									</td>
+									<td class="text-center">
+										<span t-esc="rec['product_qty']"/>
+									</td>
+									<td class="text-center">
+										<span t-esc="rec['product_price_subtotal']"/>
+									</td>
+								</tr>
+							</t>
+						</t>
+					</table>
+				</div>
+			</t>
+		</t>
+	</template>
+</odoo>

@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="action_variable_increase_adjust" model="ir.actions.act_window">
+            <field name="name">Variable Increase Adjust</field>
+            <field name="res_model">adjust.variable.increase</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="variable_adjust_request_form"/>
+            <field name="target">new</field>
+        </record>
+
+        <record id="hr_variable_increase_tree" model="ir.ui.view">
+            <field name="name">hr.variable.increase.tree</field>
+            <field name="model">hr.variable.increase</field>
+            <field name="priority" eval="8" />
+            <field name="arch" type="xml">
+                <tree string="Variable Increase Tree">
+                    <field name="name"/>
+                    <field name="increase_schedule"/>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="office_id"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="hr_variable_increase_form" model="ir.ui.view">
+            <field name="name">hr.variable.increase.form</field>
+            <field name="model">hr.variable.increase</field>
+            <field name="priority" eval="8" />
+            <field name="arch" type="xml">
+                <form string="Variable Increase Form">
+                    <header>
+                        <button string="Send To Accounting" name="action_sent_to_accounting" type="object" invisible="state != 'draft'" class="oe_highlight" groups="hr.group_hr_manager"/>
+                        <button string="Send To CEO" name="action_sent_to_ceo" type="object" invisible="state != 'accounting'" class="oe_highlight" groups="account.group_account_manager"/>
+                        <button string="Adjust Request" type="action" invisible="state != 'ceo_approve'" name="%(action_variable_increase_adjust)d" class="oe_highlight" groups="hr_employee_updation.group_ceo_approval"/>
+                        <button string="Send To HR" name="action_sent_to_hr" type="object" invisible="state != 'ceo_approve'" class="oe_highlight" groups="hr_employee_updation.group_ceo_approval" />
+                        <button string="Done" name="action_done" type="object" invisible="state != 'hr'" class="oe_highlight" groups="hr.group_hr_manager"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" readonly="state not in ('draft', 'accounting')"/>
+                                <field name="increase_schedule" required="1" readonly="state not in ('draft', 'accounting')"/>
+                                <field name="payment_date" readonly="state not in ('draft', 'accounting')"/>
+                            </group>
+                            <group>
+                                <field name="office_id" widget="selection" required="1" readonly="state not in ('draft', 'accounting')"/>
+                                <label for="start_date" string="Period" />
+                                <div>
+                                    <field name="start_date" readonly="state not in ('draft', 'accounting')" class="oe_inline"/> - <field name="end_date" class="oe_inline" readonly="state not in ('draft', 'accounting')"/>
+                                </div>
+                            </group>
+                        </group>
+                        <field name="line_ids">
+                            <tree editable="bottom">
+                                <field name="employee_id" options="{'no_open':True,'no_create':True}"/>
+                                <field name="name"/>
+                                <field name="increase_per_month" sum="total"/>
+                                <field name="qty"/>
+                                <field name="subtotal" sum="total" readonly="0"/>
+                                <field name="evaluation"/>
+                                <field name="total" sum="total" readonly="0"/>
+                                <field name="deduction_amount" sum="total" />
+                                <field name="net_amount" sum="total" readonly="0"/>
+                            </tree>
+                        </field>
+                        <label for="adjust_request"/>
+                        <field name="adjust_request" readonly="1"/>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="variable_increase_action">
+            <field name="name">Variable Increase</field>
+            <field name="res_model">hr.variable.increase</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">Variable Increase</p>
+            </field>
+        </record>
+
+        <menuitem name="Variable Increase"
+                  parent="hr_work_entry_contract_enterprise.menu_hr_payroll_root"
+                  sequence="80"
+                  id="menu_variable_increase_action"
+                  action="variable_increase_action"
+                  groups="hr_payroll.group_hr_payroll_user"/>
+
+<!--        <record id="view_hr_variable_increase_line_pivot" model="ir.ui.view">-->
+<!--            <field name="name">hr.variable.increase.line.pivot</field>-->
+<!--            <field name="model">hr.variable.increase.line</field>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <pivot string="Variable Increase Line Pivot">-->
+<!--                    <field name="employee_id" type="row"/>-->
+<!--                    <field name="increase_per_month" type="measure"/>-->
+<!--                    <field name="subtotal" type="measure"/>-->
+<!--                    <field name="evaluation" type="measure"/>-->
+<!--                    <field name="total" type="measure"/>-->
+<!--                    <field name="deduction_amount" type="measure"/>-->
+<!--                    <field name="net_amount" type="measure"/>-->
+<!--                </pivot>-->
+<!--            </field>-->
+<!--        </record>-->
+
+<!--        <record id="view_hr_variable_increase_filter" model="ir.ui.view">-->
+<!--            <field name="name">hr.variable.increase.line.select</field>-->
+<!--            <field name="model">hr.variable.increase.line</field>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <search string="Search Variable Increase">-->
+<!--                    <field name="employee_id"/>-->
+<!--                    <group col="8" colspan="4" expand="0" string="Group By">-->
+<!--                        <filter string="Department" name="department_id" context="{'group_by':'department_id'}"/>-->
+<!--                        <filter string="Employee" name="employee_id" context="{'group_by':'employee_id'}"/>-->
+<!--                    </group>-->
+<!--                </search>-->
+<!--            </field>-->
+<!--        </record>-->
+
+<!--        <record id="hr_variable_increase_line_action" model="ir.actions.act_window">-->
+<!--            <field name="name">Variable Increase Line</field>-->
+<!--            <field name="type">ir.actions.act_window</field>-->
+<!--            <field name="res_model">hr.variable.increase.line</field>-->
+<!--            <field name="view_mode">pivot</field>-->
+<!--            <field name="context">{'search_default_department_id': True}</field>-->
+<!--        </record>-->
+
+<!--        <menuitem name="Variable Increase Details"-->
+<!--                  parent="menu_hr_payroll_reports"-->
+<!--                  sequence="2"-->
+<!--                  id="menu_hr_variable_increase_line_action"-->
+<!--                  action="hr_variable_increase_line_action"-->
+<!--                  groups="om_hr_payroll.group_hr_payroll_user"/>-->
+    </data>
+</odoo>

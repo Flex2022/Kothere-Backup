@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <report id="salary_definition_report"
+                string="Salary Definition"
+                model="hr.employee"
+                report_type="qweb-pdf"
+                file="hr_employee_updation.salary_definition_template_id"
+                name="hr_employee_updation.salary_definition_template_id"/>
+
+        <template id="salary_definition_report_view">
+            <t t-call="hr_employee_updation.internal_layout_without_header">
+                <t t-set="o" t-value="o.with_context({'lang':'en_US'})"/>
+                <div class="page" style="font-family: Cairo_arabic;">
+                    <h6 style="text-align: right; direction: rtl;">التاريخ: <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d')"/></h6>
+                    <br/>
+                    <h5 style="text-align: right; direction: rtl;"><b>السادة/بنك <span t-field="o.bank_id.name"/> المحترمين،</b></h5>
+                    <h6 style="text-align: right; direction: rtl;">السلام عليكم ورحمة الله وبركاته وبعد،</h6>
+                    <br/>
+                    <p style="text-align: right; direction: rtl; font-family: 'Calibri'">  ننفيدكم بأن السيد/<span t-field="o.english_name"/> الجنسية<span t-field="o.country_id.name"/> يحمل هوية مقيم رقم (<span t-field="o.identification_id"/>) هو أحد العاملين في شركة أبحاث وتطوير الأعمال
+                        التجارية ويعمل بوظيفة <span t-field="o.job_id.name"/> من تاريخ <span t-field="o.joining_date"/> وبيانات الراتب كالتالي: </p>
+                    <br/><br/>
+                    <table class="table table-sm table-bordered " style="direction: rtl;background-color:#A9A9A9;">
+                        <thead>
+                            <tr style="white-space:nowrap;">
+                                <th style="padding: 3px; border: 2px solid black; text-align: center; font-size: 13px; width:20%">اساسي</th>
+                                <th style="padding: 3px; border: 2px solid black; text-align: center; font-size: 13px; width:20%">بدل سكن</th>
+                                <th style="padding: 3px; border: 2px solid black; text-align: center; font-size: 13px; width:20%">بدل مواصلات</th>
+                                <th style="padding: 3px; border: 2px solid black; text-align: center; font-size: 13px; width:20%">بدلات اخرى</th>
+                                <th style="padding: 3px; border: 2px solid black; text-align: center; font-size: 13px; width:20%">الإجمالي</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <td style="text-align: center; border: 2px solid black; height:10px; font-size: 13px;"><span t-esc="'%.2f'% o.contract_id.wage"/></td>
+                            <td style="text-align: center; border: 2px solid black; height:10px; font-size: 13px;"><span t-esc="'%.2f'% o.contract_id.housing_allowance_value"/></td>
+                            <td style="text-align: center; border: 2px solid black; height:10px; font-size: 13px;"><span t-esc="'%.2f'% o.contract_id.transportation_allowance_value"/></td>
+                            <td style="text-align: center; border: 2px solid black; height:10px; font-size: 13px;"><span t-esc="'%.2f'% o.contract_id.other_deduction_amount"/></td>
+                            <td style="text-align: center; border: 2px solid black; height:10px; font-size: 13px;"><span t-esc="'%.2f'% o.contract_id.total_salary"/></td>
+                        </tbody>
+                    </table>
+                    <br/><br/>
+                    <p style="text-align: right; direction: rtl;">  كما نتعهد باستمرار تحويل الرواتب الشهرية للمذكور شاملة البدلات طالما كان على رأس العمل لإيداعها في حسابه رقم اعتبارً من شهر <span t-esc="datetime.datetime.strptime(str(o.joining_date), '%Y-%m-%d').strftime('%m')"/> /<span t-esc="datetime.datetime.strptime(str(o.joining_date), '%Y-%m-%d').strftime('%y')"/> على أن لا يتم إلغاء التحويل الا عند حصولنا على إخلاء طرف منكم كما نتعهد بتحويل
+                        مكافئة نهاية الخدمة الخاصة بالموظف عند استقالته أو إنهاء خدماته، إن وجد وسيتم إشعار البنك
+                        بذلك..</p>
+                    <br/><br/>
+                    <p style="text-align: right; padding-right: 50px;">.وقد أعطيت هذه الشهادة بناءً على طلبه دون أدنى مسؤولية</p>
+                    <br/><br/>
+                    <p style="text-align: center; direction: rtl;">وتفضلوا بقبول فائق الاحترام, </p>
+
+                    <br/><br/><br/>
+                    <p style="text-align: left; padding-left: 50px;"><b>مدير الموارد البشرية</b></p>
+                </div>
+            </t>
+        </template>
+        <template id="salary_definition_template_id">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="hr_employee_updation.salary_definition_report_view"  t-lang="en_US"/>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.ui.view" id="hr_employee_tree_view_inherit">
+        <field name="name">hr.employee.tree.view</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_tree"/>
+        <field name="arch" type="xml">
+            <field name="work_phone" position="after">
+                <field name="mobile_phone"/>
+                <field name="work_mobile_ext"/>
+            </field>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="hr_employee_public_view_tree_inh">
+        <field name="name">hr.employee.public.tree.view.inh</field>
+        <field name="model">hr.employee.public</field>
+        <field name="inherit_id" ref="hr.hr_employee_public_view_tree"/>
+        <field name="arch" type="xml">
+            <field name="work_phone" position="after">
+                <field name="mobile_phone"/>
+                <field name="work_mobile_ext"/>
+            </field>
+            <field name="job_title" position="replace">
+                <field name="job_id"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_employee_tree_all" model="ir.ui.view">
+        <field name="name">hr.employee.tree</field>
+        <field name="model">hr.employee</field>
+        <field name="arch" type="xml">
+            <tree string="Employees" create="false" edit="false">
+                <field name="name"/>
+                <field name="work_phone"/>
+                <field name="mobile_phone"/>
+                <field name="work_mobile_ext"/>
+                <field name="work_email"/>
+                <field name="department_id"/>
+                <field name="job_id"/>
+                <field name="parent_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_employee_form_all" model="ir.ui.view">
+        <field name="name">hr.employee.form</field>
+        <field name="model">hr.employee</field>
+        <field name="arch" type="xml">
+            <form string="Employee" js_class="hr_employee_form" create="false" edit="false">
+                <field name="active" invisible="1"/>
+                <field name="user_id" invisible="1"/>
+                <field name="user_partner_id" invisible="1"/>
+                <field name="hr_presence_state" invisible="1"/>
+                <header>
+                    <button string="Chat" class="btn btn-primary o_employee_chat_btn" attrs="{'invisible': [('user_id','=', False)]}"/>
+                    <button name="%(hr.plan_wizard_action)d" string="Launch Plan" type="action" groups="hr.group_hr_manager"/>
+                </header>
+                <sheet>
+                    <div name="button_box" class="oe_button_box">
+                        <button
+                            id="hr_presence_button"
+                            class="oe_stat_button"
+                            disabled="1"
+                            attrs="{'invisible': ['|', '|', '|', ('last_activity', '=', False), ('is_absent', '=', True), ('user_id', '=', False), ('id', '=', False)]}">
+                            <div role="img" class="fa fa-fw fa-circle text-success o_button_icon" attrs="{'invisible': [('hr_presence_state', '!=', 'present')]}" aria-label="Available" title="Available"/>
+                            <div role="img" class="fa fa-fw fa-circle text-warning o_button_icon" attrs="{'invisible': [('hr_presence_state', '!=', 'to_define')]}" aria-label="Away" title="Away"/>
+                            <div role="img" class="fa fa-fw fa-circle text-danger o_button_icon" attrs="{'invisible': [('hr_presence_state', '!=', 'absent')]}" aria-label="Not available" title="Not available"/>
+
+                            <div class="o_stat_info" attrs="{'invisible': [('hr_presence_state', '=', 'present')]}">
+                                <span class="o_stat_text">
+                                    Not Connected
+                                </span>
+                            </div>
+                            <div class="o_stat_info" attrs="{'invisible': [('hr_presence_state', '!=', 'present')]}">
+                                <span class="o_stat_value" attrs="{'invisible': [('last_activity_time', '=', False)]}">
+                                    <field name="last_activity_time"/>
+                                </span>
+                                <span class="o_stat_value" attrs="{'invisible': [('last_activity_time', '!=', False)]}">
+                                    <field name="last_activity"/>
+                                </span>
+                                <span class="o_stat_text">Present Since</span>
+                            </div>
+                        </button>
+                        <button name="%(hr_contract.act_hr_employee_2_hr_contract)d"
+                            class="oe_stat_button"
+                            icon="fa-book"
+                            type="action"
+                            groups="hr_contract.group_hr_contract_manager">
+                            <field name="contracts_count" widget="statinfo" string="Contracts"/>
+                        </button>
+                        <field name="current_leave_id" invisible="1"/>
+                        <field name="show_leaves" invisible="1"/>
+                        <field name="is_absent" invisible="1"/>
+                        <button disabled="1"
+                                class="oe_stat_button"
+                                context="{'search_default_employee_id': active_id}"
+                                attrs="{'invisible': [('is_absent', '=', False)]}">
+                            <div role="img" class="fa fa-fw fa-plane o_button_icon text-danger" aria-label="Off Till" title="Off Till"/>
+                            <div class="o_field_widget o_stat_info">
+                                <span class="o_stat_value">
+                                    <field name="leave_date_to"/>
+                                </span>
+                                <span class="o_stat_text">
+                                    Off Till
+                                </span>
+                            </div>
+                        </button>
+                        <button name="%(hr_holidays.act_hr_employee_holiday_request)d"
+                                type="action"
+                                class="oe_stat_button"
+                                icon="fa-calendar"
+                                attrs="{'invisible': [('show_leaves','=', False)]}"
+                                context="{'search_default_employee_id': active_id}"
+                                groups="base.group_user"
+                                help="Remaining leaves">
+                            <div class="o_field_widget o_stat_info">
+                                <span class="o_stat_value">
+                                    <field name="allocation_used_display"/>/<field name="allocation_display"/> Days
+                                </span>
+                                <span class="o_stat_text">
+                                    Time Off
+                                </span>
+                            </div>
+                        </button>
+                        <button class="oe_stat_button"
+                                name="custody_view"
+                                type="object"
+                                icon="fa-list-ol"
+                                string="Custody">
+                        </button>
+                        <button name="%(om_hr_payroll.act_hr_employee_payslip_list)d"
+                                class="oe_stat_button"
+                                icon="fa-money"
+                                type="action"
+                                string="Payslips">
+                        </button>
+                    </div>
+                    <widget name="web_ribbon" title="Archived" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}"/>
+                    <field name="image_1920" widget='image' class="oe_avatar" options='{"zoom": true, "preview_image":"image_128"}'/>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Employee's Name" required="True"/>
+                        </h1>
+                        <h2>
+                            <field name="english_name" placeholder="Arabic Name"/>
+                        </h2>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="mobile_phone" widget="phone"/>
+                            <field name="work_mobile_ext"/>
+                            <field name="work_phone" widget="phone"/>
+                            <field name="work_email" widget="email"/>
+                            <field name="office_id" required="1" options='{"no_open": True, "no_create": True}'/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group>
+                            <field name="employee_number"/>
+                            <field name="department_id" options='{"no_open": True, "no_create": True}'/>
+                            <field name="job_id"/>
+                            <field name="parent_id" options="{'no_open':True,'no_create':True}" domain="['|', ('company_id', '=', False), ('company_id', '=', company_id), ('is_manager', '=', True)]"/>
+                            <field name="is_manager"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="open_view_employee_my_profile" model="ir.actions.act_window">
+        <field name="name">My Profile</field>
+        <field name="res_model">hr.employee</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('user_id', '=', uid)]</field>
+        <field name="search_view_id" ref="hr.view_employee_filter"/>
+        <field name="help" type="html">
+         <p class="o_view_nocontent_smiling_face">
+           Add a new employee
+         </p><p>
+           With just a quick glance on the Odoo employee screen, you
+           can easily find all the information you need for each person;
+           contact data, job position, availability, etc.
+         </p>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window.view" id="open_view_employee_my_profile_tree">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="hr_employee_updation.view_employee_tree_all"/>
+        <field name="act_window_id" ref="open_view_employee_my_profile"/>
+    </record>
+    <record model="ir.actions.act_window.view" id="open_view_employee_my_profile_form">
+        <field name="sequence" eval="2"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="hr_employee_updation.view_employee_form_all"/>
+        <field name="act_window_id" ref="open_view_employee_my_profile"/>
+    </record>
+
+    <menuitem id="hr.menu_hr_employee"
+              name="Employee Directory"
+              parent="hr.menu_hr_root"
+              sequence="4"
+              groups="group_hr_t2_employee"/>
+
+    <menuitem id="menu_open_view_employee_my_profile"
+              action="open_view_employee_my_profile"
+              parent="hr.menu_hr_employee"
+              sequence="1"/>
+
+    <menuitem id="menu_open_view_all_employee"
+              name="Employees"
+              action="hr.hr_employee_public_action"
+              parent="hr.menu_hr_employee"
+              sequence="2"/>
+</odoo>

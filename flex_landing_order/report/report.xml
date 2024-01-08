@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="landing_order_report" model="ir.actions.report">
+            <field name="name">Landing Order</field>
+            <field name="model">landing.order</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">flex_landing_order.flex_landing_order_report</field>
+            <field name="report_file">flex_landing_order.flex_landing_order_report</field>
+            <field name="print_report_name">'Landing Order'</field>
+            <field name="binding_model_id" ref="flex_landing_order.model_landing_order"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <template id="flex_landing_order_report">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="web.external_layout">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="col-6 text-center float-end" dir="rtl">
+                                    <h3>إذن التحميل</h3>
+                                </div>
+                                <div class="col-6 text-center float-start" dir="ltr">
+                                    <h3>Landing Order</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col-12">
+                                <div class="float-end text-end mt-4" dir="rtl" style="margin-right: 120px;">
+                                    <br/>
+                                    <br/>
+                                    <br/>
+                                    <p>
+                                        <div class="float-end" dir="rtl">
+                                            <h6>رقم كود العميل/</h6>
+                                        </div>
+                                        <div class="float-end" dir="rtl">
+                                            <span class="text-center" t-field="o.partner_code"/>
+                                        </div>
+                                    </p>
+                                    <br/>
+                                    <p>
+                                        <h6>السادة/شركة اسمنت</h6>
+                                    </p>
+                                    <p>
+                                        <h6>ارجو تسليم السائق</h6>
+                                    </p>
+                                    <p>
+                                        <h6>سيارة رقم</h6>
+                                    </p>
+                                    <p>
+                                        <h6>الكمية(طن-كيس)</h6>
+                                    </p>
+                                    <p>
+                                        <h6>النوع اسمنت(عادي-مقاوم-سايب)</h6>
+                                    </p>
+                                </div>
+                                <div class="col-3 float-end text-center mt-4" style="height: 265px;">
+                                    <br/>
+                                    <br/>
+                                    <br/>
+                                    <br/>
+                                    <br/>
+                                    <p>
+                                        <span t-field="o.partner_id"/>
+                                    </p>
+                                    <p>
+                                        <span t-field="o.driver_id"/>
+                                    </p>
+                                    <p>
+                                        <span t-field="o.car_id"/>
+                                    </p>
+                                    <p>
+                                        <span t-field="o.quantity"/>
+                                    </p>
+                                    <p>
+                                        <span t-field="o.kind"/>
+                                    </p>
+                                </div>
+                                <div class="float-start text-start mt-4" dir="ltr" style="margin-left: 120px;">
+                                    <div>
+                                        <div class="float-end" dir="ltr">
+                                            <span t-field="o.name"/>
+                                        </div>
+                                        <div class="float-end text-center">
+                                            <h6>Serial No:</h6>
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <br/>
+                                    <div>
+                                        <div class="float-end" dir="rtl">
+                                            <h6>التاريخ</h6>
+                                        </div>
+                                        <div class="float-end text-center">
+                                            <span t-field="o.h_date" t-field-options='{"format": "dd/MM/yyyy"}'/>
+                                        </div>
+                                        <div class="float-end" dir="ltr">
+                                            <h6>H :</h6>
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <br/>
+                                    <div>
+                                        <div class="float-end" dir="rtl">
+                                            <h6>الموافق</h6>
+                                        </div>
+                                        <div class="float-end text-center">
+                                            <span t-field="o.date" t-field-options='{"format": "dd/MM/yyyy"}'/>
+                                        </div>
+                                        <div class="float-end" dir="ltr">
+                                            <h6>Date</h6>
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <p>
+                                        <h6>Cement Company</h6>
+                                    </p>
+                                    <p>
+                                        <h6>Driver Name</h6>
+                                    </p>
+                                    <p>
+                                        <h6>Car No.</h6>
+                                    </p>
+                                    <p>
+                                        <h6>Qty.</h6>
+                                    </p>
+                                    <p>
+                                        <h6>Kind</h6>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col-12">
+
+                                <div class="col-4 float-end text-center">
+                                    <p>
+                                        <span>
+                                            <h6>محرر الإذن</h6>
+                                        </span>
+                                    </p>
+                                    <br/>
+                                    <p>
+                                        <hr/>
+                                    </p>
+                                </div>
+                                <div class="col-4 float-end text-center">
+                                    <p>
+                                        <span>
+                                            <h6>الختم الرسمي</h6>
+                                        </span>
+                                    </p>
+                                </div>
+                                <div class="col-4 float-start text-center">
+                                    <p>
+                                        <span>
+                                            <h6>مشرف الامدادات</h6>
+                                        </span>
+                                    </p>
+                                    <br/>
+                                    <p>
+                                        <hr/>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+
+        <!--        <report-->
+        <!--                id="report_landing_order"-->
+        <!--                model="landing.order"-->
+        <!--                string="ReportTitle"-->
+        <!--                name="landing_order_view"-->
+        <!--                file="flex_landing_orders.report_landing_order"-->
+        <!--                report_type="qweb-pdf"/>-->
+
+        <!--        &lt;!&ndash;        <t t-name="account.report_invoice_with_payments">&ndash;&gt;-->
+        <!--        &lt;!&ndash;            <t t-call="account.report_invoice">&ndash;&gt;-->
+        <!--        &lt;!&ndash;                <t t-set="print_with_payments" t-value="True"/>&ndash;&gt;-->
+        <!--        &lt;!&ndash;            </t>&ndash;&gt;-->
+        <!--        &lt;!&ndash;        </t>&ndash;&gt;-->
+
+        <!--        <template id="landing_order_view">-->
+        <!--            <t t-call="web.html_container">-->
+        <!--                <t t-foreach="docs" t-as="doc">-->
+        <!--                    <t t-call="web.external_layout">-->
+        <!--                        <div class="page">-->
+        <!--                            <div class="row">-->
+        <!--                                <div class="col-xs-12">-->
+        <!--                                    <h2>Report Title</h2>-->
+        <!--                                </div>-->
+        <!--                            </div>-->
+        <!--                            <div class="row">-->
+        <!--                                <div class="col-xs-12">-->
+        <!--                                    <h3>Report Subtitle</h3>-->
+        <!--                                </div>-->
+        <!--                            </div>-->
+        <!--                            <div class="row">-->
+        <!--                                <div class="col-xs-12">-->
+        <!--                                    <table class="table table-condensed">-->
+        <!--                                        <thead>-->
+        <!--                                            <tr>-->
+        <!--                                                <th>Column 1</th>-->
+        <!--                                                <th>Column 2</th>-->
+        <!--                                                <th>Column 3</th>-->
+        <!--                                            </tr>-->
+        <!--                                        </thead>-->
+        <!--                                        <tbody>-->
+        <!--                                            <tr>-->
+        <!--                                                <td>Value 1</td>-->
+        <!--                                                <td>Value 2</td>-->
+        <!--                                                <td>Value 3</td>-->
+        <!--                                            </tr>-->
+        <!--                                        </tbody>-->
+        <!--                                    </table>-->
+        <!--                                </div>-->
+        <!--                            </div>-->
+        <!--                        </div>-->
+        <!--                    </t>-->
+        <!--                </t>-->
+        <!--            </t>-->
+        <!--        </template>-->
+
+
+        <!--        <template id="report_invoice_34">-->
+        <!--            <t t-call="web.html_container">-->
+        <!--                <t t-foreach="docs" t-as="o">-->
+        <!--                    <t t-set="lang" t-value="o.partner_id.lang"/>-->
+        <!--                    &lt;!&ndash;                    <t t-if="o._get_name_invoice_report() == 'flex_landing_orders.landing_order_view'"&ndash;&gt;-->
+        <!--                    &lt;!&ndash;                       t-call="flex_landing_orders.landing_order_view"&ndash;&gt;-->
+        <!--                    &lt;!&ndash;                       t-lang="lang"/>&ndash;&gt;-->
+        <!--                </t>-->
+        <!--            </t>-->
+        <!--        </template>-->
+
+        <!--        <template id="report_invoice_with_payments_dfdf">-->
+        <!--            <t t-call="flex_landing_orders.report_invoice_34">-->
+        <!--                <t t-set="landing_order_view" t-value="True"/>-->
+        <!--            </t>-->
+        <!--        </template>-->
+
+    </data>
+</odoo>

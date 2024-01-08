@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_hr_payslip_tree_inh" model="ir.ui.view">
+        <field name="name">hr.payslip.tree</field>
+        <field name="model">hr.payslip</field>
+        <field name="inherit_id" ref="om_hr_payroll.view_hr_payslip_tree"/>
+        <field name="arch" type="xml">
+            <field name="state" position="before">
+                <field name="total_salary"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_hr_payslip_line_pivot" model="ir.ui.view">
+        <field name="name">hr.payslip.line.pivot</field>
+        <field name="model">hr.payslip.line</field>
+        <field name="arch" type="xml">
+            <pivot string="Payslip Line Pivot">
+                <field name="category_id" type="col"/>
+                <field name="name" type="col"/>
+                <field name="amount" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_hr_payslip_line_filter_inh" model="ir.ui.view">
+        <field name="name">hr.payslip.line.select</field>
+        <field name="model">hr.payslip.line</field>
+        <field name="inherit_id" ref="om_hr_payroll.view_hr_payslip_line_filter"/>
+        <field name="arch" type="xml">
+            <field name="slip_id" position="after">
+                <filter string="Without Net/Gross" name="without_net" domain="[('code','not in', ('NET', 'GROSS'))]"/>
+            </field>
+            <filter name="employee_id" position="before">
+                <filter string="Batches" name="payslip_run_id" context="{'group_by':'payslip_run_id'}"/>
+                <filter string="Analytic Account" name="analytic_account_id"
+                        context="{'group_by':'analytic_account_id'}"/>
+                <filter string="Department" name="department_id" context="{'group_by':'department_id'}"/>
+            </filter>
+        </field>
+    </record>
+
+    <record id="hr_payslip_line_action" model="ir.actions.act_window">
+        <field name="name">Payslip Line</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hr.payslip.line</field>
+        <field name="view_mode">pivot</field>
+        <field name="context">{'search_default_payslip_run_id': True,
+            'search_default_analytic_account_id': True,
+            'search_default_employee_id': True,}
+        </field>
+    </record>
+
+    <menuitem name="Report"
+              parent="om_hr_payroll.menu_hr_payroll_root"
+              sequence="70"
+              id="menu_hr_payroll_reports"/>
+
+    <menuitem name="Payslip Details"
+              parent="menu_hr_payroll_reports"
+              sequence="1"
+              id="menu_hr_payslip_line_action"
+              action="hr_payslip_line_action"
+              groups="om_hr_payroll.group_hr_payroll_user"/>
+
+    <record id="hr_contract_account" model="ir.ui.view">
+        <field name="name">hr.contract.account</field>
+        <field name="model">hr.contract</field>
+        <field name="inherit_id" ref="om_hr_payroll_account.hr_contract_form_inherit"/>
+        <field name="arch" type="xml">
+            <field name="journal_id" position="after">
+                <field name="account_id"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="action_payroll_adjust" model="ir.actions.act_window">
+        <field name="name">Payroll Adjust</field>
+        <field name="res_model">payroll.adjust.request</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="payroll_adjust_request_form"/>
+        <field name="target">new</field>
+    </record>
+
+    <record id="action_pivot_slip" model="ir.actions.act_window">
+        <field name="name">By Departments</field>
+        <field name="res_model">hr.payslip.line</field>
+        <field name="view_mode">pivot</field>
+        <field name="view_id" ref="view_hr_payslip_line_pivot"/>
+        <field name="domain">[('payslip_run_id', '=', active_id)]</field>
+        <field name="context">{'search_default_payslip_run_id': True,
+            'search_default_analytic_account_id': True,
+            'search_default_employee_id': True,}
+        </field>
+        <field name="target">current</field>
+    </record>
+
+    <record id="hr_payslip_run_form_inherit" model="ir.ui.view">
+        <field name="name">hr.payslip.run.form.inherit</field>
+        <field name="model">hr.payslip.run</field>
+        <field name="inherit_id" ref="om_hr_payroll.hr_payslip_run_form"/>
+        <field name="arch" type="xml">
+            <button name="close_payslip_run" position="replace"/>
+            <button name="draft_payslip_run" position="replace">
+                <button string="Send To Accounting" name="action_sent_to_accounting" type="object" states="hr"
+                        class="oe_highlight" groups="hr.group_hr_user"/>
+                <button string="Send To CEO" name="action_sent_to_ceo" type="object" states="accounting"
+                        class="oe_highlight" groups="account.group_account_manager"/>
+                <button string="Adjust Request" type="action" states="ceo_approve" name="%(action_payroll_adjust)d"
+                        class="oe_highlight" groups="hr_employee_updation.group_ceo_approval"/>
+                <button string="Send To HR" name="action_sent_to_hr" type="object" states="draft"
+                        class="oe_highlight" groups="hr_employee_updation.group_ceo_approval"/>
+                <button string="Done" name="action_done" type="object" states="ceo_approve" class="oe_highlight"
+                        groups="hr.group_hr_manager"/>
+            </button>
+            <xpath expr="//label[@for='name']" position="before">
+                <div class="oe_button_box" name="button_box">
+                    <button type="action"
+                            name="%(action_pivot_slip)d"
+                            class="oe_stat_button"
+                            icon="fa-th-list"
+                            string="By Departments">
+                    </button>
+                </div>
+            </xpath>
+            <field name="slip_ids" position="replace">
+                <field name="slip_ids" context="{'search_default_department_id': True}">
+                    <tree>
+                        <field name="employee_id"/>
+                        <field name="joining_date"/>
+                        <field name="basic_salary" sum="Total Basic Salary"/>
+                        <field name="housing_allowance" sum="Total Housing"/>
+                        <field name="transportation_allowance" sum="Total Transportation"/>
+                        <field name="other_allowance" sum="Total Other"/>
+                        <field name="gosi_deduction" sum="Total GOSI"/>
+                        <field name="other_deduction" sum="Total Other Deduction"/>
+                        <field name="loan_deduction" sum="Total Loan"/>
+                        <field name="total_salary" sum="Total Net Salary"/>
+                        <field name="state"/>
+                    </tree>
+                </field>
+            </field>
+            <xpath expr="//field[@name='credit_note']" position="before">
+                <field name="last_day_month"/>
+
+            </xpath>
+            <xpath expr="//field[@name='journal_id']" position="before">
+                <field name="number_of_days"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_hr_payslip_form_inherit" model="ir.ui.view">
+        <field name="name">hr.payslip.form.inherit</field>
+        <field name="model">hr.payslip</field>
+        <field name="inherit_id" ref="om_hr_payroll.view_hr_payslip_form"/>
+        <field name="arch" type="xml">
+            <button name="action_payslip_done" position="replace"/>
+            <button name="refund_sheet" position="attributes">
+                <attribute name="groups">om_hr_payroll.group_hr_payroll_user</attribute>
+            </button>
+            <button name="action_payslip_draft" position="attributes">
+                <attribute name="groups">om_hr_payroll.group_hr_payroll_user</attribute>
+            </button>
+            <button name="compute_sheet" position="attributes">
+                <attribute name="groups">om_hr_payroll.group_hr_payroll_user</attribute>
+            </button>
+            <button name="action_payslip_cancel" position="attributes">
+                <attribute name="groups">om_hr_payroll.group_hr_payroll_user</attribute>
+            </button>
+            <field name="credit_note" position="replace"/>
+            <xpath expr="//field[@name='number']" position="before">
+                <field name="number_of_days"/>
+            </xpath>
+            <xpath expr="//field[@name='struct_id']" position="before">
+                <field name="last_day_month"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

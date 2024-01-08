@@ -1,0 +1,10 @@
+.o_form_view .o_form_statusbar > .o_statusbar_status > .o_arrow_button.btn-primary.disabled {
+    color: #ffffff;
+    font-size: 11px;
+    background-color: #7c7bad;
+    cursor: default;
+}
+
+.o_form_view .o_form_statusbar > .o_statusbar_status > .o_arrow_button.btn-primary.disabled:after {
+    border-left-color: #7c7bad;
+}

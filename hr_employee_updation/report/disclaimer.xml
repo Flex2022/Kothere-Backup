@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <report id="disclaimer_report"
+                string="Disclaimer"
+                model="hr.employee"
+                report_type="qweb-pdf"
+                file="hr_employee_updation.disclaimer_template_id"
+                name="hr_employee_updation.disclaimer_template_id"/>
+
+        <template id="disclaimer_report_view">
+            <t t-call="hr_employee_updation.internal_layout_without_header">
+                <t t-set="o" t-value="o.with_context({'lang':'en_US'})"/>
+                <div class="page" style="font-family: Cairo_arabic;">
+                    <h6 style="text-align: right; direction: rtl;"></h6>
+                    <br/>
+                    <h5 style="text-align: center;text-decoration: underline;"><b>إقرار إخلاء مسؤولية</b></h5>
+                    <h5 style="text-align: center;text-decoration: underline; direction: rtl;"><b>Quittance Acknowledgement</b></h5>
+                        <div class="row" style="border: 1px solid gray;">
+								<div class="col-sm-6" style="padding-left: 20px;text-align: left;width:50%;border: 1px solid gray;">
+									<p> I, the undersigned hereby acknowledge that I have been acquitted by T2 – Business Research and Development Company, on this day <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d')"/>, as well as I have no contractual obligations in the name of the aforementioned company and I did not disclose such obligations, whether financial or others by virtue of Statement of Facts of Contractual Relation. I have contracted with the aforementioned company before any entity, whether public, semipublic, private, charity or individual entity in any country, as well as I certify that it is valid to date in the name of  T2 – Business Research and Development Company, or its trademarks. In case proven otherwise, I shall be solely liable for any subsequent responsibility. The company hereby relinquish its responsibility against any disputes or claims I am a part thereof that may occur later by side of any party and in any country. In addition, the company shall have the right to prosecute me anywhere in the world.   </p>
+								</div>
+								<div class="col-sm-6" style="padding-right: 20px;text-align: right;width:50%;border: 1px solid gray;">
+									<p>أُقر أنا الموقع أدناه بأنه في تاريخ <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d')"/> تم إخلاء طرفي من شركة أبحاث وتطوير الأعمال ، حيث أنه لا يوجد من طرفي أي التزامات تعاقدية باسم الشركة ولم أُفصح عنها بموجب محضر إثبات علاقات تعاقديه، سواءً كانت مالية وغير مالية وقمت في التعاقد معها من طرفي أمام أي جهة كانت، سواءً حكومية أو شبه حكومية أو خاصة أو خيريه أو أفراد في أي دولة، وساريه باسم شركة أبحاث وتطوير الأعمال أو إحدى علاماتها التجارية حتى تاريخه، وفي حال ثبوت غير ذلك أتحمل منفردًا كامل المسؤولية الناتجة عنها، وبموجب هذا الإقرار تُخلي الشركة مسؤوليتها أمام أي نزاع أو مطالبة تحدث لها مستقبلاً وأنا طرفٌ به من أي جهة كانت وفي أي دولة، ويحق للشركة ملاحقتي قضائياً في أي مكان بالعالم.</p>
+								</div>
+							</div>
+                    <br/>
+                    <h5 style="text-align: center;text-decoration: underline;"><b>وبموجب هذا الإقرار على ذلك جرى التوقيع،،،</b></h5>
+                    <h5 style="text-align: center;text-decoration: underline; direction: ltr;"><b>In witness whereof, this acknowledgment has been signed:</b></h5>                    <br/>
+                    <h5 style="text-align: right;"><b>:المقر بما فيه/ Acknowledger</b></h5>
+                    <table  cellpadding="7"  cellspacing="0" dir="rtl" style="text-align: center;border: 1px solid;" width="100%">
+                        <tbody>
+                            <tr style="border: 1px solid;">
+                                <td width="17.580645161290324%" style="border: 1px solid;"><p style="text-align: right; direction: rtl;padding-right: 3px;"><strong>الاسم</strong><strong>:</strong></p></td>
+                                <td width="64.51612903225806%" style="border: 1px solid;"><p style="text-align: center; direction: ltr;" ><span t-field="o.name"/></p></td>
+                                <td width="17.903225806451612%" style="border: 1px solid;"><p style="text-align: left; direction: ltr;padding-left: 3px;"><strong>Name:</strong></p></td>
+                            </tr>
+                            <tr style="border: 1px solid;">
+                                <td width="17.580645161290324%" style="border: 1px solid;"><p style="text-align: right; direction: rtl;padding-right: 3px;"><strong>الجنسية</strong><strong>:</strong></p></td>
+                                <td width="64.51612903225806%" style="border: 1px solid;"><p style="text-align: center; direction: ltr;"><span t-field="o.country_id.name"/></p></td>
+                                <td width="17.903225806451612%" style="border: 1px solid;"><p style="text-align: left; direction: ltr;padding-left: 3px;"><strong>Nationality</strong></p>
+                                </td>
+                            </tr>
+                            <tr style="border: 1px solid;">
+                                <td style="border: 1px solid;" width="17.580645161290324%">
+                                    <p style="text-align: right; direction: rtl;padding-right: 3px;"><strong>جواز رقم</strong><strong>:</strong></p>
+                                </td>
+                                <td style="border: 1px solid;" width="64.51612903225806%">
+                                    <p style="text-align: center; direction: ltr;"><span t-field="o.passport_id"/></p>
+                                </td>
+                                <td style="border: 1px solid;" width="17.903225806451612%">
+                                    <p style="text-align: left; direction: ltr;padding-left: 3px;"><strong>Passport No.:</strong></p>
+                                </td>
+                            </tr>
+                            <tr style="border: 1px solid;">
+                                <td style="border: 1px solid;" width="17.580645161290324%">
+                                    <p style="text-align: right; direction: rtl;padding-right: 3px;"><strong>مقيم في</strong><strong>:</strong></p>
+                                </td>
+                                <td style="border: 1px solid;" width="64.51612903225806%">
+                                    <p style="text-align: center; direction: ltr;"><span t-field="o.residence_place_id.name"/></p>
+                                </td>
+                                <td  style="border: 1px solid;" width="17.903225806451612%">
+                                    <p style="text-align: left; direction: ltr;padding-left: 3px;"><strong>Residence Address:</strong></p>
+                                </td>
+                            </tr>
+                            <tr style="border: 1px solid;">
+                                <td style="border: 1px solid;" width="17.580645161290324%">
+                                    <p style="text-align: right; direction: rtl;padding-right: 3px;"><strong>جوال رقم</strong><strong>:</strong></p>
+                                </td>
+                                <td style="border: 1px solid;" width="64.51612903225806%">
+                                    <p style="text-align: center; direction: ltr;"><span t-field="o.employee_private_phone"/></p>
+                                </td>
+                                <td style="border: 1px solid;" width="17.903225806451612%">
+                                    <p style="text-align: left; direction: ltr;padding-left: 3px;"><strong>Mobile No.:</strong></p>
+                                </td>
+                            </tr>
+                            <tr style="border: 1px solid;">
+                                <td style="border: 1px solid;" width="17.580645161290324%">
+                                    <p style="text-align: right; direction: rtl;padding-right: 3px;"><strong>المسمى الوظيفي:</strong></p>
+                                </td>
+                                <td style="border: 1px solid;" width="64.51612903225806%">
+                                    <p style="text-align: center; direction: ltr;"><span t-field="o.job_id.name"/></p>
+                                </td>
+                                <td style="border: 1px solid;" width="17.903225806451612%">
+                                    <p style="text-align: left; direction: ltr;padding-left: 3px;"><strong>Job Title:</strong></p>
+                                </td>
+                            </tr>
+                            <tr style="border: 1px solid;">
+                                <td style="border: 1px solid;" width="17.580645161290324%">
+                                    <p style="text-align: right; direction: rtl;padding-right: 3px;"><strong>تاريخ اخر يوم عمل</strong><strong>:</strong></p>
+                                </td>
+                                <td style="border: 1px solid;" width="64.51612903225806%">
+                                    <p style="text-align: center; direction: ltr;"><strong><span t-if="o.resign_date is not False"><span t-field="o.resign_date"/></span></strong></p>
+                                </td>
+                                <td style="border: 1px solid;" width="17.903225806451612%">
+                                    <p style="text-align: left; direction: ltr;padding-left: 3px;"><strong>Last working day:</strong></p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br/>
+                    <table cellpadding="7"  cellspacing="0" dir="rtl" style="text-align: center" width="100%">
+                        <tbody>
+                            <tr>
+                                <td width="50%" >
+                                    <p style="text-align: right; direction: rtl;padding-right: 3px;">توقيع الموظف:</p>
+                                    <p style="text-align: right; direction: rtl;padding-right: 3px;"></p>
+                                </td>
+                                <td width="50%">
+                                    <p style="text-align: left; direction: ltr;padding-left: 3px;">Employee Signature:</p>
+                                    <p style="text-align: left; direction: ltr;padding-left: 3px;"></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="50%" >
+                                    <p style="text-align: right; direction: rtl;padding-right: 3px;">ختم الشركة:</p>
+                                    <p style="text-align: right; direction: rtl;padding-right: 3px;"></p>
+                                </td>
+                                <td width="50%" >
+                                    <p style="text-align: left; direction: ltr;padding-left: 3px;">Company Stamp:</p>
+                                    <p style="text-align: left; direction: ltr;padding-left: 3px;"></p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br/><br/><br/>
+                    <table cellpadding="7"  cellspacing="0" dir="rtl" style="text-align: center;border: 1px solid gray;" width="100%">
+                        <tbody>
+                            <tr>
+                                <td width="50%" style="border: 1px solid gray;">
+                                    <p style="text-align: right; direction: rtl;padding-right: 3px;"><sup>*</sup>ملاحظة:</p>
+                                    <p style="text-align: right; direction: rtl;padding-right: 3px;">يتم إيداع أصل هذه الورقة في ملف الموظف لدى قسم الموارد البشرية.</p>
+                                </td>
+                                <td width="50%" style="border: 1px solid gray;">
+                                    <p style="text-align: left; direction: ltr;padding-left: 3px;">*Note:</p>
+                                    <p style="text-align: left; direction: ltr;padding-left: 3px;">The original of this paper will be placed on the employee's file at the Human Resources Department.</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </template>
+        <template id="disclaimer_template_id">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="hr_employee_updation.disclaimer_report_view"  t-lang="en_US"/>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</odoo>

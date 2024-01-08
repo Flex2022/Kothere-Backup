@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_hr_request_status_tree" model="ir.ui.view">
+            <field name="name">hr.request.status.tree</field>
+            <field name="model">hr.request.status</field>
+            <field name="arch" type="xml">
+                <tree string="Request Status Tree">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_hr_request_status_form" model="ir.ui.view">
+            <field name="name">hr.request.status.from</field>
+            <field name="model">hr.request.status</field>
+            <field name="arch" type="xml">
+                <form string="Request Status Form">
+                    <sheet>
+                        <group>
+                            <field name="name" required="1"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="hr_request_status_action" model="ir.actions.act_window">
+            <field name="name">Request Status</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hr.request.status</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new Request Status
+                </p>
+            </field>
+        </record>
+
+        <menuitem name="Request Status"
+                  parent="hr.menu_human_resources_configuration_employee"
+                  id="menu_hr_request_status_action"
+                  action="hr_request_status_action"/>
+    </data>
+</odoo>

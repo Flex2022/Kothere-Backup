@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_contract_inherit_form_inherit_flex" model="ir.ui.view">
+        <field name="name">view_contract_inherit_form_inherit_flex</field>
+        <field name="model">hr.contract</field>
+        <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='information']" position="after">
+                <page string="Clearance" name="clearance" invisible="state not in ['close', 'cancel']">
+                    <group>
+                        <group>
+                            <group>
+                                <!--                                <label for="vacation" string="Clearance Reason" class="oe_title"/>-->
+                                <field name="vacation"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="exit"/>
+
+                            </group>
+
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <group>
+                                <!--                                <label for="clear" string="Management Clearance" class="oe_title"/>-->
+                                <field name="clear"/>
+                                <field name="replacement"/>
+                            </group>
+
+                        </group>
+                        <group>
+                            <group>
+                                <field name="not_clear"/>
+                                <field name="reason"/>
+
+
+                            </group>
+
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <group>
+                                <!--                                <label for="clear" string="IT Clearance" class="oe_title"/>-->
+                                <field name="email"/>
+                                <field name="Device"/>
+                                <field name="Name_of_it_person"/>
+                                <field name="clear_it"/>
+                            </group>
+
+                        </group>
+                        <group>
+
+                            <group>
+                                <field name="other"/>
+                                <field name="other_reason"/>
+                                <field name="not_clear_it"/>
+                                <field name="reason_it"/>
+
+
+                            </group>
+
+                        </group>
+                    </group>
+
+                    <group>
+                        <group>
+                            <!--                            <label for="housing" string="HR Clearance" class="oe_title"/>-->
+                            <field name="Name_of_hr_person"/>
+                            <field name="housing"/>
+                            <field name="medical_card"/>
+                            <field name="business_card"/>
+                        </group>
+                        <group>
+                            <field name="transportation"/>
+                            <field name="emp_card"/>
+                            <field name="gosi"/>
+                            <field name="clear_hr"/>
+
+
+                        </group>
+                        <group>
+                            <field name="telecom"/>
+                            <field name="loans"/>
+                            <field name="custody"/>
+                            <field name="not_clear_hr"/>
+                            <field name="reason_hr"/>
+
+
+                        </group>
+
+                    </group>
+                    <group>
+                        <group>
+                            <group>
+                                <!--                                <label for="Name_of_acc_person" string="Financial" class="oe_title"/>-->
+                                <field name="Name_of_acc_person"/>
+                                <field name="clear_acc"/>
+                                <field name="reason_acc"/>
+                            </group>
+
+                        </group>
+                        <group>
+                            <group>
+                                <field name="not_clear_acc"/>
+
+                            </group>
+
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <group>
+                                <!--                                <label for="clear_s" string="Personnel" class="oe_title"/>-->
+                                <field name="clear_s"/>
+                                <field name="reason_s"/>
+                            </group>
+
+                        </group>
+                        <group>
+                            <group>
+                                <field name="not_clear_s"/>
+
+                            </group>
+
+                        </group>
+                    </group>
+                    <button name="print_clearance_letter" string="Print Clearance Letter" type="object"
+                            class="oe_highlight" invisible="state not in ['close', 'cancel']"/>
+                </page>
+            </xpath>
+
+            <!--            <page name="clearance" position="attributes">-->
+            <!--                <attribute name="attrs">{'invisible': [('state', 'not in', ['close','cancel'])]}</attribute>-->
+            <!--            </page>-->
+
+            <!--            <button name="print_clearance_letter" position="attributes">-->
+            <!--                <attribute name="attrs">{'invisible': [('state', 'not in', ['close','cancel'])]}</attribute>-->
+            <!--            </button>-->
+
+
+        </field>
+    </record>
+</odoo>

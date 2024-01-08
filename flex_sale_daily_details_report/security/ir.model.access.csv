@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_sale_book_day_wizard,access.sale.book.day.wizard,model_sale_book_day_wizard,base.group_user,1,1,1,1
+access_sale_book_day_line_wizard,access.sale.book.day.wizard.line,model_sale_book_day_wizard_line,base.group_user,1,1,1,1
+access_sale_book_day_payment_wizard,access.sale.book.day.wizard.payment,model_sale_book_day_wizard_payment,base.group_user,1,1,1,1
+access_sale_book_day_tax_wizard,access.sale.book.day.wizard.tax,model_sale_book_day_wizard_tax,base.group_user,1,1,1,1

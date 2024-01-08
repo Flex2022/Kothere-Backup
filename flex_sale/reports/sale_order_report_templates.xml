@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_saleorder_document_inherited" inherit_id="sale.report_saleorder_document">
+
+        <xpath expr="//t[@t-set='doc']" position="after">
+            <t t-set="ar_doc" t-value="doc.with_context(lang='en_US')"/>
+            <t t-set="en_doc" t-value="doc.with_context(lang='ar_001')"/>
+        </xpath>
+
+        <xpath expr="//th[@name='th_description']" position="replace">
+            <th name="th_product_english" class="text-start">English Name</th>
+            <th name="th_product_arabic" class="text-start">Arabic Name</th>
+            <th name="th_description" class="text-start d-none" >Description</th>
+        </xpath>
+
+        <xpath expr="//td[@name='td_name']" position="replace">
+            <td name="td_name_english">
+                <span t-field="line.product_id"></span>
+            </td>
+            <td name="td_name_arabic">
+                <span t-field="line.product_id_arabic"></span>
+            </td>
+            <td name="td_name" class="d-none" >
+                <span t-field="line.name"></span>
+            </td>
+        </xpath>
+
+    </template>
+</odoo>

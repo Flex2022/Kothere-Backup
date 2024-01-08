@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hr_variable_increase,hr.variable.increase,model_hr_variable_increase,base.group_user,1,1,1,1
+access_hr_variable_increase_line,hr.variable.increase.line,model_hr_variable_increase_line,base.group_user,1,1,1,0
+access_hr_variable_increase_line,hr.variable.increase.line,model_hr_variable_increase_line,base.group_user,1,1,1,0
+access_adjust_variable_increase,adjust.variable.increase,model_adjust_variable_increase,base.group_user,1,1,1,0
+
+

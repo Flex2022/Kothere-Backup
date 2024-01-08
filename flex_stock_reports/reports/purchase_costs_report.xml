@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <template t-name="stock_slack_report">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="web.external_layout">
+                        <div class="page">
+                            <div class="row">
+                                <div class="col-12 text-center">
+                                    <h2 class="fw-bold">Stock Slack Report</h2>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-12">
+                                    <span class="fw-bold">Using this filter :</span>
+                                    <br/>
+                                    <table class="table table-sm table-bordered border border-dark mt-3">
+                                        <tr>
+                                            <th>Products</th>
+                                            <th>Locations</th>
+                                            <th>Date From</th>
+                                            <th>Date To</th>
+                                            <th>Min QTY</th>
+                                            <th>Max QTY</th>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                <t t-if="o.product_ids">
+                                                    <ul class="text-start">
+                                                        <t t-foreach="o.product_ids" t-as="product">
+                                                            <li>
+                                                                <span t-esc="product.name"/>
+                                                            </li>
+                                                        </t>
+                                                    </ul>
+                                                </t>
+                                                <t t-else="">
+                                                    /
+                                                </t>
+                                            </th>
+                                            <th>
+                                                <t t-if="o.location_ids">
+                                                    <ul class="text-start">
+                                                        <t t-foreach="o.location_ids" t-as="vendor">
+                                                            <li>
+                                                                <span t-esc="vendor.name"/>
+                                                            </li>
+                                                        </t>
+                                                    </ul>
+                                                </t>
+                                                <t t-else="">
+                                                    /
+                                                </t>
+                                            </th>
+                                            <th>
+                                                <t t-if="o.date_from">
+                                                    <span t-field="o.date_from"/>
+                                                </t>
+                                                <t t-else="">
+                                                    /
+                                                </t>
+                                            </th>
+                                            <th>
+                                                <t t-if="o.date_to">
+                                                    <span t-field="o.date_to"/>
+                                                </t>
+                                                <t t-else="">
+                                                    /
+                                                </t>
+                                            </th>
+                                            <th>
+                                                <t t-if="o.qty_min">
+                                                    <span t-field="o.qty_min"/>
+                                                </t>
+                                                <t t-else="">
+                                                    /
+                                                </t>
+                                            </th>
+                                            <th>
+                                                <t t-if="o.qty_max">
+                                                    <span t-field="o.qty_max"/>
+                                                </t>
+                                                <t t-else="">
+                                                    /
+                                                </t>
+                                            </th>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-12">
+                                    <span class="fw-bold">Result :</span>
+                                    <br/>
+                                    <table class="table table-sm table-bordered border border-dark mt-3">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center">
+                                                    Location
+                                                </th>
+                                                <th class="text-center">
+                                                    Product
+                                                </th>
+                                                <th class="text-center">
+                                                    On hand Quantity
+                                                </th>
+                                                <th class="text-center">
+                                                    Reserved Quantity
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <t t-foreach="o.stock_line_ids" t-as="line">
+                                                <tr>
+                                                    <td class="text-start">
+                                                        <span t-field="line.location_id"/>
+                                                    </td>
+                                                    <td class="text-start">
+                                                        <span t-field="line.product_id"/>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <span t-field="line.inventory_quantity_auto_apply"/>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <span t-field="line.reserved_quantity"/>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+
+        <!-- QWeb Reports -->
+        <record id="report_stock_slack" model="ir.actions.report">
+            <field name="name">stock Slack Report</field>
+            <field name="model">flex.stock.slack.report.wizard</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">flex_stock_reports.stock_slack_report</field>
+            <field name="report_file">flex_stock_reports.stock_slack_report</field>
+            <field name="binding_model_id" ref="model_flex_stock_slack_report_wizard"/>
+            <field name="binding_type">report</field>
+            <field name="paperformat_id" ref="base.paperformat_euro"/>
+        </record>
+    </data>
+</odoo>

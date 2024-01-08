@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="sale_order_dates_report_template">
+        <t t-call="web.external_layout">
+            <t t-set="doc" t-value="doc.with_context(lang=doc.partner_id.lang)"/>
+            <div class="page">
+                <div class="oe_structure"/>
+
+                <h2 class="mt-4">
+                    <span>
+                        Sale Order Dates Report
+                    </span>
+                    <br/>
+                    <span>Order #</span>
+                    <span t-field="doc.name"></span>
+                </h2>
+
+                <div class="oe_structure"></div>
+                <table class="table table-sm o_main_table table-borderless mt-4">
+                    <!-- In case we want to repeat the header, remove "display: table-row-group" -->
+                    <thead style="display: table-row-group">
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody class="sale_tbody">
+                        <t t-foreach="lines_to_report" t-as="line">
+
+                        </t>
+                    </tbody>
+                </table>
+                <div class="oe_structure"></div>
+            </div>
+        </t>
+    </template>
+
+
+    <template id="sale_order_dates_report">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="sale.sale_order_dates_report_template" t-lang="doc.partner_id.lang"/>
+            </t>
+        </t>
+    </template>
+
+
+    <record id="action_sale_order_dates_report" model="ir.actions.report">
+        <field name="name">Sale Order Dates Report</field>
+        <field name="model">sale.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">flex_sale.sale_order_dates_report</field>
+        <field name="report_file">flex_sale.sale_order_dates_report</field>
+        <field name="print_report_name">'Sale Order Dates - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="sale.model_sale_order"/>
+        <field name="binding_type">report</field>
+        <field name="groups_id" eval="[(4, ref('sale.group_proforma_sales'))]"/>
+    </record>
+
+</odoo>
+
+
+

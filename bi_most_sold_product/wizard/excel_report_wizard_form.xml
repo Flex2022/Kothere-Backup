@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="excel_report_wizard_form" model="ir.ui.view">
+        <field name="name">excel.report.form</field>
+        <field name="model">excel.report</field>
+        <field name="arch" type="xml">
+            <form string="Excel Report">
+                <sheet>
+                    <group>
+                        <field name="file_name" readonly="1" filename="rep_fname"/>
+                        <field name="rep_fname" invisible="1"/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button string="Cancel" class="btn btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

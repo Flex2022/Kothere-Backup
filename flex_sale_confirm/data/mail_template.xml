@@ -1,0 +1,32 @@
+<?xml version="1.0" ?>
+<odoo>
+    <data noupdate="1">
+        <record id="mail_template_sale_order_submit" model="mail.template">
+            <field name="name">Sale Order Submit</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="subject">Sale Order Submitted for Finance Approval</field>
+            <field name="email_to">{'group':'flex_sale.group_sale_finance'}</field>
+            <field name="body_html"><![CDATA[
+            <p>Sale Order Submitted for Finance Approval</p>
+
+
+
+            ]]></field>
+        </record>
+        <record id="mail_template_sale_order_finance" model="mail.template">
+            <field name="name">Sale Order Finance Approval</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="email_from">${object.user_id.email}</field>
+            <field name="subject">Sale Order Finance Approval</field>
+            <field name="email_to">${object.user_id.email}</field>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html"><![CDATA[
+                <p>Dear ${object.user_id.name},</p>
+                <p>There is a sale order ${object.name} waiting for your approval.</p>
+                <p>Click <a href="/web#id=${object.id}&amp;view_type=form&amp;model=sale.order&amp;action=flex_sale.action_sale_order_finance&amp;menu_id=115">here</a> to view the sale order.</p>
+                <p>Thank you.</p>
+            ]]></field>
+        </record>
+    </data>
+
+</odoo>

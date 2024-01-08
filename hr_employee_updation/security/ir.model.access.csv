@@ -1,0 +1,5 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+access_hr_salary_increase_user,salary.increase.user,model_salary_increase,hr.group_hr_user,1,1,1,1
+access_hr_salary_increase_line_user,salary.increase.line.user,model_salary_increase_line,hr.group_hr_user,1,1,1,1
+access_reason_for_end_of_service,reason.for.end.of.service,model_reason_for_end_of_service,base.group_user,1,1,1,1
+access_hr_employee_office_location,hr.employee.office.location,model_hr_employee_office_location,base.group_user,1,1,1,1

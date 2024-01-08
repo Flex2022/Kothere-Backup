@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <template t-name="purchase_costs_report">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="web.external_layout">
+                        <div class="page">
+                            <div class="row">
+                                <div class="col-12 text-center">
+                                    <h2 class="fw-bold">Purchase Costs Report</h2>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-12">
+                                    <span class="fw-bold">Using this filter :</span>
+                                    <br/>
+                                    <table class="table table-sm table-bordered border border-dark mt-3">
+                                        <tr>
+                                            <th>Products</th>
+                                            <th>Partners</th>
+                                            <th>Date From</th>
+                                            <th>Date To</th>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                <t t-if="o.product_ids">
+                                                    <ul class="text-start">
+                                                        <t t-foreach="o.product_ids" t-as="product">
+                                                            <li>
+                                                                <span t-esc="product.name"/>
+                                                            </li>
+                                                        </t>
+                                                    </ul>
+                                                </t>
+                                                <t t-else="">
+                                                    /
+                                                </t>
+                                            </th>
+                                            <th>
+                                                <t t-if="o.vendor_ids">
+                                                    <ul class="text-start">
+                                                        <t t-foreach="o.vendor_ids" t-as="vendor">
+                                                            <li>
+                                                                <span t-esc="vendor.name"/>
+                                                            </li>
+                                                        </t>
+                                                    </ul>
+                                                </t>
+                                                <t t-else="">
+                                                    /
+                                                </t>
+                                            </th>
+                                            <th>
+                                                <t t-if="o.date_from">
+                                                    <span t-field="o.date_from"/>
+                                                </t>
+                                                <t t-else="">
+                                                    /
+                                                </t>
+                                            </th>
+                                            <th>
+                                                <t t-if="o.date_to">
+                                                    <span t-field="o.date_to"/>
+                                                </t>
+                                                <t t-else="">
+                                                    /
+                                                </t>
+                                            </th>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-12">
+                                    <span class="fw-bold">Result :</span>
+                                    <br/>
+                                    <table class="table table-sm table-bordered border border-dark mt-3">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-start">
+                                                    Order Reference
+                                                </th>
+                                                <th class="text-center">
+                                                    Product
+                                                </th>
+                                                <th class="text-center">
+                                                    Vendor
+                                                </th>
+                                                <th class="text-center">
+                                                    Confirmation Date
+                                                </th>
+                                                <th class="text-center">
+                                                    Quantity
+                                                </th>
+                                                <th class="text-center">
+                                                    Unit
+                                                </th>
+                                                <th class="text-center">
+                                                    Price Unit
+                                                </th>
+                                                <th class="text-center">
+                                                    Subtotal
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <t t-foreach="o.purchase_line_ids" t-as="line">
+                                                <tr>
+                                                    <td class="text-start">
+                                                        <span t-field="line.order_id"/>
+                                                    </td>
+                                                    <td class="text-start">
+                                                        <span t-field="line.product_id"/>
+                                                    </td>
+                                                    <td class="text-start">
+                                                        <span t-field="line.partner_id"/>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <span t-field="line.date_approve"/>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <span t-field="line.product_qty"/>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <span t-field="line.product_uom"/>
+                                                    </td>
+                                                    <td class="text-end">
+                                                        <span t-field="line.price_unit"/>
+                                                    </td>
+                                                    <td class="text-end">
+                                                        <span t-field="line.price_subtotal"/>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+
+        <!-- QWeb Reports -->
+        <record id="report_purchase_costs" model="ir.actions.report">
+            <field name="name">Purchase Costs</field>
+            <field name="model">purchase.cost.report.wizard</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">flex_purchase_reports.purchase_costs_report</field>
+            <field name="report_file">flex_purchase_reports.purchase_costs_report</field>
+            <field name="binding_model_id" ref="model_purchase_cost_report_wizard"/>
+            <field name="binding_type">report</field>
+            <field name="paperformat_id" ref="base.paperformat_euro"/>
+        </record>
+    </data>
+</odoo>

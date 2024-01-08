@@ -1,0 +1,748 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+<!--    <report-->
+<!--            id="action_clearance_letter"-->
+<!--            model="hr.contract"-->
+<!--            string="Clearance Letter"-->
+<!--            report_type="qweb-pdf"-->
+<!--            menu="False"-->
+<!--            name="flex_report_clearance_letter.clearance_letter"-->
+<!--            file="flex_report_clearance_letter.clearance_letter"-->
+<!--    />-->
+    <record id="action_clearance_letter" model="ir.actions.report">
+        <field name="name">Clearance Letter</field>
+        <field name="model">hr.contract</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">flex_report_clearance_letter.clearance_letter</field>
+        <field name="report_file">flex_report_clearance_letter.clearance_letter</field>
+        <field name="print_report_name">('Clearance Letter - %s' % (object.name))</field>
+<!--        <field name="binding_model_id" ref="model_hr_contract"/>-->
+<!--        <field name="binding_type">report</field>-->
+    </record>
+    <template id="clearance_letter">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <!-- Employee Data -->
+
+                    <div style="width:100%;">
+
+
+                        <div style="width:60px;height:40px;border:1px solid black;text-align:center;vertical-align:middle;float:right;">
+                            1
+                        </div>
+                        <div style="width:717px;height:200px;border:1px solid black;text-align:center;vertical-align:middle;float:right;">
+                            <div style="width:100%;margin-top:25px;margin-left:-5px;">
+                                <div style="float:right;">
+                                    <span>Name:</span>
+                                    <span t-esc="o.employee_id.name"/>
+                                    <span>:الاسم</span>
+
+                                </div>
+                                <div style="float:right;margin-right:25px">
+                                    <span>No:</span>
+                                    <span t-esc="o.employee_number"/>
+                                    <span>:رقم الموظف.</span>
+
+                                </div>
+                                <div style="float:left;margin-left:20px">
+                                    <span>National:</span>
+                                    <span t-esc="o.national_id"/>
+                                    <span>:الجنسية.</span>
+
+                                </div>
+
+
+                            </div>
+                            <div style="width:100%;margin-top:25px;margin-left:-15px;" class="row">
+                                <div style="float:left;margin-left:20px;margin-top:25px;" class="col-4">
+                                    <span>Title:</span>
+                                    <span t-esc="o.job_id.name"/>
+                                    <span>:مسمى الوظيفة.</span>
+
+                                </div>
+                                <div style="float:right;margin-top:25px;" class="col-4">
+                                    <span>Section:</span>
+                                    <span t-esc="o.department_id.name"/>
+                                    <span>:القسم.</span>
+
+                                </div>
+                                <div style="float:right;margin-top:25px;" class="col-4">
+                                    <span>Department:</span>
+                                    <span t-esc="o.manager_for_employee.name"/>
+                                    <span>:الإدارة</span>
+
+                                </div>
+
+
+                            </div>
+                            <div style="width:100%;margin-top:7.5px;margin-left:-15px;">
+
+                                <div style="float:right;margin-top:10px;margin-right:70px;">
+
+                                    <span>:سبب إخلاء الطرف.</span>
+
+                                </div>
+                                <div style="float:right;margin-top:8px;margin-right:15px;">
+                                    <span>Vacation:</span>
+                                    <t t-if="o.vacation">
+                                        <input type="checkbox" id="checkbox104_anything_you_give" checked="checked"/>
+                                    </t>
+                                    <t t-if="not o.vacation">
+                                        <input type="checkbox" id="checkbox104_anything_you_give"/>
+                                    </t>
+                                    <span>إجازة</span>
+
+                                </div>
+                                <div style="float:right;margin-top:8px;margin-right:20px;">
+                                    <span>Exit:</span>
+                                    <t t-if="o.exit">
+                                        <input type="checkbox" id="checkbox105_anything_you_give" checked="checked"/>
+                                    </t>
+                                    <t t-if="not o.exit">
+                                        <input type="checkbox" id="checkbox105_anything_you_give"/>
+                                    </t>
+                                    <span>نهاية خدمة</span>
+
+                                </div>
+                                <div style="float:left;margin-top:8px;margin-left:75px;">
+                                    <span>Clarence Reason:</span>
+
+
+                                </div>
+
+
+                            </div>
+
+
+                        </div>
+                        <div style="width:60px;height:40px;border:1px solid black;text-align:center;vertical-align:middle;float:left;">
+                            1
+                        </div>
+                        <div style="width:60px;height:160px;border:1px solid black;text-align:center;margin:auto;float:right;background-color:gray;color:black;">
+                            <span style="text-align:center; padding: 70px 0;writing-mode: vertical-rl;-webkit-writing-mode: vertical-rl">
+
+                                Emp
+                                Data
+
+                            </span>
+
+                        </div>
+                        <div style="width:60px;height:160px;border:1px solid black;text-align:center;padding: 15px 0;float:right;margin-top:-160px;background-color:gray;color:black">
+                            <span style="text-align:center; padding: 50px 0;writing-mode: vertical-rl;-webkit-writing-mode: vertical-rl">
+                                بيانات الموظف
+                            </span>
+                        </div>
+                    </div>
+                    <!-- الجهات ذات العلاقة -->
+                    <div style="width:100%;">
+
+
+                        <div style="width:60px;height:40px;border:1px solid black;text-align:center;vertical-align:middle;float:right;">
+                            2
+                        </div>
+                        <!--Management-->
+                        <div style="width:717px;height:200px;border:1px solid black;text-align:center;vertical-align:middle;float:right;">
+                            <!--First Line-->
+                            <div style="width:100%;margin-top:2px;margin-right:5px;">
+                                <div style="float:right">
+                                    <span>إدارة الموظف*</span>
+                                </div>
+                                <div style="float:left;margin-left:60px;">
+                                    <span>Employee Department</span>
+                                </div>
+
+
+                            </div>
+                            <!--Second Line-->
+                            <div style="width:100%;margin-right:-5px;margin-top:30px;">
+                                <!--First Column-->
+                                <div style="float:right">
+                                    <span>Name:</span>
+                                    <span t-esc="o.manager_for_employee.name"/>
+                                    <span>:الاسم</span>
+                                </div>
+
+                                <!--second Column-->
+                                <div style="float:right">
+                                    <span>Signature:</span>
+                                    <span>
+                                        --------------
+                                    </span>
+                                    <span>:التوقيع.</span>
+                                </div>
+                                <!--Third Column-->
+                                <div style="float:left">
+                                    <span>Date:</span>
+                                    <span t-esc="o.Date_of_clearance" t-options='{"widget": "date"}'/>
+                                    <span>:التاريخ.</span>
+                                </div>
+
+                            </div>
+                            <!--Third Line-->
+                            <div style="width:100%;margin-right:-5px;margin-top:30px;">
+                                <!--First Column-->
+                                <div style="float:right;margin-top:15px;">
+                                    <span>Clear:</span>
+                                    <t t-if="o.clear">
+                                        <input type="checkbox" id="checkbox106_anything_you_give" checked="checked"/>
+                                    </t>
+                                    <t t-if="not o.clear">
+                                        <input type="checkbox" id="checkbox106_anything_you_give"/>
+                                    </t>
+                                    <span>:يخلى طرفه</span>
+                                </div>
+
+                                <!--second Column-->
+                                <div style="float:right;margin-top:15px;">
+                                    <span>Not Clear:</span>
+                                    <t t-if="o.not_clear">
+                                        <input type="checkbox" id="checkbox107_anything_you_give" checked="checked"/>
+                                    </t>
+                                    <t t-if="not o.not_clear">
+                                        <input type="checkbox" id="checkbox107_anything_you_give"/>
+                                    </t>
+                                    <span>:لا يخلى طرفه</span>
+                                </div>
+                                <!--Third Column-->
+                                <div style="float:right;margin-top:15px;">
+                                    <span t-esc="o.reason"/>
+                                    <span>:حدد.</span>
+                                </div>
+                                <!--Fourth Column-->
+                                <div style="float:left;margin-top:15px;margin-left:50px;">
+
+                                    <span>Reason:</span>
+                                </div>
+                            </div>
+
+                            <!--Fourth Line-->
+                            <div style="width:80%;height:50px;margin:auto;margin-top:160px">
+                                <div style="float:right;margin-right:20px">
+                                    <span>:الشخص البديل</span>
+
+                                </div>
+                                <div style="float:right;margin-right:40px">
+                                    <span t-esc="o.replacement.name"/>
+
+                                </div>
+                                <div style="float:left;margin-left:70px;">
+                                    <span>Replacement</span>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div style="width:60px;height:40px;border:1px solid black;text-align:center;vertical-align:middle;float:left;">
+                            2
+                        </div>
+                        <div style="width:60px;height:775px;border:1px solid black;text-align:center;float:right;background-color:gray;color:black;">
+                            <div style="margin:auto;writing-mode: vertical-rl;-webkit-writing-mode: vertical-rl;margin-left:15px">
+                                <span style="text-align:center">
+                                    Related Management
+                                </span>
+                            </div>
+
+                        </div>
+                        <div style="width:60px;height:775px;border:1px solid black;text-align:center;float:right;margin-top:-775px;background-color:gray;color:black;">
+                            <div style="margin:auto;writing-mode: vertical-rl;-webkit-writing-mode: vertical-rl;margin-left:15px">
+                                <span style="text-align:center">
+                                    الجهات ذات العلاقة
+                                </span>
+                            </div>
+                        </div>
+                        <div style="width:717px;height:200px;border:1px solid black;text-align:center;vertical-align:middle;float:right;margin-right:60px;margin-top:-618px;">
+                            <div style="width:100%;margin-top:8px;margin-right:5px;">
+                                <div style="float:right">
+                                    <span>إدارة تقنية المعلومات*</span>
+                                </div>
+                                <div style="float:left;margin-left:60px;">
+                                    <span>IT Department</span>
+                                </div>
+
+
+                            </div>
+                            <div style="width:80%;height:50px;margin:auto;margin-top:40px">
+                                <div style="float:right;margin-right:16px">
+
+                                    <span>Email</span>
+                                    <t t-if="o.email">
+                                        <input type="checkbox" id="checkbox108_anything_you_give" checked="checked"/>
+                                    </t>
+                                    <t t-if="not o.email">
+                                        <input type="checkbox" id="checkbox108_anything_you_give"/>
+                                    </t>
+                                    <span>:الايميل</span>
+
+
+                                </div>
+                                <div style="float:right;margin-right:18px">
+
+                                    <span>Device</span>
+                                    <t t-if="o.Device">
+                                        <input type="checkbox" id="checkbox108_anything_you_give" checked="checked"/>
+                                    </t>
+                                    <t t-if="not o.Device">
+                                        <input type="checkbox" id="checkbox108_anything_you_give"/>
+                                    </t>
+                                    <span>:الاجهزة</span>
+
+
+                                </div>
+                                <div style="float:right;margin-right:18px">
+
+                                    <span>Other</span>
+                                    <t t-if="o.other">
+                                        <input type="checkbox" id="checkbox108_anything_you_give" checked="checked"/>
+                                    </t>
+                                    <t t-if="not o.other">
+                                        <input type="checkbox" id="checkbox108_anything_you_give"/>
+                                    </t>
+                                    <span>:أخرى</span>
+
+
+                                </div>
+                                <div style="float:right;margin-right:18px">
+
+
+                                    <span t-esc="o.other_reason"/>
+
+
+                                </div>
+                            </div>
+                            <div style="width:100%;margin-right:-5px;margin-top:-8px;">
+                                <!--First Column-->
+                                <div style="float:right;margin-top:-8px;">
+                                    <span>Name:</span>
+                                    <span t-esc="o.Name_of_it_person.name"/>
+                                    <span>:الاسم</span>
+                                </div>
+
+                                <!--second Column-->
+                                <div style="float:right;margin-top:-8px;">
+                                    <span>Signature:</span>
+                                    <span>
+                                        --------------
+                                    </span>
+                                    <span>:التوقيع.</span>
+                                </div>
+                                <!--Third Column-->
+                                <div style="float:left;margin-top:-8px;">
+                                    <span>Date:</span>
+                                    <span t-esc="o.Date_of_clearance" t-options='{"widget": "date"}'/>
+                                    <span>:التاريخ.</span>
+                                </div>
+
+                            </div>
+                            <div style="width:100%;margin-right:-5px;margin-top:30px;">
+                                <!--First Column-->
+                                <div style="float:right;margin-top:15px;">
+                                    <span>Clear:</span>
+                                    <t t-if="o.clear">
+                                        <input type="checkbox" id="checkbox106_anything_you_give" checked="checked"/>
+                                    </t>
+                                    <t t-if="not o.clear">
+                                        <input type="checkbox" id="checkbox106_anything_you_give"/>
+                                    </t>
+                                    <span>:يخلى طرفه</span>
+                                </div>
+
+                                <!--second Column-->
+                                <div style="float:right;margin-top:15px;">
+                                    <span>Not Clear:</span>
+                                    <t t-if="o.clear_it">
+                                        <input type="checkbox" id="checkbox107_anything_you_give" checked="checked"/>
+                                    </t>
+                                    <t t-if="not o.not_clear_it">
+                                        <input type="checkbox" id="checkbox107_anything_you_give"/>
+                                    </t>
+                                    <span>:لا يخلى طرفه</span>
+                                </div>
+                                <!--Third Column-->
+                                <div style="float:right;margin-top:15px;">
+                                    <span t-esc="o.reason_it"/>
+                                    <span>:حدد.</span>
+                                </div>
+                                <!--Fourth Column-->
+                                <div style="float:left;margin-top:15px;margin-left:50px;">
+
+                                    <span>Reason:</span>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div style="width:717px;height:220px;border:1px solid black;text-align:center;vertical-align:middle;float:right;margin-right:60px;margin-top:-418px;">
+                            <div style="width:100%;margin-top:8px;margin-right:5px;">
+                                <div style="float:right">
+                                    <span>إدارة الموارد البشرية*</span>
+                                </div>
+                                <div style="float:left;margin-left:60px;">
+                                    <span>HR Department</span>
+                                </div>
+
+
+                            </div>
+                            <!--start-->
+                            <div style="width:80%;height:50px;margin:auto;margin-top:40px;margin-right:100px">
+                                <div style="float:right;margin-right:16px">
+
+                                    <span>housing</span>
+                                    <t t-if="o.housing">
+                                        <input type="checkbox" id="checkbox108_anything_you_give" checked="checked"/>
+                                    </t>
+                                    <t t-if="not o.housing">
+                                        <input type="checkbox" id="checkbox108_anything_you_give"/>
+                                    </t>
+                                    <span>:السكن</span>
+
+
+                                </div>
+                                <div style="float:right;margin-right:18px">
+
+                                    <span>transportation</span>
+                                    <t t-if="o.transportation">
+                                        <input type="checkbox" id="checkbox108_anything_you_give" checked="checked"/>
+                                    </t>
+                                    <t t-if="not o.transportation">
+                                        <input type="checkbox" id="checkbox108_anything_you_give"/>
+                                    </t>
+                                    <span>:المواصلات</span>
+
+
+                                </div>
+                                <div style="float:right;margin-right:18px">
+
+                                    <span>telecom</span>
+                                    <t t-if="o.telecom">
+                                        <input type="checkbox" id="checkbox108_anything_you_give" checked="checked"/>
+                                    </t>
+                                    <t t-if="not o.telecom">
+                                        <input type="checkbox" id="checkbox108_anything_you_give"/>
+                                    </t>
+                                    <span>:الاتصالات</span>
+
+
+                                </div>
+                            </div>
+                            <div style="width:80%;height:50px;margin:auto;margin-top:-10px;margin-right:100px">
+                                <div style="float:right;margin-right:16px">
+
+                                    <span>Email</span>
+                                    <t t-if="o.medical_card">
+                                        <input type="checkbox" id="checkbox108_anything_you_give" checked="checked"/>
+                                    </t>
+                                    <t t-if="not o.medical_card">
+                                        <input type="checkbox" id="checkbox108_anything_you_give"/>
+                                    </t>
+                                    <span>:بطاقة التأمين</span>
+
+
+                                </div>
+                                <div style="float:right;margin-right:18px">
+
+                                    <span>Device</span>
+                                    <t t-if="o.emp_card">
+                                        <input type="checkbox" id="checkbox108_anything_you_give" checked="checked"/>
+                                    </t>
+                                    <t t-if="not o.emp_card">
+                                        <input type="checkbox" id="checkbox108_anything_you_give"/>
+                                    </t>
+                                    <span>:البطاقة الوظيفية</span>
+
+
+                                </div>
+                                <div style="float:right;margin-right:18px">
+
+                                    <span>Loans</span>
+                                    <t t-if="o.loans">
+                                        <input type="checkbox" id="checkbox108_anything_you_give" checked="checked"/>
+                                    </t>
+                                    <t t-if="not o.loans">
+                                        <input type="checkbox" id="checkbox108_anything_you_give"/>
+                                    </t>
+                                    <span>:الملف</span>
+
+
+                                </div>
+                            </div>
+                            <div style="width:80%;height:50px;margin:auto;margin-top:-10px;margin-right:100px">
+                                <div style="float:right;margin-right:16px">
+
+                                    <span>Email</span>
+                                    <t t-if="o.business_card">
+                                        <input type="checkbox" id="checkbox108_anything_you_give" checked="checked"/>
+                                    </t>
+                                    <t t-if="not o.business_card">
+                                        <input type="checkbox" id="checkbox108_anything_you_give"/>
+                                    </t>
+                                    <span>:بطاقة العمل</span>
+
+
+                                </div>
+                                <div style="float:right;margin-right:18px">
+
+                                    <span>GOSI</span>
+                                    <t t-if="o.gosi">
+                                        <input type="checkbox" id="checkbox108_anything_you_give" checked="checked"/>
+                                    </t>
+                                    <t t-if="not o.gosi">
+                                        <input type="checkbox" id="checkbox108_anything_you_give"/>
+                                    </t>
+                                    <span>:التأمينات الاجتماعية</span>
+
+
+                                </div>
+                                <div style="float:right;margin-right:18px">
+
+                                    <span>Custody</span>
+                                    <t t-if="o.custody">
+                                        <input type="checkbox" id="checkbox108_anything_you_give" checked="checked"/>
+                                    </t>
+                                    <t t-if="not o.custody">
+                                        <input type="checkbox" id="checkbox108_anything_you_give"/>
+                                    </t>
+                                    <span>:العهد</span>
+
+
+                                </div>
+
+                            </div>
+                            <div style="width:100%;margin-top:-10px">
+                                <div style="float:right;">
+                                    <span>Name:</span>
+                                    <span t-esc="o.Name_of_hr_person"/>
+                                    <span>:الاسم</span>
+                                </div>
+
+                                <!--second Column-->
+                                <div style="float:right;">
+                                    <span>Signature:</span>
+                                    <span>
+                                        --------------
+                                    </span>
+                                    <span>:التوقيع.</span>
+                                </div>
+                                <!--Third Column-->
+                                <div style="float:left;">
+                                    <span>Date:</span>
+                                    <span t-esc="o.Date_of_clearance" t-options='{"widget": "date"}'/>
+                                    <span>:التاريخ.</span>
+                                </div>
+
+
+                            </div>
+                            <div style="width:100%;margin-top:30px">
+                                <div style="float:right">
+                                    <span>Clear:</span>
+                                    <t t-if="o.clear_hr">
+                                        <input type="checkbox" id="checkbox106_anything_you_give" checked="checked"/>
+                                    </t>
+                                    <t t-if="not o.clear_hr">
+                                        <input type="checkbox" id="checkbox106_anything_you_give"/>
+                                    </t>
+                                    <span>:يخلى طرفه</span>
+                                </div>
+
+                                <!--second Column-->
+                                <div style="float:right">
+                                    <span>Not Clear:</span>
+                                    <t t-if="o.not_clear_hr">
+                                        <input type="checkbox" id="checkbox107_anything_you_give" checked="checked"/>
+                                    </t>
+                                    <t t-if="not o.not_clear_hr">
+                                        <input type="checkbox" id="checkbox107_anything_you_give"/>
+                                    </t>
+                                    <span>:لا يخلى طرفه</span>
+                                </div>
+                                <!--Third Column-->
+                                <div style="float:right;">
+                                    <span t-esc="o.reason_hr"/>
+                                    <span>:حدد.</span>
+                                </div>
+                                <!--Fourth Column-->
+                                <div style="float:left;margin-left:50px;">
+
+                                    <span>Reason:</span>
+                                </div>
+
+
+                            </div>
+
+
+                        </div>
+                        <div style="width:717px;height:200px;border:1px solid black;text-align:center;vertical-align:middle;float:right;margin-right:60px;margin-top:-200px;">
+                            <div style="width:100%;margin-top:30px;margin-right:5px;">
+                                <div style="float:right">
+                                    <span>.المالية*</span>
+                                </div>
+                                <div style="float:left;margin-left:60px;">
+                                    <span>Financial</span>
+                                </div>
+
+
+                            </div>
+                            <!--Second Line-->
+                            <div style="width:100%;margin-right:-5px;margin-top:60px;">
+                                <!--First Column-->
+                                <div style="float:right;margin-top:60px;">
+                                    <span>Name:</span>
+                                    <span t-esc="o.Name_of_acc_person.name"/>
+                                    <span>:الاسم</span>
+                                </div>
+
+                                <!--second Column-->
+                                <div style="float:right;margin-top:60px;">
+                                    <span>Signature:</span>
+                                    <span>
+                                        --------------
+                                    </span>
+                                    <span>:التوقيع.</span>
+                                </div>
+                                <!--Third Column-->
+                                <div style="float:left;margin-top:60px;">
+                                    <span>Date:</span>
+                                    <span t-esc="o.Date_of_clearance" t-options='{"widget": "date"}'/>
+                                    <span>:التاريخ.</span>
+                                </div>
+
+                            </div>
+                            <!--Third Line-->
+                            <div style="width:100%;margin-right:-5px;margin-top:80px;">
+                                <!--First Column-->
+                                <div style="float:right;margin-top:-5px;">
+                                    <span>Clear:</span>
+                                    <t t-if="o.clear_acc">
+                                        <input type="checkbox" id="checkbox106_anything_you_give" checked="checked"/>
+                                    </t>
+                                    <t t-if="not o.clear_acc">
+                                        <input type="checkbox" id="checkbox106_anything_you_give"/>
+                                    </t>
+                                    <span>:يخلى طرفه</span>
+                                </div>
+
+                                <!--second Column-->
+                                <div style="float:right;margin-top:-5px;">
+                                    <span>Not Clear:</span>
+                                    <t t-if="o.not_clear_acc">
+                                        <input type="checkbox" id="checkbox107_anything_you_give" checked="checked"/>
+                                    </t>
+                                    <t t-if="not o.not_clear_acc">
+                                        <input type="checkbox" id="checkbox107_anything_you_give"/>
+                                    </t>
+                                    <span>:لا يخلى طرفه</span>
+                                </div>
+                                <!--Third Column-->
+                                <div style="float:right;margin-top:-5px;">
+                                    <span t-esc="o.reason_acc"/>
+                                    <span>:حدد.</span>
+                                </div>
+                                <!--Fourth Column-->
+                                <div style="float:left;margin-top:-5px;margin-left:50px;">
+
+                                    <span>Reason:</span>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                    <div style="width:100%">
+                        <div style="width:60px;height:60px;border:1px solid black;text-align:center;vertical-align:middle;float:right;">
+                            3
+                        </div>
+                        <div style="width:717px;height:260px;border:1px solid black;text-align:center;vertical-align:middle;float:right;">
+                            <div style="width:80%;height:50px;margin:auto">
+                                <div style="float:right;margin-right:120px">
+                                    <span>Clear:</span>
+                                    <t t-if="o.clear_s">
+                                        <input type="checkbox" id="checkbox106_anything_you_give" checked="checked"/>
+                                    </t>
+                                    <t t-if="not o.clear_s">
+                                        <input type="checkbox" id="checkbox106_anything_you_give"/>
+                                    </t>
+                                    <span>:يخلى طرفه</span>
+
+
+                                </div>
+
+                                <div style="float:left;margin-left:100px;">
+                                    <span>Not Clear:</span>
+                                    <t t-if="o.not_clear_s">
+                                        <input type="checkbox" id="checkbox107_anything_you_give" checked="checked"/>
+                                    </t>
+                                    <t t-if="not o.not_clear_s">
+                                        <input type="checkbox" id="checkbox107_anything_you_give"/>
+                                    </t>
+                                    <span>:لا يخلى طرفه</span>
+
+                                </div>
+                            </div>
+                            <div style="width:100%;margin-top:10px">
+                                <div style="float:right;margin-right:20px">
+
+                                    <span t-esc="o.reason_s" style="margin-right:15px"/>
+                                    <span>:حدد.</span>
+                                </div>
+                                <div style="margin-left:20px;float:left">
+                                    <span>
+                                        Reason:
+                                    </span>
+                                </div>
+
+                            </div>
+                            <div style="margin:auto;margin-top:55px">
+                                <span>مدير الموارد البشرية</span>
+                            </div>
+                            <div style="margin:auto;margin-top:10px">
+                                <span>HR Manager</span>
+                            </div>
+                            <div style="margin:auto;margin-top:38px">
+                                <span>Signature:</span>
+                                <span>
+                                    --------------
+                                </span>
+                                <span>:التوقيع.</span>
+                            </div>
+                            <div style="margin:auto;margin-top:8px">
+                                <span>Date:</span>
+                                <span t-esc="o.Date_of_clearance" t-options='{"widget": "date"}'/>
+                                <span>:التاريخ.</span>
+                            </div>
+
+                        </div>
+                        <div style="width:60px;height:60px;border:1px solid black;text-align:center;vertical-align:middle;float:left;">
+                            3
+                        </div>
+                        <div style="width:60px;height:200px;border:1px solid black;text-align:center;;float:right;background-color:gray;color:black;">
+                            <div style="margin-top:33.33333333333333px">
+                                <span style="text-align:center;margin-top:100px;writing-mode: vertical-rl;transform: rotate(180deg);">
+
+                                </span>
+                            </div>
+
+                        </div>
+                        <div style="width:60px;height:200px;border:1px solid black;text-align:center;float:right;margin-top:-200px;background-color:gray;color:black;">
+
+                            <div style="margin-top:33.33333333333333px;writing-mode: vertical-rl;-webkit-writing-mode: vertical-rl">
+                                <span style="text-align:center">
+
+                                    إستخدام شؤون الموظفين
+
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                </t>
+            </t>
+        </t>
+    </template>
+
+
+</odoo>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_purchase_cost_report_wizard_form" model="ir.ui.view">
+        <field name="name">purchase.cost.report.wizard.form</field>
+        <field name="model">purchase.cost.report.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="product_ids" widget="many2many_tags"
+                           options="{'no_create' :True , 'no_create_edit': True}"/>
+                    <field name="vendor_ids" widget="many2many_tags"
+                           options="{'no_create' :True , 'no_create_edit': True}"/>
+                    <field name="date_from"/>
+                    <field name="date_to"/>
+                </group>
+                <footer>
+                    <button string="Get Lines" type="object" class="oe_highlight" name="generate_report"/>
+                    <button string="PDF" type="object" class="oe_highlight" name="generate_report_pdf"/>
+                    <button string="Excel" type="object" class="oe_highlight" name="generate_report_excel"/>
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_purchase_report_wizard" model="ir.actions.act_window">
+        <field name="name">Purchase Costs Report</field>
+        <field name="res_model">purchase.cost.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="flex_purchase_reports.view_purchase_cost_report_wizard_form"/>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="menu_action_purchase_report_wizard"
+              name="Purchase Costs Report Wizard"
+              parent="purchase.purchase_report_main"
+              action="action_purchase_report_wizard"/>
+
+</odoo>

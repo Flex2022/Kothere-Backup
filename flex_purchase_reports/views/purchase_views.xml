@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_purchase_lines_tree_view" model="ir.ui.view">
+        <field name="name">purchase.order.line.tree</field>
+        <field name="model">purchase.order.line</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="order_id"/>
+                <field name="product_id"/>
+                <field name="partner_id"/>
+                <field name="date_approve"/>
+                <field name="product_qty"/>
+                <field name="product_uom"/>
+                <field name="price_unit"/>
+                <field name="price_subtotal"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_purchase_lines_pivot_view" model="ir.ui.view">
+        <field name="name">purchase.order.line.pivot</field>
+        <field name="model">purchase.order.line</field>
+        <field name="arch" type="xml">
+            <pivot>
+                <field name="order_id"/>
+                <field name="product_id"/>
+                <field name="partner_id"/>
+                <field name="date_approve"/>
+                <field name="product_qty" type="measure"/>
+                <field name="product_uom"/>
+                <field name="price_unit" type="measure"/>
+                <field name="price_subtotal" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+</odoo>

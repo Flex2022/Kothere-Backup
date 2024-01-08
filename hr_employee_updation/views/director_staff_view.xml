@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_employee_director_staff" model="ir.ui.view">
+        <field name="name">hr.employee.director.staff.tree</field>
+        <field name="model">hr.employee</field>
+        <field name="arch" type="xml">
+            <tree string="Employees" create="false" edit="false">
+                <field name="name"/>
+                <field name="work_phone"/>
+                <field name="mobile_phone"/>
+                <field name="work_mobile_ext"/>
+                <field name="work_email"/>
+                <field name="department_id"/>
+                <field name="job_id"/>
+                <field name="contract_start_date"/>
+                <field name="contract_end_date"/>
+                <field name="remaining_leaves"/>
+                <field name="contract_total_salary" groups="hr_employee_updation.group_hr_request_team_lead_approval,hr.group_hr_manager" invisible="1"/>
+                <field name="employee_status"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="open_view_view_employee_director_staff" model="ir.actions.act_window">
+        <field name="name">My Team</field>
+        <field name="res_model">hr.employee</field>
+        <field name="view_mode">tree</field>
+        <field name="domain">['|', ('parent_id.user_id', '=', uid), ('parent_id.parent_id.user_id', '=', uid)]</field>
+        <field name="search_view_id" ref="hr.view_employee_filter"/>
+        <field name="help" type="html">
+         <p class="o_view_nocontent_smiling_face">
+           Add a new employee
+         </p><p>
+           With just a quick glance on the Odoo employee screen, you
+           can easily find all the information you need for each person;
+           contact data, job position, availability, etc.
+         </p>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window.view" id="open_view_view_employee_director_staff_tree">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="hr_employee_updation.view_employee_director_staff"/>
+        <field name="act_window_id" ref="open_view_view_employee_director_staff"/>
+    </record>
+
+    <menuitem id="menu_open_view_view_employee_director_staff_tree"
+              action="open_view_view_employee_director_staff"
+              parent="hr.menu_hr_employee"
+              groups="hr_employee_updation.group_hr_request_team_lead_approval"
+              sequence="3"/>
+
+    <record model="ir.actions.act_window.view" id="open_view_view_employee_tree">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="hr.view_employee_tree"/>
+        <field name="act_window_id" ref="hr.open_view_employee_list_my"/>
+    </record>
+
+</odoo>

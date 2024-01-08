@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_department_form_inherit_accounts" model="ir.ui.view">
+        <field name="name">hr.department.form.inherit</field>
+        <field name="model">hr.department</field>
+        <field name="inherit_id" ref="hr_employee_updation.view_department_form_inherit"/>
+        <field name="arch" type="xml">
+            <field name="analytic_distribution" position="after">
+                <field name="journal_id"/>
+                <field name="gosi_account_id"/>
+                <field name="basic_account_id"/>
+                <field name="eos_account_id"/>
+                <field name="salary_account_id"/>
+                <field name="ticket_account_id"/>
+                <field name="leave_account_id"/>
+                <field name="housing_account_id"/>
+                <field name="overtime_account_id"/>
+                <field name="per_diem_account_id"/>
+                <field name="Transportation_account_id"/>
+                <field name="increase_account_id"/>
+                <field name="leave_provision_account_id"/>
+                <field name="eos_provision_account_id"/>
+                <field name="other_account_id"/>
+            </field>
+        </field>
+    </record>
+</odoo>

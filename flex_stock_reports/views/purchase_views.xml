@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_stock_quants_tree_view" model="ir.ui.view">
+        <field name="name">stock.quant.tree</field>
+        <field name="model">stock.quant</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="location_id"/>
+                <field name="product_id"/>
+                <field name="inventory_quantity_auto_apply"/>
+                <field name="reserved_quantity"/>
+            </tree>
+        </field>
+    </record>
+
+
+
+</odoo>

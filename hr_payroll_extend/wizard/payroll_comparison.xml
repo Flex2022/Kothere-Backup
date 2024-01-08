@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_payroll_comparison_tree" model="ir.ui.view">
+        <field name="name">payroll.comparison.tree</field>
+        <field name="model">payroll.comparison</field>
+        <field name="arch" type="xml">
+            <tree string="Payroll Comparison Tree">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_payroll_comparison_form" model="ir.ui.view">
+        <field name="name">payroll.comparison.from</field>
+        <field name="model">payroll.comparison</field>
+        <field name="arch" type="xml">
+            <form string="Payroll Comparison Form">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" />
+                            <field name="date"/>
+                        </group>
+                        <group>
+                            <field name="number_month"/>
+                        </group>
+                    </group>
+                    <notebook string="Comparison">
+                        <page string="First Month">
+                            <field name="employee_information_first_ids" nolabel="1" >
+                                <tree editable="bottom">
+                                    <field name="employee_id" />
+                                    <field name="basic_salary" />
+                                    <field name="transportation" />
+                                    <field name="housing" />
+<!--                                    <field name="bonus"/>-->
+<!--                                    <field name="gross"/>-->
+                                    <field name="gosi"/>
+                                    <field name="loan"/>
+                                    <field name="other"/>
+                                    <field name="net"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Second Month" attrs="{'invisible': [('number_month', '=', 'first')]}">
+                            <field name="employee_information_second_ids"  nolabel="1" >
+                                <tree editable="bottom">
+                                    <field name="employee_id" />
+                                    <field name="basic_salary" />
+                                    <field name="transportation" />
+                                    <field name="housing" />
+<!--                                    <field name="bonus"/>-->
+<!--                                    <field name="gross"/>-->
+                                    <field name="gosi"/>
+                                    <field name="loan"/>
+                                    <field name="other"/>
+                                    <field name="net"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Third Month" attrs="{'invisible': [('number_month', '!=', 'third')]}" >
+                            <field name="employee_information_third_ids" nolabel="1" >
+                                <tree editable="bottom">
+                                    <field name="employee_id" />
+                                    <field name="basic_salary" />
+                                    <field name="transportation" />
+                                    <field name="housing" />
+<!--                                    <field name="bonus"/>-->
+<!--                                    <field name="gross"/>-->
+                                    <field name="gosi"/>
+                                    <field name="loan"/>
+                                    <field name="other"/>
+                                    <field name="net"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <!--                    <div class="oe_chatter">-->
+                <!--                        <field name="message_follower_ids" widget="mail_followers"/>-->
+                <!--                        <field name="activity_ids" widget="mail_activity"/>-->
+                <!--                        <field name="message_ids" widget="mail_thread"/>-->
+                <!--                    </div>-->
+            </form>
+        </field>
+    </record>
+
+
+    <record id="action_payroll_comparison" model="ir.actions.act_window">
+        <field name="name">Payroll Comparison</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">payroll.comparison</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="comparison_payroll_menu"
+              name="Comparison"
+              parent="menu_hr_payroll_reports"
+              action="action_payroll_comparison"
+              groups="hr_payroll.group_hr_payroll_user"
+              sequence="4"/>
+
+
+</odoo>

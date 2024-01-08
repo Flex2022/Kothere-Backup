@@ -1,0 +1,15 @@
+{
+    'name': 'flex material purchase requisitions',
+    'version': '0.1',
+    'summary': 'flex material purchase requisitions',
+    'description': 'flex material purchase requisitions',
+    'category': 'Uncategorized',
+    'author': 'Abdalrahman shahrour',
+    'website': 'https://flex-ops.com',
+    'license': 'AGPL-3',
+    'depends': ['material_purchase_requisitions'],
+    'data': ['security/groups.xml',
+             'views/requisition.xml',],
+    'installable': True,
+    'auto_install': False,
+}

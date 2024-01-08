@@ -1,0 +1,22 @@
+Date: 1st January 2023
+Version : '17.0.0.2' (in __manifest__.py)
+Odoo Version : 17
+Done by : Devangi Pabari
+Tested By : Devangi Pabari
+Description : Removed the selection of scanning for (normal,expiry,damage) for manual process
+
+Date: 4th December 2023
+Version : '17.0.0.1' (in __manifest__.py)
+Odoo Version : 17
+Done by : Richisha Acharya
+Tested By : Richisha Acharya,Devangi Pabari
+Description : Added Functionality of Unscanned Products
+
+Date: 3rd October 2023
+Version : '17.0.0.0' (in __manifest__.py)
+Odoo Version : 17
+Done by : Richisha Acharya
+Tested by : Richisha Acharya
+Description : Migrated from V16 to V17.
+
+

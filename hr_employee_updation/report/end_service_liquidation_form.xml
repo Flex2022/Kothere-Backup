@@ -1,0 +1,485 @@
+<odoo>
+    <data>
+        <record id="report_end_of_service_liquidation_form" model="ir.actions.report">
+            <field name="name">End Of Service Liquidation Form</field>
+            <field name="model">hr.contract</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">hr_employee_updation.end_of_service_liquidation_form</field>
+            <field name="report_file">hr_employee_updation.end_of_service_liquidation_form</field>
+            <field name="binding_model_id" ref="model_hr_contract"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <template id="end_of_service_liquidation_form">
+
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-set="o_sec" t-value="o.with_context(lang='ar_001')"/>
+                    <t t-call="web.external_layout">
+                        <link rel="stylesheet" href="/hr_employee_updation/static/src/css/style.css"/>
+
+                        <div class="first">
+                            <p class="se">
+                                Statement of Settlement Of Employee Benefits
+                            </p>
+                        </div>
+
+                        <br/>
+
+                        <table>
+                            <tr>
+
+                                <td style="text-align:center">
+                                    <span t-field="o.job_id"/>
+                                </td>
+
+                                <td style="text-align:right">
+                                    Job Title
+                                    <br/>
+                                    المسمى الوظيفي
+                                </td>
+
+                                <td style="text-align:center">
+                                    <span t-field="o.employee_id.name"/>
+                                    <br/>
+                                    <span t-field="o.employee_id.english_name"/>
+                                </td>
+
+                                <td style="text-align:right">
+                                    Employee Name
+                                    <br/>
+                                    اسم الموظف
+                                </td>
+
+
+                            </tr>
+
+                            <tr>
+                                <td style="text-align:center">
+                                    <table style="width:100%; height:100%">
+                                        <tr>
+                                            <td>
+                                                Year
+                                            </td>
+                                            <td>
+                                                Month
+                                            </td>
+                                            <td>
+                                                Day
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span t-field="o.service_duration_years"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="o.service_duration_months"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="o.service_duration_days"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td style="text-align:right">
+                                    Duration of service
+                                    <br/>
+                                    مدة الخدمة
+                                </td>
+
+                                <td style="text-align:center">
+                                    <span t-field="o.department_id"/>
+                                </td>
+
+                                <td style="text-align:right">
+                                    Department الإدارة
+                                </td>
+                            </tr>
+                            <tr>
+
+                                <td style="text-align:center">
+                                    <span t-field="o.date_start"/>
+                                </td>
+                                <td style="text-align:right">
+                                    Date of hiring
+                                    <br/>
+                                    تاريخ المباشرة
+                                </td>
+
+
+                                <td style="text-align:center">
+                                    <span t-field="o.number_od_days_off"/>
+                                </td>
+
+                                <td style="text-align:right">
+                                    Number of days off
+                                    <br/>
+                                    رصيد الإجازات
+                                </td>
+
+
+                            </tr>
+
+
+                        </table>
+
+                        <br/>
+                        <table>
+                            <tr>
+
+                                <td style="text-align:center">
+
+                                    Total salary
+                                    <br/>
+                                    اجمالي الراتب
+
+
+                                </td>
+
+                                <td style="text-align:center">
+
+                                    Other
+                                    <br/>
+                                    اخرى
+
+
+                                </td>
+
+                                <td style="text-align:center">
+                                    Connection allowance
+                                    <br/>
+                                    بدل الاتصال
+
+
+                                </td>
+
+                                <td style="text-align:center">
+
+                                    Transportation allowance
+                                    <br/>
+                                    بدل المواصلات
+
+
+                                </td>
+
+                                <td style="text-align:center">
+
+                                    Housing allowance
+                                    <br/>
+                                    بدل السكن
+
+
+                                </td>
+
+
+                                <td style="text-align:center">
+                                    basic salary
+                                    <br/>
+                                    الاساسي
+
+                                </td>
+
+
+                            </tr>
+
+                            <tr>
+
+
+                                <td style="text-align:center">
+                                    <span t-field="o.total_salary"/>
+
+                                </td>
+
+                                <td style="text-align:center">
+                                    <span t-field="o.other_allowance_value"/>
+
+                                </td>
+
+                                <td style="text-align:center">
+
+                                    <span t-field="o.mobile_allowance_value"/>
+
+                                </td>
+                                <td style="text-align:center">
+
+
+                                    <span t-field="o.transportation_allowance_value"/>
+
+
+                                </td>
+                                <td style="text-align:center">
+
+
+                                    <span t-field="o.housing_allowance_value"/>
+
+
+                                </td>
+                                <td style="text-align:center">
+
+                                    <span t-field="o.wage"/>
+
+                                </td>
+
+                            </tr>
+                        </table>
+                        <br/>
+
+                        <table>
+                            <tr>
+
+
+                                <td style="text-align:center">
+                                    <span t-field="o.reason_end_service.name"/>
+                                    <br/>
+                                    <span t-field="o.reason_end_service.name_arabic"/>
+                                </td>
+
+                                <td style="text-align:right">
+                                    Reason for end of service
+                                    <br/>
+                                    سبب انهاء العلاقة
+                                </td>
+
+
+                                <td style="text-align:center">
+                                    <span t-field="o.date_end"/>
+                                </td>
+
+                                <td style="text-align:right">
+                                    End of Service Date
+                                    <br/>
+                                    تاريخ انتهاء العلاقة
+
+
+                                </td>
+
+                            </tr>
+
+                            <tr>
+
+                                <td style="text-align:center">
+                                    <span t-field="o.days_of_the_month"/>
+                                </td>
+
+                                <td style="text-align:right">
+                                    ايام الشهر
+
+                                </td>
+
+                                <td style="text-align:center">
+                                    <span t-field="o.payroll_days"/>
+                                </td>
+
+                                <td style="text-align:right">
+                                    ايام الرواتب المستخقه
+
+                                </td>
+
+
+                            </tr>
+                        </table>
+                        <br/>
+                        <table>
+                            <tr>
+
+
+                                <td style="text-align:center">
+                                    amount deducted
+                                </td>
+
+                                <td style="text-align:center">
+                                    Deductions
+                                </td>
+
+                                <td rowspan="7"
+                                    style="text-align:center ;writing-mode: vertical-rl;-webkit-writing-mode: vertical-rl">
+
+                                    Deductions
+                                </td>
+
+
+                                <td style="text-align:center">
+                                    deserved amount
+                                </td>
+
+                                <td style="text-align:center">
+                                    Statement
+                                </td>
+
+
+                                <td style="text-align:center">
+                                    Finance
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td style="text-align:center">
+                                    <span t-field="o.his_predecessor_is_due"/>
+                                </td>
+                                <td style="text-align:center">
+                                    His predecessor is due
+                                </td>
+                                <td style="text-align:center">
+                                    <span t-field="o.salary_if_any"/>
+                                </td>
+                                <td style="text-align:center">
+                                    Salary (If Any)
+                                </td>
+                                <td rowspan="6" style="text-align:center">
+                                    Benefits
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td style="text-align:center">
+                                    <span t-field="o.covenant_deductions"/>
+                                </td>
+                                <td style="text-align:center">
+                                    Covenant
+                                </td>
+                                <td style="text-align:center">
+                                    <span t-field="o.overtime"/>
+                                </td>
+                                <td style="text-align:center">
+                                    Overtime (if any)
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+                                <td style="text-align:center">
+                                    <span t-field="o.vacations_paid_deductions"/>
+                                </td>
+                                <td style="text-align:center">
+                                    Vacations paid
+                                </td>
+                                <td style="text-align:center">
+                                    <span t-field="o.vacation_benefits"/>
+                                </td>
+                                <td style="text-align:center">
+                                    Vacation
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+                                <td style="text-align:center">
+                                    <span t-field="o.loan_deductions"/>
+                                </td>
+                                <td style="text-align:center">
+                                    Loan
+                                </td>
+                                <td style="text-align:center">
+                                    <span t-field="o.end_of_service"/>
+                                </td>
+                                <td style="text-align:center">
+                                    End of Service
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+                                <td style="text-align:center">
+                                    <span t-field="o.other_deductions"/>
+                                </td>
+                                <td style="text-align:center">
+                                    Other
+                                </td>
+                                <td style="text-align:center">
+                                    <span t-field="o.other_benefits"/>
+                                </td>
+                                <td style="text-align:center">
+                                    Other
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+                                <td style="text-align:center">
+                                    <span t-field="o.total_amount_deductions"/>
+                                </td>
+                                <td style="text-align:center">
+                                    Total Amount Deducted
+                                </td>
+                                <td style="text-align:center">
+                                    <span t-field="o.total_amount_due"/>
+                                </td>
+                                <td style="text-align:center">
+                                    Total Amount Due
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+                                <td style="text-align:center" colspan="4">
+                                    <span t-field="o.net_receivables"/>
+                                </td>
+
+
+                                <td style="text-align:center" colspan="2">
+                                    Net Receivables
+                                </td>
+
+
+                            </tr>
+
+
+                        </table>
+                        <br/>
+
+
+                        <div class="secou">
+
+                            <h6 style="text-align:left; float: left; margin-left: 20px">
+                                HR Manager
+                            </h6>
+
+                            <h6 style="text-align:left; float: left; margin-left: 150px">
+                                Financial Management
+                            </h6>
+
+
+                            <h6 style="text-align:left; float: left; margin-left: 200px">
+                                General Manager
+                            </h6>
+
+
+                        </div>
+                        <br/>
+
+
+                        <div class="third">
+                            <p style="text-align:left">
+                                I declare that I have received all of my entitlements so I absolve the company of any
+                                right or claim I may have in the present or the future .
+                            </p>
+
+                            <p style="text-align:right">
+                                أقر بأنني استلمت جميع استحقاقاتي ، لذا فإنني أعفي الشركة من أي حق أو مطالبة قد تكون لدي
+                                في الوقت الحاضر أو المستقبل.
+                            </p>
+
+
+                            <h6 style="text-align:left; float: left; margin-left: 80px">
+                                The name : ................................................
+                            </h6>
+                            <h6 style="text-align:left; float: left; margin-left: 150px">
+                                Signature ...........................
+                            </h6>
+
+                        </div>
+
+                    </t>
+                </t>
+            </t>
+
+        </template>
+
+
+    </data>
+</odoo>

@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="hr_employee_provision_tree" model="ir.ui.view">
+            <field name="name">hr.employee.provision.tree</field>
+            <field name="model">hr.employee.provision</field>
+            <field name="priority" eval="8" />
+            <field name="arch" type="xml">
+                <tree string="Employee Provision Tree">
+                    <field name="name"/>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="office_id"/>
+                    <field name="total_leave" sum="Total Leave"/>
+                    <field name="total_eos" sum="Total EOS"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_employee_provision_search">
+            <field name="name">hr.employee.provision.search</field>
+            <field name="model">hr.employee.provision</field>
+            <field name="arch" type="xml">
+                <search string="Search Employee Provision">
+                    <field name="name" string="Name"/>
+                    <field name="office_id"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="hr_employee_provision_form" model="ir.ui.view">
+            <field name="name">hr.employee.provision.form</field>
+            <field name="model">hr.employee.provision</field>
+            <field name="priority" eval="8" />
+            <field name="arch" type="xml">
+                <form string="Employee Provision Form">
+                    <header>
+                        <button string="Submit" name="action_submit" type="object" states="draft" class="oe_highlight" groups="hr_employee_updation.group_accountant,hr_employee_updation.group_chief_accountant" />
+                        <button string="Done" name="action_done" type="object" states="submit" class="oe_highlight" groups="hr_employee_updation.group_chief_accountant"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name="name" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                        </group>
+                        <group>
+                            <group>
+                                <label for="start_date" string="Period" />
+                                <div>
+                                    <field name="start_date" attrs="{'readonly': [('state', '=', 'done')]}" class="oe_inline"/> - <field name="end_date" class="oe_inline" attrs="{'readonly': [('state', '=', 'done')]}"/>
+                                </div>
+                                <field name="total_leave"/>
+                                <field name="total_eos"/>
+                            </group>
+                            <group>
+                                <field name="office_id" widget="selection" required="1" attrs="{'readonly': [('state', '=', 'done')]}"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="EOS Provision">
+                                <field name="eos_line_ids" attrs="{'readonly': [('state', '=', 'done')]}">
+                                    <tree editable="bottom">
+                                        <field name="employee_id" options="{'no_open':True,'no_create':True}"/>
+                                        <field name="contract_id"/>
+                                        <field name="department_id"/>
+                                        <field name="start_date" invisible="1"/>
+                                        <field name="end_date" invisible="1"/>
+                                        <field name="analytic_account_id"/>
+                                        <field name="total_salary" sum="Total Salary"/>
+                                        <field name="service_year" string="Years"/>
+                                        <field name="service_month" string="Months"/>
+                                        <field name="service_day" string="Days"/>
+                                        <field name="opening_balance" sum="Total Opening Balance"/>
+                                        <field name="total_provision" sum="Total Provision"/>
+                                        <field name="amount" sum="Total Amount"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Leave Provision">
+                                <field name="leave_line_ids" attrs="{'readonly': [('state', '=', 'done')]}">
+                                    <tree editable="bottom">
+                                        <field name="employee_id" options="{'no_open':True,'no_create':True}"/>
+                                        <field name="contract_id"/>
+                                        <field name="department_id"/>
+                                        <field name="start_date" invisible="1"/>
+                                        <field name="end_date" invisible="1"/>
+                                        <field name="analytic_account_id"/>
+                                        <field name="total_salary" sum="Total Salary"/>
+                                        <field name="remaining_leaves" sum="Total Service Years"/>
+                                        <field name="opening_balance" sum="Total Opening Balance"/>
+                                        <field name="total_provision" sum="Total Provision"/>
+                                        <field name="amount" sum="Total Amount"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_employee_provisions" model="ir.actions.act_window">
+            <field name="name">Employee Provision</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hr.employee.provision</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a employee provision
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="provision_employee_action"
+                  name="Employee Provision"
+                  parent="account.menu_finance_entries_management"
+                  action="action_employee_provisions"
+                  groups="account.group_account_user"/>
+
+        <record id="hr_eos_employee_provision_tree" model="ir.ui.view">
+            <field name="name">hr.eos.employee.provision.tree</field>
+            <field name="model">hr.eos.provision.line</field>
+            <field name="priority" eval="8" />
+            <field name="arch" type="xml">
+                <tree string="Employee EOS Provision Tree">
+                    <field name="employee_id" options="{'no_open':True,'no_create':True}"/>
+                    <field name="department_id"/>
+                    <field name="joining_date"/>
+                    <field name="start_date" invisible="1"/>
+                    <field name="end_date" invisible="1"/>
+                    <field name="analytic_account_id"/>
+                    <field name="total_salary" sum="Total Salary"/>
+                    <field name="service_year" string="Years"/>
+                    <field name="service_month" string="Months"/>
+                    <field name="service_day" string="Days"/>
+                    <field name="opening_balance" sum="Total Opening Balance"/>
+                    <field name="total_provision" sum="Total Provision"/>
+                    <field name="amount" sum="Total Amount"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="hr_eos_employee_provision_search" model="ir.ui.view">
+            <field name="name">hr.eos.employee.provision.search</field>
+            <field name="model">hr.eos.provision.line</field>
+            <field name="arch" type="xml">
+                <search string="Employee EOS Provision Search">
+                    <group col="8" colspan="4" expand="0" string="Group By">
+                        <filter string="Provision Request" name="request_id" context="{'group_by':'request_id'}"/>
+                        <filter string="Start Date" name="start_date" context="{'group_by':'start_date'}"/>
+                        <filter string="End Date" name="end_date" context="{'group_by':'end_date'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="hr_eos_employee_provision_pivot" model="ir.ui.view">
+            <field name="name">hr.eos.employee.provision.pivot</field>
+            <field name="model">hr.eos.provision.line</field>
+            <field name="arch" type="xml">
+                <pivot string="Employee EOS Provision Pivot">
+                    <field name="start_date" type="row"/>
+                    <field name="end_date" type="row"/>
+                    <field name="amount" type="measure"/>
+                </pivot>
+            </field>
+        </record>
+
+        <record id="action_eos_employee_provisions" model="ir.actions.act_window">
+            <field name="name">End Of Service Provision</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hr.eos.provision.line</field>
+            <field name="view_mode">tree,pivot</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a employee eos provision
+                </p>
+            </field>
+        </record>
+
+        <record id="hr_leave_employee_provision_tree" model="ir.ui.view">
+            <field name="name">hr.leave.employee.provision.tree</field>
+            <field name="model">hr.leave.provision.line</field>
+            <field name="priority" eval="8" />
+            <field name="arch" type="xml">
+                <tree string="Employee Leave Provision Tree">
+                    <field name="employee_id" options="{'no_open':True,'no_create':True}"/>
+                    <field name="department_id"/>
+                    <field name="joining_date"/>
+                    <field name="start_date" invisible="1"/>
+                    <field name="end_date" invisible="1"/>
+                    <field name="analytic_account_id"/>
+                    <field name="total_salary" sum="Total Salary"/>
+                    <field name="remaining_leaves" sum="Total Service Years"/>
+                    <field name="opening_balance" sum="Total Opening Balance"/>
+                    <field name="total_provision" sum="Total Provision"/>
+                    <field name="amount" sum="Total Amount"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="hr_leave_employee_provision_search" model="ir.ui.view">
+            <field name="name">hr.leave.employee.provision.search</field>
+            <field name="model">hr.leave.provision.line</field>
+            <field name="arch" type="xml">
+                <search string="Employee Leave Provision Search">
+                    <group col="8" colspan="4" expand="0" string="Group By">
+                        <filter string="Provision Request" name="request_id" context="{'group_by':'request_id'}"/>
+                        <filter string="Start Date" name="start_date" context="{'group_by':'start_date'}"/>
+                        <filter string="End Date" name="end_date" context="{'group_by':'end_date'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="hr_leave_employee_provision_pivot" model="ir.ui.view">
+            <field name="name">hr.leave.employee.provision.pivot</field>
+            <field name="model">hr.leave.provision.line</field>
+            <field name="arch" type="xml">
+                <pivot string="Employee Leave Provision Pivot">
+                    <field name="start_date" type="row"/>
+                    <field name="end_date" type="row"/>
+                    <field name="employee_id" type="row"/>
+                    <field name="amount" type="measure"/>
+                </pivot>
+            </field>
+        </record>
+
+        <record id="action_leave_employee_provisions" model="ir.actions.act_window">
+            <field name="name">Leave Provision</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hr.leave.provision.line</field>
+            <field name="view_mode">tree,pivot</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a employee leave provision
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="account_reports_provision" sequence="10"
+                  name="Provision Reports" parent="account.menu_finance_reports"/>
+
+        <menuitem id="provision_eos_employee_action"
+                  name="End of Service Provision"
+                  parent="account_reports_provision"
+                  action="action_eos_employee_provisions"
+                  groups="account.group_account_user"/>
+
+        <menuitem id="provision_leave_employee_action"
+                  name="Leave Provision"
+                  parent="account_reports_provision"
+                  action="action_leave_employee_provisions"
+                  groups="account.group_account_user"/>
+
+    </data>
+</odoo>

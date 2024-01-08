@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <report id="experience_certificate__report"
+                string="Experience Certificate"
+                model="hr.employee"
+                report_type="qweb-pdf"
+                file="hr_employee_updation.experience_certificate_template_id"
+                name="hr_employee_updation.experience_certificate_template_id"/>
+
+        <template id="experience_certificate_report_view">
+			<t t-call="hr_employee_updation.internal_layout_without_header">
+				<t t-set="o" t-value="o.with_context({'lang':'en_US'})"/>
+				<div style="with: 100%; clear: both;">
+
+					<div  style='text-align: center;'><strong>Experience Certificate         شهادة خبرة </strong></div>
+					<br></br>
+					<div style="border-left: 2px inset;height: 550px;position: absolute;left: 50%;margin-left: -3px;top: 20;"></div>
+					<div class="row">
+						<div class="col-sm-6" style="padding: 10px;text-align: left;width:50%;">
+							<p  style="text-align: left;">Date: <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d')"/> </p>
+						</div>
+						<div class="col-sm-6" style="padding: 10px ;direction: rtl;text-align: right;width:50%;">
+							<p>التاريخ:<span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d')"/>  </p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6" style="padding: 10px;text-align: left;width:50%;">
+							<p  style="text-align: left;">To Whom it May Concern: </p>
+						</div>
+						<div class="col-sm-6" style="padding: 10px ;direction: rtl;text-align: right;width:50%;">
+							<p>:إلى من يهمه الأمر</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6" style="padding: 10px;text-align: left;width:50%">
+							<p style="text-align: left;">Greetings from Business Research and development. </p>
+						</div>
+						<div class="col-sm-6" style="padding: 10px;direction: rtl;text-align: right;width:50%">
+							<p>السلام عليكم ورحمة الله وبركاته</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6" style="padding: 10px;text-align: left;width:50%">
+							<p style="text-align: left;">This is to certify that Mr. <span t-field="o.name"/> worked with
+                        research and business development company (T2) as: (<span t-field="o.job_id"/>) from: <span t-field="o.joining_date"/> <span t-if="o.resign_date is not False">until <span t-field="o.resign_date"/>.</span> </p>
+						</div>
+						<div class="col-sm-6" style="padding: 10px;direction: rtl;text-align: right;width:50%">
+							<p>تشهد شركة أبحاث وتطوير الأعمال التجارية بأن السيد:<span t-field="o.english_name"/> . قد عمل لدينا بوظيفة:(
+                        <span t-field="o.job_id"/> ) من تاريخ: <span t-field="o.joining_date"/> <span t-if="o.resign_date is not False">حتى تاريخ: 31<span t-field="o.resign_date"/></span> وكان خلال فترة عمله يتميز
+                        بسرعة الأداء وإنجاز المهام الموكلة له بكل إتقان مع تحمل ضغوط العمل، وكان متعاون مع زملائه ويعمل
+                        ضمن الفريق الواحد. </p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6" style="padding: 10px;text-align: left;width:50%">
+							<p style="text-align: left;">This certificate has been issued upon his request</p>
+						</div>
+						<div class="col-sm-6" style="padding: 10px;direction: rtl;text-align: right;width:50%">
+							<p>، وتم إعطاؤه هذه الشهادة بناءاً على طلبه ونتمنى لها دوام التوفيق والإبداع. </p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6" style="padding: 10px;text-align: left;width:50%">
+							<p style="text-align: left;">Sincerely, </p>
+						</div>
+						<div class="col-sm-6" style="padding: 10px;direction: rtl;text-align: right;width:50%">
+							<p>والله ولي التوفيق ،،،، </p>
+						</div>
+					</div>
+					<br></br><br/><b/><br/><br/><br/>
+
+					<p style="text-align: center;"><b> مدير إدارة الموارد البشرية</b></p>
+					<p style="text-align: center; direction: rtl;"><b>Director of Human Resources Department</b> </p>
+					<p style="text-align: center;  direction: rtl;"><b>Maher Algwaiz</b></p>
+				</div>
+			</t>
+		</template>
+        <template id="experience_certificate_template_id">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="hr_employee_updation.experience_certificate_report_view"  t-lang="en_US"/>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

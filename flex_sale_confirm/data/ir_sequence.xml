@@ -1,0 +1,36 @@
+<odoo>
+    <data noupdate="1">
+        <!--    Purchase    -->
+        <record id="purchase.seq_purchase_order" model="ir.sequence">
+            <field name="name">Purchase Order (RFQ)</field>
+            <field name="prefix">RFQ</field>
+        </record>
+        <record id="seq_po_foreign" model="ir.sequence">
+            <field name="name">Foreign Purchase Order</field>
+            <field name="code">foreign.purchase.order</field>
+            <field name="prefix">PO</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        <record id="seq_po_local" model="ir.sequence">
+            <field name="name">Local Purchase Order</field>
+            <field name="code">local.purchase.order</field>
+            <field name="prefix">LPO</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <!--    Sales    -->
+        <record id="sale.seq_sale_order" model="ir.sequence">
+            <field name="name">Sale Order (SQ)</field>
+            <field name="prefix">SQ</field>
+        </record>
+        <record id="seq_so" model="ir.sequence">
+            <field name="name">Sale Order (SO)</field>
+            <field name="code">sale.order.so</field>
+            <field name="prefix">S</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+    </data>
+</odoo>

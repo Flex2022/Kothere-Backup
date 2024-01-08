@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="product_category_form_view_inherit" model="ir.ui.view">
+            <field name="name">product.category.form.view.inherit</field>
+            <field name="model">product.category</field>
+            <field name="inherit_id" ref="product.product_category_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='parent_id']" position="after">
+                    <field name="company_id"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="product_category_list_view_inherit" model="ir.ui.view">
+            <field name="name">product.category.list.view.inherit</field>
+            <field name="model">product.category</field>
+            <field name="inherit_id" ref="product.product_category_list_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='display_name']" position="after">
+                    <field name="company_id" options="{'no_create': True}"
+                           groups="base.group_multi_company" optional="hide"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="category_comp_rule" model="ir.rule">
+            <field name="name">category multi-company</field>
+            <field name="model_id" ref="model_product_category"/>
+            <field name="domain_force">['|', ('company_id', 'in', company_ids), ('company_id', '=', False)]</field>
+        </record>
+    </data>
+</odoo>

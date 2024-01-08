@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="material_purchase_requisition_form_view_inherit" model="ir.ui.view">
+            <field name="name">material.purchase.requisition.form.view</field>
+            <field name="model">material.purchase.requisition</field>
+            <field name="inherit_id" ref="material_purchase_requisitions.material_purchase_requisition_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='date_end']" position="after">
+                    <field name="custom_picking_type_id"/>
+                </xpath>
+                <xpath expr="//page[2]/group[1]/group[2]/field[@name='custom_picking_type_id']" position="replace">
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
