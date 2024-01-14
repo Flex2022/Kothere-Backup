@@ -82,7 +82,7 @@
                                         <span t-field="o.kind"/>
                                     </p>
                                 </div>
-                                <div class="float-start text-start" dir="ltr" style="margin-left: 120px; margin-top:-200px;">
+                                <div class="float-start text-start" dir="ltr" style="margin-left: 120px; margin-top:-270px;">
                                     <div>
                                         <div class="float-end" dir="ltr">
                                             <span t-field="o.name"/>
