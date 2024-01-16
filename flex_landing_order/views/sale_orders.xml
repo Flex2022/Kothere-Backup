@@ -9,6 +9,7 @@
             <field name="arch" type="xml">
                 <xpath expr="//header" position="inside">
                     <button name="action_create_landing_order_using_wizerd" type="object" string="Create landing order"
+                            groups="flex_landing_order.flex_landing_order_group_landing_order_manager"
                             class="oe_stat_button"/>
                 </xpath>
                 <xpath expr="//sheet/div[@name='button_box']" position="inside">
