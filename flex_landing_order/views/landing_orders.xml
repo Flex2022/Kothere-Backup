@@ -157,7 +157,7 @@
 
         <menuitem name="Landing Order" id="landing_order" parent="sale.sale_order_menu"
                   action="landing_order_act_window"
-                    groups="flex_landing_order.flex_landing_order_group_landing_order_manager flex_landing_order.flex_landing_order_group_landing_order_user"/>
+                    groups="flex_landing_order.flex_landing_order_group_landing_order_manager"/>
 
     </data>
 </odoo>
