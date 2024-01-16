@@ -33,8 +33,8 @@
                                     <br/>
                                     <br/>
                                     <p>
-                                        <div class="float-end" dir="rtl">
-                                            <h6>رقم كود العميل/</h6>
+                                        <div class="col-6 float-end" dir="rtl">
+                                            <h6>/رقم كود العميل</h6>
                                         </div>
                                         <div class="float-end" dir="rtl">
                                             <span class="text-center" t-field="o.partner_code"/>
@@ -42,7 +42,9 @@
                                     </p>
                                     <br/>
                                     <p>
-                                        <h6>السادة/شركة اسمنت</h6>
+                                        <div dir="rtl">
+                                            <h6>السادة/شركة اسمنت</h6>
+                                        </div>
                                     </p>
                                     <p>
                                         <h6>ارجو تسليم السائق</h6>
@@ -58,6 +60,7 @@
                                     </p>
                                 </div>
                                 <div class="col-3 float-end text-center mt-4" style="height: 265px;">
+                                    <br/>
                                     <br/>
                                     <br/>
                                     <br/>
@@ -79,7 +82,7 @@
                                         <span t-field="o.kind"/>
                                     </p>
                                 </div>
-                                <div class="float-start text-start mt-4" dir="ltr" style="margin-left: 120px;">
+                                <div class="float-start text-start" dir="ltr" style="margin-left: 120px; margin-top:-270px;">
                                     <div>
                                         <div class="float-end" dir="ltr">
                                             <span t-field="o.name"/>
