@@ -13,13 +13,15 @@
                 </xpath>
                 <xpath expr="//sheet/div[@name='button_box']" position="inside">
                     <button name="get_all_landings" type="object" string="Landing Orders"
+                            groups="flex_landing_order.flex_landing_order_group_landing_order_manager"
                             class="oe_stat_button"
                             icon="fa-book">
-                        <field name="landing_orders_count" widget="statinfo"/>
+                        <field name="landing_orders_count" widget="statinfo"
+                                 groups="flex_landing_order.flex_landing_order_group_landing_order_manager"/>
                     </button>
                 </xpath>
                 <xpath expr="//field[@name='payment_term_id']" position="after">
-                    <field name="order_type"/>
+                    <field name="order_type" groups="flex_landing_order.flex_landing_order_group_landing_order_manager"/>
                 </xpath>
             </field>
         </record>
