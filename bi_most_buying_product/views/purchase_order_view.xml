@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <menuitem id="top_product_report_sub_menu"
+              name="Top Product Report"
+              parent="purchase.purchase_report_main"
+              action="action_top_product_wizard"
+              sequence="100"
+    />
+</odoo>

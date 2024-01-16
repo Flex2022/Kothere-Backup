@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+bi_most_buying_product.access_top_product_wizard,access_top_product_wizard,bi_most_buying_product.model_top_product_wizard,base.group_user,1,1,1,1
+bi_most_buying_product.access_save_file_wizard,access_save_file_wizard,bi_most_buying_product.model_save_file_wizard,base.group_user,1,1,1,1

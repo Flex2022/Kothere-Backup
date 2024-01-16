@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+    <record id="view_top_product_wizard_form" model="ir.ui.view">
+        <field name="name">top.product.form</field>
+        <field name="model">top.product.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Top Product Wizard">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="start_from_date" required="1"/>
+                        </group>
+                        <group>
+                            <field name="end_to_date" required="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="limit_number"/>
+                            <field name="select_options" widget="radio"/>
+                        </group>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="button_create_pdf_wizard" string="PDF" type="object" class="oe_highlight"/>
+                    <button name="button_create_excel_wizard" string="Excel Report" type="object" class="oe_highlight"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_top_product_wizard" model="ir.actions.act_window">
+        <field name="name">Top Products</field>
+        <field name="res_model">top.product.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="target">new</field>
+        <field name="view_id" ref="view_top_product_wizard_form"/>
+    </record>
+</odoo>
