@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="landing_order_form_view" model="ir.ui.view">
+            <field name="name">landing.order.form</field>
+            <field name="model">landing.order</field>
+            <field name="arch" type="xml">
+                <form string="Landing Order">
+                    <header>
+                        <button name="action_state" type="object" string="Receive" class="oe_highlight"
+                                group="flex_landing_order.flex_landing_order_group_landing_order_manager"
+                                invisible="state != 'new'"/>
+                        <button name="action_state" type="object" string="Delivery" class="oe_highlight"
+                                group="flex_landing_order.flex_landing_order_group_landing_order_manager"
+                                invisible="state != 'receive'"/>
+                        <button name="action_state" type="object" string="Cancel"
+                                group="flex_landing_order.flex_landing_order_group_landing_order_manager"
+                                invisible="state == 'calculated'"/>
+                        <button name="set_as_new" type="object" string="Set to New" class="oe_highlight"
+                                group="flex_landing_order.flex_landing_order_group_landing_order_manager"
+                                invisible="state != 'calculated'"/>
+                        <field name="state" widget="statusbar" statusbar_visible="new,receive,delivery"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group string="General Information">
+                                <field name="partner_id"/>
+                                <field name="partner_code"/>
+                                <field name="driver_id"/>
+                                <field name="car_id"/>
+                                <field name="receive_date"/>
+                                <field name="delivery_date"/>
+                            </group>
+
+                            <group string="Order Information">
+                                <group>
+                                    <field name="company_id" invisible="1"/>
+                                    <field name="order_id" string="Sale Order" readonly="1"/>
+                                    <field name="create_date"/>
+                                    <field name="date"/>
+                                    <field name="h_date"/>
+                                    <field name="kind"/>
+                                    <field name="quantity"/>
+                                </group>
+                            </group>
+                        </group>
+
+                        <group string="Date Information">
+                            <group>
+                                <label for="from_receive_to_delivery_h"/>
+                                <div class="o_row mw-50" name="other_allowance">
+                                    <field name="from_receive_to_delivery_h" class="oe_inline o_hr_narrow_field"
+                                           nolabel="1"/>
+                                    <div class="mb-3">/Hours</div>
+                                </div>
+                            </group>
+                            <group>
+                                <label for="from_receive_to_delivery_d"/>
+                                <div class="o_row mw-50" name="other_allowance">
+                                    <field name="from_receive_to_delivery_d" class="oe_inline o_hr_narrow_field"
+                                           nolabel="1"/>
+                                    <div class="mb-3">/D</div>
+                                    <field name="from_receive_to_delivery_h_hour"
+                                           class="oe_inline o_hr_narrow_field" nolabel="1"/>
+                                    <div class="mb-3">/H</div>
+                                </div>
+                            </group>
+                        </group>
+                        <field name="message_follower_ids" widget="mail_followers" invisible="1"/>
+                        <field name="message_ids" widget="mail_thread" invisible="1"/>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="landing_order_tree_view" model="ir.ui.view">
+            <field name="name">landing.order.tree</field>
+            <field name="model">landing.order</field>
+            <field name="arch" type="xml">
+                <tree string="Landing Order" decoration-info="state == 'new'" decoration-muted="state == 'calculated'">
+                    <field name="name"/>
+                    <field name="create_date"/>
+                    <field name="partner_id"/>
+                    <field name="partner_code"/>
+                    <field name="driver_id"/>
+                    <field name="kind"/>
+                    <field name="quantity"/>
+                    <field name="state" decoration-info="state == 'new'"
+                           decoration-muted="state == 'calculated'"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="landing_order_graph_view" model="ir.ui.view">
+            <field name="name">landing.order.graph</field>
+            <field name="model">landing.order</field>
+            <field name="arch" type="xml">
+                <graph string="Landing Order">
+                    <field name="name"/>
+                    <field name="create_date"/>
+                    <field name="partner_id"/>
+                    <field name="partner_code"/>
+                    <field name="driver_id"/>
+                    <field name="kind"/>
+                    <field name="quantity"/>
+                </graph>
+            </field>
+        </record>
+
+        <record id="landing_order_pivot_view" model="ir.ui.view">
+            <field name="name">landing.order.pivot</field>
+            <field name="model">landing.order</field>
+            <field name="arch" type="xml">
+                <pivot string="Landing Order">
+                    <field name="name" type="row"/>
+                    <field name="create_date" type="row"/>
+                    <field name="partner_id" type="row"/>
+                    <field name="partner_code" type="row"/>
+                    <field name="driver_id" type="row"/>
+                    <field name="kind" type="row"/>
+                    <field name="quantity" type="row"/>
+
+                    <field name="name" type="measure"/>
+                    <field name="create_date" type="measure"/>
+                    <field name="partner_id" type="measure"/>
+                    <field name="partner_code" type="measure"/>
+                    <field name="driver_id" type="measure"/>
+                    <field name="kind" type="measure"/>
+                    <field name="quantity" type="measure"/>
+                </pivot>
+            </field>
+        </record>
+
+
+        <record id="landing_order_act_window" model="ir.actions.act_window">
+            <field name="name">Landing Order</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">landing.order</field>
+            <field name="view_mode">tree,form,graph,pivot</field>
+            <field name="context">{"search_default_name":1}</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    There is no examples click here to add new Landing Order.
+                </p>
+            </field>
+        </record>
+
+        <menuitem name="Landing Order" id="landing_order" parent="sale.sale_order_menu"
+                  action="landing_order_act_window"/>
+
+    </data>
+</odoo>
