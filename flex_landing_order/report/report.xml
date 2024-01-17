@@ -33,8 +33,10 @@
                                     <br/>
                                     <br/>
                                     <p>
-                                        <div class="col-6 float-end" dir="rtl">
-                                            <h6>/رقم كود العميل</h6>
+                                        <div class="float-end" dir="rtl">
+                                            <span>
+                                                <h6>رقم كود العميل/</h6>
+                                            </span>
                                         </div>
                                         <div class="float-end" dir="rtl">
                                             <span class="text-center" t-field="o.partner_code"/>
@@ -76,13 +78,14 @@
                                         <span t-field="o.car_id"/>
                                     </p>
                                     <p>
-                                        <span t-field="o.quantity"/>
+                                        <span t-field="o.quantity"/>-<span t-field="o.size"/>
                                     </p>
                                     <p>
                                         <span t-field="o.kind"/>
                                     </p>
                                 </div>
-                                <div class="float-start text-start" dir="ltr" style="margin-left: 120px; margin-top:-270px;">
+                                <div class="float-start text-start" dir="ltr"
+                                     style="margin-left: 120px; margin-top:20px;">
                                     <div>
                                         <div class="float-end" dir="ltr">
                                             <span t-field="o.name"/>

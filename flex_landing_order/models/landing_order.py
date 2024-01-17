@@ -32,6 +32,11 @@ class LandingOrder(models.Model):
         ('kind3', 'سايب')],
         string='Kind',
         default=False)
+    size = fields.Selection([
+        ('size1', 'طن'),
+        ('size2', 'كيس')],
+        string='Size',
+        default=False)
     receive_date = fields.Datetime(string='Receive Date')
     delivery_date = fields.Datetime(string='Delivery Date')
     from_receive_to_delivery_h = fields.Float(string='From Receive To Delivery',
