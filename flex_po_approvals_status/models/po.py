@@ -118,18 +118,19 @@ class PurcheseOrder(models.Model):
         return True
 
     def write(self, vals):
-        if self.state == 'draft':
-            return super(PurcheseOrder, self).write(vals)
-        else:
-            if self.env.user.has_group('flex_po_approvals_status.flex_po_approvals_status_access_fin_man'):
+        for record in self:
+            if record.state == 'draft':
                 return super(PurcheseOrder, self).write(vals)
             else:
-                if len(list(vals.keys())) == 1:
-                    if 'state' in list(vals.keys()):
-                        return super(PurcheseOrder, self).write(vals)
+                if record.env.user.has_group('flex_po_approvals_status.flex_po_approvals_status_access_fin_man'):
+                    return super(PurcheseOrder, self).write(vals)
+                else:
+                    if len(list(vals.keys())) == 1:
+                        if 'state' in list(vals.keys()):
+                            return super(PurcheseOrder, self).write(vals)
+                        else:
+                            raise UserError(
+                                _('You can not edit this record on this state, please return to RFQ state, then edit it'))
                     else:
                         raise UserError(
                             _('You can not edit this record on this state, please return to RFQ state, then edit it'))
-                else:
-                    raise UserError(
-                        _('You can not edit this record on this state, please return to RFQ state, then edit it'))
