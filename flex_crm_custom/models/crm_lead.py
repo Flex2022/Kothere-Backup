@@ -26,7 +26,7 @@ class CustomCrmLead(models.Model):
     def write(self, vals):
         res = super(CustomCrmLead, self).write(vals)
         if 'stage_id' in vals:
-            req_prj_ids = self.env['crm.stage'].browse(vals['stage_id']).project_required.ids
+            req_prj_ids = self.env['crm.stage'].browse(vals['stage_id']).project_required
 
             if vals['stage_id'] in req_prj_ids:
                 if not self.project_id or 'project_id' not in vals:
