@@ -26,13 +26,17 @@ class CustomCrmLead(models.Model):
     def write(self, vals):
         res = super(CustomCrmLead, self).write(vals)
         if 'stage_id' in vals:
-            req_prj_ids = self.env['crm.stage'].browse(vals['stage_id']).project_required
+            req_prj = self.env['crm.stage'].search([('id', '=', vals['stage_id'])])
+            print(f'\n\n{req_prj.project_required}\n\n')
+            if req_prj.project_required:
+                print('11111')
+                if not self.project_id:
+                    print('22222')
+                    if 'project_id' not in vals:
 
-            if vals['stage_id'] in req_prj_ids:
-                if not self.project_id or 'project_id' not in vals:
-                    raise UserError(_('Please create a project for this lead'))
-
+                        raise UserError(_('You must create a project for this lead'))
         return res
+
 
 
 class CrmOrderLine(models.Model):
