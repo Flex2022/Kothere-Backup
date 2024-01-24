@@ -1,4 +1,5 @@
-from odoo import api, fields, models
+from odoo import api, fields, models, _
+from odoo.exceptions import UserError, ValidationError
 import json
 
 
@@ -15,10 +16,19 @@ class CustomCrmLead(models.Model):
 
     project_id = fields.Many2one('project.project', string='Project', no_create=True, copy=False)
 
+
+
     @api.depends('order_line_ids.price_total')
     def _compute_total_order_lines(self):
         for lead in self:
             lead.total_order_line_ids = sum(lead.order_line_ids.mapped('price_total'))
+
+    def write(self, vals):
+        res = super(CustomCrmLead, self).write(vals)
+        if 'state_id' in vals:
+            if vals['state_id'].project_required:
+                raise UserError(_('You must add project to this lead'))
+        return res
 
 
 class CrmOrderLine(models.Model):
