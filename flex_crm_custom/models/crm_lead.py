@@ -13,6 +13,8 @@ class CustomCrmLead(models.Model):
     probability_order_line_active = fields.Boolean(string='Show Order Line Probability',
                                                    related="company_id.probability_order_line_active")
 
+    project_id = fields.Many2one('project.project', string='Project', no_create=True, copy=False)
+
     @api.depends('order_line_ids.price_total')
     def _compute_total_order_lines(self):
         for lead in self:

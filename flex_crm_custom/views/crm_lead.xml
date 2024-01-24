@@ -65,6 +65,9 @@
                         </div>
                     </div>
                 </xpath>
+                <xpath expr="//field[@name='tad_ids']" position="after">
+                    <field name="project_id"/>
+                </xpath>
             </field>
         </record>
 
