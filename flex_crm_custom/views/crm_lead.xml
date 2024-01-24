@@ -79,7 +79,7 @@
             <field name="arch" type="xml">
 
                 <xpath expr="//field[@name='team_count']" position="after">
-                    <field name="project_required"/>
+                    <field name="project_required" label="Project Required"/>
                 </xpath>
 
             </field>
