@@ -71,5 +71,19 @@
             </field>
         </record>
 
+        <!-- Inherit Form View to Modify it -->
+        <record id="flex_crm_custom_crm_stage" model="ir.ui.view">
+            <field name="name">flex_crm_custom.crm.stage.form</field>
+            <field name="model">crm.stage</field>
+            <field name="inherit_id" ref="crm.crm_stage_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='team_count']" position="after">
+                    <field name="project_require"/>
+                </xpath>
+
+            </field>
+        </record>
+
     </data>
 </odoo>

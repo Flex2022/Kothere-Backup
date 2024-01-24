@@ -86,3 +86,8 @@ class CrmOrderLine(models.Model):
                 line.price_total = taxes_res['total_included']
             else:
                 line.price_total = line.price_subtotal = subtotal
+
+class CrmStage(models.Model):
+    _inherit = 'crm.stage'
+
+    project_required = fields.Boolean(string='Project Required', default=False)
