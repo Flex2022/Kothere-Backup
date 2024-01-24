@@ -47,7 +47,6 @@
                                     <field name="h_date"/>
                                     <field name="kind"/>
                                     <field name="quantity"/>
-                                    <field name="size"/>
                                 </group>
                             </group>
                         </group>
@@ -157,8 +156,8 @@
         </record>
 
         <menuitem name="Landing Order" id="landing_order" parent="sale.sale_order_menu"
-                  action="landing_order_act_window"
-                    groups="flex_landing_order.flex_landing_order_group_landing_order_manager"/>
+                  action="landing_order_act_window"/>
+        <!--                    groups="flex_landing_order.flex_landing_order_group_landing_order_manager"/>-->
 
     </data>
 </odoo>
