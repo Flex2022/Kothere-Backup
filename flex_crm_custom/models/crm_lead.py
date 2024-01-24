@@ -31,6 +31,9 @@ class CustomCrmLead(models.Model):
                 if not self.project_id:
                     if 'project_id' not in vals:
                         raise UserError(_('You must create a project for this lead'))
+            if req_prj.is_won:
+                if 'project_id' in vals:
+                    raise UserError(_('You cant change the project of a won lead'))
         return res
 
 
