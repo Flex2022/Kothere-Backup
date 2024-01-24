@@ -47,6 +47,7 @@
                                     <field name="h_date"/>
                                     <field name="kind"/>
                                     <field name="quantity"/>
+                                    <field name="size"/>
                                 </group>
                             </group>
                         </group>
