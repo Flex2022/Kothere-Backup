@@ -25,8 +25,8 @@ class CustomCrmLead(models.Model):
 
     def write(self, vals):
         res = super(CustomCrmLead, self).write(vals)
-        if 'state_id' in vals:
-            if vals['state_id'].project_required:
+        if 'stage_id' in vals:
+            if vals['stage_id'].project_required:
                 raise UserError(_('You must add project to this lead'))
         return res
 
