@@ -78,8 +78,9 @@
             <field name="inherit_id" ref="crm.crm_stage_form"/>
             <field name="arch" type="xml">
 
-                <xpath expr="//field[@name='team_count']" position="after">
-                    <field name="project_required" label="Project Required"/>
+                <xpath expr="//field[@name='team_id']" position="after">
+
+                    <field name="project_required" string="Project Required"/>
                 </xpath>
 
             </field>
