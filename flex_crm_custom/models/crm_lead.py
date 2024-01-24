@@ -26,8 +26,12 @@ class CustomCrmLead(models.Model):
     def write(self, vals):
         res = super(CustomCrmLead, self).write(vals)
         if 'stage_id' in vals:
-            if vals['stage_id'].project_required:
-                raise UserError(_('You must add project to this lead'))
+            req_prj_ids = self.env['crm.stage'].browse(vals['stage_id']).project_required.ids
+
+            if vals['stage_id'] in req_prj_ids:
+                if not self.project_id or 'project_id' not in vals:
+                    raise UserError(_('Please create a project for this lead'))
+
         return res
 
 
