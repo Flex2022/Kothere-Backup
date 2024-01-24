@@ -34,6 +34,11 @@ class CustomCrmLead(models.Model):
             if req_prj.is_won:
                 if 'project_id' in vals:
                     raise UserError(_('You cant change the project of a won lead'))
+        if 'project_id' in vals:
+            # req_prj = self.env['crm.stage'].search([('id', '=', vals['stage_id'])])
+            if self.stage_id.is_won:
+                if 'project_id' in vals:
+                    raise UserError(_('You cant change the project of a won lead'))
         return res
 
 
