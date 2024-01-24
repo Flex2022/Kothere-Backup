@@ -8,7 +8,7 @@ class PurcheseOrder(models.Model):
     state = fields.Selection([
         ('draft', 'RFQ'),
         ('sent', 'RFQ Sent'),
-        ('po', 'PO Approval'),
+        ('po', 'PM Approval'),
         ('factory', 'Factory Approval'),
         ('factory_aproved', 'Financial Approval'),
         ('to approve', 'To Approve'),
