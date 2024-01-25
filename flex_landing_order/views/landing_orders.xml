@@ -97,6 +97,7 @@
                     <field name="driver_id"/>
                     <field name="kind"/>
                     <field name="quantity"/>
+                    <field name="from_receive_to_delivery_h"/>
                     <field name="state" decoration-info="state == 'new'"
                            decoration-muted="state == 'calculated'"/>
                 </tree>
