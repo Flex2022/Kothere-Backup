@@ -21,4 +21,6 @@ class ResPartner(models.Model):
                     rec.partner_code = self.env['ir.sequence'].next_by_code('res.partner')
                 elif rec.partner_code == '':
                     rec.partner_code = self.env['ir.sequence'].next_by_code('res.partner')
+                elif rec.partner_code == False:
+                    rec.partner_code = self.env['ir.sequence'].next_by_code('res.partner')
 
