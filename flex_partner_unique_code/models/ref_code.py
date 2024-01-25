@@ -19,4 +19,6 @@ class ResPartner(models.Model):
             if rec.active:
                 if rec.partner_code == _('New'):
                     rec.partner_code = self.env['ir.sequence'].next_by_code('res.partner')
+                elif rec.partner_code == '':
+                    rec.partner_code = self.env['ir.sequence'].next_by_code('res.partner')
 
