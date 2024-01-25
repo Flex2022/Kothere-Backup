@@ -7,7 +7,7 @@
     'author': 'Abdalrahman Shahrour',
     'website': 'https://www.flex-ops.com',
     'license': 'AGPL-3',
-    'depends': ['base', 'sale', 'contacts'],
+    'depends': ['base', 'sale', 'contacts', 'fleet', ],
     'data': [
         'security/ir.model.access.csv',
         'data/data.xml',
@@ -16,7 +16,8 @@
         'views/landing_orders.xml',
         'report/report.xml',
         'views/sale_orders.xml',
-        'views/contacts.xml',
+        # 'views/contacts.xml',
+        'views/fleet_vehicle.xml',
     ],
     'installable': True,
     'auto_install': False,
