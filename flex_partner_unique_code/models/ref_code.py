@@ -4,7 +4,8 @@ from odoo.exceptions import ValidationError
 class ResPartner(models.Model):
     _inherit = 'res.partner'
 
-    partner_code = fields.Char(string="Partner Code", unique=True)
+    partner_code = fields.Char(string="Partner Code", required=False, copy=False, readonly=True,
+                           default=lambda self: _('New'))
 
     @api.model_create_multi
     def create(self, vals_list):
