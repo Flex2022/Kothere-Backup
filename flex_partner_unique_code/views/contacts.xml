@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="view_partner_tree_flex_inherit" model="ir.ui.view">
+            <field name="name">view.partner.tree.flex.inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_tree"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='display_name']" position="before">
+                    <field name="partner_code" optional="hide"/>
+                </xpath>
+
+            </field>
+        </record>
+        <record id="view_partner_form_inherit_sd" model="ir.ui.view">
+            <field name="name">res.partner.form.sd</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='function']" position="before">
+                        <field name="partner_code"/>
+                </xpath>
+
+
+            </field>
+        </record>
+
+
+        <record model="ir.actions.server" id="action_generate_sequence">
+            <field name="name">SET Sequence</field>
+            <field name="model_id" ref="base.model_res_partner"/>
+            <field name="binding_model_id" ref="base.model_res_partner"/>
+            <field name="binding_view_types">list,form</field>
+            <field name="state">code</field>
+            <field name="code">
+                action = records.random_sequence()
+            </field>
+        </record>
+
+
+    </data>
+</odoo>
