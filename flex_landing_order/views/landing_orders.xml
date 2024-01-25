@@ -35,8 +35,8 @@
                                 <field name="car_model_id"/>
                                 <field name="driver_id"/>
                                 <field name="car_id"/>
-                                <field name="receive_date"/>
-                                <field name="delivery_date"/>
+                                <field name="receive_date" readonly="1"/>
+                                <field name="delivery_date" readonly="1"/>
                             </group>
 
                             <group string="Order Information">
