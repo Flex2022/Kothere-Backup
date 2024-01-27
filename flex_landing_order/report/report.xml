@@ -26,119 +26,202 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row mt-4">
-                            <div class="col-12">
-                                <div class="float-end text-end mt-4" dir="rtl" style="margin-right: 120px;">
-                                    <br/>
-                                    <br/>
-                                    <br/>
-                                    <p>
-                                        <div class="float-end" dir="rtl">
-                                            <span>
-                                                <h6>رقم كود العميل/</h6>
-                                            </span>
-                                        </div>
-                                        <div class="float-end" dir="rtl">
-                                            <span class="text-center" t-field="o.partner_code"/>
-                                        </div>
-                                    </p>
-                                    <br/>
-                                    <p>
-                                        <div dir="rtl">
-                                            <h6>السادة/شركة اسمنت</h6>
-                                        </div>
-                                    </p>
-                                    <p>
-                                        <h6>ارجو تسليم السائق</h6>
-                                    </p>
-                                    <p>
-                                        <h6>سيارة رقم</h6>
-                                    </p>
-                                    <p>
-                                        <h6>الكمية(طن-كيس)</h6>
-                                    </p>
-                                    <p>
-                                        <h6>النوع اسمنت(عادي-مقاوم-سايب)</h6>
-                                    </p>
-                                </div>
-                                <div class="col-3 float-end text-center mt-4" style="height: 265px;">
-                                    <br/>
-                                    <br/>
-                                    <br/>
-                                    <br/>
-                                    <br/>
-                                    <br/>
-                                    <p>
-                                        <span t-field="o.partner_id"/>
-                                    </p>
-                                    <p>
-                                        <span t-field="o.driver_id"/>
-                                    </p>
-                                    <p>
-                                        <span t-field="o.car_id"/>
-                                    </p>
-                                    <p>
-                                        <span t-field="o.quantity"/>-<span t-field="o.size"/>
-                                    </p>
-                                    <p>
-                                        <span t-field="o.kind"/>
-                                    </p>
-                                </div>
-                                <div class="float-start text-start" dir="ltr"
-                                     style="margin-left: 120px; margin-top:20px;">
-                                    <div>
-                                        <div class="float-end" dir="ltr">
-                                            <span t-field="o.name"/>
-                                        </div>
-                                        <div class="float-end text-center">
-                                            <h6>Serial No:</h6>
-                                        </div>
+
+                        <!--                        <div class="row mt-4" id="informations2">-->
+                        <!--                            <span class="m-0" t-field="o.partner_code_report"/>-->
+
+                        <!--                        </div>-->
+                        <div>
+                            <h6 class="mt-2">
+                                <span>Serial No.</span>
+                                <span t-field="o.name"/>
+                                <!--                            <span> ذسذ</span>-->
+                            </h6>
+                        </div>
+                        <div style="margin-top:-10px;">
+                            <h6 class="mt-2">
+                                <span>H : </span>
+                                <span t-field="o.h_date" t-field-options='{"format": "dd/MM/yyyy"}'/>
+                                <span>التاريخ </span>
+                            </h6>
+                        </div>
+                        <div style="margin-top:-10px;">
+                            <h6 class="mt-2">
+                                <span>Date: </span>
+                                <span t-field="o.date" t-field-options='{"format": "dd/MM/yyyy"}'/>
+                                <span>الموافق </span>
+                            </h6>
+                        </div>
+
+                        <div class="row mt-4 mb-2" id="informations">
+                            <div t-if="o.name" class="col-auto col-3 mw-100 mb-2"
+                                 name="informations_reference">
+                                <strong>Cement Company:</strong>
+                                <br/>
+                                <strong>Driver Name:</strong>
+                                <br/>
+                                <strong>Car No:</strong>
+                                <br/>
+                                <strong>Qty:</strong>
+                                <br/>
+                                <strong>Kind:</strong>
+                                <!--                                <br/>-->
+                                <!--                                <span class="m-0" t-field="o.company_id.name"/>-->
+                            </div>
+                            <div t-if="o.date" class="col-auto col-3 mw-100 mb-2" name="informations_date">
+                                <span class="m-0" t-field="o.partner_id.name"/>
+                                <br/>
+                                <span class="m-0" t-field="o.driver_id.name"/>
+                                <br/>
+                                <span class="m-0" t-field="o.car_id"/>
+                                <br/>
+                                <span class="m-0" t-field="o.quantity"/>
+                                <br/>
+                                <span class="m-0" t-field="o.kind"/>
+                            </div>
+                            <div t-if="o.driver_id.name" class="col-auto col-3 mw-100 mb-2" dir="rtl" style="margin-top:-70px;">
+                                <div class="border border-dark" style="margin-top:-70px; height:40px;">
+                                    <div style="margin-top:10px; margin-right:10px;" dir="rtl" class="float-end">
+                                        <h6>
+                                          <strong>رقم كود العميل/</strong>
+                                        </h6>
                                     </div>
-                                    <br/>
-                                    <br/>
-                                    <div>
-                                        <div class="float-end" dir="rtl">
-                                            <h6>التاريخ</h6>
-                                        </div>
-                                        <div class="float-end text-center">
-                                            <span t-field="o.h_date" t-field-options='{"format": "dd/MM/yyyy"}'/>
-                                        </div>
-                                        <div class="float-end" dir="ltr">
-                                            <h6>H :</h6>
-                                        </div>
+                                    <div style="margin-top:10px; margin-left:10px;" dir="rtl" class="float-end text-end">
+                                        <h6>
+                                            <span class="m-0" t-field="o.partner_code"/>
+                                        </h6>
                                     </div>
-                                    <br/>
-                                    <br/>
-                                    <div>
-                                        <div class="float-end" dir="rtl">
-                                            <h6>الموافق</h6>
-                                        </div>
-                                        <div class="float-end text-center">
-                                            <span t-field="o.date" t-field-options='{"format": "dd/MM/yyyy"}'/>
-                                        </div>
-                                        <div class="float-end" dir="ltr">
-                                            <h6>Date</h6>
-                                        </div>
-                                    </div>
-                                    <br/>
-                                    <p>
-                                        <h6>Cement Company</h6>
-                                    </p>
-                                    <p>
-                                        <h6>Driver Name</h6>
-                                    </p>
-                                    <p>
-                                        <h6>Car No.</h6>
-                                    </p>
-                                    <p>
-                                        <h6>Qty.</h6>
-                                    </p>
-                                    <p>
-                                        <h6>Kind</h6>
-                                    </p>
                                 </div>
+                                <br/>
+                                <br/>
+                                <strong>السادة/ شركة الاسمنت:</strong>
+                                <br/>
+                                <strong>ارجو تسليم السائق:</strong>
+                                <br/>
+                                <strong>سيارة رقم:</strong>
+                                <br/>
+                                <strong>الكمية(طن-كيس):</strong>
+                                <br/>
+                                <strong>النوع اسمنت(عادي-مقاوم-سايب):</strong>
+                                <!--                                <span class="m-0" t-field="o.driver_id">Mitchell Admin</span>-->
                             </div>
                         </div>
+
+
+                        <!--                        <div class="row mt-4">-->
+                        <!--                            <div class="col-12">-->
+                        <!--                                <div class="float-end text-end mt-4" dir="rtl" style="margin-right: 120px;">-->
+                        <!--                                    <br/>-->
+                        <!--                                    <br/>-->
+                        <!--                                    <br/>-->
+                        <!--                                    <p>-->
+                        <!--                                        <div class="float-end" dir="rtl">-->
+                        <!--                                            <span>-->
+                        <!--                                                <h6>رقم كود العميل/</h6>-->
+                        <!--                                            </span>-->
+                        <!--                                        </div>-->
+                        <!--                                        <div class="float-end" dir="rtl">-->
+                        <!--                                            <span class="text-center" t-field="o.partner_code"/>-->
+                        <!--                                        </div>-->
+                        <!--                                    </p>-->
+                        <!--                                    <br/>-->
+                        <!--                                    <p>-->
+                        <!--                                        <div dir="rtl">-->
+                        <!--                                            <h6>السادة/شركة اسمنت</h6>-->
+                        <!--                                        </div>-->
+                        <!--                                    </p>-->
+                        <!--                                    <p>-->
+                        <!--                                        <h6>ارجو تسليم السائق</h6>-->
+                        <!--                                    </p>-->
+                        <!--                                    <p>-->
+                        <!--                                        <h6>سيارة رقم</h6>-->
+                        <!--                                    </p>-->
+                        <!--                                    <p>-->
+                        <!--                                        <h6>الكمية(طن-كيس)</h6>-->
+                        <!--                                    </p>-->
+                        <!--                                    <p>-->
+                        <!--                                        <h6>النوع اسمنت(عادي-مقاوم-سايب)</h6>-->
+                        <!--                                    </p>-->
+                        <!--                                </div>-->
+                        <!--                                <div class="col-3 float-end text-center mt-4" style="height: 265px;">-->
+                        <!--                                    <br/>-->
+                        <!--                                    <br/>-->
+                        <!--                                    <br/>-->
+                        <!--                                    <br/>-->
+                        <!--                                    <br/>-->
+                        <!--                                    <br/>-->
+                        <!--                                    <p>-->
+                        <!--                                        <span t-field="o.partner_id"/>-->
+                        <!--                                    </p>-->
+                        <!--                                    <p>-->
+                        <!--                                        <span t-field="o.driver_id"/>-->
+                        <!--                                    </p>-->
+                        <!--                                    <p>-->
+                        <!--                                        <span t-field="o.car_id"/>-->
+                        <!--                                    </p>-->
+                        <!--                                    <p>-->
+                        <!--                                        <span t-field="o.quantity"/>- -->
+                        <!--                                        <span t-field="o.size"/>-->
+                        <!--                                    </p>-->
+                        <!--                                    <p>-->
+                        <!--                                        <span t-field="o.kind"/>-->
+                        <!--                                    </p>-->
+                        <!--                                </div>-->
+                        <!--                                <div class="float-start text-start" dir="ltr"-->
+                        <!--                                     style="margin-left: 120px; margin-top:20px;">-->
+                        <!--                                    <div>-->
+                        <!--                                        <div class="float-end" dir="ltr">-->
+                        <!--                                            <span t-field="o.name"/>-->
+                        <!--                                        </div>-->
+                        <!--                                        <div class="float-end text-center">-->
+                        <!--                                            <h6>Serial No:</h6>-->
+                        <!--                                        </div>-->
+                        <!--                                    </div>-->
+                        <!--                                    <br/>-->
+                        <!--                                    <br/>-->
+                        <!--                                    <div>-->
+                        <!--                                        <div class="float-end" dir="rtl">-->
+                        <!--                                            <h6>التاريخ</h6>-->
+                        <!--                                        </div>-->
+                        <!--                                        <div class="float-end text-center">-->
+                        <!--                                            <span t-field="o.h_date" t-field-options='{"format": "dd/MM/yyyy"}'/>-->
+                        <!--                                        </div>-->
+                        <!--                                        <div class="float-end" dir="ltr">-->
+                        <!--                                            <h6>H :</h6>-->
+                        <!--                                        </div>-->
+                        <!--                                    </div>-->
+                        <!--                                    <br/>-->
+                        <!--                                    <br/>-->
+                        <!--                                    <div>-->
+                        <!--                                        <div class="float-end" dir="rtl">-->
+                        <!--                                            <h6>الموافق</h6>-->
+                        <!--                                        </div>-->
+                        <!--                                        <div class="float-end text-center">-->
+                        <!--                                            <span t-field="o.date" t-field-options='{"format": "dd/MM/yyyy"}'/>-->
+                        <!--                                        </div>-->
+                        <!--                                        <div class="float-end" dir="ltr">-->
+                        <!--                                            <h6>Date</h6>-->
+                        <!--                                        </div>-->
+                        <!--                                    </div>-->
+                        <!--                                    <br/>-->
+                        <!--                                    <p>-->
+                        <!--                                        <h6>Cement Company</h6>-->
+                        <!--                                    </p>-->
+                        <!--                                    <p>-->
+                        <!--                                        <h6>Driver Name</h6>-->
+                        <!--                                    </p>-->
+                        <!--                                    <p>-->
+                        <!--                                        <h6>Car No.</h6>-->
+                        <!--                                    </p>-->
+                        <!--                                    <p>-->
+                        <!--                                        <h6>Qty.</h6>-->
+                        <!--                                    </p>-->
+                        <!--                                    <p>-->
+                        <!--                                        <h6>Kind</h6>-->
+                        <!--                                    </p>-->
+                        <!--                                </div>-->
+                        <!--                            </div>-->
+                        <!--                        </div>-->
                         <div class="row mt-4">
                             <div class="col-12">
 
