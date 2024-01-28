@@ -17,18 +17,21 @@ class MaintenanceRequest(models.Model):
             rec.repair_count = self.env['repair.order'].search_count([('maintenance_request_id', '=', rec.id)])
 
     def create_repair_order(self):
+        companies = self.company_id or self.env.company
+        default_warehouse = self.env.user.with_company(companies.id)._get_default_warehouse_id()
+
         for rec in self:
             repair_order_vals = {
+                'state': 'draft',
                 'vehicle_id': rec.vehicle_id.id,
                 'maintenance_request_id': rec.id,
-                'driver_id': rec.driver_id.id,
-                'scheduled_date': fields.Datetime.now(),
-                'user_id': self.env.user.id,  # Use self.env.user.id to get the user's ID
-                'company_id': rec.company_id.id,  # Use rec.company_id.id to get the company's ID
+                'picking_type_id': default_warehouse.repair_type_id.id,
+                'location_dest_id': default_warehouse.repair_type_id.default_location_dest_id.id,
             }
+            if repair_order_vals:
+                repair = self.env['repair.order'].sudo().create(repair_order_vals)
+                repair._get_picking_type()
 
-            # Create repair order using create method
-            self.env['repair.order'].create(repair_order_vals)
 
     def get_repair_order(self):
         return {
