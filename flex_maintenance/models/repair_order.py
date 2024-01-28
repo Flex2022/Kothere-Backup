@@ -9,42 +9,26 @@ class RepairOrder(models.Model):
     driver_id = fields.Many2one('res.partner', string='Driver', related='vehicle_id.driver_id')
     license_plate = fields.Char(string='License Plate', related='vehicle_id.license_plate')
     maintenance_request_id = fields.Many2one('maintenance.request', string='Maintenance Request')
-    # vendor_id = fields.Many2one('res.partner', string='Vendor')
-    # purchase_count = fields.Integer(string='Purchase Count', compute='_compute_purchase_count')
+    purchase_count = fields.Integer(string='Purchase Count', compute='_compute_purchase_count')
 
-    # def _compute_purchase_count(self):
-    #     for rec in self:
-    #         rec.purchase_count = self.env['purchase.order'].search_count([('repair_order_id', '=', rec.id)])
+    @api.depends('move_ids')
+    def _compute_purchase_count(self):
+        for rec in self:
+            rec.purchase_count = len(rec.move_ids.created_purchase_line_ids.order_id)
+            purchase_order_ids = (self.move_ids.created_purchase_line_ids.order_id).ids
+            print(purchase_order_ids, 'purchase_order_ids')
 
-    # def create_purchase_order(self):
-    #     order_line = []
-    #     if not self.vendor_id:
-    #         raise UserError(_('Please Select Vendor'))
-    #     for line in self.move_ids:
-    #         order_line.append((0, 0, {
-    #             'product_id': line.product_id.id,
-    #             'product_qty': line.product_uom_qty,
-    #         }))
-    #     order = self.env['purchase.order'].create({
-    #         'partner_id': self.vendor_id.id,
-    #         'repair_order_id': self.id,
-    #         'order_line': order_line,
-    #     })
-    #
-    # def get_purchase_order(self):
-    #     return {
-    #         'name': _('Purchase Order'),
-    #         'domain': [('repair_order_id', '=', self.id)],
-    #         'view_type': 'form',
-    #         'view_mode': 'tree,form',
-    #         'res_model': 'purchase.order',
-    #         'type': 'ir.actions.act_window',
-    #         'view_id': False,
-    #         'target': 'current',
-    #     }
+    def get_purchase_order(self):
+        purchase_order_ids = (self.move_ids.created_purchase_line_ids.order_id).ids
 
-#
-# class PurchaseOrder(models.Model):
-#     _inherit = 'purchase.order'
-#
-#     repair_order_id = fields.Many2one('repair.order', string='Repair Order')
+        return {
+            'name': _('Purchase Order'),
+            'domain': [('id', 'in', purchase_order_ids)],
+            'view_type': 'form',
+            'view_mode': 'tree,form',
+            'res_model': 'purchase.order',
+            'type': 'ir.actions.act_window',
+            'view_id': False,
+            'target': 'current',
+        }
+
