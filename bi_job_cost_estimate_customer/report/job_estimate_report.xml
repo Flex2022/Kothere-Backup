@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="action_report_job_estimate" model="ir.actions.report">
+            <field name="name">Job Estimate</field>
+            <field name="model">job.estimate</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">bi_job_cost_estimate_customer.job_estimate_report</field>
+            <field name="report_file">bi_job_cost_estimate_customer.job_estimate_report</field>
+            <field name="binding_model_id" ref="model_job_estimate"/>
+            <field name="print_report_name">'Job Estimate - %s' % (object.number or '').replace('/','')
+            </field>
+            <field name="binding_type">report</field>
+        </record>
+    </data>
+</odoo>
+
