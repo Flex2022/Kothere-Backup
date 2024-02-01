@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+flex_additions_deductions.access_deductions_lines,access_deductions_lines,flex_additions_deductions.model_deductions_lines,base.group_user,1,1,1,1
+flex_additions_deductions.access_additions_lines,access_additions_lines,flex_additions_deductions.model_additions_lines,base.group_user,1,1,1,1
+flex_additions_deductions.access_additions_deductions,access_additions_deductions,flex_additions_deductions.model_additions_deductions,base.group_user,1,1,1,1

@@ -1,0 +1,18 @@
+{
+    'name': 'Flex Additions Deductions',
+    'version': '1.0',
+    'summary': 'Flex Additions Deductions',
+    'description': 'Flex Additions Deductions',
+    'category': 'account',
+    'author': 'Abdalrahman Shahrour',
+    'website': 'https://flex-ops.com',
+    'license': 'AGPL-3',
+    'depends': ['account'],
+    'data': ['security/ir.model.access.csv',
+             'security/groups.xml',
+             'views/conf_country.xml',
+             'views/Additions_deductions.xml',
+             'views/invoice.xml'],
+    'installable': True,
+    'auto_install': False,
+}

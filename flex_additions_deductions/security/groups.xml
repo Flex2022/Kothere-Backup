@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="group_flex_additions_deductions_conf" model="res.groups">
+            <field name="name">Access to Additions Deductions Conf</field>
+        </record>
+    </data>
+</odoo>
