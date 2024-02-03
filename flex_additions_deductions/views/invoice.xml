@@ -8,13 +8,24 @@
             <field name="inherit_id" ref="account.view_move_form"/>
             <field name="priority" eval="8"/>
             <field name="arch" type="xml">
-                <xpath expr="//field[@name='partner_id']" position="after">
+                <xpath expr="//sheet/div[@name='button_box']" position="inside">
+                    <button name="open_created_journal" type="object" class="oe_stat_button"
+                            icon="fa-pencil-square-o"  invisible="there_is_access_from_company_id == False">
+                        <field name="invoice_count" widget="statinfo" string="Deductions/Additions"/>
+                    </button>
+                </xpath>
+                <xpath expr="//field[@name='journal_id']" position="after">
+                    <field name="source_Document_for_smart_button" readonly="1"/>
+                </xpath>
+                <xpath expr="//field[@name='invoice_line_ids']" position="after">
                     <field name="there_is_access_from_company_id" invisible="1"/>
+
                 </xpath>
                 <xpath expr="//page[@name='aml_tab']" position="after">
                     <page string="Additions/Deductions" name="flex_additions_deductions_tab"
                           invisible="there_is_access_from_company_id == False">
-                        <h1>Deductions</h1>
+
+                        <h2>Deductions</h2>
                         <!--                       there_is_access_from_company_id == False-->
                         <field name="flex_deductions_ids" widget="one2many_list">
                             <tree editable="bottom">
@@ -36,7 +47,7 @@
                                 </group>
                             </form>
                         </field>
-                        <h1>Additions</h1>
+                        <h2>Additions</h2>
                         <field name="flex_additions_ids" widget="one2many_list">
                             <tree editable="bottom">
                                 <field name="additions_id"/>
@@ -60,12 +71,18 @@
                     </page>
                 </xpath>
                 <xpath expr="//field[@name='tax_totals']" position="after">
-                    <field name="deductions_amount_type_discounts" readonly="1" force_save="1" invisible="there_is_access_from_company_id == False"/>
-                    <field name="deductions_amount_type_insurances" readonly="1" force_save="1" invisible="there_is_access_from_company_id == False"/>
-                    <field name="deductions_amount_type_advance_payment" readonly="1" force_save="1" invisible="there_is_access_from_company_id == False"/>
-                    <field name="deductions_amount_type_business_guarantee" readonly="1" force_save="1" invisible="there_is_access_from_company_id == False"/>
-                    <field name="deductions_amount" readonly="1" force_save="1" invisible="there_is_access_from_company_id == False"/>
-                    <field name="additions_amount" readonly="1" force_save="1" invisible="there_is_access_from_company_id == False"/>
+                    <field name="deductions_amount_type_discounts" readonly="1" force_save="1"
+                           invisible="there_is_access_from_company_id == False"/>
+                    <field name="deductions_amount_type_insurances" readonly="1" force_save="1"
+                           invisible="there_is_access_from_company_id == False"/>
+                    <field name="deductions_amount_type_advance_payment" readonly="1" force_save="1"
+                           invisible="there_is_access_from_company_id == False"/>
+                    <field name="deductions_amount_type_business_guarantee" readonly="1" force_save="1"
+                           invisible="there_is_access_from_company_id == False"/>
+                    <field name="deductions_amount" readonly="1" force_save="1"
+                           invisible="there_is_access_from_company_id == False"/>
+                    <field name="additions_amount" readonly="1" force_save="1"
+                           invisible="there_is_access_from_company_id == False"/>
                 </xpath>
             </field>
         </record>

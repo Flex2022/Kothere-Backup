@@ -4,6 +4,9 @@ from odoo import api, fields, models
 class AccountMove(models.Model):
     _inherit = 'account.move'
 
+    # Smart Button Fields
+    source_Document_for_smart_button = fields.Char(string='Source Document SM')
+
     # Invisible Fields
     there_is_access_from_company_id = fields.Boolean(string='There Is Access From Company Id',
                                                      compute='_compute_there_is_access_from_company_id')
@@ -26,6 +29,22 @@ class AccountMove(models.Model):
 
     # sum
     total_deductions = fields.Float('Total Deductions', compute='_compute_total_deductions', store=True)
+
+    # smart Button Functions
+    def open_created_journal(self):
+        return {
+            'name': 'Deductions Lines',
+            'view_mode': 'tree,form',
+            'res_model': 'account.move',
+            'type': 'ir.actions.act_window',
+            'domain': [('source_Document_for_smart_button', '=', self.name)],
+            'context': {'default_source_Document_for_smart_button': self.name},
+        }
+
+    invoice_count = fields.Integer(compute='_compute_invoice_count', string='Journal Entres')
+    def _compute_invoice_count(self):
+        for record in self:
+            record.invoice_count = self.env['account.move'].search_count([('source_Document_for_smart_button', '=', record.name)])
 
     @api.depends('deductions_amount', 'additions_amount')
     def _compute_total_deductions(self):
@@ -75,16 +94,17 @@ class AccountMove(models.Model):
                         journal = self.env['account.move'].create({
                             'ref': line.name,
                             'move_type': 'entry',
+                            'source_Document_for_smart_button': record.name,
                             'line_ids': [
                                 (0, 0, {
                                     'name': line.name,
                                     'account_id': record.partner_id.property_account_receivable_id.id,
-                                    'debit': line.amount,
+                                    'credit': line.amount,
                                 }),
                                 (0, 0, {
                                     'name': line.name,
                                     'account_id': line.deductions_id.account_id.id,
-                                    'credit': line.amount,
+                                    'debit': line.amount,
                                 }),
                             ],
 
@@ -94,15 +114,16 @@ class AccountMove(models.Model):
                         journal = self.env['account.move'].create({
                             'ref': line.name,
                             'move_type': 'entry',
+                            'source_Document_for_smart_button': record.name,
                             'line_ids': [(0, 0,{
                                     'name': line.name,
                                     'account_id': line.additions_id.account_id.id,
-                                    'debit': line.amount,
+                                    'credit': line.amount,
                                 }),
                                 (0, 0, {
                                     'name': line.name,
                                     'account_id': record.partner_id.property_account_receivable_id.id,
-                                    'credit': line.amount,
+                                    'debit': line.amount,
                                 }),
                             ],
 
@@ -112,8 +133,15 @@ class AccountMove(models.Model):
 
 
     def action_post(self):
-        res = super(AccountMove, self).action_post()
         if self.there_is_access_from_company_id:
-
             self.create_journal_entry_when_conferim()
-        return res
+        return super(AccountMove, self).action_post()
+
+    def button_draft(self):
+        if self.there_is_access_from_company_id:
+            domain = [('source_Document_for_smart_button', '=', self.name)]
+            journals = self.env['account.move'].search(domain)
+            for journal in journals:
+                if journal.state == 'posted':
+                    journal.button_draft()
+        return super(AccountMove, self).button_draft()

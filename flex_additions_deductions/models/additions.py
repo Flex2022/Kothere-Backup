@@ -9,7 +9,7 @@ class DeductionsLines(models.Model):
     invoice_id = fields.Many2one('account.move', string='Invoice')
     name = fields.Char()
     # additions_id = fields.Selection([('1', 'دفعة مؤخرة'),], string='Additions')
-    additions_id = fields.Many2one('additions.deductions', string='Deductions', domain="[('type', '=', '1')]")
+    additions_id = fields.Many2one('additions.deductions', string='Additions', domain="[('type', '=', '1')]")
 
     is_percentage = fields.Boolean()
     amount = fields.Float('Amount', compute='_compute_amount', store=True)
