@@ -9,7 +9,7 @@ class PurcheseOrder(models.Model):
         ('draft', 'RFQ'),
         ('sent', 'RFQ Sent'),
         ('po', 'PM Approval'),
-        ('factory', 'Manufacturing Approval'),
+        ('factory', 'Sector Approval'),
         ('factory_aproved', 'Financial Approval'),
         ('to approve', 'To Approve'),
         ('purchase', 'Purchase Order'),
