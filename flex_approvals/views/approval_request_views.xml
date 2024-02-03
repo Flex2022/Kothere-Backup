@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="flex_approvals_approval_request_view_form_inherit" model="ir.ui.view">
+            <field name="name">flex_approvals_approval.request.form</field>
+            <field name="model">approval.request</field>
+            <field name="inherit_id" ref="approvals.approval_request_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='has_location']" position="after">
+                    <field name="has_appointment_type" invisible="1"/>
+                </xpath>
+                <xpath expr="//field[@name='location']"
+                       position="after">
+                    <field name="appointment_type" invisible="has_appointment_type == 'no'"
+                           readonly="request_status != 'new'" required="has_appointment_type == 'required'"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
