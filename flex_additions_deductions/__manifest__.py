@@ -12,7 +12,10 @@
              'security/groups.xml',
              'views/conf_country.xml',
              'views/Additions_deductions.xml',
-             'views/invoice.xml'],
+             'views/invoice.xml',
+             'reports/layout.xml',
+             'reports/report.xml',
+             ],
     'installable': True,
     'auto_install': False,
 }

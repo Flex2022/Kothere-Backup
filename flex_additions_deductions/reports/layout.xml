@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="report_layout_content">
+        <div t-attf-class="header o_company_#{company.id}_layout" t-att-style="report_header_style">
+            <style>
+                * { font-family: 'Odoo Unicode Support Noto', sans-serif;}
+                * { color: black; }
+                .ml-0 {
+                margin-left: 120px !important;
+                }
+                ml-2 {
+                margin-left: 20px !important;
+                }
+            </style>
+            <div class="row" dir="ltr">
+                <div class="col-4 text-center pt-4" dir="rtl">
+                    <br/>
+                    <br/>
+
+                    <p rtl="rtl" style="font-size: 14px;">
+                        مستخلص جاري رقم:
+                        <span>1</span>
+                    </p>
+                    <p rtl="rtl" style="font-size: 14px;">
+                        التاريخ:
+                        <span>23/1/2024</span>
+                    </p>
+                    <p rtl="rtl" style="font-size: 14px;">
+                        قيمة العقد:
+                        <span>10,307,440.00</span>
+                    </p>
+                </div>
+                <div class="col-5">
+                    <p class="text-center pt-4">
+                        <u><span t-field="company.name" style="font-size: 14px;"></span></u>
+                        <br/>
+                        <u><span dir="rtl" style="font-size: 14px;margin-top:-5px;">اسم المشروع / الأعمال الالكتروميكانيك والتشطيبات لفيلل المستفيدين بمشروع رواء <span dir="rtl">MS02</span></span></u>
+
+                    </p>
+                    <p class="text-center" dir="rtl">
+                        <u><span>المقاول:</span></u>
+                        <u><span style="font-size: 14px;">شركة رؤية الجيل العاشر للتجارة والمقاولات</span></u>
+                    </p>
+<!--                    <p class="text-center pt-4">-->
+<!--                      -->
+<!--                        <span>MS02</span>-->
+
+<!--                    </p>-->
+                </div>
+
+                <div class="col-3 text-right pr-0 ml-0">
+                    <img t-att-src="image_data_uri(company.logo)"
+                         style="max-height:120px; max-width:100%;" alt="Logo"/>
+                </div>
+
+            </div>
+        </div>
+
+        <div t-attf-class="article o_report_layout_standard o_company_#{company.id}_layout {{ 'o_layout_background' if company.layout_background in ['Geometric', 'Custom']  else  '' }}"
+             t-attf-style="background-image: url({{ 'data:image/png;base64,%s' % company.layout_background_image.decode('utf-8') if company.layout_background_image and company.layout_background == 'Custom' else '/base/static/img/bg_background_template.jpg' if company.layout_background == 'Geometric' else ''}});"
+             t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id"
+             t-att-data-oe-lang="o and o.env.context.get('lang')">
+            <t t-out="0"/>
+        </div>
+    </template>
+    <template id="report_layout">
+        <t t-if="not o" t-set="o" t-value="doc"/>
+        <t t-if="not company">
+            <!-- Multicompany -->
+            <t t-if="company_id">
+                <t t-set="company" t-value="company_id"/>
+            </t>
+            <t t-elif="o and 'company_id' in o and o.company_id.sudo()">
+                <t t-set="company" t-value="o.company_id.sudo()"/>
+            </t>
+            <t t-else="else">
+                <t t-set="company" t-value="res_company"/>
+            </t>
+        </t>
+        <t t-call="flex_additions_deductions.report_layout_content">
+            <t t-out="0"/>
+        </t>
+    </template>
+
+</odoo>

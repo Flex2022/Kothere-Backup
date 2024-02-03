@@ -5,7 +5,8 @@ class AccountMove(models.Model):
     _inherit = 'account.move'
 
     # Invisible Fields
-    there_is_access_from_company_id = fields.Boolean(string='There Is Access From Company Id', compute='_compute_there_is_access_from_company_id')
+    there_is_access_from_company_id = fields.Boolean(string='There Is Access From Company Id',
+                                                     compute='_compute_there_is_access_from_company_id')
 
     # Lines Fields
     flex_deductions_ids = fields.One2many('deductions.lines', 'invoice_id', string='Deductions')
@@ -18,8 +19,18 @@ class AccountMove(models.Model):
     # Sub Type Amount Fields
     deductions_amount_type_discounts = fields.Float('Discounts', compute='_compute_deductions_amount', store=True)
     deductions_amount_type_insurances = fields.Float('Insurances', compute='_compute_deductions_amount', store=True)
-    deductions_amount_type_advance_payment = fields.Float('Advance Payment', compute='_compute_deductions_amount', store=True)
-    deductions_amount_type_business_guarantee = fields.Float('Business Guarantee', compute='_compute_deductions_amount', store=True)
+    deductions_amount_type_advance_payment = fields.Float('Advance Payment', compute='_compute_deductions_amount',
+                                                          store=True)
+    deductions_amount_type_business_guarantee = fields.Float('Business Guarantee', compute='_compute_deductions_amount',
+                                                             store=True)
+
+    # sum
+    total_deductions = fields.Float('Total Deductions', compute='_compute_total_deductions', store=True)
+
+    @api.depends('deductions_amount', 'additions_amount')
+    def _compute_total_deductions(self):
+        for rec in self:
+            rec.total_deductions = rec.amount_untaxed - rec.deductions_amount + rec.additions_amount
 
     # Compute Functions For Check Access
     def _compute_there_is_access_from_company_id(self):
@@ -37,13 +48,17 @@ class AccountMove(models.Model):
     def _compute_deductions_amount(self):
         for record in self:
             record.deductions_amount = sum(record.flex_deductions_ids.mapped('amount'))
-            case_1 = self.env['deductions.lines'].search([('invoice_id', '=', record.id), ('deductions_id.type_deductions', '=', '1')])
+            case_1 = self.env['deductions.lines'].search(
+                [('invoice_id', '=', record.id), ('deductions_id.type_deductions', '=', '1')])
             record.deductions_amount_type_discounts = sum(case_1.mapped('amount'))
-            case_2 = self.env['deductions.lines'].search([('invoice_id', '=', record.id), ('deductions_id.type_deductions', '=', '2')])
+            case_2 = self.env['deductions.lines'].search(
+                [('invoice_id', '=', record.id), ('deductions_id.type_deductions', '=', '2')])
             record.deductions_amount_type_insurances = sum(case_2.mapped('amount'))
-            case_3 = self.env['deductions.lines'].search([('invoice_id', '=', record.id), ('deductions_id.type_deductions', '=', '3')])
+            case_3 = self.env['deductions.lines'].search(
+                [('invoice_id', '=', record.id), ('deductions_id.type_deductions', '=', '3')])
             record.deductions_amount_type_advance_payment = sum(case_3.mapped('amount'))
-            case_4 = self.env['deductions.lines'].search([('invoice_id', '=', record.id), ('deductions_id.type_deductions', '=', '4')])
+            case_4 = self.env['deductions.lines'].search(
+                [('invoice_id', '=', record.id), ('deductions_id.type_deductions', '=', '4')])
             record.deductions_amount_type_business_guarantee = sum(case_4.mapped('amount'))
 
     # Compute Functions For Amounts
