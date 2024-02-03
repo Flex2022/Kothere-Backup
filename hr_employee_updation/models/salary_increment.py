@@ -11,20 +11,20 @@ class SalaryIncrease(models.Model):
     _inherit = ['mail.thread', 'mail.activity.mixin']
     _order = 'id desc'
 
-    name = fields.Char(string='Name', copy=False, help="Name", track_visibility='always', readonly=True, states={'draft': [('readonly', False)], 'submit': [('readonly', False)]})
-    company_id = fields.Many2one('res.company', 'Company', help="Company", readonly=True,
+    name = fields.Char(string='Name', copy=False, help="Name", track_visibility='always', states={'draft': [('readonly', False)], 'submit': [('readonly', False)]})
+    company_id = fields.Many2one('res.company', 'Company', help="Company",
                                  default=lambda self: self.env.user.company_id,  track_visibility='always',
                                  states={'draft': [('readonly', False)], 'submit': [('readonly', False)]})
-    date = fields.Date('Date', default=lambda self: fields.datetime.now(), track_visibility='always', readonly=True,
+    date = fields.Date('Date', default=lambda self: fields.datetime.now(), track_visibility='always',
                        states={'draft': [('readonly', False)], 'submit': [('readonly', False)]})
     user_id = fields.Many2one('res.users', string='Responsable', index=True, tracking=True,
-                              default=lambda self: self.env.user, check_company=True, readonly=True,
+                              default=lambda self: self.env.user, check_company=True,
                               states={'draft': [('readonly', False)], 'submit': [('readonly', False)]})
-    type = fields.Selection([('all', 'All Employee'), ('selected', 'Selected Employee')], 'Type', readonly=True,
+    type = fields.Selection([('all', 'All Employee'), ('selected', 'Selected Employee')], 'Type',
                             states={'draft': [('readonly', False)], 'submit': [('readonly', False)]})
-    increase_percent = fields.Float('Increase Percent (%)', readonly=True,
+    increase_percent = fields.Float('Increase Percent (%)',
                                     states={'draft': [('readonly', False)], 'submit': [('readonly', False)]})
-    line_ids = fields.One2many('salary.increase.line', 'increase_id', 'Line', readonly=True,
+    line_ids = fields.One2many('salary.increase.line', 'increase_id', 'Line',
                                states={'draft': [('readonly', False)], 'submit': [('readonly', False)]})
     state = fields.Selection([('draft', 'Draft'), ('submit', 'Submitted'), ('acc_approve', 'Accounting Approved'),
                               ('ceo_approve', 'CEO Approved'), ('hr_approve', 'HR Approved')], string='Status', default='draft')

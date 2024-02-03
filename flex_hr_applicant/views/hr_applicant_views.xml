@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="flex_hr_applicant_hr_applicant_form_inherit" model="ir.ui.view">
+            <field name="name">flex_hr_applicant.hr.applicant.form</field>
+            <field name="model">hr.applicant</field>
+            <field name="inherit_id" ref="hr_recruitment.hr_applicant_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='type_id']" position="after">
+                    <field name="appointment_type"/>
+                    <field name="is_external" invisible="1"/>
+                    <field name="visa_status" invisible="is_external == True"/>
+                    <field name="job_offer_is_sent" invisible="is_external == True"/>
+                    <field name="receiving_the_visa" invisible="is_external == True"/>
+                    <field name="medical_examination_date" invisible="is_external == True"/>
+                    <field name="flight_tickets_booking_date" invisible="is_external == True"/>
+                    <field name="quarantine_date" invisible="is_external == True"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,38 @@
+table, tr, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    width: 100%;
+    text-align: center;
+    margin: auto;
+    table-layout: fixed;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 13px;
+
+}
+
+tr, td {
+    height: 50px;
+}
+
+
+.size1 {
+    width: 8%;
+}
+
+.size2 {
+    width: 32%;
+}
+
+.size3 {
+    width: 12%;
+}
+
+.size4 {
+    width: 15%;
+}
+
+
+.size8 {
+    width: 89%;
+}

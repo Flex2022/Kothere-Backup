@@ -1,0 +1,33 @@
+# -*- coding: utf-8 -*-
+{
+    'name': 'Employee Loan Management',
+    'version': '15.0.0',
+    'summary': 'Manage Employee Loan Requests',
+    'description': """Helps you to manage Loan Requests of your company's staff""",
+    'category': 'Generic Modules/Human Resources',
+    'author': "Neoteric Hub",
+    'company': 'Neoteric Hub',
+    'live_test_url': '',
+    'price': 0.0,
+    'currency': 'USD',
+    'website': "https://www.neoterichub.com",
+    'depends': [
+        'base', 'hr', 'hr_payroll', 'account'],
+    'data': [
+        'security/ir.model.access.csv',
+        'security/security.xml',
+        'data/hr_loan_seq.xml',
+        'data/salary_rule_loan.xml',
+        'views/hr_loan.xml',
+        'views/hr_payroll.xml',
+        'views/res_config_settings.xml',
+        'views/account_payment.xml',
+        'report/loan_report.xml',
+        'wizard/payment.xml',
+    ],
+    'images': ['static/description/banner.gif'],
+    'license': 'LGPL-3',
+    'installable': True,
+    'auto_install': False,
+    'application': False,
+}

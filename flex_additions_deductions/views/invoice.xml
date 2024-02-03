@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="flex_additions_deductions_view_move_form" model="ir.ui.view">
+            <field name="name">flex_additions_deductions.account.move.form</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <xpath expr="//sheet/div[@name='button_box']" position="inside">
+                    <button name="open_created_journal" type="object" class="oe_stat_button"
+                            icon="fa-pencil-square-o"  invisible="there_is_access_from_company_id == False">
+                        <field name="invoice_count" widget="statinfo" string="Deductions/Additions"/>
+                    </button>
+                </xpath>
+                <xpath expr="//field[@name='journal_id']" position="after">
+                    <field name="source_Document_for_smart_button" readonly="1"/>
+                </xpath>
+                <xpath expr="//field[@name='invoice_line_ids']" position="after">
+                    <field name="there_is_access_from_company_id" invisible="1"/>
+
+                </xpath>
+                <xpath expr="//page[@name='aml_tab']" position="after">
+                    <page string="Additions/Deductions" name="flex_additions_deductions_tab"
+                          invisible="there_is_access_from_company_id == False">
+
+                        <h2>Deductions</h2>
+                        <!--                       there_is_access_from_company_id == False-->
+                        <field name="flex_deductions_ids" widget="one2many_list">
+                            <tree editable="bottom">
+                                <field name="deductions_id"/>
+                                <field name="name"/>
+                                <field name="is_percentage"/>
+                                <field name="tax_id"/>
+                                <field name="percentage_or_value"/>
+                                <field name="amount"/>
+                            </tree>
+                            <form>
+                                <group>
+                                    <field name="deductions_id"/>
+                                    <field name="name"/>
+                                    <field name="is_percentage"/>
+                                    <field name="tax_id"/>
+                                    <field name="percentage_or_value"/>
+                                    <field name="amount"/>
+                                </group>
+                            </form>
+                        </field>
+                        <h2>Additions</h2>
+                        <field name="flex_additions_ids" widget="one2many_list">
+                            <tree editable="bottom">
+                                <field name="additions_id"/>
+                                <field name="name"/>
+                                <field name="is_percentage"/>
+                                <field name="tax_id"/>
+                                <field name="percentage_or_value"/>
+                                <field name="amount"/>
+                            </tree>
+                            <form>
+                                <group>
+                                    <field name="additions_id"/>
+                                    <field name="name"/>
+                                    <field name="is_percentage"/>
+                                    <field name="tax_id"/>
+                                    <field name="percentage_or_value"/>
+                                    <field name="amount"/>
+                                </group>
+                            </form>
+                        </field>
+                    </page>
+                </xpath>
+                <xpath expr="//field[@name='tax_totals']" position="after">
+                    <field name="deductions_amount_type_discounts" readonly="1" force_save="1"
+                           invisible="there_is_access_from_company_id == False"/>
+                    <field name="deductions_amount_type_insurances" readonly="1" force_save="1"
+                           invisible="there_is_access_from_company_id == False"/>
+                    <field name="deductions_amount_type_advance_payment" readonly="1" force_save="1"
+                           invisible="there_is_access_from_company_id == False"/>
+                    <field name="deductions_amount_type_business_guarantee" readonly="1" force_save="1"
+                           invisible="there_is_access_from_company_id == False"/>
+                    <field name="deductions_amount" readonly="1" force_save="1"
+                           invisible="there_is_access_from_company_id == False"/>
+                    <field name="additions_amount" readonly="1" force_save="1"
+                           invisible="there_is_access_from_company_id == False"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

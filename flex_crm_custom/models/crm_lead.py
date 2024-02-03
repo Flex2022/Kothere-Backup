@@ -1,4 +1,5 @@
-from odoo import api, fields, models
+from odoo import api, fields, models, _
+from odoo.exceptions import UserError, ValidationError
 import json
 
 
@@ -13,10 +14,33 @@ class CustomCrmLead(models.Model):
     probability_order_line_active = fields.Boolean(string='Show Order Line Probability',
                                                    related="company_id.probability_order_line_active")
 
+    project_id = fields.Many2one('project.project', string='Project', no_create=True, copy=False)
+
+
+
     @api.depends('order_line_ids.price_total')
     def _compute_total_order_lines(self):
         for lead in self:
             lead.total_order_line_ids = sum(lead.order_line_ids.mapped('price_total'))
+
+    def write(self, vals):
+        res = super(CustomCrmLead, self).write(vals)
+        if 'stage_id' in vals:
+            req_prj = self.env['crm.stage'].search([('id', '=', vals['stage_id'])])
+            if req_prj.project_required:
+                if not self.project_id:
+                    if 'project_id' not in vals:
+                        raise UserError(_('You must create a project for this lead'))
+            if req_prj.is_won:
+                if 'project_id' in vals:
+                    raise UserError(_('You cant change the project of a won lead'))
+        if 'project_id' in vals:
+            # req_prj = self.env['crm.stage'].search([('id', '=', vals['stage_id'])])
+            if self.stage_id.is_won:
+                if 'project_id' in vals:
+                    raise UserError(_('You cant change the project of a won lead'))
+        return res
+
 
 
 class CrmOrderLine(models.Model):
@@ -84,3 +108,8 @@ class CrmOrderLine(models.Model):
                 line.price_total = taxes_res['total_included']
             else:
                 line.price_total = line.price_subtotal = subtotal
+
+class CrmStage(models.Model):
+    _inherit = 'crm.stage'
+
+    project_required = fields.Boolean(string='Project Required', default=False)

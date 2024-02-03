@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Inherit Form View to Modify it -->
+        <record id="view_account_payment_inherit_form" model="ir.ui.view">
+            <field name="name">view_account_payment_inherit_form</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="account.view_account_payment_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='ref']" position="after">
+                    <!-- Add your fields or attributes here -->
+                    <field name="payment_loan" invisible="1"/>
+                    <field name="loan_id" invisible="not payment_loan"/>
+                </xpath>
+
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

@@ -10,7 +10,7 @@
     'website': "https://flex-ops.com",
     'category': 'Customer Relationship Management',
     'license': 'OPL-1',
-    'depends': ['base', 'sale', 'crm', 'sale_crm','analytic'],
+    'depends': ['base', 'sale', 'crm', 'sale_crm','analytic', 'project'],
     'data': [
         'security/ir.model.access.csv',
         'views/crm_lead.xml',

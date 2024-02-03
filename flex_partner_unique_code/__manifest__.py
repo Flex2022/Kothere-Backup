@@ -7,11 +7,15 @@
     'author': 'Abdalrahman Shahrour',
     'website': 'www.flex-ops.com',
     'license': 'AGPL-3',
+
     'depends': [
         'base',
         'contacts',
     ],
-
+    'data': [
+        'data/sequence.xml',
+        'views/contacts.xml',
+        ],
     'installable': True,
     'auto_install': False,
 }

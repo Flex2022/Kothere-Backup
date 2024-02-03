@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="paperformat_loan" model="report.paperformat">
+            <field name="name">A4</field>
+            <field name="default" eval="True"/>
+            <field name="format">A4</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">40</field>
+            <field name="margin_bottom">32</field>
+            <field name="margin_left">7</field>
+            <field name="margin_right">7</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">35</field>
+            <field name="dpi">90</field>
+        </record>
+
+
+        <record id="employee_loan_report" model="ir.actions.report">
+            <field name="name">Employee Loan Report</field>
+            <field name="model">hr.loan</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">nthub_loan_management.report_loan</field>
+            <field name="report_file">nthub_loan_management.report_loan</field>
+            <field name="attachment_use" eval="True"/>
+            <field name="binding_model_id" ref="nthub_loan_management.model_hr_loan"/>
+            <field name="paperformat_id" ref="paperformat_loan"/>
+            <field name="binding_type">report</field>
+        </record>
+
+
+        <template id="report_loan">
+            <t t-call="web.html_container">
+                <t t-call="web.external_layout">
+                    <t t-set="data_report_margin_top" t-value="12"/>
+                    <t t-set="data_report_header_spacing" t-value="9"/>
+                    <div class="page">
+                        <t t-foreach="docs" t-as="loan">
+                            <div class="row mt32 mb32">
+                                <div class="col-2">
+                                    <strong>Loan NO:</strong>
+                                    <p t-field="loan.name"/>
+                                </div>
+                            </div>
+                            <div class="row mt32 mb32">
+                                <div class="col-2">
+                                    <strong>Employee:</strong>
+                                    <p t-field="loan.employee_id.name"/>
+                                </div>
+                                <div class="col-2">
+                                    <strong>Date:</strong>
+                                    <p t-field="loan.date"/>
+                                </div>
+                                <div class="col-3">
+                                    <strong>Department:</strong>
+                                    <p t-field="loan.department_id"/>
+                                </div>
+                                <div class="col-2">
+                                    <strong>Loan Amount:</strong>
+                                    <p t-field="loan.loan_amount"/>
+                                </div>
+                                <div class="col-3">
+                                    <strong>Payment:</strong>
+                                    <p t-field="loan.payment_id"/>
+                                </div>
+                            </div>
+                            <table class="table table-sm table-condensed" name="account_lines_table"
+                                   style="border:1px solid gray; width:100%">
+                                <thead>
+                                    <tr style="border:1px solid gray; background-color:gray">
+                                        <th style="border:1px solid gray;">
+                                            <strong>Payment Date</strong>
+                                        </th>
+                                        <th style="border:1px solid gray;">
+                                            <strong>Amount</strong>
+                                        </th>
+                                        <th style="border:1px solid gray;">
+                                            <strong>Paid</strong>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="loan.loan_lines" t-as="line">
+                                        <tr style="border:1px solid gray;" class="text-right">
+                                            <td style="border:1px solid gray;" class="text-left">
+                                                <span t-field="line.date"/>
+                                            </td>
+                                            <td style="border:1px solid gray;" class="text-left">
+                                                <span t-field="line.amount"/>
+                                            </td>
+                                            <td style="border:1px solid gray;" class="text-left">
+                                                <span t-field="line.paid"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                            <div class="row justify-content-end">
+                                <table class="table table-sm" style="width:25% ;margin-right:10px">
+                                    <tr>
+                                        <td>
+                                            <strong>Total Amount</strong>
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-esc="loan.total_amount"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>Total Paid Amount</strong>
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-esc="loan.total_paid_amount"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>Balance Amount</strong>
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-esc="loan.balance_amount"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </t>
+                    </div>
+                </t>
+
+            </t>
+        </template>
+    </data>
+</odoo>

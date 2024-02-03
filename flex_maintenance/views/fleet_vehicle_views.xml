@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Inherit Form View to Modify it -->
+        <record id="fleet_vehicle_view_form_inherit" model="ir.ui.view">
+            <field name="name">fleet.vehicle.view.form.inherit</field>
+            <field name="model">fleet.vehicle</field>
+            <field name="inherit_id" ref="fleet.fleet_vehicle_view_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='location']" position="after">
+                    <!-- Add your fields or attributes here -->
+                    <label for="hours_number" string="Repair every"/>
+                    <div class="o_inline">
+                        <field name="hours_number" widget="float_time" placeholder="Hours" class="ms-0"
+                               style="width: fit-content;"/>
+                        <span>hours</span>
+                    </div>
+
+                    <label for="kilometres_number" string="and" class="ms-0" style="width: fit-content;"/>
+                    <div class="o_inline">
+                        <field name="kilometres_number" widget="float" placeholder="Kilometers" class="ms-0"
+                               style="width: fit-content;"/>
+                        <span>kilometers</span>
+                    </div>
+
+                </xpath>
+
+                <xpath expr="//div[@name='button_box']" position="inside">
+                    <button class="oe_stat_button" type="object" icon="fa-building"
+                            name="get_maintenance_request">
+                        <div class="o_field_widget o_stat_info">
+                            <span class="o_stat_value" widget="statinfo">
+                                <field name="maintenance_count" widget="statinfo" nolabel="1" class="mr4"
+                                       readonly="1"/>
+                            </span>
+                            <span class="o_stat_text">Maintenance Request</span>
+                        </div>
+                    </button>
+
+                    <button class="oe_stat_button" type="object" icon="fa-building"
+                            name="get_repair_order">
+                        <div class="o_field_widget o_stat_info">
+                            <span class="o_stat_value" widget="statinfo">
+                                <field name="repair_count" widget="statinfo" nolabel="1" class="mr4"
+                                       readonly="1"/>
+                            </span>
+                            <span class="o_stat_text">Repair</span>
+                        </div>
+                    </button>
+
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

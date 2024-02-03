@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="flex_additions_deductions_tree_view" model="ir.ui.view">
+            <field name="name">flex_additions_deductions.additions.deductions</field>
+            <field name="model">additions.deductions</field>
+            <field name="arch" type="xml">
+                <tree string="Additions/Deductions" editable="bottom">
+                    <field name="name"/>
+                    <field name="type"/>
+                    <field name="type_deductions"/>
+                    <field name="account_id"/>
+                    <field name="company_id" options="{'no_create': True}"
+                           groups="base.group_multi_company" optional="hide"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="flex_additions_deductions_act_window" model="ir.actions.act_window">
+            <field name="name">Additions/Deductions</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">additions.deductions</field>
+            <!--            <field name="view_type">tree</field>-->
+            <field name="view_mode">tree</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    There is no examples click here to add new Additions/Deductions.
+                </p>
+            </field>
+        </record>
+
+        <menuitem name="Additions/Deductions" id="flex_additions_deductions_menu"
+                  groups="flex_additions_deductions.group_flex_additions_deductions_conf"
+                  parent="account.menu_finance_configuration" action="flex_additions_deductions_act_window"/>
+
+        <record id="category_comp_rule" model="ir.rule">
+            <field name="name">category multi-company</field>
+            <field name="model_id" ref="model_additions_deductions"/>
+            <field name="domain_force">['|', ('company_id', 'in', company_ids), ('company_id', '=', False)]</field>
+        </record>
+    </data>
+</odoo>

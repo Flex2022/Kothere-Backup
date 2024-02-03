@@ -15,7 +15,7 @@
         </record>
 
         <record id="flex_po_approvals_status_access_fa_man" model="res.groups">
-            <field name="name">PO Approval || Factory Manager Approval</field>
+            <field name="name">PO Approval || Sector Manager Approval</field>
             <field name="category_id"
                    ref="flex_po_approvals_status_access_category"/>
         </record>
