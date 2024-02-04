@@ -41,7 +41,8 @@ class DeductionsLines(models.Model):
     @api.constrains('is_percentage', 'percentage_or_value')
     def _check_is_percentage(self):
         for record in self:
-            if record.is_percentage and record.percentage_or_value > 1:
-                raise ValidationError('You can not select percentage more than 100%')
-            elif not record.is_percentage and record.percentage_or_value > 0:
-                raise ValidationError('You can not select value more than 0')
+            if record.is_percentage:
+                if record.percentage_or_value > 1:
+                    raise ValidationError('You can not select percentage more than 100%')
+                elif record.percentage_or_value < 0:
+                    raise ValidationError('You can not select value less than 0')

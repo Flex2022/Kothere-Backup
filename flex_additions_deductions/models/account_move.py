@@ -42,9 +42,11 @@ class AccountMove(models.Model):
         }
 
     invoice_count = fields.Integer(compute='_compute_invoice_count', string='Journal Entres')
+
     def _compute_invoice_count(self):
         for record in self:
-            record.invoice_count = self.env['account.move'].search_count([('source_Document_for_smart_button', '=', record.name)])
+            record.invoice_count = self.env['account.move'].search_count(
+                [('source_Document_for_smart_button', '=', record.name)])
 
     @api.depends('deductions_amount', 'additions_amount')
     def _compute_total_deductions(self):
@@ -61,7 +63,6 @@ class AccountMove(models.Model):
                     record.there_is_access_from_company_id = False
             else:
                 record.there_is_access_from_company_id = False
-
 
     @api.depends('flex_deductions_ids')
     def _compute_deductions_amount(self):
@@ -98,11 +99,13 @@ class AccountMove(models.Model):
                             'line_ids': [
                                 (0, 0, {
                                     'name': line.name,
+                                    'partner_id': record.partner_id.id,
                                     'account_id': record.partner_id.property_account_receivable_id.id,
                                     'credit': line.amount,
                                 }),
                                 (0, 0, {
                                     'name': line.name,
+                                    'partner_id': record.partner_id.id,
                                     'account_id': line.deductions_id.account_id.id,
                                     'debit': line.amount,
                                 }),
@@ -115,22 +118,22 @@ class AccountMove(models.Model):
                             'ref': line.name,
                             'move_type': 'entry',
                             'source_Document_for_smart_button': record.name,
-                            'line_ids': [(0, 0,{
+                            'line_ids': [
+                                (0, 0, {
                                     'name': line.name,
+                                    'partner_id': record.partner_id.id,
                                     'account_id': line.additions_id.account_id.id,
                                     'credit': line.amount,
                                 }),
                                 (0, 0, {
                                     'name': line.name,
+                                    'partner_id': record.partner_id.id,
                                     'account_id': record.partner_id.property_account_receivable_id.id,
                                     'debit': line.amount,
                                 }),
                             ],
 
                         }).action_post()
-
-
-
 
     def action_post(self):
         if self.there_is_access_from_company_id:
