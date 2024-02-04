@@ -8,14 +8,18 @@
             <field name="inherit_id" ref="hr_recruitment.hr_applicant_view_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='type_id']" position="after">
+                    <field name="nationality"/>
                     <field name="appointment_type"/>
                     <field name="is_external" invisible="1"/>
                     <field name="visa_status" invisible="is_external == True"/>
+                    <field name="visa_expiry_date" invisible="is_external == True"/>
                     <field name="job_offer_is_sent" invisible="is_external == True"/>
                     <field name="receiving_the_visa" invisible="is_external == True"/>
                     <field name="medical_examination_date" invisible="is_external == True"/>
                     <field name="flight_tickets_booking_date" invisible="is_external == True"/>
                     <field name="quarantine_date" invisible="is_external == True"/>
+                    <field name="date_of_residence" invisible="is_external == False"/>
+
                 </xpath>
             </field>
         </record>
