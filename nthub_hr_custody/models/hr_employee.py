@@ -8,7 +8,7 @@ class Employee(models.Model):
     _inherit = 'hr.employee'
 
     custody_count = fields.Integer(compute='_custody_count', string='# Custody')
-    equipment_count = fields.Integer(compute='_equipment_count', string='# Equipments')
+    # equipment_count = fields.Integer(compute='_equipment_count', string='# Equipments')
     project_id = fields.Many2one('project.project', 'Project')
     related_partner = fields.Many2one('res.partner')
 
