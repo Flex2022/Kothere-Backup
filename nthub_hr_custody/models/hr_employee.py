@@ -9,9 +9,8 @@ class Employee(models.Model):
 
     custody_count = fields.Integer(compute='_custody_count', string='# Custody')
     equipment_count = fields.Integer(compute='_equipment_count', string='# Equipments')
-    project_id = fields.Many2one('project.project','Project')
+    project_id = fields.Many2one('project.project', 'Project')
     related_partner = fields.Many2one('res.partner')
-
 
     # count of all custody contracts
 
@@ -34,6 +33,16 @@ class Employee(models.Model):
         for each in self:
             custody_ids = self.env['hr.custody'].search([('employee', '=', each.id)])
             each.custody_count = len(custody_ids)
+
+    def _equipment_count(self):
+        for each in self:
+            equipment_obj = self.env['hr.custody']. \
+                search([('employee', '=', each.id), ('state', '=', 'approved')])
+            equipment_ids = []
+            for each1 in equipment_obj:
+                if each1.custody_name.id not in equipment_ids:
+                    equipment_ids.append(each1.custody_name.id)
+            each.equipment_count = len(equipment_ids)
 
     # count of all custody contracts that are in approved state
 

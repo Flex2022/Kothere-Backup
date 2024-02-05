@@ -100,6 +100,7 @@ class HrEmployee(models.Model):
     # employee_private_email = fields.Char('Private Email', tracking=True)
     # employee_private_phone = fields.Char('Private Phone', tracking=True)
     notice_period_flag = fields.Boolean('Under Notice Period', tracking=True)
+
     # residence_place_id = fields.Many2one('res.country.state', 'Residence Place', tracking=True)
     # specialization_id = fields.Many2many('hr.specialization', string='Specialization', tracking=True)
     # department_id = fields.Many2one('hr.department', 'Department', domain="['|', ('company_id', '=', False), ('company_id', '=', company_id)]", tracking=True)
@@ -232,6 +233,7 @@ class HrEmployee(models.Model):
         #         group_id.sudo().write({'users': [(4, self.user_id.id)]})
         return res
 
+
 #     def send_employee_details_for_manager(self, res):
 #         if res.parent_id.user_id:
 #             mail_content = _("New Employee added."
@@ -355,7 +357,8 @@ class HrEmployee(models.Model):
 #
 #
 class Department(models.Model):
-    _inherit = 'hr.department'
+    _name = 'hr.department'
+    _inherit = ['hr.department', 'analytic.mixin']
 
     analytic_distribution = fields.Many2one('account.analytic.account', string='Analytic Account')
     non_t2 = fields.Boolean('Non-T2')
