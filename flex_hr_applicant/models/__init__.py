@@ -32,7 +32,7 @@ class HrApplicant(models.Model):
     date_of_residence = fields.Date(string='Date of Residence')
 
     # Nationality
-    nationality = fields.Many2one('res.country', string='Nationality', default='SA')
+    nationality = fields.Many2one('res.country', string='Nationality')
 
 
     @api.onchange('visa_expiry_date')
