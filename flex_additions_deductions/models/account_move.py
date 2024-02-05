@@ -4,6 +4,14 @@ from odoo import api, fields, models
 class AccountMove(models.Model):
     _inherit = 'account.move'
 
+    # invoice_num_created_from_sale = fields.Many2one('sale.order',string='Invoice Num Created From Sale', compute='_compute_invoice_num_created_from_sale', store=True)
+    # @api.depends('invoice_origin')
+    # def _compute_invoice_num_created_from_sale(self):
+    #     self.ensure_one()
+    #     sale_order = self.line_ids.sale_line_ids.order_id
+    #     invoice_count = self.env['account.move'].search_count(
+    #         [('invoice_origin', '=', self.invoice_origin)])
+
     # Smart Button Fields
     source_Document_for_smart_button = fields.Char(string='Source Document SM')
 
@@ -29,6 +37,38 @@ class AccountMove(models.Model):
 
     # sum
     total_deductions = fields.Float('Total Deductions', compute='_compute_total_deductions', store=True)
+    project_invoice_from_sale_order = fields.Many2one('project.project', string='Project Invoice',
+                                                      compute='_compute_project_invoice_from_sale_order', store=True
+                                                      )
+    deductions_no = fields.Integer('Deductions No')
+
+    is_out_invoice = fields.Boolean('Is Out Invoice', compute='_compute_is_out_invoice', store=False)
+
+    @api.depends('move_type')
+    def _compute_is_out_invoice(self):
+        for record in self:
+            if record.move_type == 'out_invoice':
+                record.is_out_invoice = True
+            else:
+                record.is_out_invoice = False
+
+    @api.depends('invoice_origin')
+    def _compute_project_invoice_from_sale_order(self):
+        for record in self:
+            if record.invoice_origin:
+                sale_order = self.env['sale.order'].search([('name', '=', record.invoice_origin)], limit=1)
+                record.project_invoice_from_sale_order = sale_order.project_invoice.id if sale_order else False
+            else:
+                record.project_invoice_from_sale_order = False
+
+    @api.depends('invoice_origin')
+    def _compute_project_invoice_from_sale_order(self):
+        for record in self:
+            if record.invoice_origin:
+                sale_order = self.env['sale.order'].search([('name', '=', record.invoice_origin)], limit=1)
+                record.deductions_no = sale_order.deductions_no if sale_order else False
+            else:
+                record.deductions_no = False
 
     # smart Button Functions
     def open_created_journal(self):
@@ -148,3 +188,84 @@ class AccountMove(models.Model):
                 if journal.state == 'posted':
                     journal.button_draft()
         return super(AccountMove, self).button_draft()
+
+    def set_line_number(self):
+        sl_no = 0
+        for line in self.invoice_line_ids:
+            sl_no += 1
+            line.line_number = sl_no
+        return
+
+    @api.model
+    def create(self, vals):
+        res = super(AccountMove, self).create(vals)
+
+        self.set_line_number()
+        return res
+
+    def write(self, vals):
+        res = super(AccountMove, self).write(vals)
+        self.set_line_number()
+        return res
+
+
+class AccountMoveLine(models.Model):
+    _inherit = 'account.move.line'
+
+    line_number = fields.Integer(string='Line Number')
+
+    previous_accomplishment = fields.Float(string='Last Accomplishment', compute='_compute_previous_accomplishment',
+                                           store=True)
+
+    current_accomplishment = fields.Float(string='Current Accomplishment', compute='_compute_current_accomplishment',
+                                          store=False)
+
+    total_accomplishment = fields.Float(string='Total Accomplishment', compute='_compute_total_accomplishment',
+                                        store=False)
+
+    # is_out_invoice = fields.Boolean('Is Out Invoice', related='move_id.is_out_invoice')
+
+    @api.depends('quantity', 'price_unit', 'product_id', 'move_id.deductions_no')
+    def _compute_previous_accomplishment(self):
+        # invoice_line = self.env['account.move.line'].search(
+        #     [('product_id', '=', self.product_id.id), ('move_id', '=', self.move_id.id)])
+        # for record in self:
+        #     if invoice_line:
+        #         record.previous_accomplishment = sum(invoice_line.mapped('quantity')) * sum(
+        #             invoice_line.mapped('price_unit'))
+        #     else:
+        #         record.previous_accomplishment = 0.0
+        for record in self:
+            if record.quantity and record.price_unit and record.product_id and record.move_id.deductions_no > 0:
+                # Find all invoice lines with the same product
+                invoice_lines = self.env['account.move.line'].search([
+                    ('product_id', '=', record.product_id.id),
+                    ('move_id.deductions_no', '>', 0),
+                    ('move_id.project_invoice_from_sale_order', '=', record.move_id.project_invoice_from_sale_order.id),
+                ])
+
+                # Compute the sum of quantity * price_unit for all matching invoice lines
+                total_accomplishment = sum(line.quantity * line.price_unit for line in invoice_lines)
+
+                record.previous_accomplishment = total_accomplishment
+            else:
+                record.previous_accomplishment = 0.0
+
+    @api.depends('quantity', 'price_unit')
+    def _compute_current_accomplishment(self):
+        for record in self:
+            if record.quantity and record.price_unit and record.move_id.deductions_no > 0:
+                record.current_accomplishment = record.quantity * record.price_unit
+            else:
+                record.current_accomplishment = 0.0
+
+    # when create new line start from one then increase by one
+    # @api.depends('invoice_line_ids')
+
+    @api.depends('previous_accomplishment', 'current_accomplishment')
+    def _compute_total_accomplishment(self):
+        for record in self:
+            if record.previous_accomplishment and record.current_accomplishment:
+                record.total_accomplishment = record.previous_accomplishment + record.current_accomplishment
+            else:
+                record.total_accomplishment = 0.0

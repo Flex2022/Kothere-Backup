@@ -6,12 +6,16 @@
                 <t t-call="flex_additions_deductions.report_layout">
                     <link rel="stylesheet" href="/flex_additions_deductions/static/src/css/style.css"/>
                     <div dir="rtl" class="row">
-                       <div class="col-4 text-end">
-                           <u><span style="font-size:13px;">نسبة الانجاز الفعلية:</span></u>
-                       </div>
+                        <div class="col-4 text-end">
+                            <u>
+                                <span style="font-size:13px;">نسبة الانجاز الفعلية:</span>
+                            </u>
+                        </div>
                         <div class="col-4 text-center">
-                           <u><span style="font-size:13px;">8.82</span></u>
-                       </div>
+                            <u>
+                                <span style="font-size:13px;">8.82</span>
+                            </u>
+                        </div>
 
                     </div>
                     <br/>
@@ -46,35 +50,61 @@
                                 السعر
                             </td>
                         </tr>
-                        <tr>
-                            <td class="size1">
-                                1
+                        <t t-set="current_subtotal" t-value="0"/>
+                        <t t-set="lines"
+                           t-value="o.invoice_line_ids.sorted(key=lambda l: (-l.sequence, l.date, l.move_name, -l.id), reverse=True)"/>
+                        <t t-foreach="lines" t-as="line">
+                            <t t-set="current_subtotal" t-value="current_subtotal + line.price_total"/>
+                            <tr t-att-class="'bg-200 fw-bold o_line_section' if line.display_type == 'line_section' else 'fst-italic o_line_note' if line.display_type == 'line_note' else ''">
+                                <t t-if="line.display_type == 'product'"
+                                   name="account_invoice_line_accountable">
+                                    <td class="size1">
+                                        <span t-field="line.line_number"/>
+                                    </td>
+                                    <td class="size2">
+                                        <!--                                        اعمال الالكتروميكانيك والتشطيبات-->
+                                        <span t-field="line.product_id"/>
+                                    </td>
+                                    <td class="size4">
+
+                                        <span t-field="line.product_uom_id"/>
+                                        <!--                                        عدد-->
+                                    </td>
+                                    <td class="size3">
+                                        <span t-field="line.quantity"/>
+                                        <!--                                        34-->
+                                    </td>
+                                    <td class="size4">
+                                        <span t-field="line.price_unit"/>
+                                        <!--                                        303160-->
+                                    </td>
+                                    <td class="size4">
+                                        <span t-field="line.previous_accomplishment"/>
+                                    </td>
+                                    <td class="size4">
+                                        <span t-field="line.current_accomplishment"/>
+                                    </td>
+                                    <td class="size4">
+                                        <span t-field="line.total_accomplishment"/>
+                                    </td>
+                                    <td class="size4">
+                                        <span t-field="line.price_total"/>
+                                    </td>
+                                </t>
+                            </tr>
+                        </t>
+                        <t t-if="line.display_type == 'line_section'">
+                            <td colspan="99" class="text-center">
+                                <span t-field="line.name" t-options="{'widget': 'text'}"/>
                             </td>
-                            <td class="size2">
-                                اعمال الالكتروميكانيك والتشطيبات
+                            <t t-set="current_section" t-value="line"/>
+                            <t t-set="current_subtotal" t-value="0"/>
+                        </t>
+                        <t t-if="line.display_type == 'line_note'">
+                            <td colspan="99" class="text-center">
+                                <span t-field="line.name" t-options="{'widget': 'text'}"/>
                             </td>
-                            <td class="size4">
-                                عدد
-                            </td>
-                            <td class="size3">
-                                34
-                            </td>
-                            <td class="size4">
-                                303160
-                            </td>
-                            <td class="size4">
-                                0
-                            </td>
-                            <td class="size4">
-                                3
-                            </td>
-                            <td class="size4">
-                                3
-                            </td>
-                            <td class="size4">
-                                <span t-field="o.amount_untaxed"/>
-                            </td>
-                        </tr>
+                        </t>
                         <tr>
                             <td class="size1">
 
@@ -410,7 +440,9 @@
                         </tr>
                     </table>
                     <div class="col-12 border border-dark text-center" style="height:30px;border-top:none;" dir="rtl">
-                        <span>فقط</span>(<span t-esc="o.currency_id.with_context(lang='ar_001').amount_to_text(o.amount_total)"/>)<span>لا غير</span>
+                        <span>فقط</span>(<span
+                            t-esc="o.currency_id.with_context(lang='ar_001').amount_to_text(o.amount_total)"/>)
+                        <span>لا غير</span>
                     </div>
                     <br/>
                     <div class="row" rtl="rtl">

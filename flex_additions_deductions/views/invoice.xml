@@ -8,9 +8,19 @@
             <field name="inherit_id" ref="account.view_move_form"/>
             <field name="priority" eval="8"/>
             <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="project_invoice_from_sale_order"
+                           invisible="there_is_access_from_company_id == False and move_type == 'out_invoice'"/>
+                    <field name="deductions_no"
+                           invisible="there_is_access_from_company_id == False and move_type == 'out_invoice'"
+                           readonly="1"/>
+                    <field name="is_out_invoice"
+                           invisible="there_is_access_from_company_id == False and move_type == 'out_invoice'"
+                           readonly="1"/>
+                </xpath>
                 <xpath expr="//sheet/div[@name='button_box']" position="inside">
                     <button name="open_created_journal" type="object" class="oe_stat_button"
-                            icon="fa-pencil-square-o"  invisible="there_is_access_from_company_id == False">
+                            icon="fa-pencil-square-o" invisible="there_is_access_from_company_id == False">
                         <field name="invoice_count" widget="statinfo" string="Deductions/Additions"/>
                     </button>
                 </xpath>
@@ -83,6 +93,20 @@
                            invisible="there_is_access_from_company_id == False"/>
                     <field name="additions_amount" readonly="1" force_save="1"
                            invisible="there_is_access_from_company_id == False"/>
+                </xpath>
+                <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='product_id']" position="before">
+                    <field name="line_number" column_invisible="1"/>
+
+                </xpath>
+                <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='price_unit']" position="before">
+                    <!--                    <field name="move_id" column_invisible="1"/>-->
+                    <!--                    <field name="is_out_invoice" column_invisible="1"/>-->
+                    <field name="current_accomplishment"
+                           column_invisible="parent.is_out_invoice == False and parent.there_is_access_from_company_id == False"/>
+                    <field name="previous_accomplishment"
+                           column_invisible="parent.is_out_invoice == False and parent.there_is_access_from_company_id == False"/>
+                    <field name="total_accomplishment"
+                           column_invisible="parent.is_out_invoice == False and parent.there_is_access_from_company_id == False"/>
                 </xpath>
             </field>
         </record>
