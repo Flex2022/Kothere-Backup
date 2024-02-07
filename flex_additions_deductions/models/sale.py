@@ -6,6 +6,10 @@ class SaleOrder(models.Model):
 
     project_invoice = fields.Many2one('project.project', string='Project Invoice')
 
+    project_manager = fields.Many2one('res.partner', string='Project Manager')
+
+    projects_manager = fields.Many2one('res.partner', string='Projects Manager')
+
     deductions_no = fields.Integer('Deductions No', default=0)
 
     def set_line_number(self):
@@ -38,7 +42,8 @@ class SaleOrder(models.Model):
             'team_id': self.team_id.id,
             'partner_id': self.partner_invoice_id.id,
             'partner_shipping_id': self.partner_shipping_id.id,
-            'fiscal_position_id': (self.fiscal_position_id or self.fiscal_position_id._get_fiscal_position(self.partner_invoice_id)).id,
+            'fiscal_position_id': (self.fiscal_position_id or self.fiscal_position_id._get_fiscal_position(
+                self.partner_invoice_id)).id,
             'invoice_origin': self.name,
             'invoice_payment_term_id': self.payment_term_id.id,
             'invoice_user_id': self.user_id.id,

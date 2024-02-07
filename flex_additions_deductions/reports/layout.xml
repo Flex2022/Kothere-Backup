@@ -27,7 +27,7 @@
                     </p>
                     <p rtl="rtl" style="font-size: 14px;">
                         قيمة العقد:
-                        <span>10,307,440.00</span>
+                        <span t-field="o.contract_amount"/>
                     </p>
                 </div>
                 <div class="col-5">
