@@ -229,4 +229,7 @@ Create Project/Contract -> Create Job Orders -> Create Multiple Job Cost Sheets 
     'installable': True,
     'application': False,
     'auto_install': False,
+    'external_dependencies': {
+        'python': ['pandas', 'openpyxl'],
+    }
 }
