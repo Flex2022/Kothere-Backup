@@ -8,6 +8,8 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='partner_id']" position="after">
                 <field name="project_invoice" invisible="company_id.flex_additions_deductions_ids == False"/>
+                <field name="project_manager" invisible="company_id.flex_additions_deductions_ids == False"/>
+                <field name="projects_manager" invisible="company_id.flex_additions_deductions_ids == False"/>
                 <field name="deductions_no" invisible="1" readonly="1"/>
             </xpath>
         </field>

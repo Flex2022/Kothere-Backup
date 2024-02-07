@@ -44,6 +44,31 @@ class AccountMove(models.Model):
 
     is_out_invoice = fields.Boolean('Is Out Invoice', compute='_compute_is_out_invoice', store=False)
 
+    contract_amount = fields.Float(string='Contract Amount', compute='_compute_contract_amount', store=False)
+
+    project_manager = fields.Many2one('res.partner', string='Project Manager',
+                                      compute='_compute_project_manager', store=True)
+    projects_manager = fields.Many2one('res.partner', string='Projects Manager',
+                                       compute='_compute_projects_manager', store=True)
+
+    @api.depends('invoice_origin')
+    def _compute_project_manager(self):
+        for record in self:
+            if record.invoice_origin:
+                sale_order = self.env['sale.order'].search([('name', '=', record.invoice_origin)], limit=1)
+                record.project_manager = sale_order.project_manager.id if sale_order else False
+            else:
+                record.project_manager = False
+
+    @api.depends('invoice_origin')
+    def _compute_projects_manager(self):
+        for record in self:
+            if record.invoice_origin:
+                sale_order = self.env['sale.order'].search([('name', '=', record.invoice_origin)], limit=1)
+                record.projects_manager = sale_order.projects_manager.id if sale_order else False
+            else:
+                record.projects_manager = False
+
     @api.depends('move_type')
     def _compute_is_out_invoice(self):
         for record in self:
@@ -51,6 +76,15 @@ class AccountMove(models.Model):
                 record.is_out_invoice = True
             else:
                 record.is_out_invoice = False
+
+    @api.depends('invoice_origin')
+    def _compute_contract_amount(self):
+        for record in self:
+            if record.invoice_origin:
+                sale_order = self.env['sale.order'].search([('name', '=', record.invoice_origin)], limit=1)
+                record.contract_amount = sale_order.amount_total if sale_order else False
+            else:
+                record.contract_amount = False
 
     @api.depends('invoice_origin')
     def _compute_project_invoice_from_sale_order(self):
@@ -236,20 +270,25 @@ class AccountMoveLine(models.Model):
         #     else:
         #         record.previous_accomplishment = 0.0
         for record in self:
-            if record.quantity and record.price_unit and record.product_id and record.move_id.deductions_no > 0:
-                # Find all invoice lines with the same product
-                invoice_lines = self.env['account.move.line'].search([
-                    ('product_id', '=', record.product_id.id),
-                    ('move_id.deductions_no', '>', 0),
-                    ('move_id.project_invoice_from_sale_order', '=', record.move_id.project_invoice_from_sale_order.id),
-                ])
-
-                # Compute the sum of quantity * price_unit for all matching invoice lines
-                total_accomplishment = sum(line.quantity * line.price_unit for line in invoice_lines)
-
-                record.previous_accomplishment = total_accomplishment
-            else:
+            if record.move_id.deductions_no == 1:
                 record.previous_accomplishment = 0.0
+            else:
+                if record.quantity and record.price_unit and record.product_id and record.move_id.deductions_no > 0:
+                    # Find all invoice lines with the same product
+                    invoice_lines = self.env['account.move.line'].search([
+                        ('product_id', '=', record.product_id.id),
+                        ('move_id.deductions_no', '>', 0),
+                        ('move_id.project_invoice_from_sale_order', '=',
+                         record.move_id.project_invoice_from_sale_order.id),
+                        ('move_id.invoice_origin', '=', record.move_id.invoice_origin),
+                    ])
+
+                    # Compute the sum of quantity * price_unit for all matching invoice lines
+                    total_accomplishment = sum(line.quantity * line.price_unit for line in invoice_lines)
+
+                    record.previous_accomplishment = total_accomplishment
+                else:
+                    record.previous_accomplishment = 0.0
 
     @api.depends('quantity', 'price_unit')
     def _compute_current_accomplishment(self):
@@ -265,7 +304,7 @@ class AccountMoveLine(models.Model):
     @api.depends('previous_accomplishment', 'current_accomplishment')
     def _compute_total_accomplishment(self):
         for record in self:
-            if record.previous_accomplishment and record.current_accomplishment:
-                record.total_accomplishment = record.previous_accomplishment + record.current_accomplishment
-            else:
-                record.total_accomplishment = 0.0
+            # if record.previous_accomplishment and record.current_accomplishment:
+            record.total_accomplishment = record.previous_accomplishment + record.current_accomplishment
+        # else:
+        #     record.total_accomplishment = 0.0
