@@ -8,7 +8,8 @@
     'website': 'https://www.flex-ops.com',
     'license': 'AGPL-3',
     'depends': ['base', 'hr', 'hr_payroll'],
-    'data': ['views/payroll.xml'],
+    'data': ['views/payroll.xml',
+             'data/cron.xml'],
     'installable': True,
     'auto_install': False,
 }
