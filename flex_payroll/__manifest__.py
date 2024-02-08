@@ -1,0 +1,14 @@
+{
+    'name': 'Flex Payroll',
+    'version': '1.0',
+    'summary': 'Flex Payroll',
+    'description': 'Flex Payroll',
+    'category': 'payroll',
+    'author': 'Abdalrahman Shahrour',
+    'website': 'https://www.flex-ops.com',
+    'license': 'AGPL-3',
+    'depends': ['base', 'hr', 'hr_payroll'],
+    'data': ['views/payroll.xml'],
+    'installable': True,
+    'auto_install': False,
+}
