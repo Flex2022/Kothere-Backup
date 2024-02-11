@@ -183,7 +183,7 @@
                             </td>
                             <td class="size2" style="border-left:none">
                                 <div class="text-center" style="width:330px;">
-                                    <span>خصم الكلي</span>
+                                    <span>الخصم</span>
                                 </div>
 
 
@@ -327,7 +327,7 @@
                                     5
                                 </td>
                                 <td class="size2" style="border-left:none">
-                                    <div class="text-end" style="margin-right:120px;width:200px;">الخصم الإضافي</div>
+                                    <div class="text-end" style="margin-right:120px;width:200px;">إجمالي المحسوبات</div>
                                 </td>
                                 <td class="size4" style="border-right:none;border-left:none">
 

@@ -106,13 +106,17 @@ class AccountMove(models.Model):
 
     # smart Button Functions
     def open_created_journal(self):
+        tree_view_id = self.env.ref('account.view_move_tree').id
         return {
             'name': 'Deductions Lines',
             'view_mode': 'tree,form',
             'res_model': 'account.move',
             'type': 'ir.actions.act_window',
+            'views': [(tree_view_id, 'tree')],
             'domain': [('source_Document_for_smart_button', '=', self.name), ('move_type', '=', 'entry')],
-            'context': {'default_source_Document_for_smart_button': self.name},
+            'context': {'default_source_Document_for_smart_button': self.name,
+                        'default_move_type': 'entry'
+                        },
         }
 
     invoice_count = fields.Integer(compute='_compute_invoice_count', string='Journal Entres')
@@ -222,6 +226,9 @@ class AccountMove(models.Model):
             for journal in journals:
                 if journal.state == 'posted':
                     journal.button_draft()
+                    journal.button_cancel()
+                if journal.state == 'draft':
+                    journal.button_cancel()
         return super(AccountMove, self).button_draft()
 
     def set_line_number(self):
