@@ -111,7 +111,7 @@ class AccountMove(models.Model):
             'view_mode': 'tree,form',
             'res_model': 'account.move',
             'type': 'ir.actions.act_window',
-            'domain': [('source_Document_for_smart_button', '=', self.name)],
+            'domain': [('source_Document_for_smart_button', '=', self.name), ('move_type', '=', 'entry')],
             'context': {'default_source_Document_for_smart_button': self.name},
         }
 
@@ -210,9 +210,10 @@ class AccountMove(models.Model):
                         }).action_post()
 
     def action_post(self):
+        res = super(AccountMove, self).action_post()
         if self.there_is_access_from_company_id:
             self.create_journal_entry_when_conferim()
-        return super(AccountMove, self).action_post()
+        return res
 
     def button_draft(self):
         if self.there_is_access_from_company_id:
