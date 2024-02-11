@@ -36,7 +36,7 @@ class AccountMove(models.Model):
                                                              store=True)
 
     # sum
-    total_deductions = fields.Float('Total Deductions', compute='_compute_total_deductions', store=True)
+    total_deductions = fields.Float('total value of what is due, including value-added tax', compute='_compute_total_deductions', store=True)
     project_invoice_from_sale_order = fields.Many2one('project.project', string='Project Invoice',
                                                       compute='_compute_project_invoice_from_sale_order', store=True
                                                       )
