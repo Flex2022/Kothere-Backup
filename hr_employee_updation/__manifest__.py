@@ -29,7 +29,7 @@
     'author': 'Cybrosys Techno Solutions',
     'company': 'Cybrosys Techno Solutions',
     'website': "https://www.openhrms.com",
-    'depends': ['base','contacts', 'hr', 'mail', 'hr_contract', 'hr_expense','hr_payroll'],
+    'depends': ['base','contacts', 'hr', 'mail', 'hr_contract', 'hr_expense','hr_payroll','account','analytic'],
     'data': [
         'security/hr_security.xml',
         'security/ir.model.access.csv',
