@@ -23,8 +23,8 @@
                             <header>
                                 <button string="Submit" name="action_submitted" type="object" invisible="state != 'draft'" class="oe_highlight" groups="hr.group_hr_user"/>
                                 <button string="Confirm" name="action_accounting_approve" type="object" invisible="state != 'submit'" class="oe_highlight" groups="account.group_account_manager"/>
-                                <button string="Approve" name="action_ceo_approve" type="object" invisible="state != 'acc_approve'" class="oe_highlight" groups="hr_employee_updation.group_ceo_approval"/>
-                                <button string="Approve" name="action_hr_approve" type="object" invisible="state != 'acc_approve'" class="oe_highlight" groups="hr.group_hr_manager" />
+                                <button string="CEO Approve" name="action_ceo_approve" type="object" invisible="state != 'acc_approve'" class="oe_highlight" groups="hr_employee_updation.group_ceo_approval"/>
+                                <button string="HR Approve" name="action_hr_approve" type="object" invisible="state != 'ceo_approve'" class="oe_highlight" groups="hr.group_hr_manager" />
                                 <field name="state" widget="statusbar"/>
                             </header>
                             <sheet>
@@ -47,13 +47,13 @@
                                         <field name="employee_id" required="1"/>
                                         <field name="contract_id" invisible="1"/>
                                         <field name="current_salary" required="1"/>
-                                        <field name="current_variable_increase" required="1"/>
+<!--                                        <field name="current_variable_increase" required="1"/>-->
                                         <field name="type" required="1"/>
                                         <field name="currency_id" />
                                         <field name="salary_increase_amount" required="1" sum="Total Salary Increase"/>
-                                        <field name="variable_increase_amount" required="1" sum="Total Variable Increase"/>
+<!--                                        <field name="variable_increase_amount" required="1" sum="Total Variable Increase"/>-->
                                         <field name="new_salary" required="1"/>
-                                        <field name="new_variable_increase" required="1"/>
+<!--                                        <field name="new_variable_increase" required="1"/>-->
                                     </tree>
                                 </field>
                            </sheet>
@@ -98,12 +98,12 @@
                                 <field name="employee_id" invisible="1"/>
                                 <field name="contract_id" invisible="1"/>
                                 <field name="current_salary" sum="Total Current Salary"/>
-                                <field name="current_variable_increase" sum="Total Current Variable Increase"/>
+<!--                                <field name="current_variable_increase" sum="Total Current Variable Increase"/>-->
                                 <field name="type"/>
                                 <field name="salary_increase_amount" sum="Total Variable Increase"/>
-                                <field name="variable_increase_amount" sum="Total Increase"/>
+<!--                                <field name="variable_increase_amount" sum="Total Increase"/>-->
                                 <field name="new_salary" sum="Total New Salary"/>
-                                <field name="new_variable_increase" sum="Total Variable Increase"/>
+<!--                                <field name="new_variable_increase" sum="Total Variable Increase"/>-->
                             </tree>
                         </field>
                     </page>
