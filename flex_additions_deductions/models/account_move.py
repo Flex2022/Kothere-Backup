@@ -36,7 +36,8 @@ class AccountMove(models.Model):
                                                              store=True)
 
     # sum
-    total_deductions = fields.Float('total value of what is due, including value-added tax', compute='_compute_total_deductions', store=True)
+    total_deductions = fields.Float('Total value of the extract', compute='_compute_total_deductions', store=True)
+    all_total_deductions = fields.Float('total value of what is due, including value-added tax', compute='_compute_total_deductions', store=True)
     project_invoice_from_sale_order = fields.Many2one('project.project', string='Project Invoice',
                                                       compute='_compute_project_invoice_from_sale_order', store=True
                                                       )
@@ -129,7 +130,8 @@ class AccountMove(models.Model):
     @api.depends('deductions_amount', 'additions_amount', 'amount_untaxed')
     def _compute_total_deductions(self):
         for rec in self:
-            rec.total_deductions = rec.amount_untaxed - rec.deductions_amount + rec.additions_amount + rec.amount_tax
+            rec.total_deductions = rec.amount_untaxed - rec.deductions_amount + rec.additions_amount
+            rec.all_total_deductions = rec.amount_total - rec.deductions_amount + rec.additions_amount + rec.amount_tax
 
     # Compute Functions For Check Access
     def _compute_there_is_access_from_company_id(self):
