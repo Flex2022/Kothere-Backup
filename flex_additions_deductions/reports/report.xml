@@ -460,7 +460,7 @@
 
                             </td>
                             <td class="size4" style="border-right:0px;border-left:none;width:50px;">
-                                <span t-field="o.amount_total"/>
+                                <span t-field="o.all_total_deductions"/>
                             </td>
                             <td class="size4" style="border-right:0px;border-left:none;width:50px;">
 
