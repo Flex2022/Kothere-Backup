@@ -126,7 +126,7 @@ class AccountMove(models.Model):
             record.invoice_count = self.env['account.move'].search_count(
                 [('source_Document_for_smart_button', '=', record.name)])
 
-    @api.depends('deductions_amount', 'additions_amount')
+    @api.depends('deductions_amount', 'additions_amount', 'amount_untaxed')
     def _compute_total_deductions(self):
         for rec in self:
             rec.total_deductions = rec.amount_untaxed - rec.deductions_amount + rec.additions_amount + rec.amount_tax
