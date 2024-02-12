@@ -129,7 +129,7 @@ class AccountMove(models.Model):
     @api.depends('deductions_amount', 'additions_amount')
     def _compute_total_deductions(self):
         for rec in self:
-            rec.total_deductions = rec.amount_untaxed - rec.deductions_amount + rec.additions_amount
+            rec.total_deductions = rec.amount_untaxed - rec.deductions_amount + rec.additions_amount + rec.amount_tax
 
     # Compute Functions For Check Access
     def _compute_there_is_access_from_company_id(self):

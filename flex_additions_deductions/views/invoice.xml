@@ -99,8 +99,6 @@
                                name="sale_total">
                             <field name="amount_untaxed" widget='monetary'
                                    options="{'currency_field': 'currency_id'}"/>
-                            <field name="amount_tax" widget='monetary'
-                                   options="{'currency_field': 'currency_id'}"/>
                             <field name="deductions_amount_type_discounts" widget='monetary'
                                    options="{'currency_field': 'currency_id'}"
                                    invisible="there_is_access_from_company_id == False"/>
@@ -119,6 +117,8 @@
                             <field name="additions_amount" widget='monetary'
                                    options="{'currency_field': 'currency_id'}"
                                    invisible="there_is_access_from_company_id == False"/>
+                            <field name="amount_tax" widget='monetary'
+                                   options="{'currency_field': 'currency_id'}"/>
                             <div class="oe_subtotal_footer_separator oe_inline o_td_label">
                                 <label for="amount_total"/>
                             </div>
