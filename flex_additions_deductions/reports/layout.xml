@@ -19,27 +19,27 @@
 
                     <p rtl="rtl" style="font-size: 14px;">
                         مستخلص جاري رقم:
-                        <span>1</span>
+                        <span t-field="o.deductions_no"/>
                     </p>
                     <p rtl="rtl" style="font-size: 14px;">
                         التاريخ:
-                        <span>23/1/2024</span>
+                        <span t-field="o.invoice_date" t-options='{"date_format": "DD MMMM YYYY"}'/>
                     </p>
                     <p rtl="rtl" style="font-size: 14px;">
                         قيمة العقد:
-                        <span>10,307,440.00</span>
+                        <span t-field="o.contract_amount"/>
                     </p>
                 </div>
                 <div class="col-5">
                     <p class="text-center pt-4">
                         <u><span t-field="company.name" style="font-size: 14px;"></span></u>
                         <br/>
-                        <u><span dir="rtl" style="font-size: 14px;margin-top:-5px;">اسم المشروع / الأعمال الالكتروميكانيك والتشطيبات لفيلل المستفيدين بمشروع رواء <span dir="rtl">MS02</span></span></u>
+                        <u><span dir="rtl" style="font-size: 14px;margin-top:-5px;">اسم المشروع /<span dir="rtl" t-field="o.project_invoice_from_sale_order"/></span></u>
 
                     </p>
                     <p class="text-center" dir="rtl">
                         <u><span>المقاول:</span></u>
-                        <u><span style="font-size: 14px;">شركة رؤية الجيل العاشر للتجارة والمقاولات</span></u>
+                        <u><span style="font-size: 14px;" t-field="o.partner_id"/></u>
                     </p>
 <!--                    <p class="text-center pt-4">-->
 <!--                      -->

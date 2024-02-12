@@ -22,6 +22,7 @@
 ###################################################################################
 
 from odoo import models, fields, _, api
+import json
 # from dateutil.relativedelta import relativedelta
 # from odoo.osv import expression
 # from odoo.exceptions import UserError
@@ -232,6 +233,7 @@ class HrEmployee(models.Model):
         #         group_id.sudo().write({'users': [(4, self.user_id.id)]})
         return res
 
+
 #     def send_employee_details_for_manager(self, res):
 #         if res.parent_id.user_id:
 #             mail_content = _("New Employee added."
@@ -355,10 +357,36 @@ class HrEmployee(models.Model):
 #
 #
 class Department(models.Model):
-    _inherit = 'hr.department'
+    _name = 'hr.department'
+    _inherit = ['hr.department', 'analytic.mixin']
 
-    analytic_distribution = fields.Many2one('account.analytic.account', string='Analytic Account')
+    # analytic_distribution = fields.Many2one('account.analytic.account', string='Analytic Account')
     non_t2 = fields.Boolean('Non-T2')
+
+    # Company dependent JSON fields are not yet supported
+    analytic_distribution_text = fields.Text(company_dependent=True)
+    analytic_distribution = fields.Json(inverse="_inverse_analytic_distribution", store=False, precompute=False)
+    analytic_account_ids = fields.Many2many('account.analytic.account', compute="_compute_analytic_account_ids",
+                                            copy=True)
+
+    @api.depends_context('company')
+    @api.depends('analytic_distribution_text')
+    def _compute_analytic_distribution(self):
+        for record in self:
+            record.analytic_distribution = json.loads(record.analytic_distribution_text or '{}')
+
+    def _inverse_analytic_distribution(self):
+        for record in self:
+            record.analytic_distribution_text = json.dumps(record.analytic_distribution)
+
+    @api.depends('analytic_distribution')
+    def _compute_analytic_account_ids(self):
+        for record in self:
+            record.analytic_account_ids = list(
+                map(int, record.analytic_distribution.keys())) if record.analytic_distribution else []
+
+
+
 #
 #
 # class HrEmployeeFamilyInfo(models.Model):

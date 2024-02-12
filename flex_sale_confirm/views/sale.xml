@@ -34,7 +34,8 @@
                 </xpath>
                 <xpath expr="//button[@name='action_cancel']" position="replace">
                     <button name="action_cancel" type="object" string="Cancel"
-                            groups="flex_sale_confirm.group_cancel_sale_order"/>
+                            groups="flex_sale_confirm.group_cancel_sale_order"
+                            invisible="state == 'cancel'"/>
                 </xpath>
 <!--                <xpath expr="//header/field[@name='state']" position="attributes">-->
 <!--                    <attribute name="statusbar_visible">draft,sent,submit,finance,gm,sale</attribute>-->

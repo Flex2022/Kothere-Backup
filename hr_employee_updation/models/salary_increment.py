@@ -44,7 +44,7 @@ class SalaryIncrease(models.Model):
                 lines.append((0, 0, {'date': fields.Date.today(),
                                      'employee_id': employee.id,
                                      'contract_id': employee.contract_id.id,
-                                     'current_salary': employee.contract_id.total_salary,
+                                     'current_salary': employee.contract_id.wage,
                                      'current_variable_increase': employee.contract_id.variable_increase,
                                      'new_salary': employee.contract_id.total_salary + (employee.contract_id.total_salary * self.increase_percent / 100),
                                      'new_variable_increase': 0.0,
@@ -104,7 +104,7 @@ class SalaryIncrease(models.Model):
         for line in self.line_ids:
             if line.contract_id:
                 if line.type in ('annual', 'exceptional', 'exc_inv'):
-                    basic = line.new_salary * 0.74074
+                    basic = line.new_salary
                     line.contract_id.wage = basic
                     line.contract_id.housing_allowance_value = basic * 0.25
                     line.contract_id.transportation_allowance_value = basic * 0.10
@@ -127,8 +127,11 @@ class SalaryIncreaseLine(models.Model):
     current_variable_increase = fields.Float('Current Variable Increase')
     new_salary = fields.Float('New Salary')
     new_variable_increase = fields.Float('New Variable Increase')
-    type = fields.Selection([('annual', 'Annual Increase'), ('variable', 'Variable Increase'),
-                             ('exceptional', 'Exceptional Increase'), ('exc_inv', 'Exceptional & Variable Increase')], 'type')
+    type = fields.Selection([('annual', 'Annual Increase'),
+                             # ('variable', 'Variable Increase'),
+                             # ('exceptional', 'Exceptional Increase'),
+                             # ('exc_inv', 'Exceptional & Variable Increase')
+                             ], 'type')
     salary_increase_amount = fields.Float('Salary Increase Amount')
     variable_increase_amount = fields.Float('Variable Increase Amount')
 
@@ -136,24 +139,24 @@ class SalaryIncreaseLine(models.Model):
     def onchange_employee_id(self):
         if self.employee_id:
             self.contract_id = self.employee_id.contract_id.id
-            self.current_salary = self.employee_id.contract_id.total_salary
-            self.current_variable_increase = self.employee_id.contract_id.variable_increase
+            self.current_salary = self.employee_id.contract_id.wage
+            # self.current_variable_increase = self.employee_id.contract_id.variable_increase
 
     @api.onchange('type', 'salary_increase_amount', 'variable_increase_amount')
     def onchange_type(self):
         if self.type:
-            if self.type == 'exceptional':
+            # if self.type == 'exceptional':
+            #     self.new_salary = self.current_salary + self.salary_increase_amount
+            #     self.new_variable_increase = self.current_variable_increase
+            # elif self.type == 'variable':
+            #     self.new_salary = self.current_salary
+            #     self.new_variable_increase = self.current_variable_increase + self.variable_increase_amount
+            if self.type == 'annual':
                 self.new_salary = self.current_salary + self.salary_increase_amount
-                self.new_variable_increase = self.current_variable_increase
-            elif self.type == 'variable':
-                self.new_salary = self.current_salary
-                self.new_variable_increase = self.current_variable_increase + self.variable_increase_amount
-            elif self.type == 'annual':
-                self.new_salary = self.current_salary + self.salary_increase_amount
-                self.new_variable_increase = self.current_variable_increase
-            elif self.type == 'exc_inv':
-                self.new_salary = self.current_salary + self.salary_increase_amount
-                self.new_variable_increase = self.current_variable_increase + self.variable_increase_amount
+                # self.new_variable_increase = self.current_variable_increase
+            # elif self.type == 'exc_inv':
+            #     self.new_salary = self.current_salary + self.salary_increase_amount
+            #     self.new_variable_increase = self.current_variable_increase + self.variable_increase_amount
 
 
 class HrEmployeeContract(models.Model):

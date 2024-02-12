@@ -8,13 +8,16 @@
             <field name="arch" type="xml">
                 <form string='Job Costing form'>
                     <header>
-                        <button name='action_draft' type="object" string='Reset to Draft' invisible="state != 'cancel'" />
+                        <button name='action_draft' type="object" string='Reset to Draft'
+                                invisible="state != 'cancel'"/>
                         <button name="action_confirm" type="object" string="Confirm" invisible="state != 'draft'"
                                 class="btn-primary"/>
                         <button name="action_approve" type="object" string="Approve" invisible="state != 'confirm'"
                                 class="btn-primary"/>
-                        <button name="action_done" type="object" string="Done" invisible="state != 'approve'"   class="btn-primary"/>
-                        <button name="action_cancel" type="object" string="Cancel"  invisible="state not in ['draft','confirm','approve']"/>
+                        <button name="action_done" type="object" string="Done" invisible="state != 'approve'"
+                                class="btn-primary"/>
+                        <button name="action_cancel" type="object" string="Cancel"
+                                invisible="state not in ['draft','confirm','approve']"/>
 
                         <field name="state" widget="statusbar" statusbar_visible="draft,confirm,approve,done"/>
                     </header>
@@ -68,6 +71,9 @@
                                 <field name="currency_id" groups="base.group_multi_currency"/>
                                 <field name="description" readonly="state in ('approve','done','cancel')"/>
                                 <field name="so_number" readonly="state in ('approve','done','cancel')"/>
+                                <field name="data_file" widget="binary" filename="file_name"
+                                       options="{'no_create': True}" readonly="state != 'draft'"/>
+                                <field name="file_name" invisible="1"/>
                             </group>
                         </group>
                         <notebook>

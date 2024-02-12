@@ -157,6 +157,16 @@ class HrEmployeeContract(models.Model):
 
     bonus_amount = fields.Float(string='Bonus Amount', compute='_compute_bonus_amount')
 
+
+    @api.onchange('bonus_amount')
+    def onchange_end_of_service(self):
+        for rec in self:
+            if rec.bonus_amount:
+                rec.end_of_service = rec.bonus_amount
+            else:
+                rec.end_of_service = 0.0
+
+
     @api.depends('types_of_end_services')
     def _compute_bonus_amount(self):
         employee_contracts_ids = self.env['hr.contract'].search(
