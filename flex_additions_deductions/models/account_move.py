@@ -41,7 +41,21 @@ class AccountMove(models.Model):
     project_invoice_from_sale_order = fields.Many2one('project.project', string='Project Invoice',
                                                       compute='_compute_project_invoice_from_sale_order', store=True
                                                       )
-    deductions_no = fields.Integer('Deductions No')
+    deductions_no = fields.Integer('Deductions No', compute='_compute_origin_deductions_no_count', store=True)
+
+    @api.depends('line_ids.sale_line_ids')
+    def _compute_origin_deductions_no_count(self):
+        for move in self:
+            print(move.invoice_origin)
+            # order_id = move.line_ids.sale_line_ids.order_id
+            # move.deductions_no = len(order_id.invoice_ids)
+            count = 1
+            sort_invoice_by_created_date = self.env['account.move'].search(
+                    [('invoice_origin', '=', move.invoice_origin), ('move_type', '=', 'out_invoice')],
+                    order='create_date asc')
+            for invoice in sort_invoice_by_created_date:
+                invoice.deductions_no = count
+                count += 1
 
     is_out_invoice = fields.Boolean('Is Out Invoice', compute='_compute_is_out_invoice', store=False)
 
@@ -96,14 +110,14 @@ class AccountMove(models.Model):
             else:
                 record.project_invoice_from_sale_order = False
 
-    @api.depends('invoice_origin')
-    def _compute_project_invoice_from_sale_order(self):
-        for record in self:
-            if record.invoice_origin:
-                sale_order = self.env['sale.order'].search([('name', '=', record.invoice_origin)], limit=1)
-                record.deductions_no = sale_order.deductions_no if sale_order else False
-            else:
-                record.deductions_no = False
+    # @api.depends('invoice_origin')
+    # def _compute_project_invoice_from_sale_order(self):
+    #     for record in self:
+    #         if record.invoice_origin:
+    #             sale_order = self.env['sale.order'].search([('name', '=', record.invoice_origin)], limit=1)
+    #             record.deductions_no = sale_order.deductions_no if sale_order else False
+    #         else:
+    #             record.deductions_no = False
 
     # smart Button Functions
     def open_created_journal(self):
@@ -271,34 +285,37 @@ class AccountMoveLine(models.Model):
 
     @api.depends('quantity', 'price_unit', 'product_id', 'move_id.deductions_no')
     def _compute_previous_accomplishment(self):
-        # invoice_line = self.env['account.move.line'].search(
-        #     [('product_id', '=', self.product_id.id), ('move_id', '=', self.move_id.id)])
-        # for record in self:
-        #     if invoice_line:
-        #         record.previous_accomplishment = sum(invoice_line.mapped('quantity')) * sum(
-        #             invoice_line.mapped('price_unit'))
-        #     else:
-        #         record.previous_accomplishment = 0.0
         for record in self:
             if record.move_id.deductions_no == 1:
                 record.previous_accomplishment = 0.0
             else:
-                if record.quantity and record.price_unit and record.product_id and record.move_id.deductions_no > 0:
-                    # Find all invoice lines with the same product
-                    invoice_lines = self.env['account.move.line'].search([
-                        ('product_id', '=', record.product_id.id),
-                        ('move_id.deductions_no', '>', 0),
-                        ('move_id.project_invoice_from_sale_order', '=',
-                         record.move_id.project_invoice_from_sale_order.id),
-                        ('move_id.invoice_origin', '=', record.move_id.invoice_origin),
-                    ])
+                # Assuming `move_id` is the account.move (invoice) related to this line
+                invoice = record.move_id
+                if invoice:
+                    # Here you need to correctly reference the sale order. This is a hypothetical solution:
+                    # We're assuming that `invoice_origin` holds the name of the sale order.
+                    sale_order_name = invoice.invoice_origin
 
-                    # Compute the sum of quantity * price_unit for all matching invoice lines
-                    total_accomplishment = sum(line.quantity * line.price_unit for line in invoice_lines)
+                    if sale_order_name:
+                        previous_invoice = self.env['account.move'].search([
+                            ('invoice_origin', '=', sale_order_name),
+                            ('move_type', '=', 'out_invoice'),
+                            ('deductions_no', '=', invoice.deductions_no - 1)
+                        ], limit=1)
+                        print(previous_invoice)
 
-                    record.previous_accomplishment = total_accomplishment
-                else:
-                    record.previous_accomplishment = 0.0
+                        if previous_invoice:
+                            previous_invoice_line = self.env['account.move.line'].search([
+                                ('move_id', '=', previous_invoice.id),
+                                ('product_id', '=', record.product_id.id)
+                            ], limit=1)
+                            if previous_invoice_line:
+                                print(previous_invoice_line.total_accomplishment)
+                                record.previous_accomplishment = previous_invoice_line.total_accomplishment
+                            else:
+                                record.previous_accomplishment = 0.0
+                    else:
+                        record.previous_accomplishment = 0.0
 
     @api.depends('quantity', 'price_unit')
     def _compute_current_accomplishment(self):
