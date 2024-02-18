@@ -77,11 +77,13 @@ class HrEmployeeContract(models.Model):
     def _get_default_hr_user(self):
         try:
             return self.env['res.users'].search(
-                [('groups_id', 'in', self.env.user.has_group('hr_employee_updation.group_hr_notification').id)], limit=1,
+                [('groups_id', 'in', self.env.user.has_group('hr_employee_updation.group_hr_notification').id)],
+                limit=1,
                 order="id desc")
         except:
             return False
 
+    hr_leave_id = fields.Many2one('hr.leave.report', string='Leave Request', compute='_compute_hr_leave_id')
     notice_days = fields.Integer(string="Notice Period", default=_get_default_notice_days)
     transportation_allowance_type = fields.Selection([('amount', 'Amount'), ('percentage', 'Percentage')],
                                                      tracking=True, string='Transportation', default='amount')
@@ -103,7 +105,7 @@ class HrEmployeeContract(models.Model):
     increase_start_date = fields.Date('Increase Start Date')
     contract_period_type = fields.Selection([('limited', 'Limited'), ('unlimited', 'Unlimited')], string='Period Type',
                                             default='limited')
-    hr_user_id = fields.Many2one('res.users', 'HR User',default=_get_default_hr_user)
+    hr_user_id = fields.Many2one('res.users', 'HR User', default=_get_default_hr_user)
     service_year = fields.Integer('Year', compute='_compute_service_year')
     service_month = fields.Integer('Month', compute='_compute_service_year')
     service_day = fields.Integer('Day', compute='_compute_service_year')
@@ -121,8 +123,8 @@ class HrEmployeeContract(models.Model):
     tafqit_arabic = fields.Char('Tafqit Arabic')
     tafqit_english = fields.Char('Tafqit English')
     payroll_days = fields.Float('Payroll Due Days ')
-    days_of_the_month = fields.Float('Days of the Month')
-    number_od_days_off = fields.Float('Number of Days Off')
+    days_of_the_month = fields.Float('Days of the Month', default=30, store=False)
+    number_od_days_off = fields.Float('Number of Days Off', compute='_compute_number_of_days_off', store=False)
     reason_end_service = fields.Many2one('reason.for.end.of.service', string='Reason for End of Service')
     name_arabic = fields.Many2one('reason.for.end.of.service', string='Reason for End of Service')
 
@@ -157,6 +159,38 @@ class HrEmployeeContract(models.Model):
 
     bonus_amount = fields.Float(string='Bonus Amount', compute='_compute_bonus_amount')
 
+    days_spent_in_current_month = fields.Float(string='Days Spent in Current Month',
+                                               compute='_compute_days_spent_in_current_month')
+
+    @api.depends('employee_id')
+    def _compute_hr_leave_id(self):
+        for rec in self:
+            rec.hr_leave_id = self.env['hr.leave.report'].search(
+                [('employee_id', '=', rec.employee_id.id)],  limit=1)
+
+    @api.depends('hr_leave_id')
+    def _compute_number_of_days_off(self):
+        for rec in self:
+            if rec.hr_leave_id:
+                rec.number_od_days_off = rec.hr_leave_id.number_of_days
+            else:
+                rec.number_od_days_off = 0.0
+
+    @api.onchange('state')
+    def onchange_payroll_days(self):
+        for rec in self:
+            if rec.state == 'close':
+                rec.payroll_days = rec.days_spent_in_current_month
+            else:
+                rec.payroll_days = 0.0
+
+    @api.depends('days_spent_in_current_month')
+    def _compute_days_spent_in_current_month(self):
+        for record in self:
+            today = fields.Date.today()
+            first_day_of_month = today.replace(day=1)
+            days_spent = (today - first_day_of_month).days + 1
+            record.days_spent_in_current_month = days_spent
 
     @api.onchange('bonus_amount')
     def onchange_end_of_service(self):
@@ -165,7 +199,6 @@ class HrEmployeeContract(models.Model):
                 rec.end_of_service = rec.bonus_amount
             else:
                 rec.end_of_service = 0.0
-
 
     @api.depends('types_of_end_services')
     def _compute_bonus_amount(self):

@@ -29,7 +29,7 @@
     'author': 'Cybrosys Techno Solutions',
     'company': 'Cybrosys Techno Solutions',
     'website': "https://www.openhrms.com",
-    'depends': ['base','contacts', 'hr', 'mail', 'hr_contract', 'hr_expense','hr_payroll','account','analytic'],
+    'depends': ['base','contacts', 'hr', 'mail', 'hr_contract', 'hr_expense','hr_payroll','account','analytic','hr_appraisal'],
     'data': [
         'security/hr_security.xml',
         'security/ir.model.access.csv',
@@ -45,6 +45,7 @@
         # 'views/request_status_view.xml',
         # 'views/assets.xml',
         'views/salary_increase_view.xml',
+        'views/appresal.xml',
         # 'views/hr_employee_provision_view.xml',
         # 'report/report_saudicontract.xml',
         # 'report/experience_certificate.xml',
