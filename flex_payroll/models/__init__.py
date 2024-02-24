@@ -43,7 +43,7 @@ class HrContract(models.Model):
 
     def send_contract_end_notifications(self):
         # Define the target date range (30 days from now)
-        target_date = fields.Date.today() + timedelta(days=30)
+        target_date = fields.Date.today() + timedelta(days=60)
 
         # Search for contracts that will end in 30 days
         contracts_ending_soon = self.search([
@@ -55,11 +55,11 @@ class HrContract(models.Model):
         # template = self.env.ref('your_module_name.contract_end_notification_email_template')
 
         for contract in contracts_ending_soon:
-            # send the notification
-            self.env['mail.mail'].create({
-                'subject': f'Contract ending soon: {contract.name}',
-                'author_id': self.env.user.partner_id.id,
-                'email_from': self.env.user.partner_id.email,
-                'email_to': contract.employee_id.work_email,
-                'body_html': 'Your contract will end in 30 days. Please contact HR for renewal.'
-            }).send()
+            if contract.hr_responsible_id.partner_id.email:
+                self.env['mail.mail'].create({
+                    'subject': f'Contract ending soon: {contract.name}',
+                    'author_id': self.env.user.partner_id.id,
+                    'email_from': self.env.user.partner_id.email,
+                    'email_to': contract.hr_responsible_id.partner_id.email,
+                    'body_html': 'Your contract will end in 60 days. Please contact HR for renewal.'
+                }).send()
