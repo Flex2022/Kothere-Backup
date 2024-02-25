@@ -9,5 +9,14 @@
             <field name="prefix">ET/</field>
             <field name="implementation">standard</field>
         </record>
+
+        <!-- Sequence for Renew Iqama Approvals -->
+        <record id="sequence_flex_approval_renew_iqama" model="ir.sequence">
+            <field name="name">flex.approval.renew_iqama</field>
+            <field name="code">flex.approval.renew_iqama</field>
+            <field name="prefix">RENEW-IQAMA/</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
     </data>
 </odoo>

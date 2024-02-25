@@ -27,7 +27,7 @@ class ApprovalEmployeeTransfer(models.Model):
         ('hr_approval', 'HR Approval'),
         ('approved', 'Approved'),
         ('rejected', 'Rejected'),
-    ], string='Status', default='draft', track_visibility='onchange', copy=False)
+    ], string='Status', default='draft', tracking=True, copy=False)
 
     # Optional: Add a responsible user/manager field for approval
     # responsible_user_id = fields.Many2one('res.users', string='Responsible User', help="User responsible for approving the transfer.")
@@ -67,7 +67,7 @@ class ApprovalEmployeeTransfer(models.Model):
             # Check if the user is the HR manager
             if user not in self.env.ref('hr.group_hr_manager').sudo().users:
                 raise models.ValidationError(
-                    _("Only the HR manager is authorized to approve the transfer for the employee."))
+                    _("Only the HR managers are authorized to approve the transfer for the employee."))
 
             self.write({'state': 'approved'})
             self.employee_id.department_id = self.new_department_id
@@ -87,6 +87,6 @@ class ApprovalEmployeeTransfer(models.Model):
 
     def unlink(self):
         for approval in self:
-            if approval.state not in ['draft', 'cancel']:
-                raise models.UserError(_("You can only delete records with 'Draft' or 'Cancel' state."))
+            if approval.state not in ['draft', 'rejected']:
+                raise models.UserError(_("You can only delete records with 'Draft' or 'Rejected' state."))
         return super(ApprovalEmployeeTransfer, self).unlink()
