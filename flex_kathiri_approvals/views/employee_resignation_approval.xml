@@ -1,0 +1,76 @@
+<odoo>
+    <data>
+        <!-- Resignation Approval Form View -->
+        <record id="view_approval_resignation_form" model="ir.ui.view">
+            <field name="name">flex.approval.resignation.form</field>
+            <field name="model">flex.approval.resignation</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button string="Submit for Approval" type="object" name="action_submit_for_approval"
+                                invisible="state != 'draft'"/>
+                        <button string="Approve Resignation" type="object" name="action_approve_resignation"
+                                invisible="state in ('draft', 'rejected','approved')"/>
+                        <button string="Reject Resignation" type="object" name="action_reject_resignation"
+                                invisible="state in ('draft', 'rejected', 'approved')"/>
+                        <field name="state" widget="statusbar" readonly="True"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" placeholder="Sequence"/>
+                            <h1>
+                                <field name="name" placeholder="Sequence"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="employee_id" readonly="state != 'draft'"/>
+                                <field name="department_id" readonly="1"/>
+                                <field name="resignation_date" readonly="True"/>
+                            </group>
+                            <group>
+                                <field name="resignation_type" readonly="state != 'draft'"/>
+                                <field name="leave_date" readonly="state != 'draft'"/>
+                                <field name="notice_period" readonly="state != 'draft'"/>
+                                <field name="attachment_ids" widget="many2many_binary" string="Attach a file"
+                                       class="g-col-8" readonly="state != 'draft'"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page name="note">
+                                <field name="note" widget="html" readonly="state != 'draft'"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids" options="{'post_refresh': 'recipients'}"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- Resignation Approval Tree View -->
+        <record id="view_approval_resignation_tree" model="ir.ui.view">
+            <field name="name">flex.approval.resignation.tree</field>
+            <field name="model">flex.approval.resignation</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="employee_id"/>
+                    <field name="department_id"/>
+                    <field name="state" widget="badge"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Resignation Approval Action -->
+        <record id="action_approval_resignation" model="ir.actions.act_window">
+            <field name="name">Resignation Approvals</field>
+            <field name="res_model">flex.approval.resignation</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+    </data>
+</odoo>

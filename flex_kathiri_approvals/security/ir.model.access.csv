@@ -8,4 +8,7 @@ flex_approval_renew_iqama_reject_wizard_user,flex_renew_iqama_transfer_reject_wi
 flex_approval_business_trip_user,flex.approval.business_trip,model_flex_approval_business_trip,,1,1,1,1
 flex_approval_business_trip_reject_wizard_user,flex_business_trip_transfer_reject_wizard,model_flex_approval_business_trip_reject_wizard,,1,1,1,1
 
+flex_approval_resignation_user,flex.approval.resignation,model_flex_approval_resignation,,1,1,1,1
+flex_approval_resignation_reject_wizard_user,flex_resignation_transfer_reject_wizard,model_flex_approval_resignation_reject_wizard,,1,1,1,1
+
 
