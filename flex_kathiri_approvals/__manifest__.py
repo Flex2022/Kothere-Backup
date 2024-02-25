@@ -1,0 +1,19 @@
+{
+    'name': 'Flex Kathiri Approvals',
+    'version': '0.1',
+    'summary': '',
+    'description': '',
+    'category': '',
+    'author': 'HACHEMI Mohamed Ramzi || Flex-Ops',
+    'website': 'https://www.flex-ops.com',
+    'license': 'AGPL-3',
+    'depends': ['base','hr'],
+    'data': [
+        'security/ir.model.access.csv',
+        'data/sequences.xml',
+        'views/employee_transfer_approval.xml',
+        'views/menus.xml',
+    ],
+    'installable': True,
+    'auto_install': False,
+}

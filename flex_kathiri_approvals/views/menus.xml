@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <menuitem id="menu_flex_approvals" name="Approvals" sequence="10">
+        <menuitem id="menu_flex_all_approvals" name="All Approvals" sequence="10">
+            <menuitem id="menu_flex_approval_employee_transfer_action" name=" Employee Transfer Approvals"
+                      action="action_flex_approval_employee_transfer"/>
+        </menuitem>
+    </menuitem>
+</odoo>
