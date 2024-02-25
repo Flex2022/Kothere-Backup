@@ -84,3 +84,9 @@ class ApprovalEmployeeTransfer(models.Model):
                 'default_transfer_id': self.id,
             },
         }
+
+    def unlink(self):
+        for approval in self:
+            if approval.state not in ['draft', 'cancel']:
+                raise models.UserError(_("You can only delete records with 'Draft' or 'Cancel' state."))
+        return super(ApprovalEmployeeTransfer, self).unlink()
