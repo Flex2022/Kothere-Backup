@@ -6,7 +6,7 @@ class ApprovalRenewIqamaRejectWizard(models.TransientModel):
     _description = 'Renew Iqama Rejection Wizard'
 
     reason = fields.Text(string='Rejection Reason', required=True)
-    renew_iqama_id = fields.Many2one('flex.approval.renew_iqama', string='Transfer Request')
+    renew_iqama_id = fields.Many2one('flex.approval.renew_iqama', string='Renew Iqama Request')
 
     def action_confirm_rejection(self):
         self.renew_iqama_id.write({

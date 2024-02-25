@@ -4,10 +4,12 @@
         <menuitem id="menu_flex_all_approvals"
                   name="All Approvals"
                   sequence="10">
-            <menuitem id="menu_flex_approval_employee_transfer_action" name=" Employee Transfer Approvals"
+            <menuitem id="menu_flex_approval_employee_transfer_action" name="Employee Transfer Approvals"
                       action="action_flex_approval_employee_transfer"/>
-            <menuitem id="menu_flex_approval_renew_iqama_action" name=" Renew Iqama Approvals"
+            <menuitem id="menu_flex_approval_renew_iqama_action" name="Renew Iqama Approvals"
                       action="action_approval_renew_iqama"/>
+            <menuitem id="menu_flex_approval_business_trip_action" name="Business Trip Approvals"
+                      action="action_approval_business_trip"/>
         </menuitem>
     </menuitem>
 </odoo>

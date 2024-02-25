@@ -18,5 +18,14 @@
             <field name="padding">4</field>
             <field name="company_id" eval="False"/>
         </record>
+
+        <!-- Sequence for Business Trip Approvals -->
+        <record id="sequence_approval_business_trip" model="ir.sequence">
+            <field name="name">flex.approval.business.trip.sequence</field>
+            <field name="code">flex.approval.business_trip.sequence</field>
+            <field name="prefix">BUS_TRIP</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
     </data>
 </odoo>
