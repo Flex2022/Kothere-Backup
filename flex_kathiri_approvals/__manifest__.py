@@ -7,11 +7,12 @@
     'author': 'HACHEMI Mohamed Ramzi || Flex-Ops',
     'website': 'https://www.flex-ops.com',
     'license': 'AGPL-3',
-    'depends': ['base','hr'],
+    'depends': ['base', 'hr'],
     'data': [
         'security/ir.model.access.csv',
         'data/sequences.xml',
         'views/employee_transfer_approval.xml',
+        'wizards/employee_transfer_reject_wizard.xml',
         'views/menus.xml',
     ],
     'installable': True,

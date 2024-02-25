@@ -41,19 +41,48 @@ class ApprovalEmployeeTransfer(models.Model):
         return result
 
     def action_submit_for_approval(self):
+        if self.current_department_id == self.new_department_id:
+            raise models.ValidationError(_("Current and new departments must not be the same."))
+
         self.write({'state': 'new_department_approval'})
 
     def action_approve_transfer(self):
+        user = self.env.user
+
         if self.state == 'new_department_approval':
+            # Check if the user is the manager of the current department
+            if user != self.current_department_id.manager_id:
+                raise models.ValidationError(_("You are not authorized to approve for the current department."))
+
             self.write({'state': 'current_department_approval'})
+
         elif self.state == 'current_department_approval':
+            # Check if the user is the employee
+            if user != self.employee_id.user_id:
+                raise models.ValidationError(_("You are not authorized to approve as the employee."))
+
             self.write({'state': 'employee_approval'})
+
         elif self.state == 'employee_approval':
+            # Check if the user is the HR manager
+            if user != self.env.ref('hr.group_hr_manager').sudo().users:
+                raise models.ValidationError(_("You are not authorized to approve as the HR manager."))
+
             self.write({'state': 'hr_approval'})
+
         elif self.state == 'hr_approval':
             self.write({'state': 'approved'})
+            self.employee_id.department_id = self.new_department_id
 
     def action_reject_transfer(self):
-        self.write({'state': 'rejected'})
-
-
+        return {
+            'name': _('Rejection Reason'),
+            'view_mode': 'form',
+            'view_id': False,
+            'res_model': 'flex.approval.employee_transfer.reject.wizard',
+            'type': 'ir.actions.act_window',
+            'target': 'new',
+            'context': {
+                'default_transfer_id': self.id,
+            },
+        }

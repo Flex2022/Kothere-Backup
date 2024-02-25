@@ -1,2 +1,3 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 flex_approval_employee_transfer_user,flex.approval.employee_transfer,model_flex_approval_employee_transfer,,1,1,1,1
+flex_approval_employee_transfer_reject_wizard_user,flex_approval_employee_transfer_reject_wizard,model_flex_approval_employee_transfer_reject_wizard,,1,1,1,1
