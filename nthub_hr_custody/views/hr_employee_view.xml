@@ -12,7 +12,7 @@
                 </xpath>
                 <xpath expr="//field[@name='department_id']" position="after">
                     <field name="project_id"/>
-                    <field name="related_partner" readonly="0"/>
+                    <field name="related_partner" required="0"/>
                 </xpath>
                 <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
                     <button class="oe_stat_button" name="custody_view" type="object" icon="fa-list-ol">
