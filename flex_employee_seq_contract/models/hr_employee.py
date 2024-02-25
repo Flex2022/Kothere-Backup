@@ -16,6 +16,10 @@ class HrEmployee(models.Model):
                                                              employee.department_id.next_seq)
                     employee.department_id.next_seq += 1
 
+    def random_sequence(self):
+        self.compute_employee_number()
+        return True
+
 
 class HrContract(models.Model):
     _inherit = 'hr.contract'

@@ -83,7 +83,7 @@ class HrEmployeeContract(models.Model):
         except:
             return False
 
-    hr_leave_id = fields.Many2one('hr.leave.report', string='Leave Request', compute='_compute_hr_leave_id')
+    hr_leave_id = fields.Many2one('hr.leave.allocation', string='Leave Request', compute='_compute_hr_leave_id')
     notice_days = fields.Integer(string="Notice Period", default=_get_default_notice_days)
     transportation_allowance_type = fields.Selection([('amount', 'Amount'), ('percentage', 'Percentage')],
                                                      tracking=True, string='Transportation', default='amount')
@@ -131,7 +131,7 @@ class HrEmployeeContract(models.Model):
     salary_if_any = fields.Float('Salary if any', digits=(12, 2), compute='_compute_salary_if_any', store=True)
     overtime = fields.Char('Overtime', digits=(12, 2))
     vacation_benefits = fields.Float('Vacation', digits=(12, 2), compute='_compute_vacation')
-    end_of_service = fields.Float('End of Service', digits=(12, 2))
+    end_of_service = fields.Float('End of Service', digits=(12, 2), related='bonus_amount')
     other_benefits = fields.Float('Other ', digits=(12, 2))
     total_amount_due = fields.Float('Total Amount Due', digits=(12, 2), compute='_compute_total_amount_due', store=True)
     his_predecessor_is_due = fields.Float('His Predecessor is Due', digits=(12, 2))
@@ -165,14 +165,17 @@ class HrEmployeeContract(models.Model):
     @api.depends('employee_id')
     def _compute_hr_leave_id(self):
         for rec in self:
-            rec.hr_leave_id = self.env['hr.leave.report'].search(
-                [('employee_id', '=', rec.employee_id.id)],  limit=1)
+            rec.hr_leave_id = self.env['hr.leave.allocation'].search(
+                [('employee_id', '=', rec.employee_id.id)], limit=1)
 
     @api.depends('hr_leave_id')
     def _compute_number_of_days_off(self):
+        hr_leave_report = self.env['hr.leave.report'].search(
+            [('employee_id', '=', self.employee_id.id), ('state', '=', 'validate')])
+
         for rec in self:
             if rec.hr_leave_id:
-                rec.number_od_days_off = rec.hr_leave_id.number_of_days
+                rec.number_od_days_off = sum(hr_leave_report.mapped('number_of_days'))
             else:
                 rec.number_od_days_off = 0.0
 
