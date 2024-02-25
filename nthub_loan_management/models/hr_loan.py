@@ -228,11 +228,11 @@ class HrEmployee(models.Model):
 
     related_partner = fields.Many2one('res.partner')
 
-    @api.constrains('related_partner')
-    def check_identification_id(self):
-        related_partner_exist = self.env['hr.employee'].search([('related_partner', '=', self.related_partner.id),('id', '!=', self.id)])
-        if related_partner_exist:
-            raise ValidationError("Related Partner is exist")
+    # @api.constrains('related_partner')
+    # def check_identification_id(self):
+    #     related_partner_exist = self.env['hr.employee'].search([('related_partner', '=', self.related_partner.id),('id', '!=', self.id)])
+    #     if related_partner_exist:
+    #         raise ValidationError("Related Partner is exist")
 
 
 
