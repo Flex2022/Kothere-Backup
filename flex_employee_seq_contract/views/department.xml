@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!-- Inherit Form View to Modify it -->
+    <record id="view_department_form_inherit_flex999" model="ir.ui.view">
+        <field name="name">view.department.form.inherit.flex999</field>
+        <field name="model">hr.department</field>
+        <field name="inherit_id" ref="hr.view_department_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="sequence"/>
+                <field name="next_seq"/>
+            </xpath>
+
+        </field>
+    </record>
+</odoo>
