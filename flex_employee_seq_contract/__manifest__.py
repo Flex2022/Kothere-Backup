@@ -1,0 +1,15 @@
+{
+    'name': 'Flex Employee Sequence Contract',
+    'version': '1.0',
+    'summary': 'Add sequence to employee contract',
+    'description': 'Add sequence to employee contract',
+    'category': '',
+    'author': 'Sohaib alamleh ||Flex-ops',
+    'website': '',
+    'license': '',
+    'depends': ['hr', 'hr_contract'],
+    'data': ['views/department.xml'],
+    'demo': [''],
+    'installable': True,
+    'auto_install': False,
+}
