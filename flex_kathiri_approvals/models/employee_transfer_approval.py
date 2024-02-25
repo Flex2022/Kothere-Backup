@@ -22,7 +22,6 @@ class ApprovalEmployeeTransfer(models.Model):
 
     state = fields.Selection([
         ('draft', 'Draft'),
-        ('new_department_approval', 'New Department Approval'),
         ('current_department_approval', 'Current Department Approval'),
         ('employee_approval', 'Employee Approval'),
         ('hr_approval', 'HR Approval'),
@@ -43,37 +42,33 @@ class ApprovalEmployeeTransfer(models.Model):
     def action_submit_for_approval(self):
         if self.current_department_id == self.new_department_id:
             raise models.ValidationError(_("Current and new departments must not be the same."))
-
-        self.write({'state': 'new_department_approval'})
+        self.write({'state': 'current_department_approval'})
 
     def action_approve_transfer(self):
         user = self.env.user
 
-        if self.state == 'new_department_approval':
+        if self.state == 'current_department_approval':
             # Check if the user is the manager of the current department
             if user != self.current_department_id.manager_id:
                 raise models.ValidationError(
                     _("Only the department manager is authorized to approve the transfer for the current department."))
 
-            self.write({'state': 'current_department_approval'})
+            self.write({'state': 'employee_approval'})
 
-        elif self.state == 'current_department_approval':
+        elif self.state == 'employee_approval':
             # Check if the user is the employee
             if user != self.employee_id.user_id:
                 raise models.ValidationError(
                     _("Only the employee is authorized to approve the transfer for the current department."))
 
-            self.write({'state': 'employee_approval'})
+            self.write({'state': 'hr_approval'})
 
-        elif self.state == 'employee_approval':
+        elif self.state == 'hr_approval':
             # Check if the user is the HR manager
             if user not in self.env.ref('hr.group_hr_manager').sudo().users:
                 raise models.ValidationError(
                     _("Only the HR manager is authorized to approve the transfer for the employee."))
 
-            self.write({'state': 'hr_approval'})
-
-        elif self.state == 'hr_approval':
             self.write({'state': 'approved'})
             self.employee_id.department_id = self.new_department_id
 
