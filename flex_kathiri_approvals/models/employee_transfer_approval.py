@@ -52,21 +52,24 @@ class ApprovalEmployeeTransfer(models.Model):
         if self.state == 'new_department_approval':
             # Check if the user is the manager of the current department
             if user != self.current_department_id.manager_id:
-                raise models.ValidationError(_("You are not authorized to approve for the current department."))
+                raise models.ValidationError(
+                    _("Only the department manager is authorized to approve the transfer for the current department."))
 
             self.write({'state': 'current_department_approval'})
 
         elif self.state == 'current_department_approval':
             # Check if the user is the employee
             if user != self.employee_id.user_id:
-                raise models.ValidationError(_("You are not authorized to approve as the employee."))
+                raise models.ValidationError(
+                    _("Only the employee is authorized to approve the transfer for the current department."))
 
             self.write({'state': 'employee_approval'})
 
         elif self.state == 'employee_approval':
             # Check if the user is the HR manager
-            if user != self.env.ref('hr.group_hr_manager').sudo().users:
-                raise models.ValidationError(_("You are not authorized to approve as the HR manager."))
+            if user not in self.env.ref('hr.group_hr_manager').sudo().users:
+                raise models.ValidationError(
+                    _("Only the HR manager is authorized to approve the transfer for the employee."))
 
             self.write({'state': 'hr_approval'})
 
