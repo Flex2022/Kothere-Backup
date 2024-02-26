@@ -37,13 +37,13 @@ class ApprovalRenewIqama(models.Model):
 
     @api.model
     def create(self, vals):
-        if vals.get('name', _('New')) == _('New'):
-            vals['name'] = self.env['ir.sequence'].next_by_code('flex.approval.renew_iqama') or _('New')
         result = super(ApprovalRenewIqama, self).create(vals)
         return result
 
     def action_submit_for_approval(self):
         if self.state == 'draft':
+            if self.name == _('New'):
+                self.name = self.env['ir.sequence'].next_by_code('flex.approval.renew_iqama') or _('New')
             self.write({'state': 'direct_manager_approval'})
 
     def action_approve_renewal(self):
@@ -71,7 +71,7 @@ class ApprovalRenewIqama(models.Model):
 
             self.write({'state': 'approved'})
             self.employee_id.iqama_id = self.new_iqama_id
-            self.employee_id.renewal_date = self.renewal_date
+            self.employee_id.end_of_iqama = self.renewal_date
 
     def action_reject_renewal(self):
         return {
