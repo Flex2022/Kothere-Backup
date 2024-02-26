@@ -37,8 +37,8 @@
                                 <field name="purpose" readonly="state != 'draft'"/>
                                 <field name="book_hotel" readonly="state != 'draft'"
                                        invisible="trip_type != 'external'" required="trip_type == 'external'"/>
-                                <field name="hotel_name" readonly="state != 'draft'" invisible="trip_type != 'external' or book_hostel != True"
-                                       required="trip_type == 'external' and book_hostel == True"/>
+                                <field name="hotel_name" readonly="state != 'draft'" invisible="trip_type != 'external' or book_hotel != True"
+                                       required="trip_type == 'external' and book_hotel == True"/>
 
                             </group>
                             <group>
