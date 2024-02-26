@@ -12,7 +12,7 @@ class ApprovalEmployeeTransfer(models.Model):
                        default=lambda self: _('New'))
 
     employee_id = fields.Many2one('hr.employee', string='Employee', required=True)
-    current_department_id = fields.Many2one('hr.department', string='Current Department', readonly=True)
+    current_department_id = fields.Many2one('hr.department', string='Current Department', store=True)
     new_department_id = fields.Many2one('hr.department', string='New Department')
     new_employee_id = fields.Many2one('hr.employee', string='New Employee')
 
@@ -45,8 +45,6 @@ class ApprovalEmployeeTransfer(models.Model):
 
     @api.model
     def create(self, vals):
-        if vals.get('name', _('New')) == _('New'):
-            vals['name'] = self.env['ir.sequence'].next_by_code('flex.approval.employee_transfer') or _('New')
         result = super(ApprovalEmployeeTransfer, self).create(vals)
         return result
 
@@ -55,6 +53,8 @@ class ApprovalEmployeeTransfer(models.Model):
             raise models.ValidationError(_("Current and new departments must not be the same."))
         elif self.employee_id == self.new_employee_id:
             raise models.ValidationError(_("Current and new employee must not be the same."))
+        if self.name == _('New'):
+            self.name = self.env['ir.sequence'].next_by_code('flex.approval.employee_transfer') or _('New')
         self.write({'state': 'current_department_approval'})
 
     def action_approve_transfer(self):
