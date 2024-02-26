@@ -1,0 +1,6 @@
+<odoo>
+    <record id="group_ceo_approval" model="res.groups">
+        <field name="name">CEO Approval Group</field>
+        <field name="implied_ids" eval="[(4, ref('base.group_system'))]"/>
+    </record>
+</odoo>

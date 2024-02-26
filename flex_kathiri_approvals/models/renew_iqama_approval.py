@@ -18,10 +18,10 @@ class ApprovalRenewIqama(models.Model):
                                   default=_default_employee)
     department_id = fields.Many2one('hr.department', string='Department', related='employee_id.department_id',
                                     readonly=True)
-    current_iqama_id = fields.Char(string='Current Iqama ID', related='employee_id.iqama_id', readonly=True)
-    end_of_iqama = fields.Date(string='Current Expiry Date', related='employee_id.end_of_iqama', readonly=True)
-    new_iqama_id = fields.Char(string='New Iqama ID', required=True)
-    renewal_date = fields.Date(string='New Expiry Date', required=True, default=False)
+    current_iqama_id = fields.Char(string='Current Iqama ID', compute='compute_current_current_iqama_id', store=True)
+    end_of_iqama = fields.Date(string='Current Expiry Date', compute='compute_current_current_iqama_id', store=True)
+    new_iqama_id = fields.Char(string='New Iqama ID')
+    renewal_date = fields.Date(string='New Expiry Date')
     attachment_ids = fields.Many2many('ir.attachment', string='Attachments')
     expense_ids = fields.One2many('hr.expense', 'flex_approval_iqama_id', string='Expenses', copy=False)
     note = fields.Html('Note')
@@ -34,6 +34,13 @@ class ApprovalRenewIqama(models.Model):
         ('approved', 'Approved'),
         ('rejected', 'Rejected'),
     ], string='Status', default='draft', tracking=True, copy=False)
+
+    @api.depends('employee_id')
+    def compute_current_current_iqama_id(self):
+        for approval in self:
+            if approval.state == 'draft':
+                approval.current_iqama_id = approval.employee_id.iqama_id
+                approval.end_of_iqama = approval.employee_id.end_of_iqama
 
     @api.model
     def create(self, vals):

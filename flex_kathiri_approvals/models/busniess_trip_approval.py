@@ -42,13 +42,13 @@ class ApprovalBusinessTrip(models.Model):
 
     @api.model
     def create(self, vals):
-        if vals.get('name', _('New')) == _('New'):
-            vals['name'] = self.env['ir.sequence'].next_by_code('flex.approval.business_trip') or _('New')
         result = super(ApprovalBusinessTrip, self).create(vals)
         return result
 
     def action_submit_for_approval(self):
         if self.state == 'draft':
+            if self.name == _('New'):
+                self.name = self.env['ir.sequence'].next_by_code('flex.approval.business_trip') or _('New')
             self.write({'state': 'direct_manager_approval'})
 
     def action_approve_business_trip(self):
@@ -56,27 +56,33 @@ class ApprovalBusinessTrip(models.Model):
 
         if self.state == 'direct_manager_approval':
             # Check if the user is the direct manager of the employee
-            if user != self.employee_id.parent_id.user_id:
-                raise models.ValidationError(_("Only the direct manager is authorized to approve for the employee."))
+            if user.id != self.employee_id.parent_id.user_id.id:
+                raise models.ValidationError(
+                    _("Only the direct manager (%s) is authorized to approve for the employee.")
+                    % self.employee_id.parent_id.user_id.name)
             self.write({'state': 'department_manager_approval'})
 
         elif self.state == 'department_manager_approval':
             # Check if the user is the department manager
-            if user != self.employee_id.department_id.manager_id.user_id:
+            if user.id != self.employee_id.department_id.manager_id.user_id.id:
                 raise models.ValidationError(
-                    _("Only the department manager is authorized to approve for the current department."))
+                    _("Only the department manager (%s) is authorized to approve for the current department.")
+                    % self.employee_id.department_id.manager_id.user_id.name)
             self.write({'state': 'hr_manager_approval'})
 
         elif self.state == 'hr_manager_approval':
             # Check if the user is from HR managers
             if not user.has_group('hr.group_hr_manager'):
-                raise models.ValidationError(_("Only HR managers are authorized to approve for the HR department."))
+                raise models.ValidationError(
+                    _("Only HR managers are authorized to approve for the HR department."))
             self.write({'state': 'ceo_approval'})
 
         elif self.state == 'ceo_approval':
             # Check if the user is the CEO
-            if user != self.env.ref('base.group_system').sudo().users:
-                raise models.ValidationError(_("Only the CEO is authorized to approve for the company."))
+            if user != self.env.ref('flex_kathiri_approvals.group_ceo_approval').sudo().users:
+                raise models.ValidationError(
+                    _("Only the CEO (%s) is authorized to approve for the company.")
+                    % self.env.ref('base.group_system').sudo().users.mapped('name'))
             self.write({'state': 'approved'})
 
     def action_reject_business_trip(self):

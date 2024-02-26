@@ -9,6 +9,7 @@
     'license': 'AGPL-3',
     'depends': ['base', 'hr', 'flex_hr_employee', 'hr_expense'],
     'data': [
+        'security/security.xml',
         'security/ir.model.access.csv',
         'data/sequences.xml',
         'views/employee_transfer_approval.xml',
