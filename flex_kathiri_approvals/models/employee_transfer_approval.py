@@ -55,6 +55,10 @@ class ApprovalEmployeeTransfer(models.Model):
     def action_approve_transfer(self):
         user = self.env.user
 
+        if not self.employee_id.user_id:
+            raise models.ValidationError(
+                _("The employee doesn't have a user assigned. Unable to proceed with approval."))
+
         if self.state == 'current_department_approval':
             # Check if the user is the manager of the current department
             if user != self.current_department_id.manager_id.user_id:
