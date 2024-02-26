@@ -55,13 +55,9 @@ class ApprovalEmployeeTransfer(models.Model):
     def action_approve_transfer(self):
         user = self.env.user
 
-        if not self.employee_id.user_id:
-            raise models.ValidationError(
-                _("The employee doesn't have a user assigned. Unable to proceed with approval."))
-
         if self.state == 'current_department_approval':
             # Check if the user is the manager of the current department
-            if user != self.current_department_id.manager_id.user_id:
+            if user.id != self.current_department_id.manager_id.user_id.id:
                 raise models.ValidationError(
                     _("Only the department manager (%s) is authorized to approve the transfer for the current department.")
                     % self.current_department_id.manager_id.name)
@@ -69,17 +65,16 @@ class ApprovalEmployeeTransfer(models.Model):
             self.write({'state': 'employee_approval'})
 
         elif self.state == 'employee_approval':
-            # Check if the user is the employee
-            if user != self.employee_id.user_id:
+            # Check if the user is the HR user
+            if user not in self.env.ref('hr.group_hr_user').sudo().users:
                 raise models.ValidationError(
-                    _("Only the employee (%s) is authorized to approve the transfer for the current department.")
-                    % self.employee_id.user_id.name)
+                    _("Only the HR managers are authorized to approve the transfer for the employee."))
 
             self.write({'state': 'hr_approval'})
 
         elif self.state == 'hr_approval':
-            # Check if the user is the HR manager
-            if user not in self.env.ref('hr.group_hr_manager').sudo().users:
+            # Check if the user is the HR user
+            if user not in self.env.ref('hr.group_hr_user').sudo().users:
                 raise models.ValidationError(
                     _("Only the HR managers are authorized to approve the transfer for the employee."))
 
