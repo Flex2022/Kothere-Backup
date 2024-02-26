@@ -22,6 +22,7 @@ class ApprovalResignation(models.Model):
     ], string='Resignation Type', required=True, default='resignation')
     approved_date = fields.Datetime('Resignation Approve Date', readonly=True)
     attachment_ids = fields.Many2many('ir.attachment', string='Attachments')
+    expense_ids = fields.One2many('hr.expense', 'flex_approval_resignation_id', string='Expenses', copy=False)
     note = fields.Html('Note')
 
     state = fields.Selection([
@@ -86,3 +87,15 @@ class ApprovalResignation(models.Model):
             if approval.state not in ['draft', 'rejected']:
                 raise models.UserError(_("You can only delete records with 'Draft' or 'Rejected' state."))
         return super(ApprovalResignation, self).unlink()
+
+    def action_view_expenses(self):
+        action = self.env.ref('hr_expense.hr_expense_actions_my_all')
+        result = action.read()[0]
+
+        # Ensure 'context' is a dictionary
+        if isinstance(result['context'], str):
+            result['context'] = eval(result['context'])
+
+        result['domain'] = [('flex_approval_resignation_id', '=', self.id)]
+        result['context'].update({'default_flex_approval_resignation_id': self.id})
+        return result

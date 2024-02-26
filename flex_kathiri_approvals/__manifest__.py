@@ -7,7 +7,7 @@
     'author': 'HACHEMI Mohamed Ramzi || Flex-Ops',
     'website': 'https://www.flex-ops.com',
     'license': 'AGPL-3',
-    'depends': ['base', 'hr', 'flex_hr_employee'],
+    'depends': ['base', 'hr', 'flex_hr_employee', 'hr_expense'],
     'data': [
         'security/ir.model.access.csv',
         'data/sequences.xml',

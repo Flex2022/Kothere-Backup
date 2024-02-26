@@ -16,6 +16,11 @@
                         <field name="state" widget="statusbar" readonly="True"/>
                     </header>
                     <sheet>
+                        <div name="button_box" class="oe_button_box">
+                            <button name="action_view_expenses" class="oe_stat_button" type="object" icon="fa-money" invisible="state != 'approved'">
+                                <field name="expense_ids" widget="statinfo" string="Expenses"/>
+                            </button>
+                        </div>
                         <div class="oe_title">
                             <label for="name" placeholder="Sequence"/>
                             <h1>
@@ -24,11 +29,15 @@
                         </div>
                         <group>
                             <group>
+                                <field name="transfer_type" readonly="state != 'draft'"/>
                                 <field name="employee_id" readonly="state != 'draft'"/>
                                 <field name="current_department_id" readonly="1"/>
-                                <field name="new_department_id" readonly="state != 'draft'"/>
                             </group>
                             <group>
+                                <field name="new_department_id" readonly="state != 'draft'"
+                                       invisible="transfer_type == 'external'"/>
+                                <field name="new_employee_id" readonly="state != 'draft'"
+                                       invisible="transfer_type == 'internal'"/>
                                 <field name="transfer_date" readonly="state != 'draft'"/>
                                 <field name="attachment_ids" widget="many2many_binary" string="Attach a file"
                                        class="g-col-8" readonly="state != 'draft'"/>
@@ -56,6 +65,7 @@
             <field name="arch" type="xml">
                 <tree>
                     <field name="name"/>
+                    <field name="transfer_type"/>
                     <field name="employee_id"/>
                     <field name="current_department_id"/>
                     <field name="new_department_id"/>

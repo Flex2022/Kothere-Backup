@@ -23,12 +23,13 @@ class ApprovalRenewIqama(models.Model):
     new_iqama_id = fields.Char(string='New Iqama ID', required=True)
     renewal_date = fields.Date(string='New Expiry Date', required=True, default=False)
     attachment_ids = fields.Many2many('ir.attachment', string='Attachments')
+    expense_ids = fields.One2many('hr.expense', 'flex_approval_iqama_id', string='Expenses', copy=False)
     note = fields.Html('Note')
 
     state = fields.Selection([
         ('draft', 'Draft'),
         ('direct_manager_approval', 'Direct Manager Approval'),
-        ('department_manager_approval', 'Department Manager Approval'),
+        ('department_manager_approval', 'Manager Approval'),
         ('hr_manager_approval', 'HR Manager Approval'),
         ('approved', 'Approved'),
         ('rejected', 'Rejected'),
@@ -90,3 +91,15 @@ class ApprovalRenewIqama(models.Model):
             if approval.state not in ['draft', 'rejected']:
                 raise models.UserError(_("You can only delete records with 'Draft' or 'Rejected' state."))
         return super(ApprovalRenewIqama, self).unlink()
+
+    def action_view_expenses(self):
+        action = self.env.ref('hr_expense.hr_expense_actions_my_all')
+        result = action.read()[0]
+
+        # Ensure 'context' is a dictionary
+        if isinstance(result['context'], str):
+            result['context'] = eval(result['context'])
+
+        result['domain'] = [('flex_approval_iqama_id', '=', self.id)]
+        result['context'].update({'default_flex_approval_iqama_id': self.id})
+        return result

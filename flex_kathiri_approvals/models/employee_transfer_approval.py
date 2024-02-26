@@ -14,12 +14,19 @@ class ApprovalEmployeeTransfer(models.Model):
     employee_id = fields.Many2one('hr.employee', string='Employee', required=True)
     current_department_id = fields.Many2one('hr.department', string='Current Department',
                                             related='employee_id.department_id', readonly=True)
-    new_department_id = fields.Many2one('hr.department', string='New Department', required=True)
+    new_department_id = fields.Many2one('hr.department', string='New Department')
+    new_employee_id = fields.Many2one('hr.employee', string='New Employee')
 
     transfer_reason = fields.Html(string='Transfer Reason', required=True)
     transfer_date = fields.Date(string='Transfer Date', required=True, default=fields.Date.today())
+    transfer_type = fields.Selection([
+        ('internal', 'Internal'),
+        ('external', 'External'),
+    ], string='Transfer Type', required=True, default='internal')
+    book_hotel = fields.Boolean('Book Hotel')
+    hotel_name = fields.Char('Hotel Name')
     attachment_ids = fields.Many2many('ir.attachment', string='Attachments')
-
+    expense_ids = fields.One2many('hr.expense', 'flex_approval_transfer_id', string='Expenses', copy=False)
     state = fields.Selection([
         ('draft', 'Draft'),
         ('current_department_approval', 'Current Department Approval'),
@@ -42,6 +49,8 @@ class ApprovalEmployeeTransfer(models.Model):
     def action_submit_for_approval(self):
         if self.current_department_id == self.new_department_id:
             raise models.ValidationError(_("Current and new departments must not be the same."))
+        elif self.employee_id == self.new_employee_id:
+            raise models.ValidationError(_("Current and new employee must not be the same."))
         self.write({'state': 'current_department_approval'})
 
     def action_approve_transfer(self):
@@ -90,3 +99,15 @@ class ApprovalEmployeeTransfer(models.Model):
             if approval.state not in ['draft', 'rejected']:
                 raise models.UserError(_("You can only delete records with 'Draft' or 'Rejected' state."))
         return super(ApprovalEmployeeTransfer, self).unlink()
+
+    def action_view_expenses(self):
+        action = self.env.ref('hr_expense.hr_expense_actions_my_all')
+        result = action.read()[0]
+
+        # Ensure 'context' is a dictionary
+        if isinstance(result['context'], str):
+            result['context'] = eval(result['context'])
+
+        result['domain'] = [('flex_approval_transfer_id', '=', self.id)]
+        result['context'].update({'default_flex_approval_transfer_id': self.id})
+        return result

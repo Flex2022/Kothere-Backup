@@ -17,9 +17,15 @@ class ApprovalBusinessTrip(models.Model):
     department_id = fields.Many2one('hr.department', string='Department', related='employee_id.department_id',
                                     readonly=True)
     destination = fields.Char(string='Destination', required=True)
+    purpose = fields.Char(string='Purpose', required=True)
+    trip_type = fields.Selection([
+        ('internal', 'Internal'),
+        ('external', 'External'),
+    ], string='Trip Type', required=True, default='internal')
     start_date = fields.Date(string='Start Date', required=True, default=False)
     end_date = fields.Date(string='End Date', required=True, default=False)
     attachment_ids = fields.Many2many('ir.attachment', string='Attachments')
+    expense_ids = fields.One2many('hr.expense', 'flex_approval_business_trip_id', string='Expenses', copy=False)
     note = fields.Html('Note')
 
     state = fields.Selection([
@@ -89,3 +95,15 @@ class ApprovalBusinessTrip(models.Model):
             if approval.state not in ['draft', 'rejected']:
                 raise models.UserError(_("You can only delete records with 'Draft' or 'Rejected' state."))
         return super(ApprovalBusinessTrip, self).unlink()
+
+    def action_view_expenses(self):
+        action = self.env.ref('hr_expense.hr_expense_actions_my_all')
+        result = action.read()[0]
+
+        # Ensure 'context' is a dictionary
+        if isinstance(result['context'], str):
+            result['context'] = eval(result['context'])
+
+        result['domain'] = [('flex_approval_business_trip_id', '=', self.id)]
+        result['context'].update({'default_flex_approval_business_trip_id': self.id})
+        return result
