@@ -19,7 +19,7 @@ class ApprovalResignation(models.Model):
     notice_period = fields.Integer(string='Notice Period (days)', required=True)
     resignation_type = fields.Selection([
         ('resignation', 'Resignation'), ('termination', 'Termination'), ('death', 'Death')
-    ], string='Resignation Type', required=True, default='voluntary')
+    ], string='Resignation Type', required=True, default='resignation')
     approved_date = fields.Datetime('Resignation Approve Date', readonly=True)
     attachment_ids = fields.Many2many('ir.attachment', string='Attachments')
     note = fields.Html('Note')
