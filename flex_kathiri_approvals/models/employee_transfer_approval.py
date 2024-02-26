@@ -12,8 +12,7 @@ class ApprovalEmployeeTransfer(models.Model):
                        default=lambda self: _('New'))
 
     employee_id = fields.Many2one('hr.employee', string='Employee', required=True)
-    current_department_id = fields.Many2one('hr.department', string='Current Department',
-                                            related='employee_id.department_id', readonly=True)
+    current_department_id = fields.Many2one('hr.department', string='Current Department', readonly=True)
     new_department_id = fields.Many2one('hr.department', string='New Department')
     new_employee_id = fields.Many2one('hr.employee', string='New Employee')
 
@@ -37,6 +36,12 @@ class ApprovalEmployeeTransfer(models.Model):
 
     # Optional: Add a responsible user/manager field for approval
     # responsible_user_id = fields.Many2one('res.users', string='Responsible User', help="User responsible for approving the transfer.")
+
+    @api.onchange('employee_id')
+    def onchange_employee_id(self):
+        for approval in self:
+            if approval.state == 'draft':
+                approval.current_department_id = approval.employee_id.department_id.id
 
     @api.model
     def create(self, vals):
