@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_employee_form_inherit" model="ir.ui.view">
+        <field name="name">view_employee_form_inherit</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_hr_token" type="object" icon="fa-lock" class="oe_stat_button"
+                        string="Access Tokens" groups="base.group_system"/>
+            </xpath>
+            <xpath expr="//field[@name='pin']" position="before">
+                <field name="api_username"/>
+                <field name="api_password" password="True"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

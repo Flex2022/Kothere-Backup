@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_timeoff_details">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.basic_layout">
+                    <div class="page">
+                        <h3 class="text-center">Time Off Details</h3>
+                        <div class="container">
+                            <div>
+                                <strong t-field="o.name"/>
+                            </div>
+                            <div class="row">
+                                <div class="col-3 border px-0" t-foreach="o._get_employee_timeoff_data()" t-as="timeoff_data">
+                                    <div class="mx-2 mt-2">
+                                        <strong><t t-out="timeoff_data[0]"/></strong>
+                                    </div>
+                                    <div class="border-top"/>
+                                    <div class="mx-2">
+                                        <strong>Total: </strong> <t t-out="timeoff_data[1].get('max_leaves')"/>
+                                        <t t-if="timeoff_data[1].get('request_unit') == 'hour'">Hours</t>
+                                        <t t-else="">Days</t>
+                                    </div>
+                                    <div class="mx-2">
+                                        <strong>Remaining:</strong> <t t-out="timeoff_data[1].get('remaining_leaves')"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr/>
+                            <p class="text-center mt-2">Made by Odoo with ❤️</p>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+        <record id="paperformat_timeoff_details" model="report.paperformat">
+        <field name="name">A4 Label Sheet</field>
+        <field name="default" eval="True" />
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">0</field>
+        <field name="margin_bottom">0</field>
+        <field name="margin_left">0</field>
+        <field name="margin_right">0</field>
+        <field name="disable_shrinking" eval="True"/>
+        <field name="dpi">96</field>
+    </record>
+
+    <record id="employee_timeoff_details_report" model="ir.actions.report">
+        <field name="name">Time Off Details</field>
+        <field name="model">hr.employee</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">flex_hr_app.report_timeoff_details</field>
+        <field name="report_file">flex_hr_app.report_timeoff_details</field>
+        <field name="binding_model_id" ref="hr.model_hr_employee"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="paperformat_timeoff_details"/>
+    </record>
+
+</odoo>
