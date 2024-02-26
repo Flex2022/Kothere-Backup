@@ -57,17 +57,19 @@ class ApprovalEmployeeTransfer(models.Model):
 
         if self.state == 'current_department_approval':
             # Check if the user is the manager of the current department
-            if user.id != self.current_department_id.manager_id.id:
+            if user != self.current_department_id.manager_id.user_id:
                 raise models.ValidationError(
-                    _("Only the department manager is authorized to approve the transfer for the current department."))
+                    _("Only the department manager (%s) is authorized to approve the transfer for the current department.")
+                    % self.current_department_id.manager_id.name)
 
             self.write({'state': 'employee_approval'})
 
         elif self.state == 'employee_approval':
             # Check if the user is the employee
-            if user.id != self.employee_id.user_id.id:
+            if user != self.employee_id.user_id:
                 raise models.ValidationError(
-                    _("Only the employee is authorized to approve the transfer for the current department."))
+                    _("Only the employee (%s) is authorized to approve the transfer for the current department.")
+                    % self.employee_id.user_id.name)
 
             self.write({'state': 'hr_approval'})
 
