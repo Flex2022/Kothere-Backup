@@ -22,6 +22,8 @@ class ApprovalBusinessTrip(models.Model):
         ('internal', 'Internal'),
         ('external', 'External'),
     ], string='Trip Type', required=True, default='internal')
+    book_hotel = fields.Boolean('Book Hotel')
+    hotel_name = fields.Char('Hotel Name')
     start_date = fields.Date(string='Start Date', required=True, default=False)
     end_date = fields.Date(string='End Date', required=True, default=False)
     attachment_ids = fields.Many2many('ir.attachment', string='Attachments')

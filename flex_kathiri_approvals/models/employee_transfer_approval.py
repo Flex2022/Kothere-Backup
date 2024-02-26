@@ -23,8 +23,7 @@ class ApprovalEmployeeTransfer(models.Model):
         ('internal', 'Internal'),
         ('external', 'External'),
     ], string='Transfer Type', required=True, default='internal')
-    book_hotel = fields.Boolean('Book Hotel')
-    hotel_name = fields.Char('Hotel Name')
+
     attachment_ids = fields.Many2many('ir.attachment', string='Attachments')
     expense_ids = fields.One2many('hr.expense', 'flex_approval_transfer_id', string='Expenses', copy=False)
     state = fields.Selection([
