@@ -15,7 +15,7 @@ class ApprovalEmployeeTransfer(models.Model):
     current_department_id = fields.Many2one('hr.department', string='Current Department',
                                             compute="compute_current_department_id", store=True)
     new_department_id = fields.Many2one('hr.department', string='New Department')
-    new_employee_id = fields.Many2one('hr.employee', string='New Employee')
+    new_employee_id = fields.Many2one('hr.employee', string='Alternative Employee')
 
     transfer_reason = fields.Html(string='Transfer Reason', required=True)
     transfer_date = fields.Date(string='Transfer Date', required=True, default=fields.Date.today())
@@ -83,9 +83,9 @@ class ApprovalEmployeeTransfer(models.Model):
             if user not in self.env.ref('hr.group_hr_user').sudo().users:
                 raise models.ValidationError(
                     _("Only the HR managers are authorized to approve the transfer for the employee."))
-
+            if self.transfer_type == 'internal':
+                self.employee_id.department_id = self.new_department_id
             self.write({'state': 'approved'})
-            self.employee_id.department_id = self.new_department_id
 
     def action_reject_transfer(self):
         return {
