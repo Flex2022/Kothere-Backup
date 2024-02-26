@@ -69,6 +69,7 @@
                     <field name="employee_id"/>
                     <field name="current_department_id"/>
                     <field name="new_department_id"/>
+                    <field name="new_employee_id"/>
                     <field name="transfer_reason"/>
                     <field name="transfer_date"/>
                     <field name="state" widget="badge"/>
