@@ -1,0 +1,35 @@
+# -*- coding: utf-8 -*-
+
+from . import models
+
+
+def post_init_hook(env):
+    from odoo import api, SUPERUSER_ID
+
+    # env = api.Environment(cr, SUPERUSER_ID, {})
+
+    attendances = env['hr.attendance'].search([])
+    print('attendances', attendances)
+    for rec in attendances:
+        contracts = rec.employee_id.contract_ids.filtered(lambda x: x.state in ['open'])
+        if contracts:
+            rec.resource_calendar_id = contracts[0].resource_calendar_id
+            print('contract found', rec.resource_calendar_id)
+        else:
+            rec.resource_calendar_id = rec.employee_id.resource_calendar_id
+            print('no contract found', rec.resource_calendar_id)
+
+# class HrAttendance(models.Model):
+#     _inherit = 'hr.attendance'
+#
+#     @api.model
+#     def post_init_hook(cls):
+#         env = api.Environment(models.SUPERUSER_ID, {})
+#
+#         attendances = env[cls._name].search([])
+#         for rec in attendances:
+#             contracts = rec.employee_id.contract_ids.filtered(lambda x: x.state in ['open'])
+#             if contracts:
+#                 rec.resource_calendar_id = contracts[0].resource_calendar_id
+#             else:
+#                 rec.resource_calendar_id = rec.employee_id.resource_calendar_id
