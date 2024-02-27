@@ -1,5 +1,5 @@
 {
-    'name': 'Flex Kathiri Approvals',
+    'name': 'Flex Employee Requests',
     'version': '0.1',
     'summary': '',
     'description': '',

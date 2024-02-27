@@ -13,6 +13,7 @@
                       action="action_approval_renew_iqama"/>
             <menuitem id="menu_flex_approval_resignation_action" name="Resignation Requests"
                       action="action_approval_resignation"/>
+            <menuitem id="menu_employee_requests_config" name="Settings" action="action_flex_approvals_config" groups="base.group_system" sequence="0"/>
         </menuitem>
     </menuitem>
 </odoo>

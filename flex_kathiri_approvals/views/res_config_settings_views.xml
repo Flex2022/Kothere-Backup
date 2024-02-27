@@ -8,7 +8,7 @@
             <field name="inherit_id" ref="base.res_config_settings_view_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//form" position="inside">
-                    <app data-string="Employee_Requests" string="Employee Requests" name="flex_kathiri_approvals">
+                    <app data-string="flex_employee_requests" string="Employee Requests" name="flex_kathiri_approvals">
                         <block title="Employee Requests Configuration" name="employee_requests_setting_container" >
 <!--                            <setting string="Approval Category for Resignation Request" company_dependent="1"-->
 <!--                                     help="Select the approval category for handling resignation requests.">-->
