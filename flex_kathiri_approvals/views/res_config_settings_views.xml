@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="res_config_settings_view_form" model="ir.ui.view">
+            <field name="name">res.config.settings.view.form.inherit.account</field>
+            <field name="model">res.config.settings</field>
+            <field name="priority" eval="40"/>
+            <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="inside">
+                    <app data-string="Employee_Requests" string="Employee Requests" name="flex_kathiri_approvals">
+                        <block title="Employee Requests Configuration" name="employee_requests_setting_container" >
+<!--                            <setting string="Approval Category for Resignation Request" company_dependent="1"-->
+<!--                                     help="Select the approval category for handling resignation requests.">-->
+<!--                                <div class="content-group">-->
+<!--                                    <div class="mt16">-->
+<!--                                        <div>-->
+<!--                                            <label for="flex_employee_resignation_request_approval_type" string="Approval Type" class="col-2 o_light_label"/>-->
+<!--                                            <field name="flex_employee_resignation_request_approval_type"/>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </setting>-->
+                            <setting id="default_flex_employee_resignation_request_approval_type_setting"  help="Select the approval category for handling resignation requests.">
+                                <field name="flex_employee_resignation_request_approval_type"/>
+                            </setting>
+                        </block>
+                    </app>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="action_flex_approvals_config" model="ir.actions.act_window">
+            <field name="name">Settings</field>
+            <field name="res_model">res.config.settings</field>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+            <field name="context">{'module' : 'flex_kathiri_approvals', 'bin_size': False}</field>
+        </record>
+
+    </data>
+</odoo>

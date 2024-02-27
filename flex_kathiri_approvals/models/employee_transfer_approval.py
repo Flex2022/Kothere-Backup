@@ -10,7 +10,8 @@ class ApprovalEmployeeTransfer(models.Model):
 
     name = fields.Char(string='Transfer Request', required=True, copy=False, readonly=True,
                        default=lambda self: _('New'))
-
+    company_id = fields.Many2one(comodel_name='res.company', required=True, index=True,
+                                 default=lambda self: self.env.company)
     employee_id = fields.Many2one('hr.employee', string='Employee', required=True)
     current_department_id = fields.Many2one('hr.department', string='Current Department',
                                             compute="compute_current_department_id", store=True)

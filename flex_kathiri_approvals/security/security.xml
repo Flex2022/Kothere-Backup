@@ -1,6 +1,29 @@
 <odoo>
     <record id="group_ceo_approval" model="res.groups">
-        <field name="name">CEO Approval Group</field>
+        <field name="name">CEO Approval (Business Trip)</field>
         <field name="implied_ids" eval="[(4, ref('base.group_system'))]"/>
     </record>
+
+    <data noupdate="1">
+        <record id="flex_employee_requests_business_trip_own_record_rule" model="ir.rule">
+            <field name="name">Flex Employee Requests 'Business Trip': Company Records Only</field>
+            <field name="model_id" ref="model_flex_approval_business_trip"/>
+            <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+        </record>
+        <record id="flex_employee_requests_employee_transfer_own_record_rule" model="ir.rule">
+            <field name="name">Flex Employee Requests 'Employee Transfer': Company Records Only</field>
+            <field name="model_id" ref="model_flex_approval_employee_transfer"/>
+            <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+        </record>
+        <record id="flex_employee_requests_renew_iqama_own_record_rule" model="ir.rule">
+            <field name="name">Flex Employee Requests 'Renew Iqama': Company Records Only</field>
+            <field name="model_id" ref="model_flex_approval_renew_iqama"/>
+            <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+        </record>
+        <record id="flex_employee_requests_resignation_own_record_rule" model="ir.rule">
+            <field name="name">Flex Employee Requests 'Resignation': Company Records Only</field>
+            <field name="model_id" ref="model_flex_approval_resignation"/>
+            <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+        </record>
+    </data>
 </odoo>

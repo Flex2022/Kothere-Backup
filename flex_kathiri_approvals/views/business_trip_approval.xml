@@ -82,7 +82,7 @@
 
         <!-- Business Trip Approval Action -->
         <record id="action_approval_business_trip" model="ir.actions.act_window">
-            <field name="name">Business Trip Approvals</field>
+            <field name="name">Business Trip Requests</field>
             <field name="res_model">flex.approval.business_trip</field>
             <field name="view_mode">tree,form</field>
         </record>

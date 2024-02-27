@@ -7,7 +7,7 @@
     'author': 'HACHEMI Mohamed Ramzi || Flex-Ops',
     'website': 'https://www.flex-ops.com',
     'license': 'AGPL-3',
-    'depends': ['base', 'hr', 'flex_hr_employee', 'hr_expense'],
+    'depends': ['base', 'hr', 'flex_hr_employee', 'hr_expense', 'approvals', 'hr_employee_updation'],
     'data': [
         'security/security.xml',
         'security/ir.model.access.csv',
@@ -16,6 +16,7 @@
         'views/employee_renew_iqama.xml',
         'views/business_trip_approval.xml',
         'views/employee_resignation_approval.xml',
+        'views/res_config_settings_views.xml',
         'wizards/employee_transfer_reject_wizard.xml',
         'wizards/renew_iqama_reject_wizard.xml',
         'wizards/business_trip_reject_wizard.xml',

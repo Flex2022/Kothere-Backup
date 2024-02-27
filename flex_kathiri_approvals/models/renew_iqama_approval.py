@@ -13,7 +13,8 @@ class ApprovalRenewIqama(models.Model):
 
     name = fields.Char(string='Sequence', required=True, copy=False, readonly=True,
                        default=lambda self: _('New'))
-
+    company_id = fields.Many2one(comodel_name='res.company', required=True, index=True,
+                                 default=lambda self: self.env.company)
     employee_id = fields.Many2one('hr.employee', string='Employee', required=True,
                                   default=_default_employee)
     department_id = fields.Many2one('hr.department', string='Department', related='employee_id.department_id',

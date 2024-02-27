@@ -10,7 +10,8 @@ class ApprovalBusinessTrip(models.Model):
 
     name = fields.Char(string='Sequence', required=True, copy=False, readonly=True,
                        default=lambda self: _('New'))
-
+    company_id = fields.Many2one(comodel_name='res.company', required=True, index=True,
+                                 default=lambda self: self.env.company)
     employee_id = fields.Many2one('hr.employee', string='Employee', required=True,
                                   default=lambda self: self.env['hr.employee'].search([('user_id', '=', self.env.uid)],
                                                                                       limit=1))

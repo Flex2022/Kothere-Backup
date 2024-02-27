@@ -78,7 +78,7 @@
         </record>
 
         <record id="action_flex_approval_employee_transfer" model="ir.actions.act_window">
-            <field name="name">Employee Transfer Approvals</field>
+            <field name="name">Employee Transfer Requests</field>
             <field name="res_model">flex.approval.employee_transfer</field>
             <field name="view_mode">tree,form</field>
             <field name="view_id" ref="view_flex_approval_employee_transfer_tree"/>

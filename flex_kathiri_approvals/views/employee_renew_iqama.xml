@@ -79,7 +79,7 @@
 
         <!-- Renew Iqama Approval Action -->
         <record id="action_approval_renew_iqama" model="ir.actions.act_window">
-            <field name="name">Renew Iqama Approvals</field>
+            <field name="name">Renew Iqama Requests</field>
             <field name="res_model">flex.approval.renew_iqama</field>
             <field name="view_mode">tree,form</field>
         </record>

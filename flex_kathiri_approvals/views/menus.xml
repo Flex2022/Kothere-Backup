@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <menuitem id="menu_flex_approvals" name="Employee Requests" sequence="10"
+    <menuitem id="menu_flex_approvals" name="Employee_Requests" sequence="10"
               web_icon="flex_kathiri_approvals,static/description/web-icon.png">
         <menuitem id="menu_flex_all_approvals"
                   name="All Requests"
