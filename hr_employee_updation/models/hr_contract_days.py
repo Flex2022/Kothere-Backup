@@ -77,11 +77,13 @@ class HrEmployeeContract(models.Model):
     def _get_default_hr_user(self):
         try:
             return self.env['res.users'].search(
-                [('groups_id', 'in', self.env.user.has_group('hr_employee_updation.group_hr_notification').id)], limit=1,
+                [('groups_id', 'in', self.env.user.has_group('hr_employee_updation.group_hr_notification').id)],
+                limit=1,
                 order="id desc")
         except:
             return False
 
+    hr_leave_id = fields.Many2one('hr.leave.allocation', string='Leave Request', compute='_compute_hr_leave_id')
     notice_days = fields.Integer(string="Notice Period", default=_get_default_notice_days)
     transportation_allowance_type = fields.Selection([('amount', 'Amount'), ('percentage', 'Percentage')],
                                                      tracking=True, string='Transportation', default='amount')
@@ -103,7 +105,7 @@ class HrEmployeeContract(models.Model):
     increase_start_date = fields.Date('Increase Start Date')
     contract_period_type = fields.Selection([('limited', 'Limited'), ('unlimited', 'Unlimited')], string='Period Type',
                                             default='limited')
-    hr_user_id = fields.Many2one('res.users', 'HR User',default=_get_default_hr_user)
+    hr_user_id = fields.Many2one('res.users', 'HR User', default=_get_default_hr_user)
     service_year = fields.Integer('Year', compute='_compute_service_year')
     service_month = fields.Integer('Month', compute='_compute_service_year')
     service_day = fields.Integer('Day', compute='_compute_service_year')
@@ -121,15 +123,15 @@ class HrEmployeeContract(models.Model):
     tafqit_arabic = fields.Char('Tafqit Arabic')
     tafqit_english = fields.Char('Tafqit English')
     payroll_days = fields.Float('Payroll Due Days ')
-    days_of_the_month = fields.Float('Days of the Month')
-    number_od_days_off = fields.Float('Number of Days Off')
+    days_of_the_month = fields.Float('Days of the Month', default=30, store=False)
+    number_od_days_off = fields.Float('Number of Days Off', compute='_compute_number_of_days_off', store=False)
     reason_end_service = fields.Many2one('reason.for.end.of.service', string='Reason for End of Service')
     name_arabic = fields.Many2one('reason.for.end.of.service', string='Reason for End of Service')
 
     salary_if_any = fields.Float('Salary if any', digits=(12, 2), compute='_compute_salary_if_any', store=True)
     overtime = fields.Char('Overtime', digits=(12, 2))
     vacation_benefits = fields.Float('Vacation', digits=(12, 2), compute='_compute_vacation')
-    end_of_service = fields.Float('End of Service', digits=(12, 2))
+    end_of_service = fields.Float('End of Service', digits=(12, 2), related='bonus_amount')
     other_benefits = fields.Float('Other ', digits=(12, 2))
     total_amount_due = fields.Float('Total Amount Due', digits=(12, 2), compute='_compute_total_amount_due', store=True)
     his_predecessor_is_due = fields.Float('His Predecessor is Due', digits=(12, 2))
@@ -157,33 +159,79 @@ class HrEmployeeContract(models.Model):
 
     bonus_amount = fields.Float(string='Bonus Amount', compute='_compute_bonus_amount')
 
+    days_spent_in_current_month = fields.Float(string='Days Spent in Current Month',
+                                               compute='_compute_days_spent_in_current_month')
+
+    @api.depends('employee_id')
+    def _compute_hr_leave_id(self):
+        for rec in self:
+            rec.hr_leave_id = self.env['hr.leave.allocation'].search(
+                [('employee_id', '=', rec.employee_id.id)], limit=1)
+
+    @api.depends('hr_leave_id')
+    def _compute_number_of_days_off(self):
+
+        for rec in self:
+            hr_leave_report = rec.env['hr.leave.report'].search(
+                [('employee_id', '=', rec.employee_id.id), ('state', '=', 'validate')])
+            if rec.hr_leave_id:
+                rec.number_od_days_off = sum(hr_leave_report.mapped('number_of_days'))
+            else:
+                rec.number_od_days_off = 0.0
+
+    @api.onchange('state')
+    def onchange_payroll_days(self):
+        for rec in self:
+            if rec.state == 'close':
+                rec.payroll_days = rec.days_spent_in_current_month
+            else:
+                rec.payroll_days = 0.0
+
+    @api.depends('days_spent_in_current_month')
+    def _compute_days_spent_in_current_month(self):
+        for record in self:
+            today = fields.Date.today()
+            first_day_of_month = today.replace(day=1)
+            days_spent = (today - first_day_of_month).days + 1
+            record.days_spent_in_current_month = days_spent
+
+    @api.onchange('bonus_amount')
+    def onchange_end_of_service(self):
+        for rec in self:
+            if rec.bonus_amount:
+                rec.end_of_service = rec.bonus_amount
+            else:
+                rec.end_of_service = 0.0
+
     @api.depends('types_of_end_services')
     def _compute_bonus_amount(self):
-        employee_contracts_ids = self.env['hr.contract'].search(
-            [('state', 'in', ['open', 'close']), ('employee_id', '=', self.employee_id.id)])
-        working_years = 0
-        for record in employee_contracts_ids:
-            if record.state == 'open':
-                working_years += (((fields.Date.today() - record.date_start).days + 1) / 365)
-            else:
-                working_years += (((record.date_end - record.date_start).days + 1) / 365)
+        for rec in self:
+            employee_contracts_ids = self.env['hr.contract'].search(
+                [('state', 'in', ['open', 'close']), ('employee_id', '=', rec.employee_id.id)])
+            working_years = 0
+            for record in employee_contracts_ids:
+                if record.state == 'open':
+                    working_years += (((fields.Date.today() - record.date_start).days + 1) / 365)
+                else:
+                    working_years += (((record.date_end - record.date_start).days + 1) / 365)
 
-        # compute bonus amount
-        if self.types_of_end_services == 'end_of_the_contract':
-            self.bonus_amount = self.compute_bonus_end_of_the_contract(working_years)
-        elif self.types_of_end_services == 'employees_resignation':
-            self.bonus_amount = self.compute_bonus_employee_resignation(working_years)
-        else:
-            self.bonus_amount = 0
+            # compute bonus amount
+            if rec.types_of_end_services == 'end_of_the_contract':
+                rec.bonus_amount = self.compute_bonus_end_of_the_contract(working_years)
+            elif rec.types_of_end_services == 'employees_resignation':
+                rec.bonus_amount = self.compute_bonus_employee_resignation(working_years)
+            else:
+                rec.bonus_amount = 0
 
     def compute_bonus_end_of_the_contract(self, working_years):
-        bonus_amount = 0
-        # if working years more than 5 years then bonus amount += total_salary
-        if working_years > 5:
-            bonus_amount += self.total_salary * (working_years - 5) + (self.total_salary * 2.5)
-        else:
-            bonus_amount += (self.total_salary * working_years) / 2
-        return bonus_amount
+        for rec in self:
+            bonus_amount = 0
+            # if working years more than 5 years then bonus amount += total_salary
+            if working_years > 5:
+                bonus_amount += rec.total_salary * (working_years - 5) + (self.total_salary * 2.5)
+            else:
+                bonus_amount += (rec.total_salary * working_years) / 2
+            return bonus_amount
 
     def compute_bonus_employee_resignation(self, working_years):
         bonus_amount = 0

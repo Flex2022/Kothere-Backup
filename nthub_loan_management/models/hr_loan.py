@@ -226,11 +226,11 @@ class HrEmployee(models.Model):
     loan_count = fields.Integer(string="Loan Count", compute='_compute_employee_loans')
 
 
-    @api.constrains('related_partner')
-    def check_identification_id(self):
-        related_partner_exist = self.env['hr.employee'].search([('related_partner', '=', self.related_partner.id),('id', '!=', self.id)])
-        if related_partner_exist:
-            raise ValidationError("Related Partner is exist")
+    # @api.constrains('related_partner')
+    # def check_identification_id(self):
+    #     related_partner_exist = self.env['hr.employee'].search([('related_partner', '=', self.related_partner.id),('id', '!=', self.id)])
+    #     if related_partner_exist:
+    #         raise ValidationError("Related Partner is exist")
 
     def _compute_employee_loans(self):
         """This compute the loan amount and total loans count of an employee.

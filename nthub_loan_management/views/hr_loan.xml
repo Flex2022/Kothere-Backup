@@ -184,7 +184,7 @@
             </xpath>
             <xpath expr="//notebook" position="before">
                 <group>
-                    <field name="related_partner"/>
+                    <field name="related_partner" required="0"/>
                 </group>
             </xpath>
         </field>

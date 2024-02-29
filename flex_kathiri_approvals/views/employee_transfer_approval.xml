@@ -1,0 +1,95 @@
+<odoo>
+    <data>
+        <!-- Define the view for employee transfer approval -->
+        <record id="view_flex_approval_employee_transfer_form" model="ir.ui.view">
+            <field name="name">flex.approval.employee_transfer.form</field>
+            <field name="model">flex.approval.employee_transfer</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button string="Submit for Approval" type="object" name="action_submit_for_approval"
+                                class="oe_highlight" invisible="state != 'draft'"/>
+                        <button string="Approve Transfer" type="object" name="action_approve_transfer"
+                                class="oe_highlight" invisible="state in ('draft', 'approved','rejected')"/>
+                        <button string="Reject Transfer" type="object" name="action_reject_transfer"
+                                class="oe_highlight" invisible="state in ('draft', 'rejected')"/>
+                        <field name="state" widget="statusbar" readonly="True"/>
+                    </header>
+                    <sheet>
+                        <div name="button_box" class="oe_button_box">
+                            <button name="action_view_expenses" class="oe_stat_button" type="object" icon="fa-money" invisible="state != 'approved'">
+                                <field name="expense_ids" widget="statinfo" string="Expenses"/>
+                            </button>
+                        </div>
+                        <div class="oe_title">
+                            <label for="name" placeholder="Sequence"/>
+                            <h1>
+                                <field name="name" placeholder="Sequence"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="transfer_type" readonly="state != 'draft'"/>
+                                <field name="employee_id" readonly="state != 'draft'"/>
+                                <field name="current_department_id" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="new_department_id" readonly="state != 'draft'"
+                                       invisible="transfer_type == 'external'"/>
+                                <field name="new_employee_id" readonly="state != 'draft'"
+                                       invisible="transfer_type == 'internal'"/>
+                                <field name="transfer_date" readonly="state != 'draft'"/>
+                                <field name="attachment_ids" widget="many2many_binary" string="Attach a file"
+                                       class="g-col-8" readonly="state != 'draft'"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page name="Transfer Reason">
+                                <field name="transfer_reason" widget="html" readonly="state != 'draft'"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids" options="{'post_refresh': 'recipients'}"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- Define a tree view for employee transfer approvals -->
+        <record id="view_flex_approval_employee_transfer_tree" model="ir.ui.view">
+            <field name="name">flex.approval.employee_transfer.tree</field>
+            <field name="model">flex.approval.employee_transfer</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="transfer_type"/>
+                    <field name="employee_id"/>
+                    <field name="current_department_id"/>
+                    <field name="new_department_id"/>
+                    <field name="new_employee_id"/>
+                    <field name="transfer_reason"/>
+                    <field name="transfer_date"/>
+                    <field name="state" widget="badge"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_flex_approval_employee_transfer" model="ir.actions.act_window">
+            <field name="name">Employee Transfer Requests</field>
+            <field name="res_model">flex.approval.employee_transfer</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_flex_approval_employee_transfer_tree"/>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to create a new employee transfer approval request.
+                </p>
+            </field>
+        </record>
+
+    </data>
+</odoo>

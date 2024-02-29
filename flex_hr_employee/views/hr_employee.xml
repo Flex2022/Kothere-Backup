@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="flex_hr_employee_hr_employee_form_inherit" model="ir.ui.view">
+            <field name="name">flex_hr_employee.hr.employee</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='department_id']" position="before">
+                    <field name="mcj" invisible="1"/>
+                </xpath>
+                <xpath expr="//page[@name='personal_information']/group[1]/group[2]" position="after">
+                    <group string="Iqama Information">
+                        <field name="iqama_id"/>
+                        <field name="end_of_iqama"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

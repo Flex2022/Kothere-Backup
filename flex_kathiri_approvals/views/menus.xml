@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <menuitem id="menu_flex_approvals" name="Employee_Requests" sequence="10"
+              web_icon="flex_kathiri_approvals,static/description/web-icon.png">
+        <menuitem id="menu_flex_all_approvals"
+                  name="All Requests"
+                  sequence="10">
+            <menuitem id="menu_flex_approval_business_trip_action" name="Business Trip Requests"
+                      action="action_approval_business_trip"/>
+            <menuitem id="menu_flex_approval_employee_transfer_action" name="Employee Transfer Requests"
+                      action="action_flex_approval_employee_transfer"/>
+            <menuitem id="menu_flex_approval_renew_iqama_action" name="Renew Iqama Requests"
+                      action="action_approval_renew_iqama"/>
+            <menuitem id="menu_flex_approval_resignation_action" name="Resignation Requests"
+                      action="action_approval_resignation"/>
+        </menuitem>
+        <menuitem id="menu_employee_requests_config" name="Settings" action="action_flex_approvals_config" groups="base.group_system" sequence="100"/>
+    </menuitem>
+</odoo>

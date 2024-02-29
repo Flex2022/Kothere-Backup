@@ -11,9 +11,10 @@ class SalaryIncrease(models.Model):
     _inherit = ['mail.thread', 'mail.activity.mixin']
     _order = 'id desc'
 
-    name = fields.Char(string='Name', copy=False, help="Name", track_visibility='always', states={'draft': [('readonly', False)], 'submit': [('readonly', False)]})
+    name = fields.Char(string='Name', copy=False, help="Name", track_visibility='always',
+                       states={'draft': [('readonly', False)], 'submit': [('readonly', False)]})
     company_id = fields.Many2one('res.company', 'Company', help="Company",
-                                 default=lambda self: self.env.user.company_id,  track_visibility='always',
+                                 default=lambda self: self.env.user.company_id, track_visibility='always',
                                  states={'draft': [('readonly', False)], 'submit': [('readonly', False)]})
     date = fields.Date('Date', default=lambda self: fields.datetime.now(), track_visibility='always',
                        states={'draft': [('readonly', False)], 'submit': [('readonly', False)]})
@@ -27,7 +28,17 @@ class SalaryIncrease(models.Model):
     line_ids = fields.One2many('salary.increase.line', 'increase_id', 'Line',
                                states={'draft': [('readonly', False)], 'submit': [('readonly', False)]})
     state = fields.Selection([('draft', 'Draft'), ('submit', 'Submitted'), ('acc_approve', 'Accounting Approved'),
-                              ('ceo_approve', 'CEO Approved'), ('hr_approve', 'HR Approved')], string='Status', default='draft')
+                              ('ceo_approve', 'CEO Approved'), ('hr_approve', 'HR Approved')], string='Status',
+                             default='draft')
+    is_date_equal_today_date = fields.Boolean('Is Date Equal Today Date', compute='_compute_is_date_equal_today_date')
+
+    @api.depends('date')
+    def _compute_is_date_equal_today_date(self):
+        for rec in self:
+            if rec.date == fields.Date.today():
+                rec.is_date_equal_today_date = True
+            else:
+                rec.is_date_equal_today_date = False
 
     def unlink(self):
         line = self.mapped('line_ids')
@@ -44,9 +55,10 @@ class SalaryIncrease(models.Model):
                 lines.append((0, 0, {'date': fields.Date.today(),
                                      'employee_id': employee.id,
                                      'contract_id': employee.contract_id.id,
-                                     'current_salary': employee.contract_id.total_salary,
+                                     'current_salary': employee.contract_id.wage,
                                      'current_variable_increase': employee.contract_id.variable_increase,
-                                     'new_salary': employee.contract_id.total_salary + (employee.contract_id.total_salary * self.increase_percent / 100),
+                                     'new_salary': employee.contract_id.total_salary + (
+                                             employee.contract_id.total_salary * self.increase_percent / 100),
                                      'new_variable_increase': 0.0,
                                      'type': 'annual'}))
             self.line_ids = lines
@@ -60,7 +72,8 @@ class SalaryIncrease(models.Model):
                 line.salary_increase_amount = salary_increase_amount
 
     def action_submitted(self):
-        user_id = self.env['res.users'].search([('groups_id', 'in', self.env.ref('account.group_account_manager').id)], limit=1, order="id desc")
+        user_id = self.env['res.users'].search([('groups_id', 'in', self.env.ref('account.group_account_manager').id)],
+                                               limit=1, order="id desc")
         note = _('<p>Dear %s <br><br> There is a request for a salary increase. Please review it and take the '
                  'necessary action  <br><br> Best Regards,</p>') % (user_id.name)
         warning = _('Please set account manager.')
@@ -72,7 +85,8 @@ class SalaryIncrease(models.Model):
 
     def action_accounting_approve(self):
         self.activity_ids.action_feedback(feedback='So much feedback')
-        user_id = self.env['res.users'].search([('groups_id', 'in', self.env.ref('hr_employee_updation.group_ceo_approval').id)], limit=1, order="id desc")
+        user_id = self.env['res.users'].search(
+            [('groups_id', 'in', self.env.ref('hr_employee_updation.group_ceo_approval').id)], limit=1, order="id desc")
         note = _('<p>Dear %s <br><br> There is a request for a salary increase. Please review it and take the '
                  'necessary action  <br><br> Best Regards,</p>') % (user_id.name)
         warning = _('Please set CEO manager.')
@@ -84,7 +98,8 @@ class SalaryIncrease(models.Model):
 
     def action_ceo_approve(self):
         self.activity_ids.action_feedback(feedback='So much feedback')
-        user_id = self.env['res.users'].search([('groups_id', 'in', self.env.ref('hr.group_hr_manager').id)], limit=1, order="id desc")
+        user_id = self.env['res.users'].search([('groups_id', 'in', self.env.ref('hr.group_hr_manager').id)], limit=1,
+                                               order="id desc")
         note = _('<p>Dear %s <br><br> There is a request for a salary increase. Please review it and take the '
                  'necessary action  <br><br> Best Regards,</p>') % (user_id.name)
         warning = _('Please set HR manager.')
@@ -104,8 +119,7 @@ class SalaryIncrease(models.Model):
         for line in self.line_ids:
             if line.contract_id:
                 if line.type in ('annual', 'exceptional', 'exc_inv'):
-                    basic = line.new_salary * 0.74074
-                    line.contract_id.wage = basic
+                    basic = line.new_salary
                     line.contract_id.housing_allowance_value = basic * 0.25
                     line.contract_id.transportation_allowance_value = basic * 0.10
                     if line.type == 'exc_inv':
@@ -113,50 +127,97 @@ class SalaryIncrease(models.Model):
                 else:
                     line.contract_id.variable_increase = line.new_variable_increase
 
+    def onchange_wage(self):
+        for line in self.line_ids:
+            # current_salary = line.current_salary
+            if line.date == fields.Date.today():
+                basic = line.new_salary
+                line.contract_id.wage = basic
+
+            # else:
+            #     line.contract_id.wage = current_salary
+
+    def cron_edit(self):
+        increase_ids = self.env['salary.increase'].search([])
+        for salary in increase_ids:
+            salary.onchange_wage()
+
 
 class SalaryIncreaseLine(models.Model):
     _name = 'salary.increase.line'
     _description = 'Salary Increase Line'
 
     increase_id = fields.Many2one('salary.increase', 'Increase')
-    date = fields.Date('Date', default=lambda self: fields.datetime.now())
+    date = fields.Date('Date', related='increase_id.date')
     employee_id = fields.Many2one('hr.employee', 'Employee')
-    contract_id = fields.Many2one('hr.contract', 'Contract')
+    contract_id = fields.Many2one('hr.contract', 'Contract', related='employee_id.contract_id')
     currency_id = fields.Many2one('res.currency', 'Currency', related='contract_id.currency_id')
     current_salary = fields.Float('Current Salary')
     current_variable_increase = fields.Float('Current Variable Increase')
     new_salary = fields.Float('New Salary')
     new_variable_increase = fields.Float('New Variable Increase')
-    type = fields.Selection([('annual', 'Annual Increase'), ('variable', 'Variable Increase'),
-                             ('exceptional', 'Exceptional Increase'), ('exc_inv', 'Exceptional & Variable Increase')], 'type')
+    hr_appreal_id = fields.Many2one('hr.appraisal', 'Appraisal', compute='_compute_appraisal', store=False)
+    type = fields.Selection([('annual', 'Annual Increase'),
+                             # ('variable', 'Variable Increase'),
+                             # ('exceptional', 'Exceptional Increase'),
+                             # ('exc_inv', 'Exceptional & Variable Increase')
+                             ], 'type', default='annual')
     salary_increase_amount = fields.Float('Salary Increase Amount')
     variable_increase_amount = fields.Float('Variable Increase Amount')
+    evaluation_rate = fields.Char('Evaluation Rate', compute='_compute_evaluation_rate', store=False)
+
+    @api.depends('employee_id')
+    def _compute_appraisal(self):
+        for rec in self:
+            rec.hr_appreal_id = self.env['hr.appraisal'].search(
+                [('employee_id', '=', rec.employee_id.id)], limit=1, order="id desc")
+
+    @api.depends('hr_appreal_id')
+    def _compute_evaluation_rate(self):
+        for rec in self:
+            rec.evaluation_rate = rec.hr_appreal_id.evaluation_rate
 
     @api.onchange('employee_id')
     def onchange_employee_id(self):
         if self.employee_id:
-            self.contract_id = self.employee_id.contract_id.id
-            self.current_salary = self.employee_id.contract_id.total_salary
-            self.current_variable_increase = self.employee_id.contract_id.variable_increase
+            # self.contract_id = self.employee_id.contract_id.id
+            self.current_salary = self.employee_id.contract_id.wage
+            # self.current_variable_increase = self.employee_id.contract_id.variable_increase
 
     @api.onchange('type', 'salary_increase_amount', 'variable_increase_amount')
     def onchange_type(self):
         if self.type:
-            if self.type == 'exceptional':
+            # if self.type == 'exceptional':
+            #     self.new_salary = self.current_salary + self.salary_increase_amount
+            #     self.new_variable_increase = self.current_variable_increase
+            # elif self.type == 'variable':
+            #     self.new_salary = self.current_salary
+            #     self.new_variable_increase = self.current_variable_increase + self.variable_increase_amount
+            if self.type == 'annual':
                 self.new_salary = self.current_salary + self.salary_increase_amount
-                self.new_variable_increase = self.current_variable_increase
-            elif self.type == 'variable':
-                self.new_salary = self.current_salary
-                self.new_variable_increase = self.current_variable_increase + self.variable_increase_amount
-            elif self.type == 'annual':
-                self.new_salary = self.current_salary + self.salary_increase_amount
-                self.new_variable_increase = self.current_variable_increase
-            elif self.type == 'exc_inv':
-                self.new_salary = self.current_salary + self.salary_increase_amount
-                self.new_variable_increase = self.current_variable_increase + self.variable_increase_amount
+                # self.new_variable_increase = self.current_variable_increase
+            # elif self.type == 'exc_inv':
+            #     self.new_salary = self.current_salary + self.salary_increase_amount
+            #     self.new_variable_increase = self.current_variable_increase + self.variable_increase_amount
 
 
 class HrEmployeeContract(models.Model):
     _inherit = 'hr.contract'
 
     increase_salary_line_ids = fields.One2many('salary.increase.line', 'contract_id', 'Line')
+
+
+class HrAppraisal(models.Model):
+    _inherit = 'hr.appraisal'
+
+    evaluation_rate = fields.Char('Evaluation Rate')
+
+    # def action_done(self):
+    #     res = super(HrAppraisal, self).action_done()
+    #
+    #     # move assessment_note to evaluation_rate salary_increase_line for employee_id
+    #     for appraisal in self:
+    #         for line in appraisal.employee_id.contract_id.increase_salary_line_ids:
+    #             line.evaluation_rate = appraisal.evaluation_rate
+    #
+    #     return res
