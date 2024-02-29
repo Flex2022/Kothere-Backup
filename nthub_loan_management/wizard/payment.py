@@ -14,7 +14,7 @@ class PaymentLoan(models.TransientModel):
         ('outbound', 'Send Money'),
         ('inbound', 'Receive Money'), ], default='outbound', string='Payment Type', copy=False, )
 
-    company_id = fields.Many2one('res.company', copy=False, default=lambda self: self.env.user.company_id)
+    company_id = fields.Many2one('res.company', copy=False, default=lambda self: self.env.company)
     partner_id = fields.Many2one('res.partner', string="Employee", copy=False, ondelete='restrict', )
     communication = fields.Char(string='Memo')
     partner_bank_id = fields.Many2one('res.partner.bank', string='Recipient Bank',

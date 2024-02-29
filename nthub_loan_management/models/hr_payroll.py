@@ -131,7 +131,7 @@ class HrSalaryRule(models.Model):
     _inherit = 'hr.salary.rule'
 
     company_id = fields.Many2one('res.company', 'Company', copy=False, readonly=True, help="Comapny",
-                                 default=lambda self: self.env.user.company_id)
+                                 default=lambda self: self.env.company)
     is_loan = fields.Boolean('Loan')
 
 
@@ -139,4 +139,4 @@ class HrPayrollStructure(models.Model):
     _inherit = 'hr.payroll.structure'
 
     company_id = fields.Many2one('res.company', 'Company', copy=False, readonly=True, help="Comapny",
-                                 default=lambda self: self.env.user.company_id)
+                                 default=lambda self: self.env.company)
