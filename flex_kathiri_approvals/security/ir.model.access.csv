@@ -1,2 +1,14 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 flex_approval_employee_transfer_user,flex.approval.employee_transfer,model_flex_approval_employee_transfer,,1,1,1,1
+flex_approval_employee_transfer_reject_wizard_user,flex_approval_employee_transfer_reject_wizard,model_flex_approval_employee_transfer_reject_wizard,,1,1,1,1
+
+flex_approval_renew_iqama_user,flex.approval.renew_iqama,model_flex_approval_renew_iqama,,1,1,1,1
+flex_approval_renew_iqama_reject_wizard_user,flex_renew_iqama_transfer_reject_wizard,model_flex_approval_renew_iqama_reject_wizard,,1,1,1,1
+
+flex_approval_business_trip_user,flex.approval.business_trip,model_flex_approval_business_trip,,1,1,1,1
+flex_approval_business_trip_reject_wizard_user,flex_business_trip_transfer_reject_wizard,model_flex_approval_business_trip_reject_wizard,,1,1,1,1
+
+flex_approval_resignation_user,flex.approval.resignation,model_flex_approval_resignation,,1,1,1,1
+flex_approval_resignation_reject_wizard_user,flex_resignation_transfer_reject_wizard,model_flex_approval_resignation_reject_wizard,,1,1,1,1
+
+

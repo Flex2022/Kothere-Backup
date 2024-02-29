@@ -11,6 +11,10 @@ class ApprovalEmployeeTransferRejectWizard(models.TransientModel):
     def action_confirm_rejection(self):
         self.transfer_id.write({
             'state': 'rejected',
-            'rejection_reason': self.reason,
         })
+
+        # Post rejection reason in the chatter
+        message = _("Transfer rejected with reason: %s") % self.reason
+        self.transfer_id.message_post(body=message, message_type='comment')
+
         return {'type': 'ir.actions.act_window_close'}
