@@ -31,6 +31,8 @@
                                 groups="hr_employee_updation.group_ceo_approval"/>
                         <button string="HR Approve" name="action_hr_approve" type="object"
                                 invisible="state != 'ceo_approve'" class="oe_highlight" groups="hr.group_hr_manager"/>
+                        <button string="Apply Increase" name="onchange_wage" type="object" invisible="state not in ('hr_approve')"
+                                class="oe_highlight" groups="hr.group_hr_manager"/>
                         <field name="state" widget="statusbar"/>
                     </header>
                     <sheet>
@@ -45,6 +47,7 @@
                             </group>
                             <group>
                                 <field name="date" required="1"/>
+                                <field name="is_date_equal_today_date" invisible="1"/>
                                 <field name="increase_percent" required="1"/>
                             </group>
                         </group>

@@ -35,6 +35,7 @@
         'security/ir.model.access.csv',
         # 'security/ir_rule.xml',
         'data/data.xml',
+        'data/cron.xml',
         # 'views/director_staff_view.xml',
         'views/contract_days_view.xml',
         # 'views/updation_config.xml',
