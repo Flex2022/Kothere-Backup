@@ -31,7 +31,7 @@ class HrLoan(models.Model):
             loan.balance_amount = balance_amount
             loan.total_paid_amount = total_paid
 
-    name = fields.Char(string="Loan Name", default="/", readonly=True, help="Name of the loan")
+    name = fields.Char(string="Reference", default="New", readonly=True, help="Name of the loan")
     date = fields.Date(string="Date", default=fields.Date.today(), readonly=True, help="Date")
     user_id = fields.Many2one('res.users', string="User", readonly=True, default=lambda self: self.env.user, help="User")
     employee_id = fields.Many2one('hr.employee', string="Employee", required=True, help="Employee")
@@ -67,24 +67,26 @@ class HrLoan(models.Model):
         ('cancel', 'Canceled'),
     ], string="State", default='draft', tracking=True, copy=False, )
 
-    @api.model_create_multi
-    def create(self, values):
-        res = super(HrLoan, self).create(values)
+    def _check_loan(self):
         loan_count = self.env['hr.loan'].search_count(
-            [('employee_id', '=', res.employee_id.id), ('state', 'in', ('approve', 'paid')),
+            [('employee_id', '=', self.employee_id.id), ('state', 'in', ('approve', 'paid')),
              ('balance_amount', '!=', 0)])
         if loan_count:
             raise ValidationError(_("The employee has already a pending installment"))
-
         loan_date = self.env['hr.loan'].search([
             ('employee_id', '=', res.employee_id.id), ('state', 'in', ('approve', 'paid'))])
         current_year = date.today().year
         for lo in loan_date:
             if lo.date.year == current_year:
                 raise ValidationError(_("The employee has already a installment in the same year"))
-        res.name = self.env['ir.sequence'].get('hr.loan.seq') or ' '
 
-        return res
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            if vals.get('name', _('New')) == _('New'):
+                vals['name'] = self.env['ir.sequence'].next_by_code('hr.loan.seq')
+        return super(HrLoan, self).create(vals_list)
+
 
     def compute_installment(self):
         """This automatically create the installment the employee need to pay to

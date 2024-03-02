@@ -30,15 +30,15 @@
                     <button name="action_cancel" type="object" string="Cancel" invisible="state != 'draft'"/>
                     <button name="action_approve" type="object" string="Approve"
                             invisible="state != 'waiting_approval_1'"
-                            class="oe_highlight" groups="nthub_loan_management.loan_approval_group"/>
+                            class="oe_highlight" groups="nthub_loan_management.group_loan_admin"/>
                     <button name="action_refuse" type="object" string="Refuse"
                             invisible="state != 'waiting_approval_1'"
-                            class="oe_highlight" groups="nthub_loan_management.loan_approval_group"/>
+                            class="oe_highlight" groups="nthub_loan_management.group_loan_admin"/>
                     <button name="action_register_payment" type="object" string="Register Payment"
-                            groups="nthub_loan_management.loan_approval_group"
+                            groups="nthub_loan_management.group_loan_admin"
                             invisible="state != 'approve' or payment"/>
                     <button name="loan_Settlement" type="object" string="Settlement"
-                            class="oe_highlight" groups="nthub_loan_management.loan_approval_group"
+                            class="oe_highlight" groups="nthub_loan_management.group_loan_admin"
                             invisible="state != 'paid' or balance_amount == 0"/>
 
                     <field name="state" widget="statusbar" statusbar_visible="draft,waiting_approval_1,approve,paid"/>
