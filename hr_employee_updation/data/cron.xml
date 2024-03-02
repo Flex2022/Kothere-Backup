@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="employee_salary_increase" model="ir.cron">
+            <field name="name">Salary Increase</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="model_id" ref="model_salary_increase"/>
+            <field name="state">code</field>
+            <field name="code">model.cron_edit()</field>
+        </record>
+    </data>
+</odoo>

@@ -30,6 +30,15 @@ class SalaryIncrease(models.Model):
     state = fields.Selection([('draft', 'Draft'), ('submit', 'Submitted'), ('acc_approve', 'Accounting Approved'),
                               ('ceo_approve', 'CEO Approved'), ('hr_approve', 'HR Approved')], string='Status',
                              default='draft')
+    is_date_equal_today_date = fields.Boolean('Is Date Equal Today Date', compute='_compute_is_date_equal_today_date')
+
+    @api.depends('date')
+    def _compute_is_date_equal_today_date(self):
+        for rec in self:
+            if rec.date == fields.Date.today():
+                rec.is_date_equal_today_date = True
+            else:
+                rec.is_date_equal_today_date = False
 
     def unlink(self):
         line = self.mapped('line_ids')
@@ -118,12 +127,20 @@ class SalaryIncrease(models.Model):
                 else:
                     line.contract_id.variable_increase = line.new_variable_increase
 
-    @api.onchange('line_ids')
     def onchange_wage(self):
         for line in self.line_ids:
-            basic = line.new_salary
+            # current_salary = line.current_salary
             if line.date == fields.Date.today():
+                basic = line.new_salary
                 line.contract_id.wage = basic
+
+            # else:
+            #     line.contract_id.wage = current_salary
+
+    def cron_edit(self):
+        increase_ids = self.env['salary.increase'].search([])
+        for salary in increase_ids:
+            salary.onchange_wage()
 
 
 class SalaryIncreaseLine(models.Model):

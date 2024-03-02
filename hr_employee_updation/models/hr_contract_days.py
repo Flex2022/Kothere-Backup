@@ -170,10 +170,10 @@ class HrEmployeeContract(models.Model):
 
     @api.depends('hr_leave_id')
     def _compute_number_of_days_off(self):
-        hr_leave_report = self.env['hr.leave.report'].search(
-            [('employee_id', '=', self.employee_id.id), ('state', '=', 'validate')])
 
         for rec in self:
+            hr_leave_report = rec.env['hr.leave.report'].search(
+                [('employee_id', '=', rec.employee_id.id), ('state', '=', 'validate')])
             if rec.hr_leave_id:
                 rec.number_od_days_off = sum(hr_leave_report.mapped('number_of_days'))
             else:
@@ -205,31 +205,33 @@ class HrEmployeeContract(models.Model):
 
     @api.depends('types_of_end_services')
     def _compute_bonus_amount(self):
-        employee_contracts_ids = self.env['hr.contract'].search(
-            [('state', 'in', ['open', 'close']), ('employee_id', '=', self.employee_id.id)])
-        working_years = 0
-        for record in employee_contracts_ids:
-            if record.state == 'open':
-                working_years += (((fields.Date.today() - record.date_start).days + 1) / 365)
-            else:
-                working_years += (((record.date_end - record.date_start).days + 1) / 365)
+        for rec in self:
+            employee_contracts_ids = self.env['hr.contract'].search(
+                [('state', 'in', ['open', 'close']), ('employee_id', '=', rec.employee_id.id)])
+            working_years = 0
+            for record in employee_contracts_ids:
+                if record.state == 'open':
+                    working_years += (((fields.Date.today() - record.date_start).days + 1) / 365)
+                else:
+                    working_years += (((record.date_end - record.date_start).days + 1) / 365)
 
-        # compute bonus amount
-        if self.types_of_end_services == 'end_of_the_contract':
-            self.bonus_amount = self.compute_bonus_end_of_the_contract(working_years)
-        elif self.types_of_end_services == 'employees_resignation':
-            self.bonus_amount = self.compute_bonus_employee_resignation(working_years)
-        else:
-            self.bonus_amount = 0
+            # compute bonus amount
+            if rec.types_of_end_services == 'end_of_the_contract':
+                rec.bonus_amount = self.compute_bonus_end_of_the_contract(working_years)
+            elif rec.types_of_end_services == 'employees_resignation':
+                rec.bonus_amount = self.compute_bonus_employee_resignation(working_years)
+            else:
+                rec.bonus_amount = 0
 
     def compute_bonus_end_of_the_contract(self, working_years):
-        bonus_amount = 0
-        # if working years more than 5 years then bonus amount += total_salary
-        if working_years > 5:
-            bonus_amount += self.total_salary * (working_years - 5) + (self.total_salary * 2.5)
-        else:
-            bonus_amount += (self.total_salary * working_years) / 2
-        return bonus_amount
+        for rec in self:
+            bonus_amount = 0
+            # if working years more than 5 years then bonus amount += total_salary
+            if working_years > 5:
+                bonus_amount += rec.total_salary * (working_years - 5) + (self.total_salary * 2.5)
+            else:
+                bonus_amount += (rec.total_salary * working_years) / 2
+            return bonus_amount
 
     def compute_bonus_employee_resignation(self, working_years):
         bonus_amount = 0
