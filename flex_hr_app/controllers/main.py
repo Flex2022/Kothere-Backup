@@ -10,7 +10,7 @@ _logger = logging.getLogger(__name__)
 def validate_token(func):
     @functools.wraps(func)
     def wrap(self, *args, **kwargs):
-        access_token = request.httprequest.headers.get('access_token')
+        access_token = request.headers.get('access_token')
         if not access_token:
             res = {"result": {"error": "missing access token", "access_token": access_token}}
             return http.Response(json.dumps(res), status=401, mimetype='application/json')
