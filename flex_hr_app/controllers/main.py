@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from odoo import http, SUPERUSER_ID
+from odoo import fields, http, SUPERUSER_ID
 from odoo.http import request
 import json
 import functools
@@ -12,11 +12,15 @@ def validate_token(func):
     def wrap(self, *args, **kwargs):
         access_token = request.httprequest.headers.get('access_token')
         if not access_token:
-            res = {"result": {"error": "access_token is missing"}}
+            res = {"result": {"error": "missing access token"}}
             return http.Response(json.dumps(res), status=401, mimetype='application/json')
         hr_token = request.env["hr.token"].sudo().search([("token", "=", access_token)], order="id DESC", limit=1)
-        if hr_token.get_valid_token(employee_id=hr_token.employee_id.id) != access_token:
-            res = {"result": {"error": "access_token is expired or invalid"}}
+        # if hr_token.get_valid_token(employee_id=hr_token.employee_id.id) != access_token:
+        if not hr_token:
+            res = {"result": {"error": "invalid access token"}}
+            return http.Response(json.dumps(res), status=401, mimetype='application/json')
+        if hr_token.date_expiry < fields.Datetime.now():
+            res = {"result": {"error": "expired access token"}}
             return http.Response(json.dumps(res), status=401, mimetype='application/json')
         request.update_context(employee_id=hr_token.employee_id.id)
         return func(self, *args, **kwargs)
@@ -30,6 +34,36 @@ class HrApi(http.Controller):
         headers = request.httprequest.headers
         username = headers.get('username', False)
         password = headers.get('password', False)
+
+        # ====================[Login with access token (if expired, update it)]=========================
+        access_token = request.httprequest.headers.get('access_token')
+        if access_token:
+            hr_token = request.env["hr.token"].sudo().search([("token", "=", access_token)], order="id DESC", limit=1)
+            if not hr_token:
+                res = {"result": {"error": "invalid access token"}}
+                return http.Response(json.dumps(res), status=401, mimetype='application/json')
+            if hr_token.date_expiry < fields.Datetime.now():
+                new_token = hr_token._update_token()
+            res = {
+                "result": {
+                    "employee_id": hr_token.employee_id.id,
+                    "employee_name": hr_token.employee_id.name,
+                    "employee_department": {
+                        "id": hr_token.employee_id.department_id.id,
+                        "name": hr_token.employee_id.department_id.display_name
+                    },
+                    "employee_job": {
+                        "id": hr_token.employee_id.job_id.id,
+                        "name": hr_token.employee_id.job_id.name
+                    },
+                    "employee_work_phone": hr_token.employee_id.work_phone,
+                    "employee_work_email": hr_token.employee_id.work_email,
+                    "access_token": hr_token.token,
+                }
+            }
+            return http.Response(json.dumps(res), status=200, mimetype='application/json')
+        # =============================================================
+
         if not (username and password):
             res = {"result": {"error": "username or password is missing"}}
             return http.Response(json.dumps(res), status=400, mimetype='application/json')
@@ -101,6 +135,26 @@ class HrApi(http.Controller):
         context = {'employee_id': employee_id, 'allowed_company_ids': employee.company_id.ids}
         contextual_leave_type_obj = request.env['hr.leave.type'].sudo().with_context(context)
         data = contextual_leave_type_obj.get_allocation_data_request()
+        res = {"result": data}
+        return http.Response(json.dumps(res), status=200, mimetype='application/json')
+
+    @validate_token
+    @http.route("/api-hr/create-timeoff", methods=["POST"], type="http", auth="none", csrf=False)
+    def api_hr_create_timeoff(self, **params):
+        employee_id = request.context.get("employee_id")
+        if not employee_id:
+            res = {"result": {"error": "employee_id is missing in context"}}
+            return http.Response(json.dumps(res), status=400, mimetype='application/json')
+        employee = request.env['hr.employee'].sudo().browse(employee_id)
+        # data = request.get_json_data()
+        payload = json.loads(request.httprequest.data or '{}')
+        leave = request.env['hr.leave'].sudo().create({
+            'employee_id': employee.id,
+            'holiday_status_id': payload.get('holiday_status_id'),
+            'request_date_from': payload.get('request_date_from'),
+            'request_date_to': payload.get('request_date_to'),
+        })
+        data = {"msg": "timeoff created successfully", "leave_id": leave.id}
         res = {"result": data}
         return http.Response(json.dumps(res), status=200, mimetype='application/json')
 
