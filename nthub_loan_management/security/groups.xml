@@ -2,12 +2,19 @@
 <odoo>
     <data>
 
+        <record model="ir.module.category" id="loan_management_category">
+            <field name="name">Loan Management</field>
+            <field name="sequence">100</field>
+        </record>
+
         <record id="group_loan_user" model="res.groups">
             <field name="name">Loan User</field>
+            <field name="category_id" ref="loan_management_category"/>
         </record>
 
         <record id="group_loan_admin" model="res.groups">
             <field name="name">Loan Admin</field>
+            <field name="category_id" ref="loan_management_category"/>
         </record>
 
     </data>
