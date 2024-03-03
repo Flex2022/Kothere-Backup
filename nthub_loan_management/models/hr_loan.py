@@ -31,8 +31,9 @@ class HrLoan(models.Model):
             loan.balance_amount = balance_amount
             loan.total_paid_amount = total_paid
 
-    name = fields.Char(string="Loan Name", default="/", readonly=True, help="Name of the loan")
+    name = fields.Char(string="Reference", default="New", readonly=True, help="Name of the loan")
     date = fields.Date(string="Date", default=fields.Date.today(), readonly=True, help="Date")
+    user_id = fields.Many2one('res.users', string="User", readonly=True, default=lambda self: self.env.user, help="User")
     employee_id = fields.Many2one('hr.employee', string="Employee", required=True, help="Employee")
     department_id = fields.Many2one('hr.department', related="employee_id.department_id", readonly=True,
                                     string="Department", help="Employee")
@@ -42,9 +43,8 @@ class HrLoan(models.Model):
                                                                                                              "payment")
     loan_lines = fields.One2many('hr.loan.line', 'loan_id', string="Loan Line", index=True)
     company_id = fields.Many2one('res.company', 'Company', readonly=True, help="Company",
-                                 default=lambda self: self.env.user.company_id)
-    currency_id = fields.Many2one('res.currency', string='Currency', required=True, help="Currency",
-                                  default=lambda self: self.env.user.company_id.currency_id)
+                                 default=lambda self: self.env.company)
+    currency_id = fields.Many2one('res.currency', string='Currency', related='company_id.currency_id', help="Currency")
     job_position = fields.Many2one('hr.job', related="employee_id.job_id", readonly=True, string="Job Position",
                                    help="Job position")
     loan_amount = fields.Float(string="Loan Amount", required=True, help="Loan amount")
@@ -56,7 +56,7 @@ class HrLoan(models.Model):
                                      help="Total paid amount")
     payment_id = fields.Many2one('account.payment', string='Payment', )
     payment = fields.Boolean(string='Payment', required=False)
-    reason = fields.Char(string="Reason", required=True)
+    reason = fields.Char(string="Reason")
 
     state = fields.Selection([
         ('draft', 'Draft'),
@@ -67,24 +67,26 @@ class HrLoan(models.Model):
         ('cancel', 'Canceled'),
     ], string="State", default='draft', tracking=True, copy=False, )
 
-    @api.model_create_multi
-    def create(self, values):
-        res = super(HrLoan, self).create(values)
+    def _check_loan(self):
         loan_count = self.env['hr.loan'].search_count(
-            [('employee_id', '=', res.employee_id.id), ('state', 'in', ('approve', 'paid')),
+            [('employee_id', '=', self.employee_id.id), ('state', 'in', ('approve', 'paid')),
              ('balance_amount', '!=', 0)])
         if loan_count:
             raise ValidationError(_("The employee has already a pending installment"))
-
         loan_date = self.env['hr.loan'].search([
             ('employee_id', '=', res.employee_id.id), ('state', 'in', ('approve', 'paid'))])
         current_year = date.today().year
         for lo in loan_date:
             if lo.date.year == current_year:
                 raise ValidationError(_("The employee has already a installment in the same year"))
-        res.name = self.env['ir.sequence'].get('hr.loan.seq') or ' '
 
-        return res
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            if vals.get('name', _('New')) == _('New'):
+                vals['name'] = self.env['ir.sequence'].next_by_code('hr.loan.seq')
+        return super(HrLoan, self).create(vals_list)
+
 
     def compute_installment(self):
         """This automatically create the installment the employee need to pay to
@@ -121,30 +123,30 @@ class HrLoan(models.Model):
                 raise ValidationError(_("Please link partner for employee"))
             else:
                 self.write({'state': 'approve'})
-                debit_value = {
-                    'name': self.name,
-                    'debit': self.loan_amount,
-                    'credit': 0.0,
-                    'partner_id': self.employee_id.related_partner.id,
-                    'account_id': self.env.company.debit_account_id.id,
-                }
-
-                credit_value = {
-                    'name': self.name,
-                    'debit': 0.0,
-                    'credit': self.loan_amount,
-                    'partner_id': self.employee_id.related_partner.id,
-                    'account_id': self.env.company.credit_account_id.id,
-                }
-
-                values = {
-                    'journal_id': self.env.company.loan_journal_id.id,
-                    'date': self.date.today(),
-                    'ref': self.name,
-                    'state': 'draft',
-                    'line_ids': [(0, 0, debit_value), (0, 0, credit_value)]}
-                move = self.env['account.move'].create(values)
-            return move
+            #     debit_value = {
+            #         'name': self.name,
+            #         'debit': self.loan_amount,
+            #         'credit': 0.0,
+            #         'partner_id': self.employee_id.related_partner.id,
+            #         'account_id': self.env.company.debit_account_id.id,
+            #     }
+            #
+            #     credit_value = {
+            #         'name': self.name,
+            #         'debit': 0.0,
+            #         'credit': self.loan_amount,
+            #         'partner_id': self.employee_id.related_partner.id,
+            #         'account_id': self.env.company.credit_account_id.id,
+            #     }
+            #
+            #     values = {
+            #         'journal_id': self.env.company.loan_journal_id.id,
+            #         'date': self.date.today(),
+            #         'ref': self.name,
+            #         'state': 'draft',
+            #         'line_ids': [(0, 0, debit_value), (0, 0, credit_value)]}
+            #     move = self.env['account.move'].create(values)
+            # return move
 
     def unlink(self):
         for loan in self:
@@ -171,7 +173,6 @@ class HrLoan(models.Model):
             'target': 'new'
         }
 
-
     def loan_Settlement(self):
         """ to settlement all loan balance amount.
             you should to select payment method on journal."""
@@ -181,7 +182,7 @@ class HrLoan(models.Model):
                 'amount': self.balance_amount,
                 'payment_type': 'inbound',
                 'ref': f"Settlement for {self.employee_id.related_partner.name} with {self.balance_amount} with ref {self.name}",
-                'journal_id': self.env.company.loan_journal_id.id,
+                # 'journal_id': self.env.company.loan_journal_id.id,
                 'currency_id': self.currency_id.id,
                 'partner_id': self.employee_id.related_partner.id,
                 'payment_loan': True,
@@ -207,8 +208,6 @@ class HrLoan(models.Model):
         return ret
 
 
-
-
 class InstallmentLine(models.Model):
     _name = "hr.loan.line"
     _description = "Installment Line"
@@ -225,21 +224,19 @@ class InstallmentLine(models.Model):
 class HrEmployee(models.Model):
     _inherit = "hr.employee"
 
-
     related_partner = fields.Many2one('res.partner')
-
-    @api.constrains('related_partner')
-    def check_identification_id(self):
-        related_partner_exist = self.env['hr.employee'].search([('related_partner', '=', self.related_partner.id),('id', '!=', self.id)])
-        if related_partner_exist:
-            raise ValidationError("Related Partner is exist")
+    loan_count = fields.Integer(string="Loan Count", compute='_compute_employee_loans')
 
 
+    # @api.constrains('related_partner')
+    # def check_identification_id(self):
+    #     related_partner_exist = self.env['hr.employee'].search([('related_partner', '=', self.related_partner.id),('id', '!=', self.id)])
+    #     if related_partner_exist:
+    #         raise ValidationError("Related Partner is exist")
 
     def _compute_employee_loans(self):
         """This compute the loan amount and total loans count of an employee.
             """
         self.loan_count = self.env['hr.loan'].search_count(
-            [('employee_id', '=', self.id), ('state', '=', 'approve'), ('payment_id', '=', []), ])
+            [('employee_id', '=', self.id), ('state', 'in', ('approve','paid'))])
 
-    loan_count = fields.Integer(string="Loan Count", compute='_compute_employee_loans')

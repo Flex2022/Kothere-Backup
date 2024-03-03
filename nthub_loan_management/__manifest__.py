@@ -5,7 +5,7 @@
     'summary': 'Manage Employee Loan Requests',
     'description': """Helps you to manage Loan Requests of your company's staff""",
     'category': 'Generic Modules/Human Resources',
-    'author': "Neoteric Hub",
+    'author': "Mohamed Mohsen",
     'company': 'Neoteric Hub',
     'live_test_url': '',
     'price': 0.0,
@@ -15,6 +15,7 @@
         'base', 'hr', 'hr_payroll', 'account'],
     'data': [
         'security/ir.model.access.csv',
+        'security/groups.xml',
         'security/security.xml',
         'data/hr_loan_seq.xml',
         'data/salary_rule_loan.xml',

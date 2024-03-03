@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!-- Inherit Form View to Modify it -->
+    <record id="view_department_form_inherit_flex999" model="ir.ui.view">
+        <field name="name">view.department.form.inherit.flex999</field>
+        <field name="model">hr.department</field>
+        <field name="inherit_id" ref="hr.view_department_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="sequence"/>
+                <field name="next_seq"/>
+            </xpath>
+
+        </field>
+    </record>
+    <record id="action_generate_employee_seq" model="ir.actions.server">
+        <field name="name">Generate Sequence</field>
+        <field name="model_id" ref="hr.model_hr_employee"/>
+<!--        <field name="groups_id" eval="[(4,ref('stock_cancel_app.group_show_cancel_stock_picking'))]"/>-->
+        <field name="binding_model_id" ref="hr.model_hr_employee"/>
+        <field name="binding_view_types">list,form</field>
+        <field name="state">code</field>
+        <field name="code">
+        if records:
+            records.random_sequence()
+        </field>
+    </record>
+</odoo>

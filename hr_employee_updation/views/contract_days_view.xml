@@ -104,14 +104,16 @@
                 <page string="End of service liquidation form" name="end_of_service_liquidation_form">
                     <group>
                         <group string="End of service liquidation form">
+                            <field name="hr_leave_id"/>
                             <field name="payroll_days"/>
-                            <field name="days_of_the_month"/>
+                            <field name="days_of_the_month" readonly="1"/>
+                            <field name="days_spent_in_current_month" invisible="1"/>
                             <field name="number_od_days_off"/>
                             <field name="reason_end_service"/>
                             <field name="salary_if_any"/>
                             <field name="overtime"/>
                             <field name="vacation_benefits"/>
-                            <field name="end_of_service"/>
+                            <field name="end_of_service" readonly="1"/>
                             <field name="other_benefits"/>
                             <field name="total_amount_due"/>
                             <field name="his_predecessor_is_due"/>

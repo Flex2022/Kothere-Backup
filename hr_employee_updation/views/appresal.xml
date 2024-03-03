@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!-- Inherit Form View to Modify it -->
+    <record id="view_hr_appraisal_form_inherit_flex777" model="ir.ui.view">
+        <field name="name">view.hr.appraisal.form.inherit.flex777</field>
+        <field name="model">hr.appraisal</field>
+        <field name="inherit_id" ref="hr_appraisal.view_hr_appraisal_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='assessment_note']" position="after">
+               <field name="evaluation_rate" readonly="state in ['done','cancel']"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

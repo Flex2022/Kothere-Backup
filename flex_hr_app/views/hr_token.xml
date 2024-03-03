@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hr_token_tree" model="ir.ui.view">
+        <field name="name">hr_token_tree</field>
+        <field name="model">hr.token</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="token"/>
+                <field name="employee_id"/>
+                <field name="date_expiry"/>
+                <field name="create_date" optional="hide"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="hr_token_form" model="ir.ui.view">
+        <field name="name">hr_token_form</field>
+        <field name="model">hr.token</field>
+        <field name="arch" type="xml">
+            <form string="Stage">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="token"/>
+                            <field name="employee_id"/>
+                        </group>
+                        <group>
+                            <field name="date_expiry"/>
+                            <field name="create_date"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

@@ -273,6 +273,7 @@ class JobCosting(models.Model):
                     job_labour_line_ids.append(job_cost_line_id.id)
                 elif job_cost_line_id.job_type == 'overhead':
                     job_overhead_line_ids.append(job_cost_line_id.id)
+
         # Update lines
         self.job_cost_line_ids = [(6, 0, job_cost_line_ids)]
         self.job_labour_line_ids = [(6, 0, job_labour_line_ids)]
@@ -315,7 +316,8 @@ class JobCosting(models.Model):
         except ValueError:
             cost_price = product_id.standard_price
 
-        job_cost_line_id = self.env['job.cost.line'].create({
+        job_cost_line_id = self.env['job.cost.line'].sudo().create({
+            'direct_id' : self.id,
             'job_type': str(row['Type']).lower(),
             'job_type_id': job_type_id.id,
             'product_id': product_id.id,
@@ -327,6 +329,7 @@ class JobCosting(models.Model):
             'basis': row['Basis'],
             'hours': float(row['Hours']) if row['Hours'] else 0.0,
         })
+        job_cost_line_id.company_id = self.company_id.id,
         return job_cost_line_id
 
     def _check_if_the_excel_is_depended_on_my_template(self, df):
