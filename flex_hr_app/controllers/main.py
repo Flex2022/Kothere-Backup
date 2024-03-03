@@ -10,20 +10,33 @@ _logger = logging.getLogger(__name__)
 def validate_token(func):
     @functools.wraps(func)
     def wrap(self, *args, **kwargs):
+        # Access the access_token from the request headers
         access_token = request.httprequest.headers.get('access_token')
-        print("Access Token:", access_token)  # or use logging
+        
+        # Check if the access_token is missing
         if not access_token:
-            res = {"result": {"error": "missing access token", "access_token": access_token}}
+            res = {"result": {"error": "missing access token"}}
             return http.Response(json.dumps(res), status=401, mimetype='application/json')
+        
+        # Search for the hr_token using the access_token
         hr_token = request.env["hr.token"].sudo().search([("token", "=", access_token)], order="id DESC", limit=1)
-        # if hr_token.get_valid_token(employee_id=hr_token.employee_id.id) != access_token:
+        
+        # Validate the found hr_token
         if not hr_token:
             res = {"result": {"error": "invalid access token"}}
             return http.Response(json.dumps(res), status=401, mimetype='application/json')
+        
+        # Check if the token has expired
         if hr_token.date_expiry < fields.Datetime.now():
             res = {"result": {"error": "expired access token"}}
             return http.Response(json.dumps(res), status=401, mimetype='application/json')
-        request.update_context(employee_id=hr_token.employee_id.id)
+        
+        # Assuming request.update_context is a method to update the Odoo context,
+        # which is not standard, you might intend to do something like this instead:
+        # Update the environment context with the employee_id for subsequent operations
+        request.env.context = dict(request.env.context, employee_id=hr_token.employee_id.id)
+        
+        # Proceed with the original function
         return func(self, *args, **kwargs)
     return wrap
 
