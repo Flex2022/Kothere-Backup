@@ -10,7 +10,7 @@ class HrToken(models.Model):
     _description = "HR Access Token"
 
     @api.model
-    def _token(self, length=40, prefix="token_"):
+    def _token(self, length=40, prefix="token"):
         rbytes = os.urandom(length)
         return f"{prefix}{hashlib.sha1(rbytes).hexdigest()}"
 
