@@ -19,7 +19,7 @@ def validate_token(func):
             return http.Response(json.dumps(res), status=401, mimetype='application/json')
         
         # Search for the hr_token using the access_token
-        hr_token = request.env["hr.token"].sudo().search([("token", "=", access_token)], order="id DESC", limit=1)
+        hr_token = request.env["hr.token"].sudo().search([("token", "in", access_token)], order="id DESC", limit=1)
         
         # Validate the found hr_token
         if not hr_token:
