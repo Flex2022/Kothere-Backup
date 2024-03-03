@@ -4,19 +4,20 @@ from odoo.http import request
 import json
 import functools
 import logging
+from datetime import datetime
 _logger = logging.getLogger(__name__)
 
 
 def validate_token(func):
     @functools.wraps(func)
     def wrap(self, *args, **kwargs):
-        # Access the access_token from the query parameters
-        access_token = request.args.get('access_token', '').strip()
+        # Access the access_token from the query parameters for GET requests
+        access_token = request.httprequest.args.get('access_token', '').strip()
         
         # Check if the access_token is missing
         if not access_token:
             res = {"result": {"error": "missing access token"}}
-            return Response(json.dumps(res), status=401, mimetype='application/json')
+            return http.Response(json.dumps(res), status=401, mimetype='application/json')
         
         # Search for the hr_token using the access_token
         hr_token = request.env["hr.token"].sudo().search([("token", "=", access_token)], order="id DESC", limit=1)
@@ -24,13 +25,15 @@ def validate_token(func):
         # Validate the found hr_token
         if not hr_token:
             res = {"result": {"error": "invalid access token"}}
-            return Response(json.dumps(res), status=401, mimetype='application/json')
+            return http.Response(json.dumps(res), status=401, mimetype='application/json')
         
         # Check if the token has expired
-        if hr_token.date_expiry < fields.Datetime.now():
+        if hr_token.date_expiry < datetime.now():
             res = {"result": {"error": "expired access token"}}
-            return Response(json.dumps(res), status=401, mimetype='application/json')
+            return http.Response(json.dumps(res), status=401, mimetype='application/json')
         
+        # Assuming request.update_context is a method to update the Odoo context,
+        # which is not standard, you might intend to do something like this instead:
         # Update the environment context with the employee_id for subsequent operations
         request.env.context = dict(request.env.context, employee_id=hr_token.employee_id.id)
         
