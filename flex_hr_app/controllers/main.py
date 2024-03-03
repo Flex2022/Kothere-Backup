@@ -11,8 +11,7 @@ def validate_token(func):
     @functools.wraps(func)
     def wrap(self, *args, **kwargs):
         # Access the access_token from the request headers
-        access_token = request.httprequest.headers.get('access_token')
-        
+        access_token = request.httprequest.headers.get('access_token', '').strip()        
         # Check if the access_token is missing
         if not access_token:
             res = {"result": {"error": "missing access token"}}
