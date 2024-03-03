@@ -12,7 +12,7 @@ def validate_token(func):
     def wrap(self, *args, **kwargs):
         access_token = request.httprequest.headers.get('access_token')
         if not access_token:
-            res = {"result": {"error": "missing access token"}}
+            res = {"result": {"error": "missing access token", "access_token": access_token}}
             return http.Response(json.dumps(res), status=401, mimetype='application/json')
         hr_token = request.env["hr.token"].sudo().search([("token", "=", access_token)], order="id DESC", limit=1)
         # if hr_token.get_valid_token(employee_id=hr_token.employee_id.id) != access_token:
