@@ -13,10 +13,10 @@ def validate_token(func):
     @functools.wraps(func)
     def wrap(self, *args, **kwargs):
         # Access the access_token from the query parameters for GET requests
-
-        access_token = request.httprequest.headers.environ.get("HTTP_ACCESS_TOKEN")
-        # access_token = request.httprequest.headers.get('access_token')
         # access_token = request.httprequest.args.get('access_token', '').strip()
+        access_token = request.httprequest.headers.get('api_token')
+        _logger.info(f"\n\n api_token: {access_token}\n\n")
+        _logger.info(f"\n\n headers  : {request.httprequest.headers}\n\n")
 
         # Check if the access_token is missing
         if not access_token:
@@ -56,43 +56,47 @@ class HrApi(http.Controller):
         password = headers.get('password', False)
 
         # ====================[Login with access token (if expired, update it)]=========================
-        access_token = request.httprequest.headers.get('access_token')
+        access_token = request.httprequest.headers.get('api_token')
+        show_token_msg = False
         if access_token:
             hr_token = request.env["hr.token"].sudo().search([("token", "=", access_token)], order="id DESC", limit=1)
-            if not hr_token:
-                res = {"result": {"error": "invalid access token"}}
-                return http.Response(json.dumps(res), status=401, mimetype='application/json')
-            if hr_token.date_expiry < fields.Datetime.now():
-                new_token = hr_token._update_token()
-            res = {
-                "result": {
-                    "employee_id": hr_token.employee_id.id,
-                    "employee_name": hr_token.employee_id.name,
-                    "employee_department": {
-                        "id": hr_token.employee_id.department_id.id,
-                        "name": hr_token.employee_id.department_id.display_name
-                    },
-                    "employee_job": {
-                        "id": hr_token.employee_id.job_id.id,
-                        "name": hr_token.employee_id.job_id.name
-                    },
-                    "employee_work_phone": hr_token.employee_id.work_phone,
-                    "employee_work_email": hr_token.employee_id.work_email,
-                    "access_token": hr_token.token,
+            # if not hr_token:
+            #     res = {"result": {"error": "invalid access token"}}
+            #     return http.Response(json.dumps(res), status=401, mimetype='application/json')
+            if hr_token:
+                if hr_token.date_expiry < fields.Datetime.now():
+                    new_token = hr_token._update_token()
+                res = {
+                    "result": {
+                        "employee_id": hr_token.employee_id.id,
+                        "employee_name": hr_token.employee_id.name,
+                        "employee_department": {
+                            "id": hr_token.employee_id.department_id.id,
+                            "name": hr_token.employee_id.department_id.display_name
+                        },
+                        "employee_job": {
+                            "id": hr_token.employee_id.job_id.id,
+                            "name": hr_token.employee_id.job_id.name
+                        },
+                        "employee_work_phone": hr_token.employee_id.work_phone,
+                        "employee_work_email": hr_token.employee_id.work_email,
+                        "access_token": hr_token.token,
+                    }
                 }
-            }
-            return http.Response(json.dumps(res), status=200, mimetype='application/json')
+                return http.Response(json.dumps(res), status=200, mimetype='application/json')
+            else:
+                show_token_msg = True
         # =============================================================
 
         if not (username and password):
-            res = {"result": {"error": "username or password is missing"}}
+            res = {"result": {"error": f"username or password is missing{show_token_msg and ' / invalid token' or ''}"}}
             return http.Response(json.dumps(res), status=400, mimetype='application/json')
         employee = request.env['hr.employee'].sudo().search([('api_username', '=', username)], limit=1)
         if not employee:
-            res = {"result": {"error": "incorrect username"}}
+            res = {"result": {"error": f"incorrect username{show_token_msg and ' / invalid token' or ''}"}}
             return http.Response(json.dumps(res), status=401, mimetype='application/json')
         if employee.api_password != password:
-            res = {"result": {"error": "incorrect password"}}
+            res = {"result": {"error": f"incorrect password{show_token_msg and ' / invalid token' or ''}"}}
             return http.Response(json.dumps(res), status=401, mimetype='application/json')
         access_token = request.env['hr.token'].sudo().get_valid_token(employee_id=employee.id, create=True)
         res = {
@@ -117,7 +121,7 @@ class HrApi(http.Controller):
     @validate_token
     @http.route("/api-hr/update-token", methods=["POST"], type="http", auth="none", csrf=False)
     def api_hr_update_token(self, **post):
-        access_token = request.httprequest.headers.get('access_token')
+        access_token = request.httprequest.headers.get('api_token')
         # we are sure that the token is fine because of using the decorator @validate_token
         hr_token = request.env["hr.token"].sudo().search([("token", "=", access_token)], order="id DESC", limit=1)
         new_token = hr_token._update_token()
