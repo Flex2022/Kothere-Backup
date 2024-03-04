@@ -20,7 +20,7 @@ def validate_token(func):
 
         # Check if the token is missing
         if not token:
-            res = {"result": {"error": "missing access token"}}
+            res = {"result": {"error": "missing token"}}
             return http.Response(json.dumps(res), status=401, mimetype='application/json')
         
         # Search for the hr_token using the token
@@ -28,12 +28,12 @@ def validate_token(func):
         
         # Validate the found hr_token
         if not hr_token:
-            res = {"result": {"error": "invalid access token"}}
+            res = {"result": {"error": "invalid token"}}
             return http.Response(json.dumps(res), status=401, mimetype='application/json')
         
         # Check if the token has expired
         if hr_token.date_expiry < fields.Datetime.now():
-            res = {"result": {"error": "expired access token"}}
+            res = {"result": {"error": "expired token"}}
             return http.Response(json.dumps(res), status=401, mimetype='application/json')
         
         # Assuming request.update_context is a method to update the Odoo context,
@@ -58,12 +58,12 @@ class HrApi(http.Controller):
         _logger.info(f"\n\n headers     : {headers}\n\n")
         _logger.info(f"\n\n token: {token}\n\n")
 
-        # ====================[Login with access token (if expired, update it)]=========================
+        # ====================[Login with token (if expired, update it)]=========================
         show_token_msg = False
         if token:
             hr_token = request.env["hr.token"].sudo().search([("token", "=", token)], order="id DESC", limit=1)
             # if not hr_token:
-            #     res = {"result": {"error": "invalid access token"}}
+            #     res = {"result": {"error": "invalid token"}}
             #     return http.Response(json.dumps(res), status=401, mimetype='application/json')
             if hr_token:
                 if hr_token.date_expiry < fields.Datetime.now():
