@@ -12,20 +12,19 @@ _logger = logging.getLogger(__name__)
 def validate_token(func):
     @functools.wraps(func)
     def wrap(self, *args, **kwargs):
-        # Access the access_token from the query parameters for GET requests
-        # access_token = request.httprequest.args.get('access_token', '').strip()
+        # Get the token from the headers of the requests
         headers = request.httprequest.headers
-        access_token = headers.get('access_token')
-        _logger.info(f"\n\n access_token: {access_token}\n\n")
+        token = headers.get('token', '').strip()
+        _logger.info(f"\n\n token: {token}\n\n")
         _logger.info(f"\n\n headers  : {headers}\n\n")
 
-        # Check if the access_token is missing
-        if not access_token:
+        # Check if the token is missing
+        if not token:
             res = {"result": {"error": "missing access token"}}
             return http.Response(json.dumps(res), status=401, mimetype='application/json')
         
-        # Search for the hr_token using the access_token
-        hr_token = request.env["hr.token"].sudo().search([("token", "=", access_token)], order="id DESC", limit=1)
+        # Search for the hr_token using the token
+        hr_token = request.env["hr.token"].sudo().search([("token", "=", token)], order="id DESC", limit=1)
         
         # Validate the found hr_token
         if not hr_token:
@@ -55,14 +54,14 @@ class HrApi(http.Controller):
         headers = request.httprequest.headers
         username = headers.get('username', False)
         password = headers.get('password', False)
-        access_token = headers.get('access_token', False)
+        token = headers.get('token', False)
         _logger.info(f"\n\n headers     : {headers}\n\n")
-        _logger.info(f"\n\n access_token: {access_token}\n\n")
+        _logger.info(f"\n\n token: {token}\n\n")
 
         # ====================[Login with access token (if expired, update it)]=========================
         show_token_msg = False
-        if access_token:
-            hr_token = request.env["hr.token"].sudo().search([("token", "=", access_token)], order="id DESC", limit=1)
+        if token:
+            hr_token = request.env["hr.token"].sudo().search([("token", "=", token)], order="id DESC", limit=1)
             # if not hr_token:
             #     res = {"result": {"error": "invalid access token"}}
             #     return http.Response(json.dumps(res), status=401, mimetype='application/json')
@@ -83,7 +82,7 @@ class HrApi(http.Controller):
                         },
                         "employee_work_phone": hr_token.employee_id.work_phone,
                         "employee_work_email": hr_token.employee_id.work_email,
-                        "access_token": hr_token.token,
+                        "token": hr_token.token,
                     }
                 }
                 return http.Response(json.dumps(res), status=200, mimetype='application/json')
@@ -101,7 +100,7 @@ class HrApi(http.Controller):
         if employee.api_password != password:
             res = {"result": {"error": f"incorrect password{show_token_msg and ' / invalid token' or ''}"}}
             return http.Response(json.dumps(res), status=401, mimetype='application/json')
-        access_token = request.env['hr.token'].sudo().get_valid_token(employee_id=employee.id, create=True)
+        valid_token = request.env['hr.token'].sudo().get_valid_token(employee_id=employee.id, create=True)
         res = {
             "result": {
                 "employee_id": employee.id,
@@ -116,7 +115,7 @@ class HrApi(http.Controller):
                 },
                 "employee_work_phone": employee.work_phone,
                 "employee_work_email": employee.work_email,
-                "access_token": access_token,
+                "token": valid_token,
             }
         }
         return http.Response(json.dumps(res), status=200, mimetype='application/json')
@@ -125,13 +124,13 @@ class HrApi(http.Controller):
     @http.route("/api-hr/update-token", methods=["POST"], type="http", auth="none", csrf=False)
     def api_hr_update_token(self, **post):
         headers = request.httprequest.headers
-        access_token = headers.get('access_token')
+        token = headers.get('token')
         # we are sure that the token is fine because of using the decorator @validate_token
-        hr_token = request.env["hr.token"].sudo().search([("token", "=", access_token)], order="id DESC", limit=1)
+        hr_token = request.env["hr.token"].sudo().search([("token", "=", token)], order="id DESC", limit=1)
         new_token = hr_token._update_token()
         res = {
             "result": {
-                "access_token": new_token,
+                "token": new_token,
             }
         }
         return http.Response(json.dumps(res), status=200, mimetype='application/json')
