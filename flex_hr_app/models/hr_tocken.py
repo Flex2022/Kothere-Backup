@@ -16,7 +16,7 @@ class HrToken(models.Model):
 
     @api.model
     def _expiry(self):
-        return fields.Datetime.now() + timedelta(seconds=300000000)
+        return fields.Datetime.now() + timedelta(seconds=3000)
 
     employee_id = fields.Many2one(comodel_name="hr.employee", string="Employee", required=True)
     token = fields.Char(string="Access Token", required=True, default=lambda s: s._token())
