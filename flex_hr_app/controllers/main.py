@@ -14,8 +14,8 @@ def validate_token(func):
     def wrap(self, *args, **kwargs):
         # Access the access_token from the query parameters for GET requests
         # access_token = request.httprequest.args.get('access_token', '').strip()
-        access_token = request.httprequest.headers.get('api_token')
-        _logger.info(f"\n\n api_token: {access_token}\n\n")
+        access_token = request.httprequest.headers.get('access_token')
+        _logger.info(f"\n\n access_token: {access_token}\n\n")
         _logger.info(f"\n\n headers  : {request.httprequest.headers}\n\n")
 
         # Check if the access_token is missing
@@ -54,9 +54,9 @@ class HrApi(http.Controller):
         headers = request.httprequest.headers
         username = headers.get('username', False)
         password = headers.get('password', False)
+        access_token = headers.get('access_token', False)
 
         # ====================[Login with access token (if expired, update it)]=========================
-        access_token = request.httprequest.headers.get('api_token')
         show_token_msg = False
         if access_token:
             hr_token = request.env["hr.token"].sudo().search([("token", "=", access_token)], order="id DESC", limit=1)
@@ -121,7 +121,8 @@ class HrApi(http.Controller):
     @validate_token
     @http.route("/api-hr/update-token", methods=["POST"], type="http", auth="none", csrf=False)
     def api_hr_update_token(self, **post):
-        access_token = request.httprequest.headers.get('api_token')
+        headers = request.httprequest.headers
+        access_token = headers.get('access_token')
         # we are sure that the token is fine because of using the decorator @validate_token
         hr_token = request.env["hr.token"].sudo().search([("token", "=", access_token)], order="id DESC", limit=1)
         new_token = hr_token._update_token()
