@@ -14,9 +14,10 @@ def validate_token(func):
     def wrap(self, *args, **kwargs):
         # Access the access_token from the query parameters for GET requests
         # access_token = request.httprequest.args.get('access_token', '').strip()
-        access_token = request.httprequest.headers.get('access_token')
+        headers = request.httprequest.headers
+        access_token = headers.get('access_token')
         _logger.info(f"\n\n access_token: {access_token}\n\n")
-        _logger.info(f"\n\n headers  : {request.httprequest.headers}\n\n")
+        _logger.info(f"\n\n headers  : {headers}\n\n")
 
         # Check if the access_token is missing
         if not access_token:
@@ -55,6 +56,8 @@ class HrApi(http.Controller):
         username = headers.get('username', False)
         password = headers.get('password', False)
         access_token = headers.get('access_token', False)
+        _logger.info(f"\n\n headers     : {headers}\n\n")
+        _logger.info(f"\n\n access_token: {access_token}\n\n")
 
         # ====================[Login with access token (if expired, update it)]=========================
         show_token_msg = False
