@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from odoo import fields, http, SUPERUSER_ID
+from odoo.exceptions import ValidationError
 from odoo.http import request
 import json
 import functools
@@ -12,8 +13,11 @@ def validate_token(func):
     @functools.wraps(func)
     def wrap(self, *args, **kwargs):
         # Access the access_token from the query parameters for GET requests
-        access_token = request.httprequest.args.get('access_token', '').strip()
-        
+
+        access_token = request.httprequest.headers.environ.get("HTTP_ACCESS_TOKEN")
+        # access_token = request.httprequest.headers.get('access_token')
+        # access_token = request.httprequest.args.get('access_token', '').strip()
+
         # Check if the access_token is missing
         if not access_token:
             res = {"result": {"error": "missing access token"}}
@@ -28,7 +32,7 @@ def validate_token(func):
             return http.Response(json.dumps(res), status=401, mimetype='application/json')
         
         # Check if the token has expired
-        if hr_token.date_expiry < datetime.now():
+        if hr_token.date_expiry < fields.Datetime.now():
             res = {"result": {"error": "expired access token"}}
             return http.Response(json.dumps(res), status=401, mimetype='application/json')
         
@@ -36,6 +40,7 @@ def validate_token(func):
         # which is not standard, you might intend to do something like this instead:
         # Update the environment context with the employee_id for subsequent operations
         request.env.context = dict(request.env.context, employee_id=hr_token.employee_id.id)
+        # request.update_context(employee_id=hr_token.employee_id.id)
         
         # Proceed with the original function
         return func(self, *args, **kwargs)
@@ -163,13 +168,17 @@ class HrApi(http.Controller):
         employee = request.env['hr.employee'].sudo().browse(employee_id)
         # data = request.get_json_data()
         payload = json.loads(request.httprequest.data or '{}')
-        leave = request.env['hr.leave'].sudo().create({
-            'employee_id': employee.id,
-            'holiday_status_id': payload.get('holiday_status_id'),
-            'request_date_from': payload.get('request_date_from'),
-            'request_date_to': payload.get('request_date_to'),
-        })
-        data = {"msg": "timeoff created successfully", "leave_id": leave.id}
-        res = {"result": data}
-        return http.Response(json.dumps(res), status=200, mimetype='application/json')
+        try:
+            leave = request.env['hr.leave'].sudo().with_context(leave_skip_date_check=True).create({
+                'employee_id': employee.id,
+                'holiday_status_id': payload.get('holiday_status_id'),
+                'request_date_from': payload.get('request_date_from'),
+                'request_date_to': payload.get('request_date_to'),
+            })
+            data = {"msg": "timeoff created successfully", "leave_id": leave.id}
+            res = {"result": data}
+            return http.Response(json.dumps(res), status=200, mimetype='application/json')
+        except Exception as ex:
+            res = {"result": {"error": f"{ex}"}}
+            return http.Response(json.dumps(res), status=401, mimetype='application/json')
 
