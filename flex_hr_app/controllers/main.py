@@ -86,6 +86,7 @@ class HrApi(http.Controller):
                         },
                         "employee_work_phone": hr_token.employee_id.work_phone,
                         "employee_work_email": hr_token.employee_id.work_email,
+                        "image_url": f"/web/image/hr.employee.public/{employee.id}/avatar_128",
                         "token": hr_token.token,
                     }
                 }
@@ -119,6 +120,7 @@ class HrApi(http.Controller):
                 },
                 "employee_work_phone": employee.work_phone,
                 "employee_work_email": employee.work_email,
+                "image_url": f"/web/image/hr.employee.public/{employee.id}/avatar_128",
                 "token": valid_token,
             }
         }
