@@ -1,0 +1,161 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* flex_hr_app
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-03-05 16:57+0000\n"
+"PO-Revision-Date: 2024-03-05 16:57+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: flex_hr_app
+#: model_terms:ir.ui.view,arch_db:flex_hr_app.report_timeoff_details
+msgid "<strong>Remaining:</strong>"
+msgstr ""
+
+#. module: flex_hr_app
+#: model_terms:ir.ui.view,arch_db:flex_hr_app.report_timeoff_details
+msgid "<strong>Total: </strong>"
+msgstr ""
+
+#. module: flex_hr_app
+#: model:ir.model.fields,field_description:flex_hr_app.field_hr_token__token
+msgid "Access Token"
+msgstr ""
+
+#. module: flex_hr_app
+#. odoo-python
+#: code:addons/flex_hr_app/models/hr_employee.py:0
+#: model_terms:ir.ui.view,arch_db:flex_hr_app.view_employee_form_inherit
+#, python-format
+msgid "Access Tokens"
+msgstr ""
+
+#. module: flex_hr_app
+#. odoo-python
+#: code:addons/flex_hr_app/controllers/main.py:0
+#, python-format
+msgid "Approved"
+msgstr "تمت الموافقة"
+
+#. module: flex_hr_app
+#: model:ir.model.fields,field_description:flex_hr_app.field_hr_token__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: flex_hr_app
+#: model:ir.model.fields,field_description:flex_hr_app.field_hr_token__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: flex_hr_app
+#: model_terms:ir.ui.view,arch_db:flex_hr_app.report_timeoff_details
+msgid "Days"
+msgstr ""
+
+#. module: flex_hr_app
+#: model:ir.model.fields,field_description:flex_hr_app.field_hr_token__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: flex_hr_app
+#: model:ir.model,name:flex_hr_app.model_hr_employee
+#: model:ir.model.fields,field_description:flex_hr_app.field_hr_token__employee_id
+msgid "Employee"
+msgstr "الموظف"
+
+#. module: flex_hr_app
+#: model:ir.model,name:flex_hr_app.model_hr_token
+msgid "HR Access Token"
+msgstr ""
+
+#. module: flex_hr_app
+#: model_terms:ir.ui.view,arch_db:flex_hr_app.report_timeoff_details
+msgid "Hours"
+msgstr ""
+
+#. module: flex_hr_app
+#: model:ir.model.fields,field_description:flex_hr_app.field_hr_token__id
+msgid "ID"
+msgstr ""
+
+#. module: flex_hr_app
+#: model:ir.model.fields,field_description:flex_hr_app.field_hr_token__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: flex_hr_app
+#: model:ir.model.fields,field_description:flex_hr_app.field_hr_token__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: flex_hr_app
+#: model_terms:ir.ui.view,arch_db:flex_hr_app.report_timeoff_details
+msgid "Made by Odoo with ❤️"
+msgstr ""
+
+#. module: flex_hr_app
+#: model:ir.model.fields,field_description:flex_hr_app.field_hr_employee__api_password
+msgid "Password"
+msgstr ""
+
+#. module: flex_hr_app
+#. odoo-python
+#: code:addons/flex_hr_app/controllers/main.py:0
+#, python-format
+msgid "Refused"
+msgstr "تم الرفض"
+
+#. module: flex_hr_app
+#. odoo-python
+#: code:addons/flex_hr_app/controllers/main.py:0
+#, python-format
+msgid "Second Approval"
+msgstr "الموافقة الثانية"
+
+#. module: flex_hr_app
+#: model_terms:ir.ui.view,arch_db:flex_hr_app.hr_token_form
+msgid "Stage"
+msgstr ""
+
+#. module: flex_hr_app
+#: model:ir.actions.report,name:flex_hr_app.employee_timeoff_details_report
+#: model_terms:ir.ui.view,arch_db:flex_hr_app.report_timeoff_details
+msgid "Time Off Details"
+msgstr ""
+
+#. module: flex_hr_app
+#. odoo-python
+#: code:addons/flex_hr_app/controllers/main.py:0
+#, python-format
+msgid "To Approve"
+msgstr "بانتظار الموافقة"
+
+#. module: flex_hr_app
+#. odoo-python
+#: code:addons/flex_hr_app/controllers/main.py:0
+#, python-format
+msgid "To Submit"
+msgstr "للإرسال"
+
+#. module: flex_hr_app
+#: model:ir.model.fields,field_description:flex_hr_app.field_hr_employee__api_username
+msgid "Username"
+msgstr ""
+
+#. module: flex_hr_app
+#: model:ir.model.constraint,message:flex_hr_app.constraint_hr_employee_unique_api_username
+msgid "Username must be unique!"
+msgstr ""
+
+#. module: flex_hr_app
+#: model:ir.model.fields,field_description:flex_hr_app.field_hr_token__date_expiry
+msgid "Valid Until"
+msgstr ""
