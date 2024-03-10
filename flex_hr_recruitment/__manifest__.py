@@ -1,0 +1,17 @@
+{
+    'name': 'Flex HR Recruitment',
+    'version': '1.0',
+    'summary': 'Edit HR Recruitment',
+    'description': '',
+    'category': '',
+    'author': 'Sohaib Alamleh||Flex-ops',
+    'website': 'https://www.flex-ops.com',
+    'license': '',
+    'depends': ['hr_recruitment'],
+    'data': ['security/ir.model.access.csv',
+             'views/rec.xml',
+             'views/hr_application.xml'],
+    'demo': [''],
+    'installable': True,
+    'auto_install': False,
+}

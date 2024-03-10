@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="hr_applicant_view_form_inherit_flex" model="ir.ui.view">
+        <field name="name">hr.applicant.view.form.inherit.flex</field>
+        <field name="model">hr.applicant</field>
+        <field name="inherit_id" ref="hr_recruitment.hr_applicant_view_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//notebook" position="inside">
+                <page string="Evaluation">
+                    <field name="evaluation_rate">
+                        <tree string="Evaluation Rate" editable="bottom">
+                            <field name="evaluation_rate"/>
+                            <field name="priority" widget="priority"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+
+        </field>
+    </record>
+</odoo>
