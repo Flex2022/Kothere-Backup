@@ -24,7 +24,7 @@
                     </p>
                 </div>
             </field>
-            <field name="report_template_ids" eval="[(4, ref('action_hr_applicant'))]"/>
+            <field name="report_template_ids" eval="[(4, ref('flex_hr_recruitment.action_hr_applicant'))]"/>
             <field name="lang">{{ object.partner_id.lang }}</field>
             <field name="auto_delete" eval="True"/>
         </record>
