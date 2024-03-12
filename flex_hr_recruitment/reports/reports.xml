@@ -1,0 +1,515 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="flex_job_offer">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-foreach="docs.with_context(lang='ar_001')" t-as="o_sec">
+
+                    <t t-call="web.external_layout">
+                        <link rel="stylesheet" href="/flex_hr_recruitment/static/src/css/style.css"/>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="col-6 float-end text-center font-14">
+                                    <span>عــــرض وظيفي</span>
+                                </div>
+                                <div class="col-6 float-start text-center font-14">
+                                    <strong>Job Offer</strong>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="col-6 float-end text-end font-9">
+                                    <span>التاريخ:</span>
+                                    <span t-field="o.create_date1" t-options='{"widget": "date"}'/>
+                                    <br/>
+                                    <span>الصادر:</span>
+                                    <span dir="rtl" t-field="o.name"/>
+                                </div>
+                                <div class="col-6 float-start text-start font-9">
+                                    <strong>Dated:</strong>
+                                    <strong t-field="o.create_date1" t-options='{"widget": "date"}'/>
+                                    <br/>
+                                    <strong>Disp.No:</strong>
+                                    <strong t-field="o.name"/>
+                                </div>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="col-6 float-end text-end font-9">
+                                    <span dir="rtl">السيد:</span>
+                                    <span dir="rtl" t-field="o.partner_name_ar"/>
+                                    <br/>
+                                    <span dir="rtl">رقم الأقامة / رقم الجواز:</span>
+                                    <span dir="rtl"><t t-esc="o.residency_number"/>/
+                                        <t t-esc="o.passport_number"/>
+                                    </span>
+                                    <br/>
+                                    <span dir="rtl">الجنسية:</span>
+                                    <span dir="rtl" t-esc="o_sec.nationality.name"/>
+                                    <br/>
+                                    <p dir="rtl">
+                                        نيابة عن إدارة الشركة، يسرنا التقدم لك بعرض وظيفي للعمل لدى
+                                        <span dir="rtl" t-field="o.company_id.name_ar"/>
+                                        بوظيفة ؟
+                                        <span dir="rtl" t-esc="o_sec.job_id.name"/>
+                                    </p>
+                                    <span dir="rtl mt-1">:المزايا والبدلات الوظيفية</span>
+                                    <br/>
+                                    <div>
+                                        <br/>
+                                        <div class="col-6 row">
+                                            <div dir="col-3 rtl float-end" t-field="o.marital_status_ar"/>
+                                            <div dir="col-3 rtl float-end">الحالة الإجتماعية</div>
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <div>
+                                        <div class="col-6 row">
+                                            <div dir="col-3 rtl float-end">
+                                                <span dir="rtl" t-esc="o_sec.contract_duration"/>
+                                                <span dir="rtl">(قابلة للتجديد)</span>
+                                            </div>
+                                            <div dir="col-3 rtl float-end">مدة العقد</div>
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <div>
+                                        <div class="col-6 row">
+                                            <div dir="col-3 rtl float-end">
+                                                <!--                                                <span dir="rtl" t-esc="o_sec.contract_duration"/>-->
+                                                <span dir="rtl">90 يوم(قابلة للتجديد)</span>
+                                            </div>
+                                            <div dir="col-3 rtl float-end">فترة التجربة</div>
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <div>
+                                        <div class="col-6 row">
+                                            <div dir="col-3 rtl float-end">
+                                                <span dir="rtl" t-esc="o.salary_expected"/>
+                                                <span dir="rtl">سعودي ريال شهرياً</span>
+                                            </div>
+                                            <div dir="col-3 rtl float-end">الراتب الأساسي</div>
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <div>
+                                        <div class="col-6 row">
+                                            <div dir="col-3 rtl float-end">
+                                                <span dir="rtl" t-esc="o.housing_allowance1"/>
+                                                <span dir="rtl">سعودي ريال شهرياً</span>
+                                            </div>
+                                            <div dir="col-3 rtl float-end">بدل سكن</div>
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <div>
+                                        <div class="col-6 row">
+                                            <div dir="col-3 rtl float-end">
+                                                <span dir="rtl" t-esc="o.transportation_allowance1"/>
+                                                <span dir="rtl">سعودي ريال شهرياً</span>
+                                            </div>
+                                            <div dir="col-3 rtl float-end">بدل نقل</div>
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <br/>
+                                    <div>
+                                        <div class="col-6 row">
+                                            <div dir="col-3 rtl float-end" t-esc="o_sec.annual_leave.name"/>
+                                            <div dir="col-3 rtl float-end">الإجازة السنوية</div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="col-6 row">
+                                            <div dir="col-3 rtl float-end">
+                                                <p dir="rtl" t-esc="o_sec.yearly_ticket"/>
+                                            </div>
+                                            <div class="mt-2" dir="col-3 rtl float-end">التذاكر السنوية</div>
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <br/>
+                                    <br/>
+                                    <br/>
+                                    <div>
+                                        <div class="col-6 row">
+                                            <div dir="col-3 rtl float-end">
+                                                <span dir="rtl" t-esc="o_sec.sign_city.name"/>
+                                                <!--                                                <span dir="rtl">سعودي ريال شهرياً</span>-->
+                                            </div>
+                                            <div dir="col-3 rtl float-end">مدينة التعاقد</div>
+                                        </div>
+                                    </div>
+                                    <div class="mt-2">
+                                        <div class="col-6 row">
+                                            <div dir="col-3 rtl float-end">
+                                                <span dir="rtl" t-esc="o_sec.work_place"/>
+                                                <!--                                                <span dir="rtl">سعودي ريال شهرياً</span>-->
+                                            </div>
+                                            <div dir="col-3 rtl float-end">مكان التعاقد</div>
+                                        </div>
+                                    </div>
+                                    <div class="mt-2">
+                                        <div class="col-6 row">
+                                            <div dir="col-3 rtl float-end">
+                                                <!--                                                <span dir="rtl" t-esc="o_sec.work_place"/>-->
+                                                <span dir="rtl">مقدمة من الشركةً</span>
+                                            </div>
+                                            <div dir="col-3 rtl float-end">التأمين الطبي</div>
+                                        </div>
+                                    </div>
+                                    <div class="mt-2">
+                                        <div class="col-6 row">
+                                            <div dir="col-3 rtl float-end">
+                                                <span dir="rtl" t-field="o.company_id.name_ar"/>
+                                                <!--                                            <span dir="rtl">نيابة عن الشركةً</span>-->
+                                            </div>
+                                            <div dir="col-3 rtl float-end">:نيابة عن الشركة</div>
+                                        </div>
+                                    </div>
+                                    <div class="mt-2">
+                                        <div class="col-6 row">
+                                            <div dir="col-3 rtl float-end">
+                                                <!--                                                <span dir="rtl" t-field="o.company_id.name_ar"/>-->
+                                                <!--                                            <span dir="rtl">نيابة عن الشركةً</span>-->
+                                            </div>
+                                            <div dir="col-3 rtl float-end">
+                                                <span dir="rtl" t-field="o.partner_name_ar"/>
+                                            </div>
+                                        </div>
+                                        <div class="mt-2">
+                                            <div class="col-6 row">
+                                                <div dir="col-3 rtl float-end">
+                                                    <!--                                                <span dir="rtl" t-field="o.company_id.name_ar"/>-->
+                                                    <!--                                            <span dir="rtl">نيابة عن الشركةً</span>-->
+                                                </div>
+                                                <div dir="col-3 rtl float-end">
+                                                    <span dir="rtl">الوظيفة:</span>
+                                                    <span dir="rtl" t-esc="o_sec.job_id.name"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mt-2">
+                                            <div class="col-6 row">
+                                                <div dir="col-3 rtl float-end">
+                                                    <!--                                                <span dir="rtl" t-field="o.company_id.name_ar"/>-->
+                                                    <!--                                            <span dir="rtl">نيابة عن الشركةً</span>-->
+                                                </div>
+                                                <div dir="col-3 rtl float-end">
+                                                    <span dir="rtl">التوقيع:</span>
+                                                    <!--                                                    <span dir="rtl" t-esc="o_sec.job_id.name"/>-->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6 float-start text-start font-9">
+                                    <span>Dear:</span>
+                                    <span t-field="o.partner_name"/>
+                                    <br/>
+                                    <span>Iqama/Passport:</span>
+                                    <span>
+                                        <t t-esc="o.residency_number"/>
+                                        /
+                                        <t t-esc="o.passport_number"/>
+                                    </span>
+                                    <br/>
+                                    <span>Nationality:</span>
+                                    <span t-field="o.nationality"/>
+                                    <br/>
+                                    <p>
+                                        On behalf of<strong t-field="o.company_id.name"/>, it is our pleasure to offer
+                                        you a position with the company as ?
+                                        <span t-field="o.job_id.name"/>
+                                    </p>
+                                    <span>The employment benefits for this position will be as follows:</span>
+                                    <br/>
+                                    <div>
+                                        <br/>
+                                        <div class="col-6 row">
+                                            <div dir="col-3 ltr float-start">
+                                                <b>Status</b>
+                                            </div>
+                                            <b>
+                                                <div dir="col-3 ltr float-end" t-field="o.marital_status"/>
+                                            </b>
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <div>
+                                        <div class="col-6 row">
+                                            <div dir="col-3 ltr float-start">
+                                                <b>Contract Period:</b>
+                                            </div>
+                                            <div dir="col-3 ltr float-end">
+                                                <strong t-field="o.contract_duration"/>
+                                                <strong>(Renewable)</strong>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <div>
+                                        <div class="col-6 row">
+                                            <div dir="col-3 ltr float-start">
+                                                <b>Probation Period:</b>
+                                            </div>
+                                            <div dir="col-3 ltr float-end">
+                                                <!--                                                <strong t-field="o.contract_duration"/>-->
+                                                <strong>90 Days(Renewable)</strong>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <div>
+                                        <div class="col-6 row">
+                                            <div dir="col-3 ltr float-start">
+                                                <b>Basic Salary:</b>
+                                            </div>
+                                            <div dir="col-3 ltr float-end">
+                                                <strong t-field="o.salary_expected"/>
+                                                <strong>SR Monthly</strong>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <div>
+                                        <div class="col-6 row">
+                                            <div dir="col-3 ltr float-start">
+                                                <b>Housing Allowance:</b>
+                                            </div>
+                                            <div dir="col-3 ltr float-end">
+                                                <strong t-field="o.housing_allowance1"/>
+                                                <strong>SR Monthly</strong>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <div>
+                                        <div class="col-6 row">
+                                            <div dir="col-3 ltr float-start">
+                                                <b>Transportation Allowance:</b>
+                                            </div>
+                                            <div dir="col-3 ltr float-end">
+                                                <strong t-field="o.transportation_allowance1"/>
+                                                <strong>SR Monthly</strong>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <br/>
+                                    <div>
+                                        <div class="col-6 row">
+                                            <div dir="col-3 ltr float-start">
+                                                <b>Annual Vac.:</b>
+                                            </div>
+                                            <div dir="col-3 ltr float-end">
+                                                <strong t-field="o.annual_leave"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="col-6 row">
+                                            <div dir="col-3 ltr float-start">
+                                                <b>Annual Airlines Ticket:</b>
+                                            </div>
+                                            <div dir="col-3 ltr float-end">
+                                                <!--                                                <strong t-field="o.annual_leave"/>-->
+                                                <p>
+                                                    <strong t-field="o.yearly_ticket"/>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <br/>
+                                    <br/>
+                                    <br/>
+                                    <div>
+                                        <div class="col-6 row">
+                                            <div dir="col-3 ltr float-start">
+                                                <b>City of origin</b>
+                                            </div>
+                                            <div dir="col-3 ltr float-end">
+                                                <strong t-field="o.sign_city"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mt-2">
+                                        <div class="col-6 row">
+                                            <div dir="col-3 ltr float-start">
+                                                <b>City of work</b>
+                                            </div>
+                                            <div dir="col-3 ltr float-end">
+                                                <strong t-field="o.work_place"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mt-2">
+                                        <div class="col-6 row">
+                                            <div dir="col-3 ltr float-start">
+                                                <b>Medical Ins.</b>
+                                            </div>
+                                            <div dir="col-3 ltr float-end">
+                                                <strong>Provided by the company</strong>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mt-2">
+                                        <div class="col-6 row">
+                                            <div dir="col-3 ltr float-start">
+                                                <span>On Behalf of the Company</span>
+                                            </div>
+                                            <div dir="col-3 ltr float-end">
+                                                <span t-field="o.company_id.name"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mt-2">
+                                        <div class="col-6 row">
+                                            <div dir="col-3 ltr float-start">
+                                                <strong t-field="o.partner_name"/>
+                                            </div>
+                                            <div dir="col-3 ltr float-end">
+                                                <!--                                                <span t-field="o.company_id.name"/>-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mt-2">
+                                        <div class="col-6 row">
+                                            <div dir="col-3 ltr float-start">
+                                                <strong t-field="o.job_id"/>
+                                            </div>
+                                            <div dir="col-3 ltr float-end">
+                                                <!--                                                <span t-field="o.company_id.name"/>-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mt-2">
+                                        <div class="col-6 row">
+                                            <div dir="col-3 ltr float-start">
+                                                <strong>Signature:</strong>
+                                            </div>
+                                            <div dir="col-3 ltr float-end">
+                                                <!--                                                <span t-field="o.company_id.name"/>-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br/>
+                        <hr/>
+                        <br/>
+                        <div class="row font-9">
+                            <div class="col-12">
+                                <div class="col-6 float-end">
+                                    <div dir="rtl" class="col-3 float-end">
+                                        <span dir="rtl">العرض أعلاه:</span>
+                                        <!--                                                <span dir="rtl">سعودي ريال شهرياً</span>-->
+                                    </div>
+                                    <div dir="rtl" class="col-3 float-end text-start">Accepted مقبول</div>
+                                    <div dir="rtl" class="col-2 float-end text-start">
+                                        <t t-if="o.accept">
+                                            <input type="checkbox" id="checkbox104_anything_you_give"
+                                                   checked="checked"/>
+                                        </t>
+                                        <t t-if="not o.accept">
+                                            <input type="checkbox" id="checkbox104_anything_you_give"/>
+                                        </t>
+                                    </div>
+                                </div>
+                                <div class="col-6 float-start">
+                                    <div class="col-3 float-start">
+                                        <span>Above offer:</span>
+                                    </div>
+                                    <div class="col-4 float-start text-end">
+                                        <span>Not Accepted غير مقبول</span>
+                                    </div>
+                                    <div class="col-2 float-start text-end ">
+                                        <t t-if="o.not_accept">
+                                            <input type="checkbox" id="checkbox105_anything_you_give"
+                                                   checked="checked"/>
+                                        </t>
+                                        <t t-if="not o.not_accept">
+                                            <input type="checkbox" id="checkbox105_anything_you_give"/>
+                                        </t>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-2 row font-9" t-if="o.accept">
+                            <div class="col-12">
+                                <div class="col-4 float-start">
+                                    <span>If Accepted Please specify the joining date:</span>
+                                </div>
+                                <div dir="rtl" class="col-4 float-end">
+                                    <span>في حال الموافقة يرجى تحديد تاريخ المباشرة:</span>
+                                </div>
+                                <div class="col-4 float-end text-center">
+                                    <span t-field="o.start_work_date" t-options='{"widget": "date"}'/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-2 row font-9" t-if="o.accept">
+                            <div class="col-12">
+                                <div class="col-6 float-start">
+                                    <strong>Name:</strong>
+                                    <span t-field="o.partner_name"/>
+                                </div>
+
+                                <div dir="rtl" class="col-6 float-end">
+                                    <span>الإسم:</span>
+                                    <span dir="rtl" t-field="o.partner_name_ar"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-2 row font-9" t-if="o.accept">
+                            <div class="col-12">
+                                <div class="col-6 float-start">
+                                    <strong>Signature</strong>
+                                </div>
+
+                                <div dir="rtl" class="col-6 float-end">
+                                    <span>التوقيع</span>
+                                </div>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="mt-2 row font-8" t-if="o.accept">
+                            <div class="col-12">
+                                <div class="col-6 float-start">
+                                    <span>This offer is valid for 7 calendar days from the signature date</span>
+                                    <br/>
+                                    <span>This offer is cancelled if the candidate does not report to work by the joining date</span>
+                                    <br/>
+                                    <span>unless otherwise agreed by the company</span>
+                                </div>
+
+                                <div dir="rtl" class="col-6 float-end">
+                                    <span>هذا العرض صالح لسبعة أيام من تاريخ التوقيع</span>
+                                    <br/>
+                                    <span>يعتبر هذا العرض لاغياً إذا لم يباشر الموظف العمل في التاريخ المحدد أعلاه مالم توافق الشركة على</span>
+                                    <br/>
+                                    <span>خلاف ذلك</span>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </t>
+    </template>
+    <record id="action_hr_applicant" model="ir.actions.report">
+        <field name="name">Job Offer</field>
+        <field name="model">hr.applicant</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">flex_hr_recruitment.flex_job_offer</field>
+        <field name="report_file">flex_hr_recruitment.flex_job_offer</field>
+        <field name="binding_model_id" ref="flex_hr_recruitment.model_hr_applicant"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

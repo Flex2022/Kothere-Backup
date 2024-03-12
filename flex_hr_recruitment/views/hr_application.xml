@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
-
     <record id="hr_applicant_view_form_inherit_flex" model="ir.ui.view">
         <field name="name">hr.applicant.view.form.inherit.flex</field>
         <field name="model">hr.applicant</field>
         <field name="inherit_id" ref="hr_recruitment.hr_applicant_view_form"/>
         <field name="arch" type="xml">
-
+            <xpath expr="//header" position="inside">
+                <button name="action_offer_send" string="Send Job Offer" type="object" class="oe_highlight"/>
+            </xpath>
             <xpath expr="//notebook" position="inside">
                 <page string="Evaluation">
                     <field name="evaluation_rate">
@@ -16,8 +17,76 @@
                         </tree>
                     </field>
                 </page>
+                <page string="Applicant information">
+                    <group>
+                        <field name="residency_number" required="stage_id_char == 'Contract Proposal'"/>
+                        <field name="passport_number" required="stage_id_char == 'Contract Proposal'"/>
+                        <field name="nationality" required="stage_id_char == 'Contract Proposal'"/>
+                        <field name="marital_status" required="stage_id_char == 'Contract Proposal'"/>
+                        <field name="marital_status_ar" invisible="1"/>
+                    </group>
+                </page>
+                <page string="Offer State">
+                    <group>
+                        <field name="accept"/>
+                        <field name="not_accept"/>
+                        <field name="start_work_date" required="accept == True"/>
+                        <field name="stage_id_char" invisible="1"/>
+                    </group>
+                </page>
+                <!--                <page string="Contract information">-->
+                <!--                    <group>-->
+                <!--                        <field name="basic_salary"/>-->
+                <!--                        <field name="contract_duration"/>-->
+                <!--                    </group>-->
+                <!--                </page>-->
             </xpath>
-
+            <xpath expr="//group[@name='recruitment_contract']/div[@class='o_row'][2]" position="after">
+                <label for="contract_duration"/>
+                <div class="o_row">
+                    <field name="contract_duration" required="stage_id_char == 'Contract Proposal'"/>
+                </div>
+                <label for="housing_allowance1"/>
+                <div class="o_row">
+                    <field name="housing_allowance1" required="stage_id_char == 'Contract Proposal'"/>
+                </div>
+                <label for="transportation_allowance1"/>
+                <div class="o_row">
+                    <field name="transportation_allowance1" required="stage_id_char == 'Contract Proposal'"/>
+                </div>
+            </xpath>
+            <xpath expr="//group[@name='recruitment_contract']" position="after">
+                <group>
+                    <group string="Leave/Tickit Information" name="leave_information">
+                        <label for="annual_leave"/>
+                        <div class="o_row">
+                            <field name="annual_leave" required="stage_id_char == 'Contract Proposal'"/>
+                        </div>
+                        <label for="yearly_ticket"/>
+                        <div class="o_row">
+                            <field name="yearly_ticket" required="stage_id_char == 'Contract Proposal'"/>
+                        </div>
+                    </group>
+                    <group string="Other Information" name="other_information">
+                        <label for="sign_city"/>
+                        <div class="o_row">
+                            <field name="sign_city" required="stage_id_char == 'Contract Proposal'"/>
+                        </div>
+                        <label for="work_place"/>
+                        <div class="o_row">
+                            <field name="work_place" required="stage_id_char == 'Contract Proposal'"/>
+                        </div>
+                    </group>
+                </group>
+            </xpath>
+            <xpath expr="//field[@name='date_closed']" position="after">
+                <field name="create_date1" required="stage_id_char == 'Contract Proposal'"/>
+            </xpath>
+            <xpath expr="//field[@name='nationality']" position="replace"/>
+            <xpath expr="//field[@name='partner_name']" position="after">
+                <label for="partner_name_ar"/>
+                <field name="partner_name_ar" string="Name in Arabic"/>
+            </xpath>
         </field>
     </record>
 </odoo>
