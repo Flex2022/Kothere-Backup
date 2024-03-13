@@ -14,35 +14,19 @@
 
 
             </style>
-            <!--            <div class="page">-->
-            <!--                <div class="oe_structure"/>-->
             <div class="row">
-                <!--                <div class="col-12 border border-dark">-->
                 <div class="col-5 pt-4">
-                    <!--                    <p>-->
                     <t t-esc="company.name"/>
-                    <!--                    </p>-->
-                    <!--                    <br/>-->
-                    <!--                    <u>-->
-                    <!--                        <span>P.O.Box: 25639, Riyadh: 11466</span>-->
-                    <!--                    </u>-->
                     <br/>
-                    <!--                    <p>-->
                     <span>Tel:</span>
                     <t t-esc="company.phone"/>
                     <br/>
-                    <!--                    <p>-->
                     <span>Kingdom of Saudi Arabia</span>
-                    <!--                    </p>-->
                     <br/>
-                    <!--                    <u>-->
                     <t t-esc="company.website"/>
-                    <!--                    </u>-->
                     <br/>
-                    <!--                    <u>-->
                     <span>VAT Reg. No.:</span>
                     <t t-esc="company.vat"/>
-                    <!--                    </u>-->
                     <br/>
                 </div>
                 <div style="padding-bottom:10px" class="col-4 text-right padding_bottom">

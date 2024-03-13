@@ -5,119 +5,10 @@
             <t t-foreach="docs" t-as="o">
                 <t t-call="flex_tax_report.report_layout">
                     <link rel="stylesheet" href="/flex_tax_report/static/src/css/style.css"/>
-                    <!--                    <table dir="rtl">-->
-                    <!--                        <tr>-->
-                    <!--                            <td class="size2" style="border-left:none">-->
-                    <!--                                <div class="row">-->
-                    <!--                                    <div class="col-6">-->
-                    <!--                                        <div class="col-2 float-start border">-->
-                    <!--                                            <span>الخصم</span>-->
-                    <!--                                        </div>-->
-                    <!--                                        <div class="col-2 float-start border">-->
-                    <!--                                            <span>الخصم</span>-->
-                    <!--                                        </div>-->
-                    <!--                                        <div class="col-2 float-start border">-->
-                    <!--                                            <span>الخصم</span>-->
-                    <!--                                        </div>-->
-                    <!--                                    </div>-->
-                    <!--                                </div>-->
-
-                    <!--                                &lt;!&ndash;                                <div class="text-center col-12">&ndash;&gt;-->
-                    <!--                                &lt;!&ndash;                                    <span>الخصم</span>&ndash;&gt;-->
-                    <!--                                &lt;!&ndash;                                </div>&ndash;&gt;-->
-                    <!--                                &lt;!&ndash;                                <div class="text-center col-13">&ndash;&gt;-->
-                    <!--                                &lt;!&ndash;                                    <span>الخصم</span>&ndash;&gt;-->
-                    <!--                                &lt;!&ndash;                                </div>&ndash;&gt;-->
-
-
-                    <!--                            </td>-->
-
-                    <!--                            <td class="size2" style="border-left:none">-->
-                    <!--                                <div class="text-center" style="width:320px;">-->
-                    <!--                                    <span>الخصم</span>-->
-                    <!--                                </div>-->
-
-
-                    <!--                            </td>-->
-
-                    <!--                        </tr>-->
-                    <!--                        <td class="size2" style="border-left:none">-->
-                    <!--                            <div class="text-center" style="width:320px;">-->
-                    <!--                                <span>الخصم</span>-->
-                    <!--                            </div>-->
-
-
-                    <!--                        </td>-->
-
-                    <!--                        <td class="size2" style="border-left:none">-->
-                    <!--                            <div class="text-center" style="width:320px;">-->
-                    <!--                                <span>الخصم</span>-->
-                    <!--                            </div>-->
-
-
-                    <!--                        </td>-->
-                    <!--                        <tr>-->
-                    <!--                            <td class="size2" style="border-left:none">-->
-                    <!--                                <div class="text-center" style="width:320px;">-->
-                    <!--                                    <span>الخصم</span>-->
-                    <!--                                </div>-->
-
-
-                    <!--                            </td>-->
-
-                    <!--                            <td class="size2" style="border-left:none">-->
-                    <!--                                <div class="text-center" style="width:320px;">-->
-                    <!--                                    <span>الخصم</span>-->
-                    <!--                                </div>-->
-
-
-                    <!--                            </td>-->
-                    <!--                        </tr>-->
-                    <!--                        <tr>-->
-                    <!--                            <td class="size2" style="border-left:none">-->
-                    <!--                                <div class="text-center" style="width:320px;">-->
-                    <!--                                    <span>الخصم</span>-->
-                    <!--                                </div>-->
-
-
-                    <!--                            </td>-->
-
-                    <!--                            <td class="size2" style="border-left:none">-->
-                    <!--                                <div class="text-center" style="width:320px;">-->
-                    <!--                                    <span>الخصم</span>-->
-                    <!--                                </div>-->
-
-
-                    <!--                            </td>-->
-                    <!--                        </tr>-->
-                    <!--                        <tr></tr>-->
-
-                    <!--                        <t t-set="current_subtotal" t-value="0"/>-->
-                    <!--                        <t t-set="lines"-->
-                    <!--                           t-value="o.invoice_line_ids.sorted(key=lambda l: (-l.sequence, l.date, l.move_name, -l.id), reverse=True)"/>-->
-                    <!--                        <t t-foreach="lines" t-as="line">-->
-                    <!--                            <t t-set="current_subtotal" t-value="current_subtotal + line.price_total"/>-->
-
-
-                    <!--                        </t>-->
-                    <!--                        <t t-if="line.display_type == 'line_section'">-->
-                    <!--                            <td colspan="99" class="text-center">-->
-                    <!--                                <span t-field="line.name" t-options="{'widget': 'text'}"/>-->
-                    <!--                            </td>-->
-                    <!--                            <t t-set="current_section" t-value="line"/>-->
-                    <!--                            <t t-set="current_subtotal" t-value="0"/>-->
-                    <!--                        </t>-->
-                    <!--                        <t t-if="line.display_type == 'line_note'">-->
-                    <!--                            <td colspan="99" class="text-center">-->
-                    <!--                                <span t-field="line.name" t-options="{'widget': 'text'}"/>-->
-                    <!--                            </td>-->
-                    <!--                        </t>-->
-
-                    <!--                    </table>-->
                     <br/>
                     <div class="row">
                         <div class="col-12 border border-dark height50">
-                            <div class="col-6 float-end right_border height50 padding22">
+                            <div class="col-6 float-end right_border padding22">
                                 <div class="col-3 float-start">
                                     <span>Doc No.:</span>
                                 </div>
@@ -136,8 +27,11 @@
                                     <span>Date:</span>
                                 </div>
                                 <div class="col-6 float-start text-center">
-                                    <span>
+                                    <span t-if="o.invoice_date.strftime('%d-%m-%Y')">
                                         <t t-esc="o.invoice_date.strftime('%d-%m-%Y')"/>
+                                    </span>
+                                    <span t-if="not o.invoice_date.strftime('%d-%m-%Y')">
+                                        NONE
                                     </span>
                                 </div>
                                 <div class="col-3 float-start" dir="rtl">
@@ -149,8 +43,11 @@
                                     <span>Payment Terms:</span>
                                 </div>
                                 <div class="col-5 float-start text-center">
-                                    <span>
+                                    <span t-if="o.partner_id.property_payment_term_id.name">
                                         <t t-esc="o.partner_id.property_payment_term_id.name"/>
+                                    </span>
+                                    <span t-if="not o.partner_id.property_payment_term_id.name">
+                                        NONE
                                     </span>
                                 </div>
                                 <div class="col-3 float-start" dir="rtl">
@@ -163,8 +60,11 @@
                                     <span>Salesman:</span>
                                 </div>
                                 <div class="col-6 float-start text-center">
-                                    <span>
+                                    <span t-if="o.invoice_user_id.name">
                                         <t t-esc="o.invoice_user_id.name"/>
+                                    </span>
+                                    <span t-if="not o.invoice_user_id.name">
+                                        NONE
                                     </span>
                                 </div>
                                 <div class="col-3 float-start" dir="rtl">
@@ -177,13 +77,15 @@
                                     <span>Project:</span>
                                 </div>
                                 <div class="col-6 float-start text-center">
-                                    <span>
+                                    <span t-if="o.project_invoice_from_sale_order.name">
                                         <t t-esc="o.project_invoice_from_sale_order.name"/>
+                                    </span>
+                                    <span t-if="not o.project_invoice_from_sale_order.name">
+                                        NONE
                                     </span>
                                 </div>
                                 <div class="col-3 float-start" dir="rtl">
                                     <span>المشروع</span>
-
                                 </div>
 
 
@@ -191,8 +93,11 @@
                                     <span>Currency:</span>
                                 </div>
                                 <div class="col-6 float-start text-center">
-                                    <span>
+                                    <span t-if="o.currency_id.name">
                                         <t t-esc="o.currency_id.name"/>
+                                    </span>
+                                    <span t-if="not o.currency_id.name">
+                                        NONE
                                     </span>
                                 </div>
                                 <div class="col-3 float-start" dir="rtl">
@@ -209,8 +114,11 @@
                                     <span>Customer Name:</span>
                                 </div>
                                 <div class="col-6 float-start text-center">
-                                    <span>
+                                    <span t-if="o.partner_id.name">
                                         <t t-esc="o.partner_id.name"/>
+                                    </span>
+                                    <span t-if="not o.partner_id.name">
+                                        NONE
                                     </span>
                                 </div>
                                 <div class="col-2 float-start" dir="rtl">
@@ -222,8 +130,11 @@
                                     <span>Customer Code:</span>
                                 </div>
                                 <div class="col-6 float-start text-center">
-                                    <span>
+                                    <span t-if="o.partner_id.partner_code">
                                         <t t-esc="o.partner_id.partner_code"/>
+                                    </span>
+                                    <span t-if="not o.partner_id.partner_code">
+                                        NONE
                                     </span>
                                 </div>
                                 <div class="col-2 float-start" dir="rtl">
@@ -235,8 +146,11 @@
                                     <span>Customer PO NO:</span>
                                 </div>
                                 <div class="col-6 float-start text-center">
-                                    <span>
+                                    <span t-if="o.partner_id.name">
                                         <t t-esc="o.partner_id.name"/>
+                                    </span>
+                                    <span t-if="not o.partner_id.name">
+                                        NONE
                                     </span>
                                 </div>
                                 <div class="col-2 float-start" dir="rtl">
@@ -248,8 +162,12 @@
                                     <span>Cust PO Date:</span>
                                 </div>
                                 <div class="col-5 float-start text-center">
-                                    <span>
+
+                                    <span t-if="o.invoice_date.strftime('%d-%m-%Y')">
                                         <t t-esc="o.invoice_date.strftime('%d-%m-%Y')"/>
+                                    </span>
+                                    <span t-if="not o.invoice_date.strftime('%d-%m-%Y')">
+                                        NONE
                                     </span>
                                 </div>
                                 <div class="col-3 float-start" dir="rtl">
@@ -261,8 +179,11 @@
                                     <span>Cust VAT NO:</span>
                                 </div>
                                 <div class="col-5 float-start text-center">
-                                    <span>
+                                    <span t-if="o.partner_id.vat">
                                         <t t-esc="o.partner_id.vat"/>
+                                    </span>
+                                    <span t-if="not o.partner_id.vat">
+                                        NONE
                                     </span>
                                 </div>
                                 <div class="col-3 float-start" dir="rtl">
@@ -392,10 +313,6 @@
                                 <t t-set="current_subtotal" t-value="current_subtotal + line.price_total"/>
                                 <tr t-att-class="'bg-200 fw-bold o_line_section' if line.display_type == 'line_section' else 'fst-italic o_line_note' if line.display_type == 'line_note' else ''">
                                     <t t-if="line.display_type == 'product'" name="account_invoice_line_accountable">
-
-
-
-
 
 
                                         <td class="text-center" dir="ltr">
@@ -596,36 +513,42 @@
                         </div>
                     </div>
 
-                    <div>
-                        <div class="col-auto mw-100 mb-2">
-                            <span dir="rtl" style="font-size: 14px;">Any payment is considered valid only with ELITE
-                                TRADING
-                                ALLIANCE Co.Official Receipt
-                            </span>
-                        </div>
-                        <div class="col-auto mw-100 mb-2">
-                            <span style="font-size: 14px;">Please make a payment to:</span>
-                            <br/>
-                            <span>Beneficiary Name: ELITE TRADING ALLIANCE Co.</span>
-                            <br/>
-                            <span>Beneficiary Account: 011-497773-001</span>
-                            <br/>
-                            <span>Swift Code: SABBSARI</span>
-                            <br/>
-                            <span>IBAN No.: SA7745000000011497773001</span>
-                            <br/>
-                            <span>Bank Name: The Saudi British Bank (SABB)</span>
-                            <br/>
-                            <span>Thank you for your business!</span>
-                            <br/>
-                        </div>
-                        <div class="col-auto mw-100 mb-2">
-                            Invoice QR Code
-                            <br/>
-                            <img t-att-src="qr_code_url" style="max-height:120px; max-width:100%;" alt="QR Code"/>
-                        </div>
-
+                    <div class="text-muted mb-3"
+                         t-attf-style="#{'text-align:justify;text-justify:inter-word;' if o.company_id.terms_type != 'html' else ''}"
+                         t-if="not is_html_empty(o.narration)" name="comment">
+                        <span t-field="o.narration"/>
                     </div>
+
+                    <!--                    <div>-->
+                    <!--                        <div class="col-auto mw-100 mb-2">-->
+                    <!--                            <span dir="rtl" style="font-size: 14px;">Any payment is considered valid only with ELITE-->
+                    <!--                                TRADING-->
+                    <!--                                ALLIANCE Co.Official Receipt-->
+                    <!--                            </span>-->
+                    <!--                        </div>-->
+                    <!--                        <div class="col-auto mw-100 mb-2">-->
+                    <!--                            <span style="font-size: 14px;">Please make a payment to:</span>-->
+                    <!--                            <br/>-->
+                    <!--                            <span>Beneficiary Name: ELITE TRADING ALLIANCE Co.</span>-->
+                    <!--                            <br/>-->
+                    <!--                            <span>Beneficiary Account: 011-497773-001</span>-->
+                    <!--                            <br/>-->
+                    <!--                            <span>Swift Code: SABBSARI</span>-->
+                    <!--                            <br/>-->
+                    <!--                            <span>IBAN No.: SA7745000000011497773001</span>-->
+                    <!--                            <br/>-->
+                    <!--                            <span>Bank Name: The Saudi British Bank (SABB)</span>-->
+                    <!--                            <br/>-->
+                    <!--                            <span>Thank you for your business!</span>-->
+                    <!--                            <br/>-->
+                    <!--                        </div>-->
+                    <!--                        <div class="col-auto mw-100 mb-2">-->
+                    <!--                            Invoice QR Code-->
+                    <!--                            <br/>-->
+                    <!--                            <img t-att-src="qr_code_url" style="max-height:120px; max-width:100%;" alt="QR Code"/>-->
+                    <!--                        </div>-->
+
+                    <!--                    </div>-->
 
                 </t>
             </t>
