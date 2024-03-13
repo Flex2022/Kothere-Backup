@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="report_layout_content_tax">
+        <div t-attf-class="header o_company_#{company.id}_layout" t-att-style="report_header_style">
+            <style>
+                <!--                * { font-family: 'Odoo Unicode Support Noto', sans-serif;}-->
+                * { color: black; }
+                .ml-0 {
+                margin-left: 120px !important;
+                }
+                .ml-2 {
+                margin-left: 20px !important;
+                }
+
+
+            </style>
+            <!--            <div class="page">-->
+            <!--                <div class="oe_structure"/>-->
+            <div class="row">
+                <!--                <div class="col-12 border border-dark">-->
+                <div class="col-5 pt-4">
+                    <!--                    <p>-->
+                    <t t-esc="company.name"/>
+                    <!--                    </p>-->
+                    <!--                    <br/>-->
+                    <!--                    <u>-->
+                    <!--                        <span>P.O.Box: 25639, Riyadh: 11466</span>-->
+                    <!--                    </u>-->
+                    <br/>
+                    <!--                    <p>-->
+                    <span>Tel:</span>
+                    <t t-esc="company.phone"/>
+                    <br/>
+                    <!--                    <p>-->
+                    <span>Kingdom of Saudi Arabia</span>
+                    <!--                    </p>-->
+                    <br/>
+                    <!--                    <u>-->
+                    <t t-esc="company.website"/>
+                    <!--                    </u>-->
+                    <br/>
+                    <!--                    <u>-->
+                    <span>VAT Reg. No.:</span>
+                    <t t-esc="company.vat"/>
+                    <!--                    </u>-->
+                    <br/>
+                </div>
+                <div style="padding-bottom:10px" class="col-4 text-right padding_bottom">
+
+                    <img t-att-src="image_data_uri(company.logo)"
+                         style="max-height:120px; max-width:100%;" alt="Logo" class="o_company_logo"/>
+                    <br/>
+                    <h4>Tax Invoice</h4>
+                    <h4>فاتورة ضريبية</h4>
+
+                </div>
+                <div class="col-3 pt-4" dir="rtl">
+
+                    <!--                    <p dir="rtl">-->
+                    <!--                    <p>-->
+                    <t t-esc="company.name"/>
+                    <!--                    </p>-->
+                    <!--                    <p>-->
+                    <!--                        <span>شركة الصفوة المتحالفة للتجارة</span>-->
+                    <!--                    </p>-->
+                    <br/>
+                    <!--                    <u>-->
+                    <!--                        <span>11476 الرياض 25639 ص.ب</span>-->
+                    <!--                    </u>-->
+                    <!--                    <br/>-->
+                    <!--                    <p>-->
+                    <span>: هاتف</span>
+                    <t t-esc="company.phone"/>
+                    <!--                    </p>-->
+                    <br/>
+                    <!--                    <u>-->
+                    <!--                        <span>00966 11 277 1126: فاكس</span>-->
+                    <!--                    </u>-->
+                    <!--                                        <br/>-->
+                    <!--                    <u>-->
+                    <span>المملكة العربية السعودية</span>
+                    <!--                    </u>-->
+                    <br/>
+                    <!--                    <u>-->
+                    <t t-esc="company.website"/>
+                    <!--                    </u>-->
+                    <!--                    <br/>-->
+                    <br/>
+                    <span> : الرقم الضريبي</span>
+                    <t t-esc="company.vat"/>
+                    <!--                    </p>-->
+                </div>
+                <!--                </div>-->
+            </div>
+            <!--            </div>-->
+
+            <!--            </div>-->
+        </div>
+
+        <div t-attf-class="article o_report_layout_standard o_company_#{company.id}_layout {{ 'o_layout_background' if company.layout_background in ['Geometric', 'Custom']  else  '' }}"
+             t-attf-style="background-image: url({{ 'data:image/png;base64,%s' % company.layout_background_image.decode('utf-8') if company.layout_background_image and company.layout_background == 'Custom' else '/base/static/img/bg_background_template.jpg' if company.layout_background == 'Geometric' else ''}});"
+             t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id"
+             t-att-data-oe-lang="o and o.env.context.get('lang')">
+            <t t-out="0"/>
+        </div>
+    </template>
+    <template id="report_layout">
+        <t t-if="not o" t-set="o" t-value="doc"/>
+        <t t-if="not company">
+            <!-- Multicompany -->
+            <t t-if="company_id">
+                <t t-set="company" t-value="company_id"/>
+            </t>
+            <t t-elif="o and 'company_id' in o and o.company_id.sudo()">
+                <t t-set="company" t-value="o.company_id.sudo()"/>
+            </t>
+            <t t-else="else">
+                <t t-set="company" t-value="res_company"/>
+            </t>
+        </t>
+        <t t-call="flex_tax_report.report_layout_content_tax">
+            <t t-out="0"/>
+        </t>
+    </template>
+
+</odoo>
