@@ -251,7 +251,7 @@ class HrApi(http.Controller):
             res = {"result": {"error": "employee_id is missing in context"}}
             return http.Response(json.dumps(res), status=400, mimetype='application/json')
         # employee = request.env['hr.employee'].sudo().browse(employee_id)
-        domain = [('employee_id', '=', employee_id), ('state', '=', 'validate')]
+        domain = [('employee_id', '=', employee_id)]
 
         leave_list = request.env['hr.leave'].sudo().search(domain)
         LEAVE = request.env['hr.leave'].sudo()
