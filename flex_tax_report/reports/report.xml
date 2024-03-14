@@ -7,7 +7,7 @@
                     <link rel="stylesheet" href="/flex_tax_report/static/src/css/style.css"/>
                     <br/>
                     <div class="row">
-                        <div class="col-12 border border-dark height50">
+                        <div class="col-12 border border-dark">
                             <div class="col-6 float-end right_border padding22">
                                 <div class="col-3 float-start">
                                     <span>Doc No.:</span>
@@ -108,7 +108,7 @@
 
                             </div>
 
-                            <div class="col-6 float-start height50 padding22">
+                            <div class="col-6 float-start padding22">
 
                                 <div class="col-4 float-start">
                                     <span>Customer Name:</span>
@@ -146,10 +146,10 @@
                                     <span>Customer PO NO:</span>
                                 </div>
                                 <div class="col-6 float-start text-center">
-                                    <span t-if="o.partner_id.name">
-                                        <t t-esc="o.partner_id.name"/>
+                                    <span t-if="o.po_number.name">
+                                        <t t-esc="o.po_number.name"/>
                                     </span>
-                                    <span t-if="not o.partner_id.name">
+                                    <span t-if="not o.po_number.name">
                                         NONE
                                     </span>
                                 </div>
@@ -163,10 +163,10 @@
                                 </div>
                                 <div class="col-5 float-start text-center">
 
-                                    <span t-if="o.invoice_date.strftime('%d-%m-%Y')">
-                                        <t t-esc="o.invoice_date.strftime('%d-%m-%Y')"/>
+                                    <span t-if="o.po_number">
+                                        <t t-esc="o.po_number.create_date.strftime('%d-%m-%Y')"/>
                                     </span>
-                                    <span t-if="not o.invoice_date.strftime('%d-%m-%Y')">
+                                    <span t-if="not o.po_number">
                                         NONE
                                     </span>
                                 </div>
@@ -374,8 +374,8 @@
 
 
                     <div class="row">
-                        <div class="col-12 height70 border border-dark">
-                            <div class="col-6 float-end height70 right_border padding22">
+                        <div class="col-12 border border-dark">
+                            <div class="col-6 float-end right_border padding22">
                                 <div class="col-3 float-start">
                                     <span>Gross</span>
                                 </div>
@@ -504,7 +504,7 @@
 
 
                             </div>
-                            <div class="col-6 float-end height70 padding22" dir="rtl">
+                            <div class="col-6 float-end padding22" dir="rtl">
                                 <span>صافي الاجمالي</span>
                                 <br/>
                                 <span t-esc="o.currency_id.with_context(lang='ar_001').amount_to_text(o.amount_total)"/>
@@ -517,6 +517,26 @@
                          t-attf-style="#{'text-align:justify;text-justify:inter-word;' if o.company_id.terms_type != 'html' else ''}"
                          t-if="not is_html_empty(o.narration)" name="comment">
                         <span t-field="o.narration"/>
+                    </div>
+
+
+                    <t t-set="show_qr" t-value="o.display_qr_code and o.amount_residual > 0"/>
+                    <div t-if="not show_qr" name="qr_code_placeholder" class="oe_structure"></div>
+                    <div id="qrcode" class="d-flex mb-3 avoid-page-break-inside" t-else="">
+                        <div class="qrcode me-3" id="qrcode_image">
+                            <t t-set="qr_code_url" t-value="o._generate_qr_code(silent_errors=True)"/>
+                            <p t-if="qr_code_url" class="position-relative mb-0">
+                                <img t-att-src="qr_code_url"/>
+                                <img src="/account/static/src/img/Odoo_logo_O.svg"
+                                     id="qrcode_odoo_logo"
+                                     class="top-50 start-50 position-absolute bg-white border border-white border-3 rounded-circle"
+                                />
+                            </p>
+                        </div>
+                        <div class="d-inline text-muted lh-sm fst-italic" id="qrcode_info" t-if="qr_code_url">
+                            <p>Scan this QR Code to<br/>pay with your mobile
+                            </p>
+                        </div>
                     </div>
 
                     <!--                    <div>-->
