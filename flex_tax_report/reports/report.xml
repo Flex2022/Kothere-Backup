@@ -8,7 +8,7 @@
                     <br/>
                     <div class="row">
                         <div class="col-12 border border-dark">
-                            <div class="col-6 float-end right_border padding22">
+                            <div class="col-6 float-end padding22">
                                 <div class="col-3 float-start">
                                     <span>Doc No.:</span>
                                 </div>
@@ -108,7 +108,7 @@
 
                             </div>
 
-                            <div class="col-6 float-start padding22">
+                            <div class="col-6 float-start left_border padding22">
 
                                 <div class="col-4 float-start">
                                     <span>Customer Name:</span>
@@ -375,7 +375,7 @@
 
                     <div class="row">
                         <div class="col-12 border border-dark">
-                            <div class="col-6 float-end padding22">
+                            <div class="col-6 float-end right_border padding22">
                                 <div class="col-3 float-start">
                                     <span>Gross</span>
                                 </div>
@@ -504,7 +504,7 @@
 
 
                             </div>
-                            <div class="col-6 float-end padding22 right_border" dir="rtl">
+                            <div class="col-6 float-end padding22" dir="rtl">
                                 <span>صافي الاجمالي</span>
                                 <br/>
                                 <span t-esc="o.currency_id.with_context(lang='ar_001').amount_to_text(o.amount_total)"/>

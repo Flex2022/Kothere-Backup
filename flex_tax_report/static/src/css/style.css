@@ -56,3 +56,7 @@ tr, td {
 .padding_bottom {
     padding-bottom: 10px;
 }
+
+.left_border {
+    border-right: 1px solid black;
+}
