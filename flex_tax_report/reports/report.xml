@@ -519,30 +519,12 @@
                         <span t-field="o.narration"/>
                     </div>
 
-                    <div class="row">
-                        <t t-set="show_qr" t-value="o.display_qr_code and o.amount_residual > 0"/>
-                        <div t-if="not show_qr" name="qr_code_placeholder" class="oe_structure">
-                            sdsdasdasdasd
-                        </div>
-                        <div id="qrcode" class="d-flex mb-3 avoid-page-break-inside" t-else="">
-                            hello mohamed
-                            <div class="qrcode me-3" id="qrcode_image">
-                                <!--                                <t t-set="display_qr_code" t-value="o._generate_qr_code(silent_errors=False)"/>-->
-                                <!--                                <t t-out="display_qr_code"/>-->
-                                <!--                                <t t-field="o.id"/>-->
-                                <p t-if="display_qr_code" class="position-relative mb-0">
-                                    <img t-att-src="display_qr_code"/>
-                                    <img src="/account/static/src/img/Odoo_logo_O.svg"
-                                         id="qrcode_odoo_logo"
-                                         class="position-absolute bg-white border border-white border-3 rounded-circle"
-                                    />
-                                </p>
-                            </div>
-                            <div class="d-inline text-muted lh-sm fst-italic" id="qrcode_info" t-if="qr_code_url">
-                                <p>Scan this QR Code to<br/>pay with your mobile
-                                </p>
-                            </div>
-                        </div>
+                    <div class="row text-center">
+                        <p class="m-5">
+                            <img t-if="o.l10n_sa_qr_code_str"
+                                 style="display:block;"
+                                 t-att-src="'/report/barcode/?barcode_type=%s&amp;value=%s&amp;width=%s&amp;height=%s'%('QR', quote_plus(o.l10n_sa_qr_code_str), 200, 200)"/>
+                        </p>
                     </div>
 
                 </t>

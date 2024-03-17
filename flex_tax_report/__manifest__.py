@@ -7,7 +7,7 @@
     'author': 'Abdalrahman Shahrour',
     'website': 'https://flex-ops.com',
     'license': 'AGPL-3',
-    'depends': ['account', 'sale', 'flex_additions_deductions', 'purchase'],
+    'depends': ['account', 'sale', 'flex_additions_deductions', 'purchase','l10n_sa'],
     'data': [
         # 'security/ir.model.access.csv',
         # 'security/groups.xml',
