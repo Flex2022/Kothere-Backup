@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
-    <template id="report_new_invoice">
+    <template id="report_new_invoice_2">
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="o">
                 <t t-call="flex_tax_report.report_layout">
@@ -519,56 +519,31 @@
                         <span t-field="o.narration"/>
                     </div>
 
-
-                    <t t-set="show_qr" t-value="o.display_qr_code and o.amount_residual > 0"/>
-                    <div t-if="not show_qr" name="qr_code_placeholder" class="oe_structure"></div>
-                    <div id="qrcode" class="d-flex mb-3 avoid-page-break-inside" t-else="">
-                        <div class="qrcode me-3" id="qrcode_image">
-                            <t t-set="qr_code_url" t-value="o._generate_qr_code(silent_errors=True)"/>
-                            <p t-if="qr_code_url" class="position-relative mb-0">
-                                <img t-att-src="qr_code_url"/>
-                                <img src="/account/static/src/img/Odoo_logo_O.svg"
-                                     id="qrcode_odoo_logo"
-                                     class="top-50 start-50 position-absolute bg-white border border-white border-3 rounded-circle"
-                                />
-                            </p>
+                    <div class="row">
+                        <t t-set="show_qr" t-value="o.display_qr_code and o.amount_residual > 0"/>
+                        <div t-if="not show_qr" name="qr_code_placeholder" class="oe_structure">
+                            sdsdasdasdasd
                         </div>
-                        <div class="d-inline text-muted lh-sm fst-italic" id="qrcode_info" t-if="qr_code_url">
-                            <p>Scan this QR Code to<br/>pay with your mobile
-                            </p>
+                        <div id="qrcode" class="d-flex mb-3 avoid-page-break-inside" t-else="">
+                            hello mohamed
+                            <div class="qrcode me-3" id="qrcode_image">
+                                <!--                                <t t-set="display_qr_code" t-value="o._generate_qr_code(silent_errors=False)"/>-->
+                                <!--                                <t t-out="display_qr_code"/>-->
+                                <!--                                <t t-field="o.id"/>-->
+                                <p t-if="display_qr_code" class="position-relative mb-0">
+                                    <img t-att-src="display_qr_code"/>
+                                    <img src="/account/static/src/img/Odoo_logo_O.svg"
+                                         id="qrcode_odoo_logo"
+                                         class="position-absolute bg-white border border-white border-3 rounded-circle"
+                                    />
+                                </p>
+                            </div>
+                            <div class="d-inline text-muted lh-sm fst-italic" id="qrcode_info" t-if="qr_code_url">
+                                <p>Scan this QR Code to<br/>pay with your mobile
+                                </p>
+                            </div>
                         </div>
                     </div>
-
-                    <!--                    <div>-->
-                    <!--                        <div class="col-auto mw-100 mb-2">-->
-                    <!--                            <span dir="rtl" style="font-size: 14px;">Any payment is considered valid only with ELITE-->
-                    <!--                                TRADING-->
-                    <!--                                ALLIANCE Co.Official Receipt-->
-                    <!--                            </span>-->
-                    <!--                        </div>-->
-                    <!--                        <div class="col-auto mw-100 mb-2">-->
-                    <!--                            <span style="font-size: 14px;">Please make a payment to:</span>-->
-                    <!--                            <br/>-->
-                    <!--                            <span>Beneficiary Name: ELITE TRADING ALLIANCE Co.</span>-->
-                    <!--                            <br/>-->
-                    <!--                            <span>Beneficiary Account: 011-497773-001</span>-->
-                    <!--                            <br/>-->
-                    <!--                            <span>Swift Code: SABBSARI</span>-->
-                    <!--                            <br/>-->
-                    <!--                            <span>IBAN No.: SA7745000000011497773001</span>-->
-                    <!--                            <br/>-->
-                    <!--                            <span>Bank Name: The Saudi British Bank (SABB)</span>-->
-                    <!--                            <br/>-->
-                    <!--                            <span>Thank you for your business!</span>-->
-                    <!--                            <br/>-->
-                    <!--                        </div>-->
-                    <!--                        <div class="col-auto mw-100 mb-2">-->
-                    <!--                            Invoice QR Code-->
-                    <!--                            <br/>-->
-                    <!--                            <img t-att-src="qr_code_url" style="max-height:120px; max-width:100%;" alt="QR Code"/>-->
-                    <!--                        </div>-->
-
-                    <!--                    </div>-->
 
                 </t>
             </t>
@@ -593,9 +568,9 @@
         <field name="name">Tax Report</field>
         <field name="model">account.move</field>
         <field name="report_type">qweb-pdf</field>
-        <field name="report_name">flex_tax_report.report_new_invoice</field>
-        <field name="report_file">flex_tax_report.report_new_invoice</field>
-        <field name="binding_model_id" ref="sale.model_account_move"/>
+        <field name="report_name">flex_tax_report.report_new_invoice_2</field>
+        <field name="report_file">flex_tax_report.report_new_invoice_2</field>
+        <field name="binding_model_id" ref="account.model_account_move"/>
         <field name="binding_type">report</field>
         <field name="paperformat_id" ref="paperformat_report_new"/>
     </record>
