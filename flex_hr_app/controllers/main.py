@@ -241,7 +241,8 @@ class HrApi(http.Controller):
             return http.Response(json.dumps(res), status=200, mimetype='application/json')
         except Exception as ex:
             res = {"result": {"error": f"{ex}"}}
-            return http.Response(json.dumps(res), status=401, mimetype='application/json')
+            # 406: not acceptable
+            return http.Response(json.dumps(res), status=406, mimetype='application/json')
 
     @validate_token
     @http.route("/api-hr/my-timeoff", methods=["GET"], type="http", auth="none", csrf=False)
