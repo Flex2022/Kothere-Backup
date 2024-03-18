@@ -26,7 +26,8 @@ def validate_token(func):
         # Check if the token is missing
         if not token:
             res = {"result": {"error": "missing token"}}
-            return http.Response(json.dumps(res), status=401, mimetype='application/json')
+            # 403: forbidden
+            return http.Response(json.dumps(res), status=403, mimetype='application/json')
         
         # Search for the hr_token using the token
         hr_token = request.env["hr.token"].sudo().search([("token", "=", token)], order="id DESC", limit=1)
@@ -34,12 +35,12 @@ def validate_token(func):
         # Validate the found hr_token
         if not hr_token:
             res = {"result": {"error": "invalid token"}}
-            return http.Response(json.dumps(res), status=401, mimetype='application/json')
+            return http.Response(json.dumps(res), status=403, mimetype='application/json')
         
         # Check if the token has expired
         if hr_token.date_expiry < fields.Datetime.now():
             res = {"result": {"error": "expired token"}}
-            return http.Response(json.dumps(res), status=401, mimetype='application/json')
+            return http.Response(json.dumps(res), status=403, mimetype='application/json')
         
         # Assuming request.update_context is a method to update the Odoo context,
         # which is not standard, you might intend to do something like this instead:
@@ -112,7 +113,7 @@ class HrApi(http.Controller):
 
         if not (username and password):
             res = {"result": {"error": f"username or password is missing"}}
-            return http.Response(json.dumps(res), status=400, mimetype='application/json')
+            return http.Response(json.dumps(res), status=401, mimetype='application/json')
         employee = request.env['hr.employee'].sudo().search([('api_username', '=', username)], limit=1)
         if not employee:
             res = {"result": {"error": f"incorrect username"}}
