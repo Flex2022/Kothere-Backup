@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
-from odoo import fields, http, SUPERUSER_ID
+from odoo import fields, http, SUPERUSER_ID, _
 from odoo.exceptions import ValidationError
 from odoo.http import request
 import json
 import functools
+import base64
 import logging
 from datetime import datetime
 _logger = logging.getLogger(__name__)
@@ -17,6 +18,8 @@ def validate_token(func):
         # Get the token from the headers of the requests
         headers = request.httprequest.headers
         token = headers.get('token', '').strip()
+        headers_lang = headers.get('lang', 'en').strip()
+        lang = 'ar_001' if headers_lang == 'ar' else 'en_US'
         # _logger.info(f"\n\n token    : {token}\n\n")
         # _logger.info(f"\n\n headers  : {headers}\n\n")
 
@@ -41,7 +44,7 @@ def validate_token(func):
         # Assuming request.update_context is a method to update the Odoo context,
         # which is not standard, you might intend to do something like this instead:
         # Update the environment context with the employee_id for subsequent operations
-        request.env.context = dict(request.env.context, employee_id=hr_token.employee_id.id)
+        request.env.context = dict(request.env.context, employee_id=hr_token.employee_id.id, lang=lang)
         # request.update_context(employee_id=hr_token.employee_id.id)
         
         # Proceed with the original function
@@ -54,53 +57,68 @@ class HrApi(http.Controller):
     @http.route("/api-hr/login", methods=["GET"], type="http", auth="none", csrf=False)
     def api_hr_login(self, **params):
         headers = request.httprequest.headers
-        username = headers.get('username', False)
-        password = headers.get('password', False)
-        token = headers.get('token', '').strip()
+        # username = headers.get('username', False)
+        # password = headers.get('password', False)
+        # token = headers.get('token', '').strip()
+        print(f"headers: {headers}")
+        auth_header = headers.get('Authorization')
+        if not auth_header.startswith('Basic '):
+            res = {"result": {"error": f"Authorization type should be 'Basic Auth'"}}
+            return http.Response(json.dumps(res), status=401, mimetype='application/json')
+        # Get the base64 encoded string after 'Basic '
+        encoded_credentials = auth_header[len('Basic '):]
+        # Decode the base64 string
+        credentials = base64.b64decode(encoded_credentials).decode('utf-8')
+        # Split the credentials into username and password
+        username, password = credentials.split(':', 1)
+        print('username: ', username)
+        print('password: ', password)
+
         # _logger.info(f"\n\n headers: {headers}\n\n")
         # _logger.info(f"\n\n token  : {token}\n\n")
 
         # ====================[Login with token (if expired, update it)]=========================
-        show_token_msg = False
-        if token:
-            hr_token = request.env["hr.token"].sudo().search([("token", "=", token)], order="id DESC", limit=1)
-            # if not hr_token:
-            #     res = {"result": {"error": "invalid token"}}
-            #     return http.Response(json.dumps(res), status=401, mimetype='application/json')
-            if hr_token:
-                if hr_token.date_expiry < fields.Datetime.now():
-                    new_token = hr_token._update_token()
-                res = {
-                    "result": {
-                        "employee_id": hr_token.employee_id.id,
-                        "employee_name": hr_token.employee_id.name,
-                        "employee_department": {
-                            "id": hr_token.employee_id.department_id.id,
-                            "name": hr_token.employee_id.department_id.display_name
-                        },
-                        "employee_job": {
-                            "id": hr_token.employee_id.job_id.id,
-                            "name": hr_token.employee_id.job_id.name
-                        },
-                        "employee_work_phone": hr_token.employee_id.work_phone,
-                        "employee_work_email": hr_token.employee_id.work_email,
-                        "token": hr_token.token,
-                    }
-                }
-                return http.Response(json.dumps(res), status=200, mimetype='application/json')
-            else:
-                show_token_msg = True
-        # =============================================================
+        # show_token_msg = False
+        # if token:
+        #     hr_token = request.env["hr.token"].sudo().search([("token", "=", token)], order="id DESC", limit=1)
+        #     # if not hr_token:
+        #     #     res = {"result": {"error": "invalid token"}}
+        #     #     return http.Response(json.dumps(res), status=401, mimetype='application/json')
+        #     if hr_token:
+        #         if hr_token.date_expiry < fields.Datetime.now():
+        #             new_token = hr_token._update_token()
+        #         res = {
+        #             "result": {
+        #                 "employee_id": hr_token.employee_id.id,
+        #                 "employee_name": hr_token.employee_id.name,
+        #                 "employee_department": {
+        #                     "id": hr_token.employee_id.department_id.id,
+        #                     "name": hr_token.employee_id.department_id.display_name
+        #                 },
+        #                 "employee_job": {
+        #                     "id": hr_token.employee_id.job_id.id,
+        #                     "name": hr_token.employee_id.job_id.name
+        #                 },
+        #                 "employee_work_phone": hr_token.employee_id.work_phone,
+        #                 "employee_work_email": hr_token.employee_id.work_email,
+        #                 "image_url": f"/web/image/hr.employee.public/{hr_token.employee_id.id}/image_1920",
+        #                 "token": hr_token.token,
+        #             }
+        #         }
+        #         return http.Response(json.dumps(res), status=200, mimetype='application/json')
+        #     else:
+        #         show_token_msg = True
+        # # =============================================================
 
         if not (username and password):
-            res = {"result": {"error": f"username or password is missing{show_token_msg and ' / invalid token' or ''}"}}
+            res = {"result": {"error": f"username or password is missing"}}
             return http.Response(json.dumps(res), status=400, mimetype='application/json')
         employee = request.env['hr.employee'].sudo().search([('api_username', '=', username)], limit=1)
         if not employee:
-            res = {"result": {"error": f"incorrect username{show_token_msg and ' / invalid token' or ''}"}}
+            res = {"result": {"error": f"incorrect username"}}
             return http.Response(json.dumps(res), status=401, mimetype='application/json')
         if employee.api_password != password:
-            res = {"result": {"error": f"incorrect password{show_token_msg and ' / invalid token' or ''}"}}
+            res = {"result": {"error": f"incorrect password"}}
             return http.Response(json.dumps(res), status=401, mimetype='application/json')
         valid_token = request.env['hr.token'].sudo().get_valid_token(employee_id=employee.id, create=True)
         res = {
@@ -117,6 +135,7 @@ class HrApi(http.Controller):
                 },
                 "employee_work_phone": employee.work_phone,
                 "employee_work_email": employee.work_email,
+                "image_url": f"/web/image/hr.employee.public/{employee.id}/image_1920",
                 "token": valid_token,
             }
         }
@@ -175,6 +194,7 @@ class HrApi(http.Controller):
                 },
                 "employee_work_phone": employee.work_phone,
                 "employee_work_email": employee.work_email,
+                "image_url": f"/web/image/hr.employee.public/{employee.id}/image_1920",
             }
         }
         return http.Response(json.dumps(res), status=200, mimetype='application/json')
@@ -231,17 +251,32 @@ class HrApi(http.Controller):
             res = {"result": {"error": "employee_id is missing in context"}}
             return http.Response(json.dumps(res), status=400, mimetype='application/json')
         # employee = request.env['hr.employee'].sudo().browse(employee_id)
-        domain = [('employee_id', '=', employee_id), ('state', '=', 'validate')]
+        domain = [('employee_id', '=', employee_id)]
 
         leave_list = request.env['hr.leave'].sudo().search(domain)
         LEAVE = request.env['hr.leave'].sudo()
         leave_by_state = [(state, LEAVE.concat(*leaves)) for state, leaves in groupby(leave_list, itemgetter('state'))]
         data = {}
+        # def _selection_name(model, field_name, field_value, lang='en_US'):
+        #     names = dict(request.env[model].sudo().with_context(lang='ar_001')._fields[field_name]._description_selection(request.env))
+        #     return names.get(field_value, field_value)
+
+        # field_description = lambda model, key: request.env['ir.model.fields'].sudo()._get(model, key)['field_description']
         # all_states = ["draft", "confirm", "refuse", "validate1", "validate"]
-        state_info = {"draft": "To Submit", "confirm": "To Approve", "refuse": "Refused", "validate1": "Second Approval", "validate": "Approved"}
+
+
+        state_info = {
+            "draft": _("To Submit"),
+            "confirm": _("To Approve"),
+            "refuse": _("Refused"),
+            "validate1": _("Second Approval"),
+            "validate": _("Approved")
+        }
         for state, leaves in leave_by_state:
+            # print(f"state: {_selection_name('hr.leave', 'state', state, lang='ar_001')}")
             data[state] = {
                 "leave_count": len(leaves),
+                "description": state_info[state],
                 "leaves": [{
                     "employee_id": {
                         "id": leave.employee_id.id,
@@ -263,9 +298,10 @@ class HrApi(http.Controller):
             if state not in data:
                 data[state] = {
                     "leave_count": 0,
+                    "description": state_info[state],
                     "leaves": []
                 }
-        data["state_info"] = state_info
         res = {"result": data}
         return http.Response(json.dumps(res), status=200, mimetype='application/json')
+
 

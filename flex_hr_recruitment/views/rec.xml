@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_recruitment_tree" model="ir.ui.view">
+            <field name="name">view.recruitment.form</field>
+            <field name="model">evaluation.rate</field>
+            <field name="arch" type="xml">
+                <tree string="Evaluation Rate" editable="bottom">
+                    <field name="name"/>
+                    <field name="priority" widget="priority"/>
+                </tree>
+            </field>
+        </record>
+        <record id="evaluation_rate_actions" model="ir.actions.act_window">
+            <field name="name">Evaluation Rate</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">evaluation.rate</field>
+            <field name="view_mode">tree</field>
+        </record>
+        <menuitem id="menu_evaluation_rate" name="Evaluation Rate" parent="hr_recruitment.report_hr_recruitment"
+                  action="evaluation_rate_actions" sequence="100"/>
+    </data>
+</odoo>

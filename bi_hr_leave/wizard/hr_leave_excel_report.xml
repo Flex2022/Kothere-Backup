@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+
+    <record id="hr_leave_wizard_form_view" model="ir.ui.view">
+        <field name="name">hr.leave.report.wiz.form</field>
+        <field name="model">hr.leave.report.wiz</field>
+        <field name="arch" type="xml">
+            <form string="Hr Leave Excel Report">
+                <footer>
+                    <button name="print_hr_leave_report" string="Print Excel Report" type="object" class="oe_highlight"/>
+                    <button string="Cancel" name="cancel" special="cancel" class="oe_highlight"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_he_leave_report_action" model="ir.actions.act_window">
+        <field name="name">Hr Leave Order Report</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hr.leave.report.wiz</field>
+        <field name="view_mode">form</field>
+        <field name="binding_model_id" ref="hr_holidays.model_hr_leave"/>
+        <field name="target">new</field>
+    </record>
+
+
+</odoo>

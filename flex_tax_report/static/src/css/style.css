@@ -1,0 +1,62 @@
+table, tr, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    width: 100%;
+    text-align: center;
+    margin: auto;
+    table-layout: fixed;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 13px;
+
+}
+
+tr, td {
+    height: 50px;
+}
+
+
+.size1 {
+    width: 8%;
+}
+
+.size2 {
+    width: 50%;
+}
+
+.size3 {
+    width: 12%;
+}
+
+.size4 {
+    width: 15%;
+}
+
+
+.size8 {
+    width: 89%;
+}
+
+.height50 {
+    height: 150px;
+}
+
+.height70 {
+    height: 270px;
+}
+
+.right_border {
+    border-left: 1px solid black;
+}
+
+.padding22 {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.padding_bottom {
+    padding-bottom: 10px;
+}
+
+.left_border {
+    border-right: 1px solid black;
+}

@@ -1,0 +1,23 @@
+{
+    'name': 'Flex Tax Report',
+    'version': '1.0',
+    'summary': 'Flex Tax Report',
+    'description': 'Flex Tax Report',
+    'category': 'account',
+    'author': 'Abdalrahman Shahrour',
+    'website': 'https://flex-ops.com',
+    'license': 'AGPL-3',
+    'depends': ['account', 'sale', 'flex_additions_deductions', 'purchase','l10n_sa'],
+    'data': [
+        # 'security/ir.model.access.csv',
+        # 'security/groups.xml',
+        # 'views/conf_country.xml',
+        # 'views/Additions_deductions.xml',
+        # 'views/sale.xml',
+        'views/invoice.xml',
+        'reports/layout.xml',
+        'reports/report.xml',
+    ],
+    'installable': True,
+    'auto_install': False,
+}

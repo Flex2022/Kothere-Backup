@@ -1,0 +1,564 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="report_new_invoice_2">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="flex_tax_report.report_layout">
+                    <link rel="stylesheet" href="/flex_tax_report/static/src/css/style.css"/>
+                    <br/>
+                    <div class="row">
+                        <div class="col-12 border border-dark">
+                            <div class="col-6 float-end padding22">
+                                <div class="col-3 float-start">
+                                    <span>Doc No.:</span>
+                                </div>
+                                <div class="col-6 float-start text-center">
+                                    <span>
+                                        <t t-esc="o.name"/>
+                                    </span>
+                                </div>
+                                <div class="col-3 float-start" dir="rtl">
+                                    <span>رقم المستند</span>
+
+                                </div>
+
+
+                                <div class="col-3 float-start">
+                                    <span>Date:</span>
+                                </div>
+                                <div class="col-6 float-start text-center">
+                                    <span t-if="o.invoice_date.strftime('%d-%m-%Y')">
+                                        <t t-esc="o.invoice_date.strftime('%d-%m-%Y')"/>
+                                    </span>
+                                    <span t-if="not o.invoice_date.strftime('%d-%m-%Y')">
+                                        NONE
+                                    </span>
+                                </div>
+                                <div class="col-3 float-start" dir="rtl">
+                                    <span>التاريخ</span>
+                                </div>
+
+
+                                <div class="col-4 float-start">
+                                    <span>Payment Terms:</span>
+                                </div>
+                                <div class="col-5 float-start text-center">
+                                    <span t-if="o.partner_id.property_payment_term_id.name">
+                                        <t t-esc="o.partner_id.property_payment_term_id.name"/>
+                                    </span>
+                                    <span t-if="not o.partner_id.property_payment_term_id.name">
+                                        NONE
+                                    </span>
+                                </div>
+                                <div class="col-3 float-start" dir="rtl">
+                                    <span>شروط الدفع</span>
+
+                                </div>
+
+
+                                <div class="col-3 float-start">
+                                    <span>Salesman:</span>
+                                </div>
+                                <div class="col-6 float-start text-center">
+                                    <span t-if="o.invoice_user_id.name">
+                                        <t t-esc="o.invoice_user_id.name"/>
+                                    </span>
+                                    <span t-if="not o.invoice_user_id.name">
+                                        NONE
+                                    </span>
+                                </div>
+                                <div class="col-3 float-start" dir="rtl">
+                                    <span>المندوب</span>
+
+                                </div>
+
+
+                                <div class="col-3 float-start">
+                                    <span>Project:</span>
+                                </div>
+                                <div class="col-6 float-start text-center">
+                                    <span t-if="o.project_invoice_from_sale_order.name">
+                                        <t t-esc="o.project_invoice_from_sale_order.name"/>
+                                    </span>
+                                    <span t-if="not o.project_invoice_from_sale_order.name">
+                                        NONE
+                                    </span>
+                                </div>
+                                <div class="col-3 float-start" dir="rtl">
+                                    <span>المشروع</span>
+                                </div>
+
+
+                                <div class="col-3 float-start">
+                                    <span>Currency:</span>
+                                </div>
+                                <div class="col-6 float-start text-center">
+                                    <span t-if="o.currency_id.name">
+                                        <t t-esc="o.currency_id.name"/>
+                                    </span>
+                                    <span t-if="not o.currency_id.name">
+                                        NONE
+                                    </span>
+                                </div>
+                                <div class="col-3 float-start" dir="rtl">
+                                    <span>العملة</span>
+
+                                </div>
+
+
+                            </div>
+
+                            <div class="col-6 float-start left_border padding22">
+
+                                <div class="col-4 float-start">
+                                    <span>Customer Name:</span>
+                                </div>
+                                <div class="col-6 float-start text-center">
+                                    <span t-if="o.partner_id.name">
+                                        <t t-esc="o.partner_id.name"/>
+                                    </span>
+                                    <span t-if="not o.partner_id.name">
+                                        NONE
+                                    </span>
+                                </div>
+                                <div class="col-2 float-start" dir="rtl">
+                                    <span>اسم العميل</span>
+
+                                </div>
+
+                                <div class="col-4 float-start">
+                                    <span>Customer Code:</span>
+                                </div>
+                                <div class="col-6 float-start text-center">
+                                    <span t-if="o.partner_id.partner_code">
+                                        <t t-esc="o.partner_id.partner_code"/>
+                                    </span>
+                                    <span t-if="not o.partner_id.partner_code">
+                                        NONE
+                                    </span>
+                                </div>
+                                <div class="col-2 float-start" dir="rtl">
+                                    <span>رقم العميل</span>
+                                </div>
+
+
+                                <div class="col-4 float-start">
+                                    <span>Customer PO NO:</span>
+                                </div>
+                                <div class="col-6 float-start text-center">
+                                    <span t-if="o.po_number.name">
+                                        <t t-esc="o.po_number.name"/>
+                                    </span>
+                                    <span t-if="not o.po_number.name">
+                                        NONE
+                                    </span>
+                                </div>
+                                <div class="col-2 float-start" dir="rtl">
+                                    <span>رقم الطلب</span>
+                                </div>
+
+
+                                <div class="col-4 float-start">
+                                    <span>Cust PO Date:</span>
+                                </div>
+                                <div class="col-5 float-start text-center">
+
+                                    <span t-if="o.po_number">
+                                        <t t-esc="o.po_number.create_date.strftime('%d-%m-%Y')"/>
+                                    </span>
+                                    <span t-if="not o.po_number">
+                                        NONE
+                                    </span>
+                                </div>
+                                <div class="col-3 float-start" dir="rtl">
+                                    <span>تاريخ طلب الشراء</span>
+                                </div>
+
+
+                                <div class="col-4 float-start">
+                                    <span>Cust VAT NO:</span>
+                                </div>
+                                <div class="col-5 float-start text-center">
+                                    <span t-if="o.partner_id.vat">
+                                        <t t-esc="o.partner_id.vat"/>
+                                    </span>
+                                    <span t-if="not o.partner_id.vat">
+                                        NONE
+                                    </span>
+                                </div>
+                                <div class="col-3 float-start" dir="rtl">
+                                    <span>رقم الضريبي</span>
+                                </div>
+
+
+                                <div class="col-3 float-start">
+                                    <span>Address:</span>
+                                </div>
+                                <div class="col-6 float-start text-center">
+                                    <span>
+                                        <t t-esc="o.partner_id.street"/>
+                                    </span>
+                                    <span>
+                                        <t t-esc="o.partner_id.city"/>
+                                    </span>
+                                    <span>
+                                        <t t-esc="o.partner_id.country_id.name"/>
+                                    </span>
+                                </div>
+                                <div class="col-3 float-start" dir="rtl">
+                                    <span>العنوان</span>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                    <!--                    <div class="row">-->
+                    <!--                        <div class="col-12 height70 border border-dark">-->
+                    <!--                            <div class="col-2 float-end border border-dark text-center">-->
+                    <!--                                <span>الاجمالي</span>-->
+                    <!--                                <br/>-->
+                    <!--                                <span>Total</span>-->
+                    <!--                            </div>-->
+                    <!--                            <div class="col-1 float-end border border-dark text-center">-->
+                    <!--                                <span>سعر الوحدة</span>-->
+                    <!--                                <br/>-->
+                    <!--                                <span>Unit Rate</span>-->
+                    <!--                            </div>-->
+                    <!--                            <div class="col-1 float-end border border-dark text-center">-->
+                    <!--                                <span>الكمية</span>-->
+                    <!--                                <br/>-->
+                    <!--                                <span>Quy</span>-->
+                    <!--                            </div>-->
+                    <!--                            <div class="col-1 float-end border border-dark text-center">-->
+                    <!--                                <span>الوحدة</span>-->
+                    <!--                                <br/>-->
+                    <!--                                <span>Unit</span>-->
+                    <!--                            </div>-->
+                    <!--                            <div class="col-4 float-end border border-dark text-center">-->
+                    <!--                                <span>البيان</span>-->
+                    <!--                                <br/>-->
+                    <!--                                <span>Description</span>-->
+                    <!--                            </div>-->
+                    <!--                            <div class="col-2 float-end border border-dark text-center">-->
+                    <!--                                <span>رمز الصنف</span>-->
+                    <!--                                <br/>-->
+                    <!--                                <span>Product Code</span>-->
+                    <!--                            </div>-->
+                    <!--                            <div class="col-1 float-end border border-dark text-center">-->
+                    <!--                                <span>رقم</span>-->
+                    <!--                                <br/>-->
+                    <!--                                <span>SL.No.</span>-->
+                    <!--                            </div>-->
+
+                    <!--                        </div>-->
+                    <!--                    </div>-->
+
+                    <table class="table table-bordered font_13 mt-4" dir="rtl" name="table_invoice">
+                        <thead>
+                            <tr>
+
+                                <th>
+                                    <span>الإجمالي</span>
+                                    <br/>
+                                    <span>Total</span>
+                                </th>
+
+
+                                <th>
+                                    <span>سعر الوحدة</span>
+                                    <br/>
+                                    <span>Unit Rate</span>
+                                </th>
+
+                                <th>
+                                    <span>الكمية</span>
+                                    <br/>
+                                    <span>Quy</span>
+                                </th>
+
+                                <th>
+                                    <span>الوحدة</span>
+                                    <br/>
+                                    <span>Unit</span>
+                                </th>
+
+                                <th>
+                                    <span>البيان</span>
+                                    <br/>
+                                    <span>Description</span>
+                                </th>
+
+
+                                <th>
+                                    <span>رمز الصنف</span>
+                                    <br/>
+                                    <span>Product Code</span>
+                                </th>
+
+                                <th>
+                                    <span>رقم</span>
+                                    <br/>
+                                    <span>SL.NO</span>
+                                </th>
+
+                            </tr>
+                        </thead>
+                        <tbody class="invoice_tbody">
+                            <t t-set="current_subtotal" t-value="0"/>
+                            <t t-set="lines"
+                               t-value="o.invoice_line_ids.sorted(key=lambda l: (-l.sequence, l.date, l.move_name, -l.id), reverse=True)"/>
+                            <t t-foreach="lines" t-as="line">
+                                <t t-set="current_subtotal" t-value="current_subtotal + line.price_total"/>
+                                <tr t-att-class="'bg-200 fw-bold o_line_section' if line.display_type == 'line_section' else 'fst-italic o_line_note' if line.display_type == 'line_note' else ''">
+                                    <t t-if="line.display_type == 'product'" name="account_invoice_line_accountable">
+
+
+                                        <td class="text-center" dir="ltr">
+                                            <span t-esc="line.price_unit * line.quantity"
+                                                  t-options="{'widget': 'monetary', 'display_currency': line.currency_id}"/>
+                                        </td>
+
+                                        <td class="text-center" dir="ltr">
+                                            <span t-field="line.price_unit"/>
+                                        </td>
+                                        <td class="text-center" dir="ltr">
+                                            <span t-field="line.quantity"/>
+                                        </td>
+                                        <td class="text-center">
+                                            <span t-field="line.product_uom_id"/>
+                                        </td>
+                                        <td class="text-center">
+                                            <span t-field="line.name" t-options="{'widget': 'text'}"/>
+                                        </td>
+                                        <td class="text-center">
+                                            <span t-esc="line.product_id.default_code"/>
+                                        </td>
+
+                                        <td class="text-center">
+                                            <span t-esc="line.sequence + 1"/>
+                                        </td>
+                                    </t>
+                                    <t t-if="line.display_type == 'line_section'">
+                                        <td colspan="99" class="text-center">
+                                            <span t-field="line.name" t-options="{'widget': 'text'}"/>
+                                        </td>
+                                        <t t-set="current_section" t-value="line"/>
+                                        <t t-set="current_subtotal" t-value="0"/>
+                                    </t>
+                                    <t t-if="line.display_type == 'line_note'">
+                                        <td colspan="99" class="text-center">
+                                            <span t-field="line.name" t-options="{'widget': 'text'}"/>
+                                        </td>
+                                    </t>
+                                </tr>
+                                <t t-if="current_section and (line_last or lines[line_index+1].display_type == 'line_section')">
+                                    <tr class="is-subtotal text-end">
+                                        <td colspan="99" class="text-center">
+                                            <strong class="mx-4">الأجمالي الفرعي :</strong>
+                                            <span t-esc="current_subtotal"
+                                                  t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"
+                                                  dir="ltr"/>
+                                            display_currency": o.currency_id}" dir="ltr"/>
+                                            <strong class="mx-4" dir="rtl">
+                                                <strong dir="ltr">Subtotal :</strong>
+                                            </strong>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </t>
+                        </tbody>
+
+                    </table>
+
+
+                    <div class="row">
+                        <div class="col-12 border border-dark">
+                            <div class="col-6 float-end right_border padding22">
+                                <div class="col-3 float-start">
+                                    <span>Gross</span>
+                                </div>
+                                <div class="col-6 float-start text-center">
+                                    <span>
+                                        <t t-esc="o.amount_untaxed"/>
+                                    </span>
+                                </div>
+                                <div class="col-3 float-start" dir="rtl">
+                                    <span>الاجمالي</span>
+                                </div>
+
+
+                                <div class="col-3 float-start">
+                                    <span>VAT</span>
+                                </div>
+                                <div class="col-6 float-start text-center">
+                                    <span>
+                                        <t t-esc="o.amount_tax"/>
+                                    </span>
+                                </div>
+                                <div class="col-3 float-start" dir="rtl">
+                                    <span>الضريبة</span>
+                                </div>
+
+                                <div class="col-3 float-start">
+                                    <span>Grand Total</span>
+                                </div>
+                                <div class="col-6 float-start text-center">
+                                    <span>
+                                        <t t-esc="o.amount_total"/>
+                                    </span>
+                                </div>
+                                <div class="col-3 float-start" dir="rtl">
+                                    <span>الاجمالي بعد الضريبة</span>
+                                </div>
+
+
+                                <div class="col-3 float-start">
+                                    <span>Discounts</span>
+                                </div>
+                                <div class="col-6 float-start text-center">
+                                    <span>
+                                        <t t-esc="o.deductions_amount_type_discounts"/>
+                                    </span>
+                                </div>
+                                <div class="col-3 float-start" dir="rtl">
+                                    <span>الخصومات</span>
+                                </div>
+
+                                <div class="col-3 float-start">
+                                    <span>Insurances</span>
+                                </div>
+                                <div class="col-6 float-start text-center">
+                                    <span>
+                                        <t t-esc="o.deductions_amount_type_insurances"/>
+                                    </span>
+                                </div>
+                                <div class="col-3 float-start" dir="rtl">
+                                    <span>التامينات</span>
+                                </div>
+
+
+                                <div class="col-5 float-start">
+                                    <span>Business Guarantee</span>
+                                </div>
+                                <div class="col-4 float-start text-center">
+                                    <span>
+                                        <t t-esc="o.deductions_amount_type_business_guarantee"/>
+                                    </span>
+                                </div>
+                                <div class="col-3 float-start" dir="rtl">
+                                    <span>ضمان اعمال</span>
+                                </div>
+
+                                <div class="col-5 float-start">
+                                    <span>Advance Payment</span>
+                                </div>
+                                <div class="col-4 float-start text-center">
+                                    <span>
+                                        <t t-esc="o.deductions_amount_type_advance_payment"/>
+                                    </span>
+                                </div>
+                                <div class="col-3 float-start" dir="rtl">
+                                    <span>دفعة مقدمة</span>
+                                </div>
+
+
+                                <div class="col-5 float-start">
+                                    <span>Deductions Amount</span>
+                                </div>
+                                <div class="col-4 float-start text-center">
+                                    <span>
+                                        <t t-esc="o.deductions_amount"/>
+                                    </span>
+                                </div>
+                                <div class="col-3 float-start" dir="rtl">
+                                    <span>اجمالي الحسميات</span>
+                                </div>
+
+
+                                <div class="col-5 float-start">
+                                    <span>Deductions Amount</span>
+                                </div>
+                                <div class="col-4 float-start text-center">
+                                    <span>
+                                        <t t-esc="o.additions_amount"/>
+                                    </span>
+                                </div>
+                                <div class="col-3 float-start" dir="rtl">
+                                    <span>اجمالي الاضافات</span>
+                                </div>
+
+
+                                <!--                                <div class="col-3 float-start">-->
+                                <!--                                    <span>total value of what is due, including value-added tax</span>-->
+                                <!--                                </div>-->
+                                <!--                                <div class="col-6 float-start text-center">-->
+                                <!--                                    <span>-->
+                                <!--                                        <t t-esc="o.additions_amount"/>-->
+                                <!--                                    </span>-->
+                                <!--                                </div>-->
+                                <!--                                <div class="col-3 float-start" dir="rtl">-->
+                                <!--                                    <span>القيمة الإجمالية للمستحقات بما في ذلك ضريبة القيمة المضافة</span>-->
+                                <!--                                </div>-->
+
+
+                            </div>
+                            <div class="col-6 float-end padding22" dir="rtl">
+                                <span>صافي الاجمالي</span>
+                                <br/>
+                                <span t-esc="o.currency_id.with_context(lang='ar_001').amount_to_text(o.amount_total)"/>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="text-muted mb-3"
+                         t-attf-style="#{'text-align:justify;text-justify:inter-word;' if o.company_id.terms_type != 'html' else ''}"
+                         t-if="not is_html_empty(o.narration)" name="comment">
+                        <span t-field="o.narration"/>
+                    </div>
+
+                    <div class="row text-right">
+                        <div class="col-10"/>
+                        <div class="col-2">
+                            <p>
+                                <img t-if="o.l10n_sa_qr_code_str"
+                                     style="display:block;"
+                                     t-att-src="'/report/barcode/?barcode_type=%s&amp;value=%s&amp;width=%s&amp;height=%s'%('QR', quote_plus(o.l10n_sa_qr_code_str), 100, 100)"/>
+                            </p>
+                        </div>
+                    </div>
+
+                </t>
+            </t>
+        </t>
+    </template>
+    <record id="paperformat_report_new" model="report.paperformat">
+        <field name="name">A4 - Custom Report New</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">80</field>
+        <field name="margin_bottom">32</field>
+        <field name="margin_left">7</field>
+        <field name="margin_right">7</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">40</field>
+        <field name="dpi">90</field>
+    </record>
+    <record id="report_new_in_invoice" model="ir.actions.report">
+        <field name="name">Tax Report</field>
+        <field name="model">account.move</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">flex_tax_report.report_new_invoice_2</field>
+        <field name="report_file">flex_tax_report.report_new_invoice_2</field>
+        <field name="binding_model_id" ref="account.model_account_move"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="paperformat_report_new"/>
+    </record>
+
+
+</odoo>
