@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="flex_employee_sales_sale_order_form_inherit" model="ir.ui.view">
+            <field name="name">flex_employee_sales.sale.order.form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='other_information']/group[1]/group[@name='sales_person']/field[@name='user_id']" position="before">
+                    <field name="sale_employee_id" readonly="state == 'sale'"/>
+                </xpath>
+                <!--                <xpath expr="//field[@name='example_field']" position="attributes">-->
+                <!--                    <attribute name="invisible">True</attribute>-->
+                <!--                </xpath>-->
+            </field>
+        </record>
+    </data>
+</odoo>
