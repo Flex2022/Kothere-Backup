@@ -306,4 +306,56 @@ class HrApi(http.Controller):
         res = {"result": data}
         return http.Response(json.dumps(res), status=200, mimetype='application/json')
 
+    @validate_token
+    @http.route("/api-hr/my-payslip", methods=["GET"], type="http", auth="none", csrf=False)
+    def api_hr_my_payslip(self, **params):
+        employee_id = request.context.get("employee_id")
+        if not employee_id:
+            res = {"result": {"error": "employee_id is missing in context"}}
+            return http.Response(json.dumps(res), status=400, mimetype='application/json')
+        if request.env['ir.module.module'].sudo().search([('name', '=', 'hr_payroll')], limit=1).state != 'installed':
+            res = {"result": {"error": "payroll app not installed"}}
+            return http.Response(json.dumps(res), status=400, mimetype='application/json')
+        # employee = request.env['hr.employee'].sudo().browse(employee_id)
+        domain = [('employee_id', '=', employee_id), ('state', 'in', ['done', 'paid'])]
+        payslip_list = request.env['hr.payslip'].sudo().search(domain)
+        data = []
+        for payslip in payslip_list:
+            worked_days_list = []
+            for worked_days in payslip.worked_days_line_ids.filtered(lambda wd: wd.code != 'OUT'):
+                worked_days_list.append({
+                    'name': worked_days.name,
+                    'number_of_hours': worked_days.number_of_hours,
+                    'number_of_days': worked_days.number_of_days,
+                    'amount': worked_days.amount,
+                })
+            payslip_lines_list = []
+            for line in payslip.line_ids.filtered(lambda l: l.appears_on_payslip):
+                payslip_lines_list.append({
+                    'name': line.name,
+                    'quantity': line.quantity,
+                    'total': line.total,
+                })
+            data.append({
+                "payslip_id": payslip.id,
+                "employee_id": payslip.employee_id.id,
+                "employee_name": payslip.employee_id.name,
+                "identification_id": payslip.employee_id.identification_id,
+                "children": payslip.employee_id.children,
+                "contract_id": payslip.contract_id.id,
+                "contract_name": payslip.contract_id.name,
+                "contract_type": payslip.employee_id.contract_id.contract_type_id.name,
+                "working_schedule": payslip.employee_id.contract_id.hours_per_week,
+                "contract_start_date": payslip.employee_id.first_contract_date.isoformat(),
+                "date_from": payslip.date_from.isoformat(),
+                "date_to": payslip.date_to.isoformat(),
+                "computed_on": payslip.compute_date.isoformat(),
+                "salary_type": payslip.contract_id.wage_type,
+                "basic_salary": payslip.contract_id._get_contract_wage(),
+                "worked_days": worked_days_list,
+                "payslip_lines": payslip_lines_list,
+            })
+        res = {"result": data}
+        return http.Response(json.dumps(res), status=200, mimetype='application/json')
+
 
