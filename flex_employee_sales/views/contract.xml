@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="flex_employee_sales_hr_contract_form_inherit" model="ir.ui.view">
+            <field name="name">flex_employee_sales.hr.contract.form</field>
+            <field name="model">hr.contract</field>
+            <field name="inherit_id" ref="l10n_sa_hr_payroll.hr_contract_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='l10n_sa_number_of_days']" position="replace">
+                    <label for="l10n_sa_number_of_days" string="Numbers Of Days" groups="hr.group_hr_user"/>
+                    <div groups="hr.group_hr_user">
+                        <field name="l10n_sa_number_of_days" class="oe_inline"/>
+                        <button name="update_l10n_sa_number_of_days" string="" type="object" class="inline" icon="fa-refresh"/>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
