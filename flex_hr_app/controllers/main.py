@@ -377,10 +377,10 @@ class HrApi(http.Controller):
                 "basic_salary": payslip.contract_id._get_contract_wage(),
                 "worked_days": worked_days_list,
                 "payslip_lines": payslip_lines_list,
-                "report_pdf_url_en": f"/report/pdf/hr_payroll.report_payslip_lang/{payslip.id}",
-                "report_html_url_en": f"/report/html/hr_payroll.report_payslip_lang/{payslip.id}",
-                "report_pdf_url_ar": f"/report/pdf/hr_payroll.report_payslip_lang/{payslip.id}/ar",
-                "report_html_url_ar": f"/report/html/hr_payroll.report_payslip_lang/{payslip.id}/ar",
+                "report_pdf_url_en": f"/force_report/pdf/hr_payroll.report_payslip_lang/{payslip.id}",
+                "report_html_url_en": f"/force_report/html/hr_payroll.report_payslip_lang/{payslip.id}",
+                "report_pdf_url_ar": f"/force_report/pdf/hr_payroll.report_payslip_lang/{payslip.id}/ar",
+                "report_html_url_ar": f"/force_report/html/hr_payroll.report_payslip_lang/{payslip.id}/ar",
             })
             # report_payslip_lang
         res = {"result": data}
