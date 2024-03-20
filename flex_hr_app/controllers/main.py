@@ -328,17 +328,6 @@ class HrApi(http.Controller):
                 }
         res = {"result": data}
         return http.Response(json.dumps(res), status=200, mimetype='application/json')
-        
-    @http.route('/force_report/pdf/<string:model_name>/<int:rec_id>.pdf', type='http', auth='public', website=True)
-    def v1_public_dynamic_pdf_controller(self, model_name, rec_id):
-        record = http.request.env[model_name].browse(rec_id)
-        pdf_content, content_type = http.request.env.ref(model_name + '.your_report_template_id').sudo().render_qweb_pdf([record.id])
-        pdfhttpheaders = [
-            ('Content-Type', 'application/pdf'),
-            ('Content-Length', len(pdf_content)),
-            ('Content-Disposition', 'attachment; filename="your_pdf_filename.pdf"'),
-        ]
-        return http.request.make_response(pdf_content, headers=pdfhttpheaders)
     
     @validate_token
     @http.route("/api-hr/my-payslip", methods=["GET"], type="http", auth="none", csrf=False)
@@ -399,9 +388,9 @@ class HrApi(http.Controller):
 
     # , website=True
     @http.route([
-        '/force_report/<converter>/<reportname>',
-        '/force_report/<converter>/<reportname>/<docids>',
-        '/force_report/<converter>/<reportname>/<docids>/<lang>',
+        '/force_report/<converter>/<reportname>.pdf',
+        '/force_report/<converter>/<reportname>/<docids>.pdf',
+        '/force_report/<converter>/<reportname>/<docids>/<lang>.pdf',
     ], type='http', auth='none')
     def report_routes(self, reportname, docids=None, converter=None, lang=None, **data):
         report = request.env['ir.actions.report'].sudo()
