@@ -328,7 +328,11 @@ class HrApi(http.Controller):
                 }
         res = {"result": data}
         return http.Response(json.dumps(res), status=200, mimetype='application/json')
-
+        
+    @http.route('/force_report/pdf/<string:model_name>/<int:rec_id>.pdf’, type='http', auth='public', website=True)
+    def v1_public_dynamic_pdf_controller(self, model_name, rec_id):
+        return http.request.render(‘/force_report/pdf/<string:model_name>/<int:rec_id>’), {})
+    
     @validate_token
     @http.route("/api-hr/my-payslip", methods=["GET"], type="http", auth="none", csrf=False)
     def api_hr_my_payslip(self, **params):
