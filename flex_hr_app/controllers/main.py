@@ -10,6 +10,7 @@ from datetime import datetime
 _logger = logging.getLogger(__name__)
 from odoo.tools import groupby
 from operator import itemgetter
+import werkzeug.exceptions
 
 
 def validate_token(func):
@@ -137,6 +138,17 @@ class HrApi(http.Controller):
                 "employee_work_phone": employee.work_phone,
                 "employee_work_email": employee.work_email,
                 "image_url": f"/web/image/hr.employee.public/{employee.id}/image_1920",
+                # =================================
+                "identification_id": employee.identification_id,
+                "children": employee.children,
+                "contract_id": employee.contract_id.id,
+                "contract_name": employee.contract_id.name,
+                "contract_type": employee.contract_id.contract_type_id.name,
+                "working_schedule": employee.contract_id.hours_per_week,
+                "contract_start_date": employee.first_contract_date and employee.first_contract_date.isoformat(),
+                "salary_type": employee.contract_id.wage_type,
+                "basic_salary": employee.contract_id._get_contract_wage(),
+                # =================================
                 "token": valid_token,
             }
         }
@@ -195,6 +207,17 @@ class HrApi(http.Controller):
                 },
                 "employee_work_phone": employee.work_phone,
                 "employee_work_email": employee.work_email,
+                # =================================
+                "identification_id": employee.identification_id,
+                "children": employee.children,
+                "contract_id": employee.contract_id.id,
+                "contract_name": employee.contract_id.name,
+                "contract_type": employee.contract_id.contract_type_id.name,
+                "working_schedule": employee.contract_id.hours_per_week,
+                "contract_start_date": employee.first_contract_date and employee.first_contract_date.isoformat(),
+                "salary_type": employee.contract_id.wage_type,
+                "basic_salary": employee.contract_id._get_contract_wage(),
+                # =================================
                 "image_url": f"/web/image/hr.employee.public/{employee.id}/image_1920",
             }
         }
@@ -354,8 +377,46 @@ class HrApi(http.Controller):
                 "basic_salary": payslip.contract_id._get_contract_wage(),
                 "worked_days": worked_days_list,
                 "payslip_lines": payslip_lines_list,
+                "report_pdf_url_en": f"/report/pdf/hr_payroll.report_payslip_lang/{payslip.id}",
+                "report_html_url_en": f"/report/html/hr_payroll.report_payslip_lang/{payslip.id}",
+                "report_pdf_url_ar": f"/report/pdf/hr_payroll.report_payslip_lang/{payslip.id}/ar",
+                "report_html_url_ar": f"/report/html/hr_payroll.report_payslip_lang/{payslip.id}/ar",
             })
+            # report_payslip_lang
         res = {"result": data}
         return http.Response(json.dumps(res), status=200, mimetype='application/json')
+
+    @http.route([
+        '/force_report/<converter>/<reportname>',
+        '/force_report/<converter>/<reportname>/<docids>',
+        '/force_report/<converter>/<reportname>/<docids>/<lang>',
+    ], type='http', auth='none', website=True)
+    def report_routes(self, reportname, docids=None, converter=None, lang=None, **data):
+        report = request.env['ir.actions.report'].sudo()
+        context = dict(request.env.context)
+
+        if lang == 'ar':
+            context.update({'lang': 'ar_001'})
+        if docids:
+            docids = [int(i) for i in docids.split(',') if i.isdigit()]
+        if data.get('options'):
+            data.update(json.loads(data.pop('options')))
+        if data.get('context'):
+            data['context'] = json.loads(data['context'])
+            context.update(data['context'])
+        if converter == 'html':
+            html = report.with_context(context)._render_qweb_html(reportname, docids, data=data)[0]
+            return request.make_response(html)
+        elif converter == 'pdf':
+            pdf = report.with_context(context).sudo()._render_qweb_pdf(reportname, docids, data=data)[0]
+            pdfhttpheaders = [('Content-Type', 'application/pdf'), ('Content-Length', len(pdf))]
+            return request.make_response(pdf, headers=pdfhttpheaders)
+        elif converter == 'text':
+            text = report.with_context(context)._render_qweb_text(reportname, docids, data=data)[0]
+            texthttpheaders = [('Content-Type', 'text/plain'), ('Content-Length', len(text))]
+            return request.make_response(text, headers=texthttpheaders)
+        else:
+            raise werkzeug.exceptions.HTTPException(description='Converter %s not implemented.' % converter)
+
 
 
