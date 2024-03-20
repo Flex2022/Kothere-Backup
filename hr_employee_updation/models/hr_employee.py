@@ -221,10 +221,10 @@ class HrEmployee(models.Model):
     #                           )
     #         self.fam_ids = [(6, 0, 0)] + lines_info
 
-    @api.model
-    def create(self, vals):
-        vals['employee_number'] = self.env['ir.sequence'].next_by_code('hr.employee.number')
-        res = super(HrEmployee, self).create(vals)
+    # @api.model
+    # def create(self, vals):
+    #     vals['employee_number'] = self.env['ir.sequence'].next_by_code('hr.employee.number')
+    #     res = super(HrEmployee, self).create(vals)
         # self.send_employee_details_for_manager(res)
         # self.send_employee_details_for_hr_user(res)
         # self.send_employee_details_for_product_manager(res)
@@ -232,7 +232,7 @@ class HrEmployee(models.Model):
         #     group_id = self.sudo().env.ref('hr_employee_updation.group_hr_request_team_lead_approval')
         #     if vals['is_manager']:
         #         group_id.sudo().write({'users': [(4, self.user_id.id)]})
-        return res
+        # return res
 
 
 #     def send_employee_details_for_manager(self, res):
