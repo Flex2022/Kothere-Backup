@@ -145,6 +145,16 @@
                 </xpath>
             </field>
         </record>
+        <record model="ir.ui.view" id="hr_employee_tree_view_inherit">
+        <field name="name">hr.employee.tree.view</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_tree"/>
+        <field name="arch" type="xml">
+            <field name="work_phone" position="after">
+                <field name="employee_number"/>
+            </field>
+        </field>
+    </record>
 
 <!--        <record id="hr_employee_view_kanban_inh" model="ir.ui.view">-->
 <!--            <field name="name">hr.employee.view.kanban.inh</field>-->
