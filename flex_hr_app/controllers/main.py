@@ -331,7 +331,14 @@ class HrApi(http.Controller):
         
     @http.route('/force_report/pdf/<string:model_name>/<int:rec_id>.pdf', type='http', auth='public', website=True)
     def v1_public_dynamic_pdf_controller(self, model_name, rec_id):
-        return http.request.render('/force_report/pdf/<string:model_name>/<int:rec_id>'), {})
+        record = http.request.env[model_name].browse(rec_id)
+        pdf_content, content_type = http.request.env.ref(model_name + '.your_report_template_id').sudo().render_qweb_pdf([record.id])
+        pdfhttpheaders = [
+            ('Content-Type', 'application/pdf'),
+            ('Content-Length', len(pdf_content)),
+            ('Content-Disposition', 'attachment; filename="your_pdf_filename.pdf"'),
+        ]
+        return http.request.make_response(pdf_content, headers=pdfhttpheaders)
     
     @validate_token
     @http.route("/api-hr/my-payslip", methods=["GET"], type="http", auth="none", csrf=False)
