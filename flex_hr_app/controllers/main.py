@@ -386,11 +386,12 @@ class HrApi(http.Controller):
         res = {"result": data}
         return http.Response(json.dumps(res), status=200, mimetype='application/json')
 
+    # , website=True
     @http.route([
         '/force_report/<converter>/<reportname>',
         '/force_report/<converter>/<reportname>/<docids>',
         '/force_report/<converter>/<reportname>/<docids>/<lang>',
-    ], type='http', auth='none', website=True)
+    ], type='http', auth='none')
     def report_routes(self, reportname, docids=None, converter=None, lang=None, **data):
         report = request.env['ir.actions.report'].sudo()
         context = dict(request.env.context)
