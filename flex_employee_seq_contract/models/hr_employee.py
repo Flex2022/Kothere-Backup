@@ -4,8 +4,7 @@ from odoo import api, fields, models
 class HrEmployee(models.Model):
     _inherit = 'hr.employee'
 
-    employee_number = fields.Char(string='Employee Number', store=True,
-                                  readonly=False)
+    employee_number = fields.Char(string='Employee Number', compute='compute_employee_number', store=True)
 
     @api.depends('department_id')
     def compute_employee_number(self):
