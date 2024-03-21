@@ -10,6 +10,7 @@ from datetime import datetime
 _logger = logging.getLogger(__name__)
 from odoo.tools import groupby
 from operator import itemgetter
+import werkzeug.exceptions
 
 
 def validate_token(func):
@@ -26,7 +27,8 @@ def validate_token(func):
         # Check if the token is missing
         if not token:
             res = {"result": {"error": "missing token"}}
-            return http.Response(json.dumps(res), status=401, mimetype='application/json')
+            # 403: forbidden
+            return http.Response(json.dumps(res), status=403, mimetype='application/json')
         
         # Search for the hr_token using the token
         hr_token = request.env["hr.token"].sudo().search([("token", "=", token)], order="id DESC", limit=1)
@@ -34,12 +36,12 @@ def validate_token(func):
         # Validate the found hr_token
         if not hr_token:
             res = {"result": {"error": "invalid token"}}
-            return http.Response(json.dumps(res), status=401, mimetype='application/json')
+            return http.Response(json.dumps(res), status=403, mimetype='application/json')
         
         # Check if the token has expired
         if hr_token.date_expiry < fields.Datetime.now():
             res = {"result": {"error": "expired token"}}
-            return http.Response(json.dumps(res), status=401, mimetype='application/json')
+            return http.Response(json.dumps(res), status=403, mimetype='application/json')
         
         # Assuming request.update_context is a method to update the Odoo context,
         # which is not standard, you might intend to do something like this instead:
@@ -112,7 +114,7 @@ class HrApi(http.Controller):
 
         if not (username and password):
             res = {"result": {"error": f"username or password is missing"}}
-            return http.Response(json.dumps(res), status=400, mimetype='application/json')
+            return http.Response(json.dumps(res), status=401, mimetype='application/json')
         employee = request.env['hr.employee'].sudo().search([('api_username', '=', username)], limit=1)
         if not employee:
             res = {"result": {"error": f"incorrect username"}}
@@ -136,6 +138,17 @@ class HrApi(http.Controller):
                 "employee_work_phone": employee.work_phone,
                 "employee_work_email": employee.work_email,
                 "image_url": f"/web/image/hr.employee.public/{employee.id}/image_1920",
+                # =================================
+                "identification_id": employee.identification_id,
+                "children": employee.children,
+                "contract_id": employee.contract_id.id,
+                "contract_name": employee.contract_id.name,
+                "contract_type": employee.contract_id.contract_type_id.name,
+                "working_schedule": employee.contract_id.hours_per_week,
+                "contract_start_date": employee.first_contract_date and employee.first_contract_date.isoformat(),
+                "salary_type": employee.contract_id.wage_type,
+                "basic_salary": employee.contract_id._get_contract_wage(),
+                # =================================
                 "token": valid_token,
             }
         }
@@ -194,6 +207,17 @@ class HrApi(http.Controller):
                 },
                 "employee_work_phone": employee.work_phone,
                 "employee_work_email": employee.work_email,
+                # =================================
+                "identification_id": employee.identification_id,
+                "children": employee.children,
+                "contract_id": employee.contract_id.id,
+                "contract_name": employee.contract_id.name,
+                "contract_type": employee.contract_id.contract_type_id.name,
+                "working_schedule": employee.contract_id.hours_per_week,
+                "contract_start_date": employee.first_contract_date and employee.first_contract_date.isoformat(),
+                "salary_type": employee.contract_id.wage_type,
+                "basic_salary": employee.contract_id._get_contract_wage(),
+                # =================================
                 "image_url": f"/web/image/hr.employee.public/{employee.id}/image_1920",
             }
         }
@@ -241,7 +265,8 @@ class HrApi(http.Controller):
             return http.Response(json.dumps(res), status=200, mimetype='application/json')
         except Exception as ex:
             res = {"result": {"error": f"{ex}"}}
-            return http.Response(json.dumps(res), status=401, mimetype='application/json')
+            # 406: not acceptable
+            return http.Response(json.dumps(res), status=406, mimetype='application/json')
 
     @validate_token
     @http.route("/api-hr/my-timeoff", methods=["GET"], type="http", auth="none", csrf=False)
@@ -303,5 +328,96 @@ class HrApi(http.Controller):
                 }
         res = {"result": data}
         return http.Response(json.dumps(res), status=200, mimetype='application/json')
+    
+    @validate_token
+    @http.route("/api-hr/my-payslip", methods=["GET"], type="http", auth="none", csrf=False)
+    def api_hr_my_payslip(self, **params):
+        employee_id = request.context.get("employee_id")
+        if not employee_id:
+            res = {"result": {"error": "employee_id is missing in context"}}
+            return http.Response(json.dumps(res), status=400, mimetype='application/json')
+        if request.env['ir.module.module'].sudo().search([('name', '=', 'hr_payroll')], limit=1).state != 'installed':
+            res = {"result": {"error": "payroll app not installed"}}
+            return http.Response(json.dumps(res), status=400, mimetype='application/json')
+        # employee = request.env['hr.employee'].sudo().browse(employee_id)
+        domain = [('employee_id', '=', employee_id), ('state', 'in', ['done', 'paid'])]
+        payslip_list = request.env['hr.payslip'].sudo().search(domain)
+        data = []
+        for payslip in payslip_list:
+            worked_days_list = []
+            for worked_days in payslip.worked_days_line_ids.filtered(lambda wd: wd.code != 'OUT'):
+                worked_days_list.append({
+                    'name': worked_days.name,
+                    'number_of_hours': worked_days.number_of_hours,
+                    'number_of_days': worked_days.number_of_days,
+                    'amount': worked_days.amount,
+                })
+            payslip_lines_list = []
+            for line in payslip.line_ids.filtered(lambda l: l.appears_on_payslip):
+                payslip_lines_list.append({
+                    'name': line.name,
+                    'quantity': line.quantity,
+                    'total': line.total,
+                })
+            data.append({
+                "payslip_id": payslip.id,
+                "employee_id": payslip.employee_id.id,
+                "employee_name": payslip.employee_id.name,
+                "identification_id": payslip.employee_id.identification_id,
+                "children": payslip.employee_id.children,
+                "contract_id": payslip.contract_id.id,
+                "contract_name": payslip.contract_id.name,
+                "contract_type": payslip.employee_id.contract_id.contract_type_id.name,
+                "working_schedule": payslip.employee_id.contract_id.hours_per_week,
+                "contract_start_date": payslip.employee_id.first_contract_date.isoformat(),
+                "date_from": payslip.date_from.isoformat(),
+                "date_to": payslip.date_to.isoformat(),
+                "computed_on": payslip.compute_date.isoformat(),
+                "salary_type": payslip.contract_id.wage_type,
+                "basic_salary": payslip.contract_id._get_contract_wage(),
+                "worked_days": worked_days_list,
+                "payslip_lines": payslip_lines_list,
+                "report_pdf_url_en": f"/force_report/pdf/hr_payroll.report_payslip_lang/{payslip.id}",
+                "report_html_url_en": f"/force_report/html/hr_payroll.report_payslip_lang/{payslip.id}",
+                "report_pdf_url_ar": f"/force_report/pdf/hr_payroll.report_payslip_lang/{payslip.id}/ar",
+                "report_html_url_ar": f"/force_report/html/hr_payroll.report_payslip_lang/{payslip.id}/ar",
+            })
+            # report_payslip_lang
+        res = {"result": data}
+        return http.Response(json.dumps(res), status=200, mimetype='application/json')
+
+    # , website=True
+    @http.route([
+        '/force_report/<converter>/<reportname>.pdf',
+        '/force_report/<converter>/<reportname>/<docids>.pdf',
+        '/force_report/<converter>/<reportname>/<docids>/<lang>.pdf',
+    ], type='http', auth='none')
+    def report_routes(self, reportname, docids=None, converter=None, lang=None, **data):
+        report = request.env['ir.actions.report'].sudo()
+        context = dict(request.env.context)
+
+        if lang == 'ar':
+            context.update({'lang': 'ar_001'})
+        if docids:
+            docids = [int(i) for i in docids.split(',') if i.isdigit()]
+        if data.get('options'):
+            data.update(json.loads(data.pop('options')))
+        if data.get('context'):
+            data['context'] = json.loads(data['context'])
+            context.update(data['context'])
+        if converter == 'html':
+            html = report.with_context(context)._render_qweb_html(reportname, docids, data=data)[0]
+            return request.make_response(html)
+        elif converter == 'pdf':
+            pdf = report.with_context(context).sudo()._render_qweb_pdf(reportname, docids, data=data)[0]
+            pdfhttpheaders = [('Content-Type', 'application/pdf'), ('Content-Length', len(pdf))]
+            return request.make_response(pdf, headers=pdfhttpheaders)
+        elif converter == 'text':
+            text = report.with_context(context)._render_qweb_text(reportname, docids, data=data)[0]
+            texthttpheaders = [('Content-Type', 'text/plain'), ('Content-Length', len(text))]
+            return request.make_response(text, headers=texthttpheaders)
+        else:
+            raise werkzeug.exceptions.HTTPException(description='Converter %s not implemented.' % converter)
+
 
 
