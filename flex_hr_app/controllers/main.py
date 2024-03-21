@@ -10,6 +10,7 @@ from datetime import datetime
 _logger = logging.getLogger(__name__)
 from odoo.tools import groupby
 from operator import itemgetter
+import werkzeug.exceptions
 
 
 def validate_token(func):
@@ -137,6 +138,17 @@ class HrApi(http.Controller):
                 "employee_work_phone": employee.work_phone,
                 "employee_work_email": employee.work_email,
                 "image_url": f"/web/image/hr.employee.public/{employee.id}/image_1920",
+                # =================================
+                "identification_id": employee.identification_id,
+                "children": employee.children,
+                "contract_id": employee.contract_id.id,
+                "contract_name": employee.contract_id.name,
+                "contract_type": employee.contract_id.contract_type_id.name,
+                "working_schedule": employee.contract_id.hours_per_week,
+                "contract_start_date": employee.first_contract_date and employee.first_contract_date.isoformat(),
+                "salary_type": employee.contract_id.wage_type,
+                "basic_salary": employee.contract_id._get_contract_wage(),
+                # =================================
                 "token": valid_token,
             }
         }
@@ -195,6 +207,17 @@ class HrApi(http.Controller):
                 },
                 "employee_work_phone": employee.work_phone,
                 "employee_work_email": employee.work_email,
+                # =================================
+                "identification_id": employee.identification_id,
+                "children": employee.children,
+                "contract_id": employee.contract_id.id,
+                "contract_name": employee.contract_id.name,
+                "contract_type": employee.contract_id.contract_type_id.name,
+                "working_schedule": employee.contract_id.hours_per_week,
+                "contract_start_date": employee.first_contract_date and employee.first_contract_date.isoformat(),
+                "salary_type": employee.contract_id.wage_type,
+                "basic_salary": employee.contract_id._get_contract_wage(),
+                # =================================
                 "image_url": f"/web/image/hr.employee.public/{employee.id}/image_1920",
             }
         }
@@ -305,7 +328,7 @@ class HrApi(http.Controller):
                 }
         res = {"result": data}
         return http.Response(json.dumps(res), status=200, mimetype='application/json')
-
+    
     @validate_token
     @http.route("/api-hr/my-payslip", methods=["GET"], type="http", auth="none", csrf=False)
     def api_hr_my_payslip(self, **params):
@@ -354,8 +377,152 @@ class HrApi(http.Controller):
                 "basic_salary": payslip.contract_id._get_contract_wage(),
                 "worked_days": worked_days_list,
                 "payslip_lines": payslip_lines_list,
+                "report_pdf_url_en": f"/force_report/pdf/hr_payroll.report_payslip_lang/{payslip.id}",
+                "report_html_url_en": f"/force_report/html/hr_payroll.report_payslip_lang/{payslip.id}",
+                "report_pdf_url_ar": f"/force_report/pdf/hr_payroll.report_payslip_lang/{payslip.id}/ar",
+                "report_html_url_ar": f"/force_report/html/hr_payroll.report_payslip_lang/{payslip.id}/ar",
             })
+            # report_payslip_lang
         res = {"result": data}
         return http.Response(json.dumps(res), status=200, mimetype='application/json')
+
+    # , website=True
+    @http.route([
+        '/force_report/<converter>/<reportname>.pdf',
+        '/force_report/<converter>/<reportname>/<docids>.pdf',
+        '/force_report/<converter>/<reportname>/<docids>/<lang>.pdf',
+    ], type='http', auth='none')
+    def report_routes(self, reportname, docids=None, converter=None, lang=None, **data):
+        report = request.env['ir.actions.report'].sudo()
+        context = dict(request.env.context)
+
+        if lang == 'ar':
+            context.update({'lang': 'ar_001'})
+        if docids:
+            docids = [int(i) for i in docids.split(',') if i.isdigit()]
+        if data.get('options'):
+            data.update(json.loads(data.pop('options')))
+        if data.get('context'):
+            data['context'] = json.loads(data['context'])
+            context.update(data['context'])
+        if converter == 'html':
+            html = report.with_context(context)._render_qweb_html(reportname, docids, data=data)[0]
+            return request.make_response(html)
+        elif converter == 'pdf':
+            pdf = report.with_context(context).sudo()._render_qweb_pdf(reportname, docids, data=data)[0]
+            pdfhttpheaders = [('Content-Type', 'application/pdf'), ('Content-Length', len(pdf))]
+            return request.make_response(pdf, headers=pdfhttpheaders)
+        elif converter == 'text':
+            text = report.with_context(context)._render_qweb_text(reportname, docids, data=data)[0]
+            texthttpheaders = [('Content-Type', 'text/plain'), ('Content-Length', len(text))]
+            return request.make_response(text, headers=texthttpheaders)
+        else:
+            raise werkzeug.exceptions.HTTPException(description='Converter %s not implemented.' % converter)
+
+
+    # Loans
+
+    @validate_token
+    @http.route("/api-hr/my-loan", methods=["GET"], type="http", auth="none", csrf=False)
+    def api_hr_my_loan(self, **params):
+        employee_id = request.context.get("employee_id")
+        if not employee_id:
+            res = {"result": {"error": "employee_id is missing in context"}}
+            return http.Response(json.dumps(res), status=400, mimetype='application/json')
+        # employee = request.env['hr.employee'].sudo().browse(employee_id)
+        domain = [('employee_id', '=', employee_id)]
+
+        loan_list = request.env['hr.loan'].sudo().search(domain)
+        LOAN = request.env['hr.loan'].sudo()
+        loan_by_state = [(state, LOAN.concat(*loans)) for state, loans in groupby(loan_list, itemgetter('state'))]
+        data = {}
+        # def _selection_name(model, field_name, field_value, lang='en_US'):
+        #     names = dict(request.env[model].sudo().with_context(lang='ar_001')._fields[field_name]._description_selection(request.env))
+        #     return names.get(field_value, field_value)
+
+        # field_description = lambda model, key: request.env['ir.model.fields'].sudo()._get(model, key)['field_description']
+        # all_states = ["draft", "confirm", "refuse", "validate1", "validate"]
+
+        state_info = {
+            "draft": _("To Submit"),
+            "waiting_approval_1": _("Submitted"),
+            "approve": _("Approved"),
+            "refuse": _("Refused"),
+            "paid": _("Paid"),
+            "cancel": _("Cancelled")
+        }
+        for state, loans in loan_by_state:
+            # print(f"state: {_selection_name('hr.loan', 'state', state, lang='ar_001')}")
+            data[state] = {
+                "loan_count": len(loans),
+                "description": state_info[state],
+                "loans": [{
+                    "name": loan.name,
+                    "employee_id": {
+                        "id": loan.employee_id.id,
+                        "name": loan.employee_id.name
+                    },
+                    "employee_department": {
+                        "id": loan.employee_id.department_id.id,
+                        "name": loan.employee_id.department_id.display_name
+                    },
+                    "employee_job": {
+                        "id": loan.employee_id.job_id.id,
+                        "name": loan.employee_id.job_id.name
+                    },
+                    "loan_amount": loan.loan_amount,
+                    "installment": loan.installment,
+                    "payment_date": loan.payment_date.isoformat(),
+                    "date": loan.date.isoformat(),
+                    "reason": loan.reason,
+                    "state": loan.state,
+                    "loan_lines": [
+                        {
+                            'date': line.date.isoformat(),
+                            'amount': line.amount,
+                            'paid': line.paid,
+                        } for line in loan.loan_lines],
+                } for loan in loans]
+            }
+        for state in state_info.keys():
+            if state not in data:
+                data[state] = {
+                    "loan_count": 0,
+                    "description": state_info[state],
+                    "loans": []
+                }
+        res = {"result": data}
+        return http.Response(json.dumps(res), status=200, mimetype='application/json')
+
+
+    @validate_token
+    @http.route("/api-hr/create-loan", methods=["POST"], type="http", auth="none", csrf=False)
+    def api_hr_create_loan(self, **params):
+        employee_id = request.context.get("employee_id")
+        if not employee_id:
+            res = {"result": {"error": "employee_id is missing in context"}}
+            return http.Response(json.dumps(res), status=400, mimetype='application/json')
+        employee = request.env['hr.employee'].sudo().browse(employee_id)
+        # data = request.get_json_data()
+        payload = json.loads(request.httprequest.data or '{}')
+        try:
+            loan = request.env['hr.loan'].sudo().create({
+                'employee_id': employee.id,
+                'company_id': employee.company_id.id,
+                'loan_amount': payload.get('loan_amount'),
+                'installment': payload.get('installment'),
+                'payment_date': payload.get('payment_date'),
+                'reason': payload.get('reason'),
+            })
+            data = {"msg": "loan created successfully", "loan_id": loan.id}
+            res = {"result": data}
+            return http.Response(json.dumps(res), status=200, mimetype='application/json')
+        except Exception as ex:
+            res = {"result": {"error": f"{ex}"}}
+            # 406: not acceptable
+            return http.Response(json.dumps(res), status=406, mimetype='application/json')
+
+
+
 
 

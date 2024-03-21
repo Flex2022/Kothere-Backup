@@ -64,7 +64,7 @@ class HrLoan(models.Model):
         ('approve', 'Approved'),
         ('refuse', 'Refused'),
         ('paid', 'Paid'),
-        ('cancel', 'Canceled'),
+        ('cancel', 'Cancelled'),
     ], string="State", default='draft', tracking=True, copy=False, )
 
     def _check_loan(self):
