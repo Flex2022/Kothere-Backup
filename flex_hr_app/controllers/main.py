@@ -420,4 +420,109 @@ class HrApi(http.Controller):
             raise werkzeug.exceptions.HTTPException(description='Converter %s not implemented.' % converter)
 
 
+    # Loans
+
+    @validate_token
+    @http.route("/api-hr/my-loan", methods=["GET"], type="http", auth="none", csrf=False)
+    def api_hr_my_loan(self, **params):
+        employee_id = request.context.get("employee_id")
+        if not employee_id:
+            res = {"result": {"error": "employee_id is missing in context"}}
+            return http.Response(json.dumps(res), status=400, mimetype='application/json')
+        # employee = request.env['hr.employee'].sudo().browse(employee_id)
+        domain = [('employee_id', '=', employee_id)]
+
+        loan_list = request.env['hr.loan'].sudo().search(domain)
+        LOAN = request.env['hr.loan'].sudo()
+        loan_by_state = [(state, LOAN.concat(*loans)) for state, loans in groupby(loan_list, itemgetter('state'))]
+        data = {}
+        # def _selection_name(model, field_name, field_value, lang='en_US'):
+        #     names = dict(request.env[model].sudo().with_context(lang='ar_001')._fields[field_name]._description_selection(request.env))
+        #     return names.get(field_value, field_value)
+
+        # field_description = lambda model, key: request.env['ir.model.fields'].sudo()._get(model, key)['field_description']
+        # all_states = ["draft", "confirm", "refuse", "validate1", "validate"]
+
+        state_info = {
+            "draft": _("To Submit"),
+            "waiting_approval_1": _("Submitted"),
+            "approve": _("Approved"),
+            "refuse": _("Refused"),
+            "paid": _("Paid"),
+            "cancel": _("Cancelled")
+        }
+        for state, loans in loan_by_state:
+            # print(f"state: {_selection_name('hr.loan', 'state', state, lang='ar_001')}")
+            data[state] = {
+                "loan_count": len(loans),
+                "description": state_info[state],
+                "loans": [{
+                    "name": loan.name,
+                    "employee_id": {
+                        "id": loan.employee_id.id,
+                        "name": loan.employee_id.name
+                    },
+                    "employee_department": {
+                        "id": loan.employee_id.department_id.id,
+                        "name": loan.employee_id.department_id.display_name
+                    },
+                    "employee_job": {
+                        "id": loan.employee_id.job_id.id,
+                        "name": loan.employee_id.job_id.name
+                    },
+                    "loan_amount": loan.loan_amount,
+                    "installment": loan.installment,
+                    "payment_date": loan.payment_date.isoformat(),
+                    "date": loan.date.isoformat(),
+                    "reason": loan.reason,
+                    "state": loan.state,
+                    "loan_lines": [
+                        {
+                            'date': line.date.isoformat(),
+                            'amount': line.amount,
+                            'paid': line.paid,
+                        } for line in loan.loan_lines],
+                } for loan in loans]
+            }
+        for state in state_info.keys():
+            if state not in data:
+                data[state] = {
+                    "loan_count": 0,
+                    "description": state_info[state],
+                    "loans": []
+                }
+        res = {"result": data}
+        return http.Response(json.dumps(res), status=200, mimetype='application/json')
+
+
+    @validate_token
+    @http.route("/api-hr/create-loan", methods=["POST"], type="http", auth="none", csrf=False)
+    def api_hr_create_loan(self, **params):
+        employee_id = request.context.get("employee_id")
+        if not employee_id:
+            res = {"result": {"error": "employee_id is missing in context"}}
+            return http.Response(json.dumps(res), status=400, mimetype='application/json')
+        employee = request.env['hr.employee'].sudo().browse(employee_id)
+        # data = request.get_json_data()
+        payload = json.loads(request.httprequest.data or '{}')
+        try:
+            loan = request.env['hr.loan'].sudo().create({
+                'employee_id': employee.id,
+                'company_id': employee.company_id.id,
+                'loan_amount': payload.get('loan_amount'),
+                'installment': payload.get('installment'),
+                'payment_date': payload.get('payment_date'),
+                'reason': payload.get('reason'),
+            })
+            data = {"msg": "loan created successfully", "loan_id": loan.id}
+            res = {"result": data}
+            return http.Response(json.dumps(res), status=200, mimetype='application/json')
+        except Exception as ex:
+            res = {"result": {"error": f"{ex}"}}
+            # 406: not acceptable
+            return http.Response(json.dumps(res), status=406, mimetype='application/json')
+
+
+
+
 
