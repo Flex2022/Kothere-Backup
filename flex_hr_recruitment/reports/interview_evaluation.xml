@@ -359,7 +359,7 @@
             </t>
         </t>
     </template>
-    <record id="action_hr_applicant" model="ir.actions.report">
+    <record id="action_hr_evaluation" model="ir.actions.report">
         <field name="name">Interview Evaluation</field>
         <field name="model">hr.applicant</field>
         <field name="report_type">qweb-pdf</field>
