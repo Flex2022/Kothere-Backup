@@ -1,129 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-<!--        <menuitem id="menu_hr_requests" name="Employee Requests" parent="hr.menu_hr_root" sequence="7"/>-->
+        <!--        <menuitem id="menu_hr_requests" name="Employee Requests" parent="hr.menu_hr_root" sequence="7"/>-->
 
         <record model="ir.ui.view" id="hr_employee_inherit_form_view">
             <field name="name">hr.employee.form.view</field>
             <field name="model">hr.employee</field>
             <field name="inherit_id" ref="hr.view_employee_form"/>
             <field name="arch" type="xml">
-<!--                <field name="coach_id" position="attributes">-->
-<!--                    <attribute name="options">{'no_create_edit': True, 'no_create': True, 'no_open': True}</attribute>-->
-<!--                </field>-->
-<!--                <field name="work_email" position="after">-->
-<!--                    <field name="user_check_tick" invisible="1"/>-->
-<!--                </field>-->
-<!--                <xpath expr="//header" position="inside">-->
-<!--                    <button name="create_user"-->
-<!--                            string="Create User"-->
-<!--                            type="object"-->
-<!--                            class="oe_highlight"-->
-<!--                            attrs="{'invisible':[('user_check_tick','=',True)]}"-->
-<!--                            groups="hr.group_hr_manager"/>-->
-<!--                </xpath>-->
-<!--                <field name="work_email" position="attributes">-->
-<!--                    <attribute name="required">1</attribute>-->
-<!--                </field>-->
-<!--                <field name="work_location" position="replace">-->
-<!--                    <field name="office_id" required="1" options='{"no_open": True, "no_create": True}'/>-->
-<!--                </field>-->
-<!--                <field name="gender" position="after">-->
-<!--                    <field name="religion" required="1"/>-->
-<!--                </field>-->
-<!--                <xpath expr="//page[@name='personal_information']/group" position="after">-->
-<!--                    <group name="fam_ids" colspan="4" string="Dependence Details">-->
-<!--                        <field name="fam_ids" nolabel="1">-->
-<!--                            <tree editable="bottom">-->
-<!--                                <field name="member_name" required="1"/>-->
-<!--                                <field name="relation_id" required="1"/>-->
-<!--                                <field name="member_contact"/>-->
-<!--                                <field name="birth_date"/>-->
-<!--                            </tree>-->
-<!--                        </field>-->
-<!--                    </group>-->
-<!--                </xpath>-->
+                <!--                <field name="coach_id" position="attributes">-->
+                <!--                    <attribute name="options">{'no_create_edit': True, 'no_create': True, 'no_open': True}</attribute>-->
+                <!--                </field>-->
+                <!--                <field name="work_email" position="after">-->
+                <!--                    <field name="user_check_tick" invisible="1"/>-->
+                <!--                </field>-->
+                <!--                <xpath expr="//header" position="inside">-->
+                <!--                    <button name="create_user"-->
+                <!--                            string="Create User"-->
+                <!--                            type="object"-->
+                <!--                            class="oe_highlight"-->
+                <!--                            attrs="{'invisible':[('user_check_tick','=',True)]}"-->
+                <!--                            groups="hr.group_hr_manager"/>-->
+                <!--                </xpath>-->
+                <!--                <field name="work_email" position="attributes">-->
+                <!--                    <attribute name="required">1</attribute>-->
+                <!--                </field>-->
+                <!--                <field name="work_location" position="replace">-->
+                <!--                    <field name="office_id" required="1" options='{"no_open": True, "no_create": True}'/>-->
+                <!--                </field>-->
+                <!--                <field name="gender" position="after">-->
+                <!--                    <field name="religion" required="1"/>-->
+                <!--                </field>-->
+                <!--                <xpath expr="//page[@name='personal_information']/group" position="after">-->
+                <!--                    <group name="fam_ids" colspan="4" string="Dependence Details">-->
+                <!--                        <field name="fam_ids" nolabel="1">-->
+                <!--                            <tree editable="bottom">-->
+                <!--                                <field name="member_name" required="1"/>-->
+                <!--                                <field name="relation_id" required="1"/>-->
+                <!--                                <field name="member_contact"/>-->
+                <!--                                <field name="birth_date"/>-->
+                <!--                            </tree>-->
+                <!--                        </field>-->
+                <!--                    </group>-->
+                <!--                </xpath>-->
                 <field name="department_id" position="replace">
-<!--                    <field name="name_in_id"/>-->
-<!--                    <field name="name_in_id_english"/>-->
+                    <!--                    <field name="name_in_id"/>-->
+                    <!--                    <field name="name_in_id_english"/>-->
                     <field name="employee_number"/>
                     <field name="department_id" required="1" options='{"no_create": True, "no_create_edit":True}'/>
                 </field>
-<!--                <field name="job_id" position="replace">-->
-<!--                    <field name="job_id" required="1" options='{"no_create": True, "no_create_edit":True}'/>-->
-<!--                </field>-->
-<!--                <field name="user_id" position="after">-->
-<!--                    <field name="joining_date" required="1"/>-->
-<!--                    <field name="employment_type" required="1"/>-->
-<!--                    <field name="calculate_leave"/>-->
-<!--                    <field name="specialization_id" widget="many2many_tags"/>-->
-<!--                </field>-->
-<!--                <field name="study_school" position="after">-->
-<!--                    <field name="graduation_year"/>-->
-<!--                </field>-->
-<!--                <field name="job_title" position="replace">-->
-<!--                    <field name="english_name" placeholder="Arabic Name"/>-->
-<!--                </field>-->
-<!--                <field name="visa_expire" position="after">-->
-<!--                    <field name="medical"/>-->
-<!--                    <field name="iban"/>-->
-<!--                </field>-->
-<!--                <field name="parent_id" position="after">-->
-<!--                    <field name="is_manager"/>-->
-<!--                </field>-->
-<!--                <field name="address_home_id" position="attributes">-->
-<!--                    <attribute name="invisible">1</attribute>-->
-<!--                </field>-->
-<!--                <field name="phone" position="replace">-->
-<!--                    <field name="employee_private_phone"/>-->
-<!--                </field>-->
-<!--                <field name="private_email" position="replace">-->
-<!--                    <field name="employee_private_email"/>-->
-<!--                </field>-->
-<!--                <field name="mobile_phone" position="after">-->
-<!--                    <field name="work_mobile_ext"/>-->
-<!--                </field>-->
-<!--                <field name="parent_id" position="replace">-->
-<!--                    <field name="parent_id" required="1" options='{"no_open": True, "no_create": True}' domain="['|', ('company_id', '=', False), ('company_id', '=', company_id), ('is_manager', '=', True)]"/>-->
-<!--                </field>-->
-<!--                <field name="country_id" position="replace">-->
-<!--                    <field name="country_id" options="{'no_open': True, 'no_create': True}" required="1"/>-->
-<!--                    <field name="residence_place_id" options="{'no_open': True, 'no_create': True}" required="1"/>-->
-<!--                </field>-->
-<!--                <field name="identification_id" position="replace"/>-->
-<!--                <field name="passport_id" position="replace"/>-->
-<!--                <xpath expr="//page[@name='personal_information']/group/group[1]" position="after">-->
-<!--                    <group name="identification_id" string="Identification ID">-->
-<!--                        <field name="identification_id" required="1"/>-->
-<!--                        <field name="id_expiry_date"  groups="hr.group_hr_user"/>-->
-<!--                        <field name="id_attachment_id" groups="hr.group_hr_user" widget="many2many_binary" class="oe_inline"/>-->
-<!--                    </group>-->
-<!--                    <group name="passport_id" string="Passport ID">-->
-<!--                        <field name="passport_id"/>-->
-<!--                        <field name="passport_expiry_date" groups="hr.group_hr_user"/>-->
-<!--                        <field name="passport_attachment_id" groups="hr.group_hr_user" widget="many2many_binary" class="oe_inline"/>-->
-<!--                    </group>-->
-<!--                </xpath>-->
+                <!--                <field name="job_id" position="replace">-->
+                <!--                    <field name="job_id" required="1" options='{"no_create": True, "no_create_edit":True}'/>-->
+                <!--                </field>-->
+                <!--                <field name="user_id" position="after">-->
+                <!--                    <field name="joining_date" required="1"/>-->
+                <!--                    <field name="employment_type" required="1"/>-->
+                <!--                    <field name="calculate_leave"/>-->
+                <!--                    <field name="specialization_id" widget="many2many_tags"/>-->
+                <!--                </field>-->
+                <!--                <field name="study_school" position="after">-->
+                <!--                    <field name="graduation_year"/>-->
+                <!--                </field>-->
+                <!--                <field name="job_title" position="replace">-->
+                <!--                    <field name="english_name" placeholder="Arabic Name"/>-->
+                <!--                </field>-->
+                <!--                <field name="visa_expire" position="after">-->
+                <!--                    <field name="medical"/>-->
+                <!--                    <field name="iban"/>-->
+                <!--                </field>-->
+                <!--                <field name="parent_id" position="after">-->
+                <!--                    <field name="is_manager"/>-->
+                <!--                </field>-->
+                <!--                <field name="address_home_id" position="attributes">-->
+                <!--                    <attribute name="invisible">1</attribute>-->
+                <!--                </field>-->
+                <!--                <field name="phone" position="replace">-->
+                <!--                    <field name="employee_private_phone"/>-->
+                <!--                </field>-->
+                <!--                <field name="private_email" position="replace">-->
+                <!--                    <field name="employee_private_email"/>-->
+                <!--                </field>-->
+                <!--                <field name="mobile_phone" position="after">-->
+                <!--                    <field name="work_mobile_ext"/>-->
+                <!--                </field>-->
+                <!--                <field name="parent_id" position="replace">-->
+                <!--                    <field name="parent_id" required="1" options='{"no_open": True, "no_create": True}' domain="['|', ('company_id', '=', False), ('company_id', '=', company_id), ('is_manager', '=', True)]"/>-->
+                <!--                </field>-->
+                <!--                <field name="country_id" position="replace">-->
+                <!--                    <field name="country_id" options="{'no_open': True, 'no_create': True}" required="1"/>-->
+                <!--                    <field name="residence_place_id" options="{'no_open': True, 'no_create': True}" required="1"/>-->
+                <!--                </field>-->
+                <!--                <field name="identification_id" position="replace"/>-->
+                <!--                <field name="passport_id" position="replace"/>-->
+                <!--                <xpath expr="//page[@name='personal_information']/group/group[1]" position="after">-->
+                <!--                    <group name="identification_id" string="Identification ID">-->
+                <!--                        <field name="identification_id" required="1"/>-->
+                <!--                        <field name="id_expiry_date"  groups="hr.group_hr_user"/>-->
+                <!--                        <field name="id_attachment_id" groups="hr.group_hr_user" widget="many2many_binary" class="oe_inline"/>-->
+                <!--                    </group>-->
+                <!--                    <group name="passport_id" string="Passport ID">-->
+                <!--                        <field name="passport_id"/>-->
+                <!--                        <field name="passport_expiry_date" groups="hr.group_hr_user"/>-->
+                <!--                        <field name="passport_attachment_id" groups="hr.group_hr_user" widget="many2many_binary" class="oe_inline"/>-->
+                <!--                    </group>-->
+                <!--                </xpath>-->
             </field>
         </record>
 
-<!--        <record id="hr_employee_search_inherit" model="ir.ui.view">-->
-<!--            <field name="name">hr.employee.search.inherit</field>-->
-<!--            <field name="model">hr.employee</field>-->
-<!--            <field name="inherit_id" ref="hr.view_employee_filter"/>-->
-<!--            <field name="arch" type="xml">-->
-<!--                <field name='name' position="replace">-->
-<!--                    <field name="name" string="Employee" filter_domain="['|', '|', ('work_email', 'ilike', self), ('name', 'ilike', self), ('english_name', 'ilike', self)]"/>-->
-<!--                    <field name="english_name" string="Arabic Name"/>-->
-<!--                </field>-->
-<!--                <field name="name" position="after">-->
-<!--                    <field name="office_id"/>-->
-<!--                </field>-->
-<!--                <filter name="group_department" position="after">-->
-<!--                    <filter name="office_id" string="Office" context="{'group_by': 'office_id'}"/>-->
-<!--                </filter>-->
-<!--            </field>-->
-<!--        </record>-->
+        <!--        <record id="hr_employee_search_inherit" model="ir.ui.view">-->
+        <!--            <field name="name">hr.employee.search.inherit</field>-->
+        <!--            <field name="model">hr.employee</field>-->
+        <!--            <field name="inherit_id" ref="hr.view_employee_filter"/>-->
+        <!--            <field name="arch" type="xml">-->
+        <!--                <field name='name' position="replace">-->
+        <!--                    <field name="name" string="Employee" filter_domain="['|', '|', ('work_email', 'ilike', self), ('name', 'ilike', self), ('english_name', 'ilike', self)]"/>-->
+        <!--                    <field name="english_name" string="Arabic Name"/>-->
+        <!--                </field>-->
+        <!--                <field name="name" position="after">-->
+        <!--                    <field name="office_id"/>-->
+        <!--                </field>-->
+        <!--                <filter name="group_department" position="after">-->
+        <!--                    <filter name="office_id" string="Office" context="{'group_by': 'office_id'}"/>-->
+        <!--                </filter>-->
+        <!--            </field>-->
+        <!--        </record>-->
 
         <record id="view_department_form_inherit" model="ir.ui.view">
             <field name="name">hr.department.form.inherit</field>
@@ -133,7 +133,7 @@
                 <xpath expr="//field[@name='manager_id']" position="attributes">
                     <attribute name="options">{'no_create_edit': True, 'no_create': True, 'no_open': True}</attribute>
                 </xpath>
-                 <xpath expr="//field[@name='manager_id']" position="after">
+                <xpath expr="//field[@name='manager_id']" position="after">
                     <field name="non_t2" groups="hr.group_hr_manager"/>
                 </xpath>
                 <xpath expr="//group[1]" position="after">
@@ -145,76 +145,75 @@
                 </xpath>
             </field>
         </record>
-        <record model="ir.ui.view" id="hr_employee_tree_view_inherit">
-        <field name="name">hr.employee.tree.view</field>
-        <field name="model">hr.employee</field>
-        <field name="inherit_id" ref="hr.view_employee_tree"/>
-        <field name="arch" type="xml">
-            <field name="work_phone" position="after">
-                <field name="employee_number"/>
+
+        <!--        <record id="hr_employee_view_kanban_inh" model="ir.ui.view">-->
+        <!--            <field name="name">hr.employee.view.kanban.inh</field>-->
+        <!--            <field name="model">hr.employee</field>-->
+        <!--            <field name="inherit_id" ref="hr.hr_kanban_view_employees"/>-->
+        <!--            <field name="arch" type="xml">-->
+        <!--                <data>-->
+        <!--                    <field name="category_ids" position="after">-->
+        <!--                        <div class="o_stat_info">-->
+        <!--                            <span>Status : </span>-->
+        <!--                            <field name="employee_status"/>-->
+        <!--                        </div>-->
+        <!--                    </field>-->
+        <!--                </data>-->
+        <!--            </field>-->
+        <!--        </record>-->
+
+        <!--        <record id="hr_employee_public_view_kanban_inh" model="ir.ui.view">-->
+        <!--            <field name="name">hr.employee.public.view.kanban.inh</field>-->
+        <!--            <field name="model">hr.employee.public</field>-->
+        <!--            <field name="inherit_id" ref="hr.hr_employee_public_view_kanban"/>-->
+        <!--            <field name="arch" type="xml">-->
+        <!--                <xpath expr="//div[@class='o_kanban_record_top']" position="replace">-->
+        <!--                    <div class="o_kanban_record_headings">-->
+        <!--                        <strong class="o_kanban_record_title">-->
+        <!--                            <div class="float-right" attrs="{'invisible': [('is_absent', '=', False)]}">-->
+        <!--                                <field name="is_absent" invisible="1"/>-->
+        <!--                                <span class="fa fa-plane text-danger" role="img" aria-label="Absent" title="Absent" name="presence_absent"/>-->
+        <!--                            </div>-->
+        <!--                            <field name="name"/>-->
+        <!--                        </strong>-->
+        <!--                        <span t-if="record.job_id.raw_value" class="o_kanban_record_subtitle"><field name="job_id"/></span>-->
+        <!--                    </div>-->
+        <!--                </xpath>-->
+        <!--            </field>-->
+        <!--        </record>-->
+
+        <!--        <record id="hr_employee_public_view_form_inh" model="ir.ui.view">-->
+        <!--            <field name="name">hr.employee.public.form.inh</field>-->
+        <!--            <field name="model">hr.employee.public</field>-->
+        <!--            <field name="inherit_id" ref="hr.hr_employee_public_view_form"/>-->
+        <!--            <field name="arch" type="xml">-->
+        <!--                <field name="department_id" position="after">-->
+        <!--                    <field name="job_id" options='{"no_open": True}'/>-->
+        <!--                </field>-->
+        <!--            </field>-->
+        <!--        </record>-->
+
+        <!--        <record id="res_users_view_form_profile" model="ir.ui.view">-->
+        <!--            <field name="name">res.users.preferences.form.inherit</field>-->
+        <!--            <field name="model">res.users</field>-->
+        <!--            <field name="inherit_id" ref="hr.res_users_view_form_profile"/>-->
+        <!--            <field name="arch" type="xml">-->
+        <!--                <xpath expr="//field[@name='employee_parent_id']" position="attributes">-->
+        <!--                    <attribute name="options">{'no_create_edit': True, 'no_create': True, 'no_open': True}</attribute>-->
+        <!--                </xpath>-->
+        <!--            </field>-->
+        <!--        </record>-->
+
+        <record model="ir.ui.view" id="hr_employee_updation_hr_employee_search_view_inherit_22">
+            <field name="name">hr.employee.view.search.employee.up</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='job_id']" position="after">
+                    <field name="employee_number"/>
+                </xpath>
             </field>
-        </field>
-    </record>
-
-<!--        <record id="hr_employee_view_kanban_inh" model="ir.ui.view">-->
-<!--            <field name="name">hr.employee.view.kanban.inh</field>-->
-<!--            <field name="model">hr.employee</field>-->
-<!--            <field name="inherit_id" ref="hr.hr_kanban_view_employees"/>-->
-<!--            <field name="arch" type="xml">-->
-<!--                <data>-->
-<!--                    <field name="category_ids" position="after">-->
-<!--                        <div class="o_stat_info">-->
-<!--                            <span>Status : </span>-->
-<!--                            <field name="employee_status"/>-->
-<!--                        </div>-->
-<!--                    </field>-->
-<!--                </data>-->
-<!--            </field>-->
-<!--        </record>-->
-
-<!--        <record id="hr_employee_public_view_kanban_inh" model="ir.ui.view">-->
-<!--            <field name="name">hr.employee.public.view.kanban.inh</field>-->
-<!--            <field name="model">hr.employee.public</field>-->
-<!--            <field name="inherit_id" ref="hr.hr_employee_public_view_kanban"/>-->
-<!--            <field name="arch" type="xml">-->
-<!--                <xpath expr="//div[@class='o_kanban_record_top']" position="replace">-->
-<!--                    <div class="o_kanban_record_headings">-->
-<!--                        <strong class="o_kanban_record_title">-->
-<!--                            <div class="float-right" attrs="{'invisible': [('is_absent', '=', False)]}">-->
-<!--                                <field name="is_absent" invisible="1"/>-->
-<!--                                <span class="fa fa-plane text-danger" role="img" aria-label="Absent" title="Absent" name="presence_absent"/>-->
-<!--                            </div>-->
-<!--                            <field name="name"/>-->
-<!--                        </strong>-->
-<!--                        <span t-if="record.job_id.raw_value" class="o_kanban_record_subtitle"><field name="job_id"/></span>-->
-<!--                    </div>-->
-<!--                </xpath>-->
-<!--            </field>-->
-<!--        </record>-->
-
-<!--        <record id="hr_employee_public_view_form_inh" model="ir.ui.view">-->
-<!--            <field name="name">hr.employee.public.form.inh</field>-->
-<!--            <field name="model">hr.employee.public</field>-->
-<!--            <field name="inherit_id" ref="hr.hr_employee_public_view_form"/>-->
-<!--            <field name="arch" type="xml">-->
-<!--                <field name="department_id" position="after">-->
-<!--                    <field name="job_id" options='{"no_open": True}'/>-->
-<!--                </field>-->
-<!--            </field>-->
-<!--        </record>-->
-
-<!--        <record id="res_users_view_form_profile" model="ir.ui.view">-->
-<!--            <field name="name">res.users.preferences.form.inherit</field>-->
-<!--            <field name="model">res.users</field>-->
-<!--            <field name="inherit_id" ref="hr.res_users_view_form_profile"/>-->
-<!--            <field name="arch" type="xml">-->
-<!--                <xpath expr="//field[@name='employee_parent_id']" position="attributes">-->
-<!--                    <attribute name="options">{'no_create_edit': True, 'no_create': True, 'no_open': True}</attribute>-->
-<!--                </xpath>-->
-<!--            </field>-->
-<!--        </record>-->
-
-
+        </record>
 
     </data>
 </odoo>

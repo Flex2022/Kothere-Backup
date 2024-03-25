@@ -1,31 +1,38 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
     data noupdate="1">
-        <record id="email_template_edi_offer" model="mail.template">
-            <field name="name">Job Offer</field>
-            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
-            <field name="subject">Job Offer Name: {{ object.name }} From Company: {{ object.company_id.name }}</field>
-            <field name="email_from">{{ (object.user_id.email_formatted or object.company_id.email_formatted or user.email_formatted) }}</field>
-            <field name="partner_to">{{ object.partner_id.id }}</field>
-            <field name="description">Used by Hr when they send Job Offer</field>
-            <field name="body_html" type="html">
-                <div style="margin: 0px; padding: 0px;">
-                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
-                        Dear <t t-esc="object.partner_name" />,
-                        <br/>
-                        <br/>
-                                We are pleased to offer you the position of <t t-esc="object.job_id.name" /> Number <t t-esc="object.name" /> at <t t-esc="object.company_id.name" />.
+    <record id="email_template_edi_offer" model="mail.template">
+        <field name="name">Job Offer</field>
+        <field name="model_id" ref="hr_contract_salary.model_hr_contract_salary_offer"/>
+        <field name="subject">Job Offer Name: {{ object.applicant_id.name }} From Company: {{ object.applicant_id.company_id.name }}</field>
+        <field name="email_from">{{ (object.applicant_id.user_id.email_formatted or object.company_id.email_formatted or user.email_formatted) }}</field>
+        <field name="partner_to">{{ object.applicant_id.partner_id.id }}</field>
+        <field name="description">Used by Hr when they send Job Offer</field>
+        <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                    Dear<t t-esc="object.applicant_id.partner_name"/>,
+                    <br/>
+                    <br/>
+                    We are pleased to offer you the position of
+                    <t t-esc="object.applicant_id.job_id.name"/>
+                    Number
+                    <t t-esc="object.applicant_id.name"/>
+                    at<t t-esc="object.company_id.name"/>.
 
-                        <t t-if="not is_html_empty(object.user_id.signature)">
-            <br/><br/>
-            <t t-out="object.user_id.signature or ''">--<br/>Mitchell Admin</t>
-        </t>
-        <br/><br/>
-                    </p>
-                </div>
-            </field>
-            <field name="report_template_ids" eval="[(4, ref('flex_hr_recruitment.action_hr_applicant'))]"/>
-            <field name="lang">{{ object.partner_id.lang }}</field>
-            <field name="auto_delete" eval="True"/>
-        </record>
+                    <t t-if="not is_html_empty(object.applicant_id.user_id.signature)">
+                        <br/>
+                        <br/>
+                        <t t-out="object.applicant_id.user_id.signature or ''">--<br/>Mitchell Admin
+                        </t>
+                    </t>
+                    <br/>
+                    <br/>
+                </p>
+            </div>
+        </field>
+        <field name="report_template_ids" eval="[(4, ref('flex_hr_recruitment.action_hr_applicant'))]"/>
+        <field name="lang">{{ object.applicant_id.partner_id.lang }}</field>
+        <field name="auto_delete" eval="True"/>
+    </record>
 </odoo>

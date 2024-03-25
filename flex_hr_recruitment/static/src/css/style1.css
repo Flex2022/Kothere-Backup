@@ -1,0 +1,33 @@
+.h1 {
+    height: 75px;
+    background-color: #d9d6ce;
+}
+
+.h2 {
+    height: 30px;
+
+}
+
+.b1 {
+    background-color: #d9d6ce;
+}
+
+.w{
+    width: 50%;
+    height: 60px;
+    border: 1px solid black;
+}
+.table-bordered {
+    border: 1px solid black;
+    border-collapse: collapse;
+    width: 100%;
+}
+.w1{
+    width: 50px;
+}
+
+.h11{
+    height: 75px;
+    border: 1px solid black;
+}
+

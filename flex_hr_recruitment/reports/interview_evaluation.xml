@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="flex_interview_evaluation">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-foreach="docs.with_context(lang='ar_001')" t-as="o_sec">
+                    <t t-call="web.external_layout">
+                        <link rel="stylesheet" href="/flex_hr_recruitment/static/src/css/style1.css"/>
+                        <div class="row">
+                            <div class="col-12 border h1 text-center">
+                                <h5>تقييم مقابلة شخصية</h5>
+                                <h5>Interview Evaluation</h5>
+                            </div>
+                        </div>
+                        <br/>
+                        <table class="table table-bordered">
+                            <tr>
+                                <td class="b1 text-start">
+                                    <strong>Dept./Section:</strong>
+                                </td>
+                                <td class="text-center">
+                                    <span t-field="o.department_id"/>
+                                </td>
+                                <td class="text-center">
+                                    <span t-esc="o_sec.department_id.name"/>
+                                </td>
+                                <td dir="rtl" class="b1 text-end">الإدارة/القسم:</td>
+                            </tr>
+                            <tr>
+                                <td class="b1 text-start">
+                                    <strong>Name Of Applicant:</strong>
+                                </td>
+                                <td class="text-center">
+                                    <span t-field="o.partner_name"/>
+                                </td>
+                                <td class="text-center">
+                                    <span t-esc="o_sec.partner_name_ar"/>
+                                </td>
+                                <td dir="rtl" class="b1 text-end">اسم المتقدم:</td>
+                            </tr>
+                            <tr>
+                                <td class="b1 text-start">
+                                    <strong>Nationality:</strong>
+                                </td>
+                                <td class="text-center">
+                                    <span t-field="o.nationality"/>
+                                </td>
+                                <td class="text-center">
+                                    <span t-esc="o_sec.nationality.name"/>
+                                </td>
+                                <td dir="rtl" class="b1 text-end">الجنسية:</td>
+                            </tr>
+                            <tr>
+                                <td class="b1 text-start">
+                                    <strong>Position Applied:</strong>
+                                </td>
+                                <td class="text-center">
+                                    <span t-field="o.job_id"/>
+                                </td>
+                                <td class="text-center">
+                                    <span t-esc="o_sec.job_id.name"/>
+                                </td>
+                                <td dir="rtl" class="b1 text-end">الوظيفة المتقدم لها:</td>
+                            </tr>
+                            <tr>
+                                <td class="b1 text-start">
+                                    <strong>Education:</strong>
+                                </td>
+                                <td class="text-center">
+                                    <span t-field="o.type_id"/>
+                                </td>
+                                <td class="text-center">
+                                    <span t-esc="o_sec.type_id.name"/>
+                                </td>
+                                <td dir="rtl" class="b1 text-end">المؤهل العلمي:</td>
+                            </tr>
+                            <tr>
+                                <td class="b1 text-start">
+                                    <strong>Interview Date:</strong>
+                                </td>
+                                <td class="text-center">
+                                    <span t-field="o.interview_date" t-options='{"widget": "date"}'/>
+                                </td>
+                                <td class="text-center">
+                                    <span t-field="o.interview_date" t-options='{"widget": "date"}'/>
+                                </td>
+                                <td dir="rtl" class="b1 text-end">تاريخ المقابلة:</td>
+                            </tr>
+                        </table>
+                        <div>
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th class="b1 text-center">EVALUATION SUBJECTS</th>
+                                        <td class="text-center">
+                                            <span>ضعيف</span>
+                                            <br/>
+                                            <strong>Poor</strong>
+                                        </td>
+                                        <td class="text-center">
+                                            <span>متوسط</span>
+                                            <br/>
+                                            <strong>Med.</strong>
+                                        </td>
+                                        <td class="text-center">
+                                            <span>جيد</span>
+                                            <br/>
+                                            <strong>Good</strong>
+                                        </td>
+                                        <td class="text-center">
+                                            <span>ممتاز</span>
+                                            <br/>
+                                            <strong>Excellent</strong>
+                                        </td>
+                                        <td class="b1 text-center">مجال التقييم</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="o.evaluation_rate" t-as="rate">
+                                        <!--                                        <t t-foreach="o_sec.evaluation_rate" t-as="rate1">-->
+                                        <tr>
+
+                                            <td class="text-center">
+                                                <span t-field="rate.evaluation_rate"/>
+
+                                            </td>
+                                            <td class="text-center">
+                                                <t t-if="rate.excellent">
+                                                    <input type="checkbox" id="checkbox109_anything_you_give"
+                                                           checked="checked"/>
+                                                </t>
+                                                <t t-else="">
+                                                    <input type="checkbox" id="checkbox110_anything_you_give"/>
+                                                </t>
+                                            </td>
+                                            <td class="text-center">
+
+                                                <t t-if="rate.good">
+                                                    <input type="checkbox" id="checkbox111_anything_you_give"
+                                                           checked="checked"/>
+                                                </t>
+                                                <t t-else="">
+                                                    <input type="checkbox" id="checkbox112_anything_you_give"/>
+                                                </t>
+                                            </td>
+                                            <td class="text-center">
+                                                <t t-if="rate.medium">
+                                                    <input type="checkbox" id="checkbox113_anything_you_give"
+                                                           checked="checked"/>
+                                                </t>
+                                                <t t-else="">
+                                                    <input type="checkbox" id="checkbox114_anything_you_give"/>
+                                                </t>
+                                            </td>
+                                            <td class="text-center">
+
+                                                <t t-if="rate.poor">
+                                                    <input type="checkbox" id="checkbox115_anything_you_give"
+                                                           checked="checked"/>
+                                                </t>
+                                                <t t-else="">
+                                                    <input type="checkbox" id="checkbox116_anything_you_give"/>
+                                                </t>
+
+                                            </td>
+                                            <td class="text-center">
+
+                                                <!--                                                    <span t-esc="rate1.evaluation_rate.name"/>-->
+                                                <span t-esc="o_sec.evaluation_rate.filtered(lambda r: r.evaluation_rate == rate.evaluation_rate).evaluation_rate.name"/>
+
+
+                                            </td>
+                                            <!--                                                <td class="b1 text-center">-->
+                                            <!--                                                    <span t-esc="rate1.-->
+                                            <!--                                                </td>-->
+                                        </tr>
+                                        <!--                                        </t>-->
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!--                        <div class="row mx-auto border">-->
+                        <div class="mx-auto border w">
+                            <table class="table table-bordered">
+                                <tr>
+                                    <td class="
+                                        text-center">
+                                        <span>غير واضحة</span>
+                                        <br/>
+                                        <strong>Not clear</strong>
+                                    </td>
+                                    <td class="
+                                        text-center">
+                                        <span>معقول</span>
+                                        <br/>
+                                        <strong>Reas.</strong>
+                                    </td>
+                                    <td class="
+                                        text-center">
+                                        <span>مبالغ</span>
+                                        <br/>
+                                        <strong>Exag.</strong>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <table class="table table-bordered mt-2">
+                            <tr>
+                                <td class="b1 text-center">
+                                    <strong>Career Goals</strong>
+                                </td>
+                                <td class="text-center w1">
+                                    <t t-if="o.not_clear">
+                                        <input type="checkbox" id="checkbox117_anything_you_give" checked="checked"/>
+                                    </t>
+                                    <t t-else="">
+                                        <input type="checkbox" id="checkbox118_anything_you_give"/>
+                                    </t>
+                                </td>
+                                <td class="text-center w1">
+                                    <t t-if="o.reas">
+                                        <input type="checkbox" id="checkbox119_anything_you_give" checked="checked"/>
+                                    </t>
+                                    <t t-else="">
+                                        <input type="checkbox" id="checkbox120_anything_you_give"/>
+                                    </t>
+                                </td>
+                                <td class="text-center w1">
+                                    <t t-if="o.exag">
+                                        <input type="checkbox" id="checkbox121_anything_you_give" checked="checked"/>
+                                    </t>
+                                    <t t-else="">
+                                        <input type="checkbox" id="checkbox122_anything_you_give"/>
+                                    </t>
+                                </td>
+                                <td class="b1 text-center">الطموحات العلمية</td>
+                            </tr>
+
+                        </table>
+                        <br/>
+                        <table class="table table-bordered">
+                            <tr>
+                                <td class="b1 text-center">
+                                    <strong>Is The Applicant Expected To Have Long Career With The Company</strong>
+                                </td>
+                                <td class="text-center w1">
+                                    <!--                                    <span>Yes()</span>-->
+                                    <span>لا (No)</span>
+                                    <span>
+                                        <t t-if="o.not_long_career">
+                                            <input type="checkbox" id="checkbox123_anything_you_give"
+                                                   checked="checked"/>
+                                        </t>
+                                        <t t-else="">
+                                            <input type="checkbox" id="checkbox124_anything_you_give"/>
+                                        </t>
+                                    </span>
+                                </td>
+
+                                <td class="text-center">
+                                    <span>نعم (Yes)</span>
+                                    <span>
+                                        <t t-if="o.long_career">
+                                            <input type="checkbox" id="checkbox125_anything_you_give"
+                                                   checked="checked"/>
+                                        </t>
+                                        <t t-else="">
+                                            <input type="checkbox" id="checkbox126_anything_you_give"/>
+                                        </t>
+                                    </span>
+                                    <!--                                    <span dir="rtl">لا()</span>-->
+
+                                </td>
+                                <td class="b1 text-center">هل من المتوقع استمراريته بالعمل لدى الشركة</td>
+                            </tr>
+                        </table>
+                        <br/>
+                        <div class="h11 col-12">
+                            <div dir="rtl" class="float-end" style="margin-right:60px;margin-top:30px;">
+                                <h6>ملاحظات:</h6>
+                            </div>
+                            <div dir="rtl" class="float-end" style="margin-right:60px;margin-top:30px;">
+                                <h6>
+                                    <span t-field="o.note"/>
+                                </h6>
+                            </div>
+                            <div class="float-start" style="margin-left:60px;margin-top:30px;">
+                                <h6>
+                                    <strong>Remarks:</strong>
+                                </h6>
+                            </div>
+                        </div>
+                        <br/>
+                        <table class="table table-bordered">
+                            <tr>
+                                <td class="b1 text-center">
+                                    <strong>Recommendation Of Hiring</strong>
+                                </td>
+                                <td class="text-center">
+                                    <strong>yes
+                                        <span>
+                                            <t t-if="o.rec_yes">
+                                                <input type="checkbox" id="checkbox127_anything_you_give"
+                                                       checked="checked"/>
+                                            </t>
+                                            <t t-else="">
+                                                <input type="checkbox" id="checkbox128_anything_you_give"/>
+                                            </t>
+                                        </span>
+                                        No
+                                        <span>
+                                            <t t-if="o.rec_no">
+                                                <input type="checkbox" id="checkbox129_anything_you_give"
+                                                       checked="checked"/>
+                                            </t>
+                                            <t t-else="">
+                                                <input type="checkbox" id="checkbox130_anything_you_give"/>
+                                            </t>
+                                        </span>
+                                    </strong>
+                                </td>
+                                <td dir="rtl" class="text-center">
+                                    <span>
+                                        <span>
+                                            <t t-if="o_sec.rec_yes">
+                                                <input type="checkbox" id="checkbox131_anything_you_give"
+                                                       checked="checked"/>
+                                            </t>
+                                            <t t-else="">
+                                                <input type="checkbox" id="checkbox132_anything_you_give"/>
+                                            </t>
+                                        </span>
+                                        نعم
+                                        <span>
+                                            <t t-if="o_sec.rec_no">
+                                                <input type="checkbox" id="checkbox130_anything_you_give"
+                                                       checked="checked"/>
+                                            </t>
+                                            <t t-else="">
+                                                <input type="checkbox" id="checkbox129_anything_you_give"/>
+                                            </t>
+                                        </span>
+                                        لا
+                                    </span>
+                                </td>
+                                <td class="b1 text-center">التوصية بالتوظيف</td>
+                            </tr>
+                            <tr>
+                                <td class="b1 text-center">
+                                    <strong>Interviewers Name</strong>
+                                </td>
+                                <td class="text-center">
+                                    <span t-field="o.interviewer_ids" widget="many2many_tags"/>
+                                </td>
+                                <td class="text-center">
+                                    <span t-esc="o_sec.interviewer_ids.name"/>
+                                </td>
+                                <td class="b1 text-center">اسم مجري المقابلة الشخصية</td>
+                            </tr>
+                            <tr>
+                                <td class="b1 text-center">
+                                    <strong>Signature</strong>
+                                </td>
+                                <td class="text-center"></td>
+                                <td class="text-center">
+                                </td>
+                                <td class="b1 text-center">التوقيع</td>
+                            </tr>
+                        </table>
+                    </t>
+                </t>
+            </t>
+        </t>
+    </template>
+    <record id="action_hr_evaluation" model="ir.actions.report">
+        <field name="name">Interview Evaluation</field>
+        <field name="model">hr.applicant</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">flex_hr_recruitment.flex_interview_evaluation</field>
+        <field name="report_file">flex_hr_recruitment.flex_interview_evaluation</field>
+        <field name="binding_model_id" ref="hr_recruitment.model_hr_applicant"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>
