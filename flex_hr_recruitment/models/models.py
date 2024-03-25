@@ -39,7 +39,16 @@ class HrApplicant(models.Model):
         ('divorced3', 'مطلق'),
         ('widower4', 'أرمل'),
     ], string='Marital Status Arabic', default='single1')
-    contract_duration = fields.Char(string='Contract Duration', translate=True)
+    contract_duration = fields.Selection([
+        ('3', '3 Months'),
+        ('6', '6 Months'),
+        ('9', '9 Months'),
+        ('12', '12 Months'),
+        ('15', '15 Months'),
+        ('18', '18 Months'),
+        ('21', '21 Months'),
+        ('24', '24 Months'),
+    ], string='Contract Duration', default=False)
     housing_allowance1 = fields.Float(string='Housing Allowance')
     transportation_allowance1 = fields.Float(string='Transportation Allowance')
     annual_leave = fields.Many2one('annual.leave', string='Annual Leave')
@@ -65,6 +74,7 @@ class HrApplicant(models.Model):
     rec_no = fields.Boolean(string='No')
 
     note = fields.Text(string='Note')
+    is_created_employee = fields.Boolean(string='Is Created Employee', default=False)
 
     @api.onchange('stage_id')
     def _onchange_stage_id(self):
@@ -179,6 +189,7 @@ class HrApplicant(models.Model):
                 'employee_id': employee.id,
                 'department_id': self.department_id.id,
                 'job_id': self.job_id.id,
+                'contract_type_duration': self.contract_duration,
                 # 'job_id': self.job_id.id,
                 # 'wage': self.expected_salary,
                 # 'date_start': self.contract_start_date,
@@ -190,6 +201,7 @@ class HrApplicant(models.Model):
             })
             for rec in self:
                 rec.employee_id = employee.id
+        self.is_created_employee = True
         return {
             'type': 'ir.actions.act_window',
             'name': 'Employees',
@@ -328,3 +340,51 @@ class HrContract(models.Model):
                 rec.contract_duration_ar_month = '211'
             elif rec.contract_type_duration == '24':
                 rec.contract_duration_ar_month = '241'
+
+
+class HrContractSalaryOffer(models.Model):
+    _inherit = 'hr.contract.salary.offer'
+
+    def action_offer_send(self):
+        """ Opens a wizard to compose an email, with relevant mail template loaded by default """
+        self.ensure_one()
+
+        lang = self.env.context.get('lang')
+        mail_template = self._find_mail_template()
+        if mail_template and mail_template.lang:
+            lang = mail_template._render_lang(self.ids)[self.id]
+        ctx = {
+            'default_model': 'hr.contract.salary.offer',
+            'default_res_ids': self.ids,
+            'default_template_id': mail_template.id if mail_template else None,
+            'default_composition_mode': 'comment',
+            'mark_so_as_sent': True,
+            'default_email_layout_xmlid': 'mail.mail_notification_layout_with_responsible_signature',
+            # 'proforma': self.env.context.get('proforma', False),
+            'force_email': True,
+            'model_description': self.with_context(lang=lang)
+        }
+        return {
+            'type': 'ir.actions.act_window',
+            'view_mode': 'form',
+            'res_model': 'mail.compose.message',
+            'views': [(False, 'form')],
+            'view_id': False,
+            'target': 'new',
+            'context': ctx,
+        }
+
+    def _find_mail_template(self):
+        """ Get the appropriate mail template for the current sales order based on its state.
+
+        If the SO is confirmed, we return the mail template for the sale confirmation.
+        Otherwise, we return the quotation email template.
+
+        :return: The correct mail template based on the current status
+        :rtype: record of `mail.template` or `None` if not found
+        """
+        self.ensure_one()
+
+        return self.env.ref('flex_hr_recruitment.email_template_edi_offer', raise_if_not_found=False)
+
+

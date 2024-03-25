@@ -9,9 +9,9 @@
                 <field name="interview_date"/>
             </xpath>
             <xpath expr="//header" position="inside">
-                <button name="action_offer_send" string="Send Job Offer" type="object" class="oe_highlight"
-                        invisible="stage_id_char != 'Contract Proposal'"/>
-                <button name="create_employee" string="Create employee" type="object" class="oe_highlight"/>
+<!--                <button name="action_offer_send" string="Send Job Offer" type="object" class="oe_highlight"-->
+<!--                        invisible="stage_id_char != 'Contract Proposal'"/>-->
+                <button name="create_employee" string="Create employee" type="object" class="oe_highlight" invisible="is_created_employee == True"/>
             </xpath>
             <xpath expr="//notebook" position="inside">
                 <page string="Interview Evaluation">
@@ -51,16 +51,17 @@
                         <field name="nationality" required="stage_id_char == 'Contract Proposal'"/>
                         <field name="marital_status" required="stage_id_char == 'Contract Proposal'"/>
                         <field name="marital_status_ar" invisible="1"/>
-                    </group>
-                </page>
-                <page string="Offer State">
-                    <group>
-                        <field name="accept"/>
-                        <field name="not_accept"/>
-                        <field name="start_work_date" required="accept == True"/>
                         <field name="stage_id_char" invisible="1"/>
                     </group>
                 </page>
+<!--                <page string="Offer State">-->
+<!--                    <group>-->
+<!--                        <field name="accept"/>-->
+<!--                        <field name="not_accept"/>-->
+<!--                        <field name="start_work_date" required="accept == True"/>-->
+                        <field name="stage_id_char" invisible="1"/>
+<!--                    </group>-->
+<!--                </page>-->
                 <!--                <page string="Contract information">-->
                 <!--                    <group>-->
                 <!--                        <field name="basic_salary"/>-->
@@ -76,6 +77,7 @@
                 <label for="housing_allowance1"/>
                 <div class="o_row">
                     <field name="housing_allowance1" required="stage_id_char == 'Contract Proposal'"/>
+                    <field name="is_created_employee" invisible="1"/>
                 </div>
                 <label for="transportation_allowance1"/>
                 <div class="o_row">
@@ -128,4 +130,16 @@
                 </xpath>
             </field>
         </record>
+    <!-- Inherit Form View to Modify it -->
+    <record id="hr_contract_salary_offer_view_form_inherit" model="ir.ui.view">
+        <field name="name">hr.contract.salary.offer.view.form.inherit</field>
+        <field name="model">hr.contract.salary.offer</field>
+        <field name="inherit_id" ref="hr_contract_salary.hr_contract_salary_offer_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="action_offer_send" string="Send Job Offer" type="object" class="oe_highlight"/>
+            </xpath>
+
+        </field>
+    </record>
 </odoo>
