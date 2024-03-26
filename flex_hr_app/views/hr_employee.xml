@@ -8,6 +8,8 @@
             <xpath expr="//div[@name='button_box']" position="inside">
                 <button name="action_view_hr_token" type="object" icon="fa-lock" class="oe_stat_button"
                         string="Access Tokens" groups="base.group_system"/>
+                <button name="action_view_hr_notify" type="object" icon="fa-list-ul" class="oe_stat_button"
+                        string="App Notifications" groups="base.group_system"/>
             </xpath>
             <xpath expr="//field[@name='pin']" position="before">
                 <field name="api_username"/>

@@ -1,3 +1,4 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 hr_token_r,hr_token_r,model_hr_token,,1,0,0,0
 hr_employee_public_r,hr_employee_public_r,hr.model_hr_employee_public,,1,0,0,0
+hr_notify_r,hr_notify_r,model_hr_notify,,1,0,0,0
