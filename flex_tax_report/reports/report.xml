@@ -255,7 +255,7 @@
                     <!--                        </div>-->
                     <!--                    </div>-->
 
-                    <table class="table table-bordered font_13 mt-4" dir="rtl" name="table_invoice">
+                    <table class="font_13 mt-4" dir="rtl" name="table_invoice">
                         <thead>
                             <tr>
 
@@ -266,7 +266,7 @@
                                 </th>
 
 
-                                <th style="width: 10%">
+                                <th style="width: 11%">
                                     <span>سعر الوحدة</span>
                                     <br/>
                                     <span>Unit Rate</span>
@@ -291,7 +291,7 @@
                                 </th>
 
 
-                                <th>
+                                <th class="fixed-width">
                                     <span>رمز الصنف</span>
                                     <br/>
                                     <span>Product Code</span>
@@ -371,6 +371,9 @@
                         </tbody>
 
                     </table>
+
+                    <br/>
+                    <br/>
 
 
                     <div class="row">
