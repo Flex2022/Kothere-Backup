@@ -46,11 +46,11 @@ class HrEmployee(models.Model):
         now = fields.Datetime.now()
         huawei_client_id = self.env["ir.config_parameter"].sudo().get_param("huawei_client_id")
         huawei_client_secret = self.env["ir.config_parameter"].sudo().get_param("huawei_client_secret")
-        # android_server_key = self.env["ir.config_parameter"].sudo().get_param("android_server_key")
+        android_server_key = self.env["ir.config_parameter"].sudo().get_param("android_server_key")
         # huawei_client_id = "-109269039"
         # huawei_client_secret = "-6324a22e3908f311ae1b607f70a9234af995df914c36dca4aa7596e8f3c55f25"
         # android_server_key = 'key=AAAAbZxgcqI:APA91bFvDOvPzREQo6gZEgqqTAOEm1aW6TIGwfwpPaXnB9uPuU_CSjFGjQ6LiXR2NSJKTPmFrP-OXwGjka5DA71_WOEoiXaYwort_C-QYyniPP8nrw2HUHrcGOwKHRAwRXz_KaiQFTg8'
-        android_server_key = 'key=AAAAlvQMTqw:APA91bHEVyopYSrqwhJ0EVRgFP1BgMOrSXmGi_sUyjKCdBWCgNau8OyJJu5dT5GAtE7jMh1WRNvxr2R0e67pzMzl6_9DGy7Wtx2BqRuoF2cqQXBtu2-C4TAy0CHPB1vT9oU5ELellcy0'
+        # android_server_key = 'key=AAAAlvQMTqw:APA91bHEVyopYSrqwhJ0EVRgFP1BgMOrSXmGi_sUyjKCdBWCgNau8OyJJu5dT5GAtE7jMh1WRNvxr2R0e67pzMzl6_9DGy7Wtx2BqRuoF2cqQXBtu2-C4TAy0CHPB1vT9oU5ELellcy0'
 
         for employee in self:
             sendable_tokens = employee.token_ids.filtered(lambda t: t.device_token and t.date_expiry > now)
