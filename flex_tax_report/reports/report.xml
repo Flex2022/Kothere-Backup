@@ -384,7 +384,7 @@
                                 </div>
                                 <div class="col-6 float-start text-center">
                                     <span>
-                                        <t t-esc="o.amount_untaxed"/>
+                                        <t t-esc="round(o.amount_untaxed,2)"/>
                                     </span>
                                 </div>
                                 <div class="col-3 float-start" dir="rtl">
@@ -397,7 +397,7 @@
                                 </div>
                                 <div class="col-6 float-start text-center">
                                     <span>
-                                        <t t-esc="o.amount_tax"/>
+                                        <t t-esc="round(o.amount_tax,2)"/>
                                     </span>
                                 </div>
                                 <div class="col-3 float-start" dir="rtl">
@@ -409,7 +409,7 @@
                                 </div>
                                 <div class="col-6 float-start text-center">
                                     <span>
-                                        <t t-esc="o.amount_total"/>
+                                        <t t-esc="round(o.amount_total,2)"/>
                                     </span>
                                 </div>
                                 <div class="col-3 float-start" dir="rtl">
@@ -422,7 +422,7 @@
                                 </div>
                                 <div class="col-6 float-start text-center">
                                     <span>
-                                        <t t-esc="o.deductions_amount_type_discounts"/>
+                                        <t t-esc="round(o.deductions_amount_type_discounts,2)"/>
                                     </span>
                                 </div>
                                 <div class="col-3 float-start" dir="rtl">
@@ -434,7 +434,7 @@
                                 </div>
                                 <div class="col-6 float-start text-center">
                                     <span>
-                                        <t t-esc="o.deductions_amount_type_insurances"/>
+                                        <t t-esc="round(o.deductions_amount_type_insurances,2)"/>
                                     </span>
                                 </div>
                                 <div class="col-3 float-start" dir="rtl">
@@ -447,7 +447,7 @@
                                 </div>
                                 <div class="col-4 float-start text-center">
                                     <span>
-                                        <t t-esc="o.deductions_amount_type_business_guarantee"/>
+                                        <t t-esc="round(o.deductions_amount_type_business_guarantee,2)"/>
                                     </span>
                                 </div>
                                 <div class="col-3 float-start" dir="rtl">
@@ -459,7 +459,7 @@
                                 </div>
                                 <div class="col-4 float-start text-center">
                                     <span>
-                                        <t t-esc="o.deductions_amount_type_final_guarantee"/>
+                                        <t t-esc="round(o.deductions_amount_type_final_guarantee,2)"/>
                                     </span>
                                 </div>
                                 <div class="col-3 float-start" dir="rtl">
@@ -471,7 +471,7 @@
                                 </div>
                                 <div class="col-4 float-start text-center">
                                     <span>
-                                        <t t-esc="o.deductions_amount_type_advance_payment"/>
+                                        <t t-esc="round(o.deductions_amount_type_advance_payment,2)"/>
                                     </span>
                                 </div>
                                 <div class="col-3 float-start" dir="rtl">
@@ -497,7 +497,7 @@
                                 </div>
                                 <div class="col-4 float-start text-center">
                                     <span>
-                                        <t t-esc="o.additions_amount"/>
+                                        <t t-esc="round(o.additions_amount,2)"/>
                                     </span>
                                 </div>
                                 <div class="col-3 float-start" dir="rtl">
@@ -509,7 +509,7 @@
                                 </div>
                                 <div class="col-4 float-start text-center">
                                     <span>
-                                        <t t-esc="o.all_total_deductions"/>
+                                        <t t-esc="round(o.all_total_deductions,2)"/>
                                     </span>
                                 </div>
                                 <div class="col-3 float-start" dir="rtl">
@@ -536,10 +536,12 @@
                                 <br/>
                                 <span t-esc="o.currency_id.with_context(lang='ar_001').amount_to_text(o.amount_total)"/>
                                 <br/>
+                                <br/>
 
                                 <div class="row text-right">
                                     <div class="col-10"/>
                                     <div class="col-8">
+                                        <br/>
                                         <p>
                                             <img t-if="o.l10n_sa_qr_code_str"
                                                  style="display:block;"
