@@ -504,6 +504,18 @@
                                     <span>اجمالي الاضافات</span>
                                 </div>
 
+                                <div class="col-5 float-start">
+                                    <span>Amount</span>
+                                </div>
+                                <div class="col-4 float-start text-center">
+                                    <span>
+                                        <t t-esc="o.all_total_deductions"/>
+                                    </span>
+                                </div>
+                                <div class="col-3 float-start" dir="rtl">
+                                    <span>الاجمالي</span>
+                                </div>
+
 
                                 <!--                                <div class="col-3 float-start">-->
                                 <!--                                    <span>total value of what is due, including value-added tax</span>-->
