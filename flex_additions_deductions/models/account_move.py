@@ -34,6 +34,8 @@ class AccountMove(models.Model):
                                                           store=True)
     deductions_amount_type_business_guarantee = fields.Float('Business Guarantee', compute='_compute_deductions_amount',
                                                              store=True)
+    deductions_amount_type_final_guarantee = fields.Float('Final Guarantee', compute='_compute_deductions_amount',
+                                                            store=True)
 
     # sum
     total_deductions = fields.Float('Total value of the extract', compute='_compute_total_deductions', store=True)
@@ -174,6 +176,9 @@ class AccountMove(models.Model):
             case_4 = self.env['deductions.lines'].search(
                 [('invoice_id', '=', record.id), ('deductions_id.type_deductions', '=', '4')])
             record.deductions_amount_type_business_guarantee = sum(case_4.mapped('amount'))
+            case_5 = self.env['deductions.lines'].search(
+                [('invoice_id', '=', record.id), ('deductions_id.type_deductions', '=', '5')])
+            record.deductions_amount_type_final_guarantee = sum(case_5.mapped('amount'))
 
     # Compute Functions For Amounts
     @api.depends('flex_additions_ids')

@@ -15,7 +15,8 @@ class Additions_deductions(models.Model):
     type_deductions = fields.Selection([('1', 'الخصم'),
                                         ('2', 'التامينات'),
                                         ('3', 'دفعة مقدمة'),
-                                        ('4', 'ضمان اعمال')], string='Deductions')
+                                        ('4', 'ضمان اعمال'),
+                                        ('5', 'ضمان نهائي')], string='Deductions')
 
 
     def open_additions_deductions_menu(self):

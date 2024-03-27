@@ -111,6 +111,9 @@
                             <field name="deductions_amount_type_business_guarantee" widget='monetary'
                                    options="{'currency_field': 'currency_id'}"
                                    invisible="there_is_access_from_company_id == False"/>
+                            <field name="deductions_amount_type_final_guarantee" widget='monetary'
+                                      options="{'currency_field': 'currency_id'}"
+                                      invisible="there_is_access_from_company_id == False"/>
                             <field name="deductions_amount" widget='monetary'
                                    options="{'currency_field': 'currency_id'}"
                                    invisible="there_is_access_from_company_id == False"/>
