@@ -29,15 +29,18 @@ class HrToken(models.Model):
     date_expiry = fields.Datetime(string="Valid Until", required=True, default=lambda s: s._expiry())
 
     @api.model
-    def get_valid_token(self, employee_id=False, create=False):
+    def get_valid_token(self, employee_id=False, device_token=False, create=False):
         if not employee_id:
             return False
         now = fields.Datetime.now()
-        access_token = self.sudo().search([('employee_id', '=', employee_id), ('date_expiry', '>', now)], order="id DESC", limit=1)
+        domain = [('employee_id', '=', employee_id), ('date_expiry', '>', now)]
+        if device_token:
+            domain += [('device_token', '=', device_token)]
+        access_token = self.sudo().search(domain, order="id DESC", limit=1)
         if access_token:
             return access_token[0].token
         elif create:
-            return self.sudo().create({"employee_id": employee_id}).token
+            return self.sudo().create({"employee_id": employee_id, 'device_token': device_token}).token
         return False
 
     def _update_token(self):
