@@ -24,6 +24,8 @@ class DeductionsLines(models.Model):
             self.name = 'دفعة مقدمة'
         elif self.deductions_id.type_deductions == '4':
             self.name = 'ضمان اعمال'
+        elif self.deductions_id.type_deductions == '5':
+            self.name = 'ضمان نهائي'
 
     @api.depends('is_percentage', 'percentage_or_value')
     def _compute_amount(self):
