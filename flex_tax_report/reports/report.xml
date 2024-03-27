@@ -493,7 +493,7 @@
 
 
                                 <div class="col-5 float-start">
-                                    <span>Deductions Amount</span>
+                                    <span>Additions Amount</span>
                                 </div>
                                 <div class="col-4 float-start text-center">
                                     <span>
@@ -505,7 +505,7 @@
                                 </div>
 
                                 <div class="col-5 float-start">
-                                    <span>Amount</span>
+                                    <span>Amount Due</span>
                                 </div>
                                 <div class="col-4 float-start text-center">
                                     <span>
@@ -513,7 +513,7 @@
                                     </span>
                                 </div>
                                 <div class="col-3 float-start" dir="rtl">
-                                    <span>الاجمالي</span>
+                                    <span>المبلغ المستحق</span>
                                 </div>
 
 
