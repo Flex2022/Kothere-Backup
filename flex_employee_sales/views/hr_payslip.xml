@@ -8,9 +8,15 @@
             <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='payslip_run_id']" position="after">
-                    <label for="total_sales" string="Total Sales : " groups="hr.group_hr_user"/>
+                    <label for="total_sales" string="Total Sales Employee " groups="hr.group_hr_user"/>
                     <div groups="hr.group_hr_user">
                         <field name="total_sales" class="oe_inline"/>
+                        <field name="currency_id" class="oe_inline"/>
+                        <button name="update_sale_total" string="" type="object" class="inline" icon="fa-refresh"/>
+                    </div>
+                    <label for="total_all_sales" string="Total Sales : " groups="hr.group_hr_user"/>
+                    <div groups="hr.group_hr_user">
+                        <field name="total_all_sales" class="oe_inline"/>
                         <field name="currency_id" class="oe_inline"/>
                         <button name="update_sale_total" string="" type="object" class="inline" icon="fa-refresh"/>
                     </div>

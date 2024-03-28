@@ -4,9 +4,8 @@ from odoo import api, fields, models
 class Payslip(models.Model):
     _inherit = 'hr.payslip'
 
-    total_sales = fields.Float(string='Total Sales', compute='_compute_total_sales', store=True)
-    # invoice_ids = fields.Many2many('account.move', string='Invoices', compute='get_all_invoice_for_employee',
-    #                                store=True)
+    total_sales = fields.Float(string='Total Sales Employee', compute='_compute_total_sales', store=True)
+    total_all_sales = fields.Float(string='Total Sales', compute='_compute_all_total_sales', store=True)
 
     @api.depends('employee_id', 'date_from', 'date_to')
     def _compute_total_sales(self):
@@ -38,8 +37,40 @@ class Payslip(models.Model):
                 ]
             )
 
+            all_invoice_based_on_date_range = self.env['account.move'].search(
+                [
+                    ('state', '=', 'posted'),
+                    ('invoice_date', '>=', payslip.date_from),
+                    ('invoice_date', '<=', payslip.date_to)
+                ]
+            )
+
+
             total_sales = 0
             if all_invoice_for_employee:
                 for invoice in all_invoice_for_employee:
                     total_sales += invoice.amount_total
             payslip.total_sales = total_sales
+            total_sales_2 = 0
+            if all_invoice_based_on_date_range:
+                for invoice in all_invoice_based_on_date_range:
+                    total_sales_2 += invoice.amount_total
+            payslip.total_all_sales = total_sales_2
+
+
+    @api.depends('employee_id', 'date_from', 'date_to')
+    def _compute_all_total_sales(self):
+        for payslip in self:
+            all_invoice_for_employee = self.env['account.move'].search(
+                [
+                    ('state', '=', 'posted'),
+                    ('invoice_date', '>=', payslip.date_from),
+                    ('invoice_date', '<=', payslip.date_to)
+                ]
+            )
+
+            total_sales = 0
+            if all_invoice_for_employee:
+                for invoice in all_invoice_for_employee:
+                    total_sales += invoice.amount_total
+            payslip.total_all_sales = total_sales
