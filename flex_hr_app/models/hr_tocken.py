@@ -30,6 +30,7 @@ class HrToken(models.Model):
 
     @api.model
     def get_valid_token(self, employee_id=False, device_token=False, create=False):
+        _logger.info(f"device_token: {device_token}")
         if not employee_id:
             return False
         now = fields.Datetime.now()
@@ -40,7 +41,7 @@ class HrToken(models.Model):
         if access_token:
             return access_token[0].token
         elif create:
-            return self.sudo().create({"employee_id": employee_id, 'device_token': device_token}).token
+            return self.sudo().create({"employee_id": employee_id, "device_token": device_token}).token
         return False
 
     def _update_token(self):

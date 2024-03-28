@@ -64,6 +64,8 @@ class HrApi(http.Controller):
         # token = headers.get('token', '').strip()
         device_token = headers.get('device_token', '').strip()
         # print(f"headers: {headers}")
+        _logger.info(f"\nheaders: {headers}")
+        _logger.info(f"\ndevice_token: {device_token}")
         auth_header = headers.get('Authorization')
         if not auth_header.startswith('Basic '):
             res = {"result": {"error": f"Authorization type should be 'Basic Auth'"}}
