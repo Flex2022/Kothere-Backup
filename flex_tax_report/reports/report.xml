@@ -534,7 +534,7 @@
                             <div class="col-6 float-end padding22" dir="rtl">
                                 <span>صافي الاجمالي</span>
                                 <br/>
-                                <span t-esc="o.currency_id.with_context(lang='ar_001').amount_to_text(o.amount_total)"/>
+                                <span t-esc="o.currency_id.with_context(lang='ar_001').amount_to_text(o.all_total_deductions)"/>
                                 <br/>
                                 <br/>
 
