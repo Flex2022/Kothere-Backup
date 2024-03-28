@@ -16,7 +16,6 @@ class RepairOrder(models.Model):
         for rec in self:
             rec.purchase_count = len(rec.move_ids.created_purchase_line_ids.order_id)
             purchase_order_ids = (self.move_ids.created_purchase_line_ids.order_id).ids
-            print(purchase_order_ids, 'purchase_order_ids')
 
     def get_purchase_order(self):
         purchase_order_ids = (self.move_ids.created_purchase_line_ids.order_id).ids

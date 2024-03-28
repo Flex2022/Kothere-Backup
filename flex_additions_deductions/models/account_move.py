@@ -302,7 +302,7 @@ class AccountMoveLine(models.Model):
                             ('move_type', '=', 'out_invoice'),
                             ('deductions_no', '=', invoice.deductions_no - 1)
                         ], limit=1)
-                        print(previous_invoice)
+
 
                         if previous_invoice:
                             previous_invoice_line = self.env['account.move.line'].search([
@@ -310,7 +310,6 @@ class AccountMoveLine(models.Model):
                                 ('product_id', '=', record.product_id.id)
                             ], limit=1)
                             if previous_invoice_line:
-                                print(previous_invoice_line.total_accomplishment)
                                 record.previous_accomplishment = previous_invoice_line.total_accomplishment
                             else:
                                 record.previous_accomplishment = 0.0

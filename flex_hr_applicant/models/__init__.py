@@ -39,7 +39,6 @@ class HrApplicant(models.Model):
     def _onchange_visa_status(self):
         today = fields.Date.today()
         after_six_month = today + relativedelta(months=6)
-        # print(after_six_month, self.visa_expiry_date)
         if isinstance(self.visa_expiry_date, date) and isinstance(after_six_month, date):
             # if self.visa_expiry_date < after_six_month:
             if self.visa_expiry_date < after_six_month:

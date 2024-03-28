@@ -11,12 +11,12 @@ class SalaryIncrease(models.Model):
     _inherit = ['mail.thread', 'mail.activity.mixin']
     _order = 'id desc'
 
-    name = fields.Char(string='Name', copy=False, help="Name", track_visibility='always',
+    name = fields.Char(string='Name', copy=False, help="Name", tracking=True,
                        states={'draft': [('readonly', False)], 'submit': [('readonly', False)]})
     company_id = fields.Many2one('res.company', 'Company', help="Company",
-                                 default=lambda self: self.env.user.company_id, track_visibility='always',
+                                 default=lambda self: self.env.user.company_id, tracking=True,
                                  states={'draft': [('readonly', False)], 'submit': [('readonly', False)]})
-    date = fields.Date('Date', default=lambda self: fields.datetime.now(), track_visibility='always',
+    date = fields.Date('Date', default=lambda self: fields.datetime.now(), tracking=True,
                        states={'draft': [('readonly', False)], 'submit': [('readonly', False)]})
     user_id = fields.Many2one('res.users', string='Responsable', index=True, tracking=True,
                               default=lambda self: self.env.user, check_company=True,

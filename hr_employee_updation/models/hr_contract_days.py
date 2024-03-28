@@ -113,9 +113,9 @@ class HrEmployeeContract(models.Model):
     eos_provision = fields.Float('EOS Provision')
     currency_id = fields.Many2one("res.currency", related=False, readonly=False, required=True,
                                   default=lambda self: self.env.user.company_id.currency_id,
-                                  track_visibility='always')
+                                  tracking=True)
     contract_template = fields.Html('Contract Template')
-    attached = fields.Binary(string='UPLOAD YOUR FILE', track_visibility='always', readonly=True,
+    attached = fields.Binary(string='UPLOAD YOUR FILE', tracking=True, readonly=True,
                              states={'draft': [('readonly', False)], 'confirm': [('readonly', False)]})
     stop_daily_notification = fields.Boolean('Stop Notification')
     total_with_variable_increase = fields.Float('Total with Variable Increase', compute='_compute_total_salary',
