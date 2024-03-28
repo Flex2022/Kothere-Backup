@@ -8,6 +8,7 @@
             <field name="work_phone" position="after">
                 <field name="mobile_phone"/>
                 <field name="work_mobile_ext"/>
+                <field name="employee_number"/>
             </field>
         </field>
     </record>

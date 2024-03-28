@@ -5,17 +5,44 @@
         <field name="model">hr.applicant</field>
         <field name="inherit_id" ref="hr_recruitment.hr_applicant_view_form"/>
         <field name="arch" type="xml">
+            <xpath expr="//field[@name='interviewer_ids']" position="after">
+                <field name="interview_date"/>
+            </xpath>
             <xpath expr="//header" position="inside">
-                <button name="action_offer_send" string="Send Job Offer" type="object" class="oe_highlight" invisible="stage_id_char != 'Contract Proposal'"/>
+<!--                <button name="action_offer_send" string="Send Job Offer" type="object" class="oe_highlight"-->
+<!--                        invisible="stage_id_char != 'Contract Proposal'"/>-->
+                <button name="create_employee" string="Create employee" type="object" class="oe_highlight" invisible="is_created_employee == True"/>
             </xpath>
             <xpath expr="//notebook" position="inside">
-                <page string="Evaluation">
+                <page string="Interview Evaluation">
                     <field name="evaluation_rate">
                         <tree string="Evaluation Rate" editable="bottom">
                             <field name="evaluation_rate"/>
-                            <field name="priority" widget="priority"/>
+                            <field name="poor"/>
+                            <field name="medium"/>
+                            <field name="good"/>
+                            <field name="excellent"/>
+<!--                            <field name="priority" widget="priority"/>-->
                         </tree>
                     </field>
+                    <group>
+                        <group string="Career Goals">
+                            <field name="exag"/>
+                            <field name="reas"/>
+                            <field name="not_clear"/>
+                        </group>
+                        <group string="Long Career">
+                            <field name="long_career"/>
+                            <field name="not_long_career"/>
+                        </group>
+                        <group string="Recommendation">
+                            <field name="rec_yes"/>
+                            <field name="rec_no"/>
+                        </group>
+                        <group string="Other">
+                            <field name="note"/>
+                        </group>
+                    </group>
                 </page>
                 <page string="Applicant information">
                     <group>
@@ -24,16 +51,17 @@
                         <field name="nationality" required="stage_id_char == 'Contract Proposal'"/>
                         <field name="marital_status" required="stage_id_char == 'Contract Proposal'"/>
                         <field name="marital_status_ar" invisible="1"/>
-                    </group>
-                </page>
-                <page string="Offer State">
-                    <group>
-                        <field name="accept"/>
-                        <field name="not_accept"/>
-                        <field name="start_work_date" required="accept == True"/>
                         <field name="stage_id_char" invisible="1"/>
                     </group>
                 </page>
+<!--                <page string="Offer State">-->
+<!--                    <group>-->
+<!--                        <field name="accept"/>-->
+<!--                        <field name="not_accept"/>-->
+<!--                        <field name="start_work_date" required="accept == True"/>-->
+                        <field name="stage_id_char" invisible="1"/>
+<!--                    </group>-->
+<!--                </page>-->
                 <!--                <page string="Contract information">-->
                 <!--                    <group>-->
                 <!--                        <field name="basic_salary"/>-->
@@ -49,6 +77,7 @@
                 <label for="housing_allowance1"/>
                 <div class="o_row">
                     <field name="housing_allowance1" required="stage_id_char == 'Contract Proposal'"/>
+                    <field name="is_created_employee" invisible="1"/>
                 </div>
                 <label for="transportation_allowance1"/>
                 <div class="o_row">
@@ -86,7 +115,31 @@
             <xpath expr="//field[@name='partner_name']" position="after">
                 <label for="partner_name_ar"/>
                 <field name="partner_name_ar" string="Name in Arabic"/>
+                <field name="employee_id" invisible="1"/>
+                <field name="employee_number" invisible="1"/>
             </xpath>
+        </field>
+    </record>
+    <record id="flex_hr_employee_hr_employee_form_inherit_new" model="ir.ui.view">
+            <field name="name">flex.hr.employee.hr.employee.form.inherit.new</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='country_of_birth']" position="after">
+                    <field name="marital_status"/>
+                </xpath>
+            </field>
+        </record>
+    <!-- Inherit Form View to Modify it -->
+    <record id="hr_contract_salary_offer_view_form_inherit" model="ir.ui.view">
+        <field name="name">hr.contract.salary.offer.view.form.inherit</field>
+        <field name="model">hr.contract.salary.offer</field>
+        <field name="inherit_id" ref="hr_contract_salary.hr_contract_salary_offer_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="action_offer_send" string="Send Job Offer" type="object" class="oe_highlight"/>
+            </xpath>
+
         </field>
     </record>
 </odoo>

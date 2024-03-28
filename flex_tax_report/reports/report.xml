@@ -142,37 +142,37 @@
                                 </div>
 
 
-                                <div class="col-4 float-start">
-                                    <span>Customer PO NO:</span>
-                                </div>
-                                <div class="col-6 float-start text-center">
-                                    <span t-if="o.po_number.name">
-                                        <t t-esc="o.po_number.name"/>
-                                    </span>
-                                    <span t-if="not o.po_number.name">
-                                        NONE
-                                    </span>
-                                </div>
-                                <div class="col-2 float-start" dir="rtl">
-                                    <span>رقم الطلب</span>
-                                </div>
+                                <!--                                <div class="col-4 float-start">-->
+                                <!--                                    <span>Customer PO NO:</span>-->
+                                <!--                                </div>-->
+                                <!--                                <div class="col-6 float-start text-center">-->
+                                <!--                                    <span t-if="o.po_number.name">-->
+                                <!--                                        <t t-esc="o.po_number.name"/>-->
+                                <!--                                    </span>-->
+                                <!--                                    <span t-if="not o.po_number.name">-->
+                                <!--                                        NONE-->
+                                <!--                                    </span>-->
+                                <!--                                </div>-->
+                                <!--                                <div class="col-2 float-start" dir="rtl">-->
+                                <!--                                    <span>رقم الطلب</span>-->
+                                <!--                                </div>-->
 
 
-                                <div class="col-4 float-start">
-                                    <span>Cust PO Date:</span>
-                                </div>
-                                <div class="col-5 float-start text-center">
+                                <!--                                <div class="col-4 float-start">-->
+                                <!--                                    <span>Cust PO Date:</span>-->
+                                <!--                                </div>-->
+                                <!--                                <div class="col-5 float-start text-center">-->
 
-                                    <span t-if="o.po_number">
-                                        <t t-esc="o.po_number.create_date.strftime('%d-%m-%Y')"/>
-                                    </span>
-                                    <span t-if="not o.po_number">
-                                        NONE
-                                    </span>
-                                </div>
-                                <div class="col-3 float-start" dir="rtl">
-                                    <span>تاريخ طلب الشراء</span>
-                                </div>
+                                <!--                                    <span t-if="o.po_number">-->
+                                <!--                                        <t t-esc="o.po_number.create_date.strftime('%d-%m-%Y')"/>-->
+                                <!--                                    </span>-->
+                                <!--                                    <span t-if="not o.po_number">-->
+                                <!--                                        NONE-->
+                                <!--                                    </span>-->
+                                <!--                                </div>-->
+                                <!--                                <div class="col-3 float-start" dir="rtl">-->
+                                <!--                                    <span>تاريخ طلب الشراء</span>-->
+                                <!--                                </div>-->
 
 
                                 <div class="col-4 float-start">
@@ -255,7 +255,7 @@
                     <!--                        </div>-->
                     <!--                    </div>-->
 
-                    <table class="table table-bordered font_13 mt-4" dir="rtl" name="table_invoice">
+                    <table class="font_13 mt-4" dir="rtl" name="table_invoice">
                         <thead>
                             <tr>
 
@@ -266,19 +266,19 @@
                                 </th>
 
 
-                                <th>
+                                <th style="width: 11%">
                                     <span>سعر الوحدة</span>
                                     <br/>
                                     <span>Unit Rate</span>
                                 </th>
 
-                                <th>
+                                <th style="width: 10%">
                                     <span>الكمية</span>
                                     <br/>
                                     <span>Quy</span>
                                 </th>
 
-                                <th>
+                                <th style="width: 10%">
                                     <span>الوحدة</span>
                                     <br/>
                                     <span>Unit</span>
@@ -291,13 +291,13 @@
                                 </th>
 
 
-                                <th>
+                                <th class="fixed-width">
                                     <span>رمز الصنف</span>
                                     <br/>
                                     <span>Product Code</span>
                                 </th>
 
-                                <th>
+                                <th style="width: 10%">
                                     <span>رقم</span>
                                     <br/>
                                     <span>SL.NO</span>
@@ -372,6 +372,9 @@
 
                     </table>
 
+                    <br/>
+                    <br/>
+
 
                     <div class="row">
                         <div class="col-12 border border-dark">
@@ -381,7 +384,7 @@
                                 </div>
                                 <div class="col-6 float-start text-center">
                                     <span>
-                                        <t t-esc="o.amount_untaxed"/>
+                                        <t t-esc="round(o.amount_untaxed,2)"/>
                                     </span>
                                 </div>
                                 <div class="col-3 float-start" dir="rtl">
@@ -394,7 +397,7 @@
                                 </div>
                                 <div class="col-6 float-start text-center">
                                     <span>
-                                        <t t-esc="o.amount_tax"/>
+                                        <t t-esc="round(o.amount_tax,2)"/>
                                     </span>
                                 </div>
                                 <div class="col-3 float-start" dir="rtl">
@@ -406,7 +409,7 @@
                                 </div>
                                 <div class="col-6 float-start text-center">
                                     <span>
-                                        <t t-esc="o.amount_total"/>
+                                        <t t-esc="round(o.amount_total,2)"/>
                                     </span>
                                 </div>
                                 <div class="col-3 float-start" dir="rtl">
@@ -419,7 +422,7 @@
                                 </div>
                                 <div class="col-6 float-start text-center">
                                     <span>
-                                        <t t-esc="o.deductions_amount_type_discounts"/>
+                                        <t t-esc="round(o.deductions_amount_type_discounts,2)"/>
                                     </span>
                                 </div>
                                 <div class="col-3 float-start" dir="rtl">
@@ -431,7 +434,7 @@
                                 </div>
                                 <div class="col-6 float-start text-center">
                                     <span>
-                                        <t t-esc="o.deductions_amount_type_insurances"/>
+                                        <t t-esc="round(o.deductions_amount_type_insurances,2)"/>
                                     </span>
                                 </div>
                                 <div class="col-3 float-start" dir="rtl">
@@ -444,7 +447,7 @@
                                 </div>
                                 <div class="col-4 float-start text-center">
                                     <span>
-                                        <t t-esc="o.deductions_amount_type_business_guarantee"/>
+                                        <t t-esc="round(o.deductions_amount_type_business_guarantee,2)"/>
                                     </span>
                                 </div>
                                 <div class="col-3 float-start" dir="rtl">
@@ -452,11 +455,23 @@
                                 </div>
 
                                 <div class="col-5 float-start">
+                                    <span>Final Guarantee</span>
+                                </div>
+                                <div class="col-4 float-start text-center">
+                                    <span>
+                                        <t t-esc="round(o.deductions_amount_type_final_guarantee,2)"/>
+                                    </span>
+                                </div>
+                                <div class="col-3 float-start" dir="rtl">
+                                    <span>ضمان نهائي</span>
+                                </div>
+
+                                <div class="col-5 float-start">
                                     <span>Advance Payment</span>
                                 </div>
                                 <div class="col-4 float-start text-center">
                                     <span>
-                                        <t t-esc="o.deductions_amount_type_advance_payment"/>
+                                        <t t-esc="round(o.deductions_amount_type_advance_payment,2)"/>
                                     </span>
                                 </div>
                                 <div class="col-3 float-start" dir="rtl">
@@ -469,7 +484,7 @@
                                 </div>
                                 <div class="col-4 float-start text-center">
                                     <span>
-                                        <t t-esc="o.deductions_amount"/>
+                                        <t t-esc="round(o.deductions_amount,2)"/>
                                     </span>
                                 </div>
                                 <div class="col-3 float-start" dir="rtl">
@@ -478,15 +493,27 @@
 
 
                                 <div class="col-5 float-start">
-                                    <span>Deductions Amount</span>
+                                    <span>Additions Amount</span>
                                 </div>
                                 <div class="col-4 float-start text-center">
                                     <span>
-                                        <t t-esc="o.additions_amount"/>
+                                        <t t-esc="round(o.additions_amount,2)"/>
                                     </span>
                                 </div>
                                 <div class="col-3 float-start" dir="rtl">
                                     <span>اجمالي الاضافات</span>
+                                </div>
+
+                                <div class="col-5 float-start">
+                                    <span>Amount Due</span>
+                                </div>
+                                <div class="col-4 float-start text-center">
+                                    <span>
+                                        <t t-esc="round(o.all_total_deductions,2)"/>
+                                    </span>
+                                </div>
+                                <div class="col-3 float-start" dir="rtl">
+                                    <span>المبلغ المستحق</span>
                                 </div>
 
 
@@ -507,7 +534,21 @@
                             <div class="col-6 float-end padding22" dir="rtl">
                                 <span>صافي الاجمالي</span>
                                 <br/>
-                                <span t-esc="o.currency_id.with_context(lang='ar_001').amount_to_text(o.amount_total)"/>
+                                <span t-esc="o.currency_id.with_context(lang='ar_001').amount_to_text(o.all_total_deductions)"/>
+                                <br/>
+                                <br/>
+
+                                <div class="row text-right">
+                                    <div class="col-10"/>
+                                    <div class="col-8">
+                                        <br/>
+                                        <p>
+                                            <img t-if="o.l10n_sa_qr_code_str"
+                                                 style="display:block;"
+                                                 t-att-src="'/report/barcode/?barcode_type=%s&amp;value=%s&amp;width=%s&amp;height=%s'%('QR', quote_plus(o.l10n_sa_qr_code_str), 100, 100)"/>
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
 
                         </div>
@@ -519,16 +560,16 @@
                         <span t-field="o.narration"/>
                     </div>
 
-                    <div class="row text-center">
-                        <div class="col-6"/>
-                        <div class="col-6">
-                            <p>
-                                <img t-if="o.l10n_sa_qr_code_str"
-                                     style="display:block;"
-                                     t-att-src="'/report/barcode/?barcode_type=%s&amp;value=%s&amp;width=%s&amp;height=%s'%('QR', quote_plus(o.l10n_sa_qr_code_str), 200, 200)"/>
-                            </p>
-                        </div>
-                    </div>
+                    <!--                    <div class="row text-right">-->
+                    <!--                        <div class="col-10"/>-->
+                    <!--                        <div class="col-2">-->
+                    <!--                            <p>-->
+                    <!--                                <img t-if="o.l10n_sa_qr_code_str"-->
+                    <!--                                     style="display:block;"-->
+                    <!--                                     t-att-src="'/report/barcode/?barcode_type=%s&amp;value=%s&amp;width=%s&amp;height=%s'%('QR', quote_plus(o.l10n_sa_qr_code_str), 100, 100)"/>-->
+                    <!--                            </p>-->
+                    <!--                        </div>-->
+                    <!--                    </div>-->
 
                 </t>
             </t>

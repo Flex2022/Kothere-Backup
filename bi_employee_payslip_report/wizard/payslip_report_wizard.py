@@ -79,9 +79,10 @@ class EmpPayslipReport(models.TransientModel):
             
             worksheet.merge_range(3, 0, 4, 0, 'NO', cell_wrap_format_bold)
             worksheet.merge_range(3, 1, 4, 1, 'Payslip Ref', cell_wrap_format_bold)
-            worksheet.merge_range(3, 2, 4, 2, 'Employee', cell_wrap_format_bold)
-            worksheet.merge_range(3, 3, 4, 3, 'Designation', cell_wrap_format_bold)
-            worksheet.merge_range(3, 4, 4, 4, 'Period', cell_wrap_format_bold)
+            worksheet.merge_range(3, 2, 4, 2, 'Employee Number', cell_wrap_format_bold)
+            worksheet.merge_range(3, 3, 4, 3, 'Employee', cell_wrap_format_bold)
+            worksheet.merge_range(3, 4, 4, 4, 'Designation', cell_wrap_format_bold)
+            worksheet.merge_range(3, 5, 4, 5, 'Period', cell_wrap_format_bold)
             
             dict = {}
             lines=[dict]
@@ -107,7 +108,7 @@ class EmpPayslipReport(models.TransientModel):
                                     remaining.append(i.name)
                         if remaining:
                             for i, j in dict.items():
-                                if i.lower()[:3] == line.category_id.name.lower()[:3] :
+                                if i.lower()[:3] == line.category_id.name.lower()[:3]:
                                     for r in remaining:
                                         main_sub.append(r)
                                         dict[i].append(r)
@@ -211,6 +212,7 @@ class EmpPayslipReport(models.TransientModel):
                 not_category = []
                 values['NO'] = no,
                 values['Payslip_Ref'] = payslip.number or '',
+                values['Employee Number'] = payslip.employee_id.employee_number or '',
                 values['Employee'] = payslip.employee_id.name or '',
                 values['Designation'] = payslip.employee_id.job_id.name or '',
                 values['Period'] = str(payslip.date_from) +  '  to  ' +str(payslip.date_to),
@@ -219,7 +221,7 @@ class EmpPayslipReport(models.TransientModel):
                 sub_categ = lines.mapped('name')
                 temp = []
                 for i , j in lable.items():
-                    if i not in ['no', 'payslip_ref', 'employee', 'designation', 'period']:
+                    if i not in ['no', 'payslip_ref', 'employee number', 'employee', 'designation', 'period']:
                         if i in all_category:
                             present_categ = []
                             for sub in j:
@@ -246,13 +248,15 @@ class EmpPayslipReport(models.TransientModel):
             for value in main:
                 col = 0
                 row = row
-                list = ['NO', 'Payslip_Ref', 'Employee', 'Designation', 'Period', 'BASIC', 'ALW', 'GROSS', 'DED', 'NET']
+                list = ['NO', 'Payslip_Ref','Employee Number', 'Employee', 'Designation', 'Period', 'BASIC', 'ALW', 'GROSS', 'DED', 'NET']
                 for l in list:
                     if l in value.keys():
                         data  = value.get(l)
+
                         for r in data:
                             worksheet.write(row,col, r, cell_wrap_format)
                             col+=1
+
                 row+=1
                 end_row = row
             
