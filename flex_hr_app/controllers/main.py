@@ -190,6 +190,36 @@ class HrApi(http.Controller):
         return http.Response(json.dumps(res), status=200, mimetype='application/json')
 
     @validate_token
+    @http.route('/api-hr/my-notification', type='http', auth='none', methods=['GET'], csrf=False)
+    def api_hr_my_notification(self, **params):
+        employee_id = request.context.get("employee_id")
+        if not employee_id:
+            res = {"result": {"error": "employee_id is missing in context"}}
+            return http.Response(json.dumps(res), status=400, mimetype='application/json')
+        data = []
+        notifications = request.env['hr.notify'].sudo().search([('employee_id', '=', employee_id)], order="id desc")
+        for notify in notifications:
+            data.append({
+                "id": notify.id,
+                "name": notify.name,
+                "body": notify.body,
+                "date": notify.date.isoformat(),
+                "model_name": notify.model_name,
+                "res_id": notify.res_id,
+                "is_read": notify.is_read,
+            })
+            notify.is_read = True
+        res = {
+            "result": {"data": data},
+        }
+        return http.Response(
+            json.dumps(res),
+            status=200,
+            mimetype='application/json'
+        )
+
+
+    @validate_token
     @http.route("/api-hr/timeoff-board", methods=["GET"], type="http", auth="none", csrf=False)
     def api_hr_timeoff_board(self, **params):
         employee_id = request.context.get("employee_id")

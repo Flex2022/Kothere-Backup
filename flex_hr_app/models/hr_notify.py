@@ -15,3 +15,4 @@ class BaseModel(models.Model):
     employee_id = fields.Many2one(comodel_name='hr.employee', string='Employee', readonly=True)
     model_name = fields.Char(string='Model', readonly=True)
     res_id = fields.Integer(string='Record Id', readonly=True)
+    is_read = fields.Boolean(string='Is Read', readonly=True)

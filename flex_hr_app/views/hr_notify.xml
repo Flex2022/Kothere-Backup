@@ -9,6 +9,7 @@
                 <field name="body" optional="show"/>
                 <field name="employee_id" optional="hide"/>
                 <field name="date"/>
+                <field name="is_read" optional="hide"/>
                 <field name="model_name" optional="hide"/>
                 <field name="res_id" optional="hide"/>
             </tree>
@@ -29,6 +30,7 @@
                         <group>
                             <field name="employee_id"/>
                             <field name="date"/>
+                            <field name="is_read"/>
                         </group>
                         <group string="Record">
                             <field name="model_name"/>
