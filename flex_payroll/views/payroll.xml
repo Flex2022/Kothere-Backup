@@ -27,6 +27,12 @@
                         <div class="mb-3">/ month</div>
                     </div>
 
+                    <label for="position_allowance"/>
+                    <div class="o_row mw-50" name="other_allowance_3">
+                        <field name="position_allowance" class="oe_inline o_hr_narrow_field" nolabel="1" widget="monetary"/>
+                        <div class="mb-3">/ month</div>
+                    </div>
+
 
                 </xpath>
             </field>
