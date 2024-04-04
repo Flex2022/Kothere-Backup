@@ -7,7 +7,7 @@
     'author': 'Abdalrahman Shahrour',
     'website': 'https://www.flex-ops.com',
     'license': 'AGPL-3',
-    'depends': ['base', 'sale', 'contacts', 'fleet', ],
+    'depends': ['base', 'sale', 'contacts', 'fleet','flex_partner_unique_code' ],
     'data': [
         'security/ir.model.access.csv',
         'data/data.xml',

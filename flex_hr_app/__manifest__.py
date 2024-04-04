@@ -17,6 +17,7 @@
         # views
         'views/hr_token.xml',
         'views/hr_employee.xml',
+        'views/hr_notify.xml',
         # reports
         'reports/report.xml',
     ],

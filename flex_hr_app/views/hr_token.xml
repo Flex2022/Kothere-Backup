@@ -8,6 +8,8 @@
                 <field name="token"/>
                 <field name="employee_id"/>
                 <field name="date_expiry"/>
+                <field name="device_token" optional="hide"/>
+                <field name="is_huawei" optional="hide"/>
                 <field name="create_date" optional="hide"/>
             </tree>
         </field>
@@ -27,6 +29,10 @@
                         <group>
                             <field name="date_expiry"/>
                             <field name="create_date"/>
+                        </group>
+                        <group string="Device">
+                            <field name="device_token"/>
+                            <field name="is_huawei"/>
                         </group>
                     </group>
                 </sheet>

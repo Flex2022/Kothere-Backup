@@ -9,6 +9,7 @@ class HrContract(models.Model):
 
     call_allowance = fields.Float('Call Allowance', default=0.0)
     food_allowance = fields.Float('Food Allowance', default=0.0)
+    position_allowance = fields.Float('Position Allowance', default=0.0)
 
     contract_type_duration = fields.Selection([
         ('3', '3 Months'),

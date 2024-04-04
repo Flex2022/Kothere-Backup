@@ -62,7 +62,10 @@ class HrApi(http.Controller):
         # username = headers.get('username', False)
         # password = headers.get('password', False)
         # token = headers.get('token', '').strip()
-        print(f"headers: {headers}")
+        device_token = headers.get('device_token', '').strip()
+        # print(f"headers: {headers}")
+        _logger.info(f"\nheaders: {headers}")
+        _logger.info(f"\ndevice_token: {device_token}")
         auth_header = headers.get('Authorization')
         if not auth_header.startswith('Basic '):
             res = {"result": {"error": f"Authorization type should be 'Basic Auth'"}}
@@ -73,45 +76,8 @@ class HrApi(http.Controller):
         credentials = base64.b64decode(encoded_credentials).decode('utf-8')
         # Split the credentials into username and password
         username, password = credentials.split(':', 1)
-        print('username: ', username)
-        print('password: ', password)
-
-        # _logger.info(f"\n\n headers: {headers}\n\n")
-        # _logger.info(f"\n\n token  : {token}\n\n")
-
-        # ====================[Login with token (if expired, update it)]=========================
-        # show_token_msg = False
-        # if token:
-        #     hr_token = request.env["hr.token"].sudo().search([("token", "=", token)], order="id DESC", limit=1)
-        #     # if not hr_token:
-        #     #     res = {"result": {"error": "invalid token"}}
-        #     #     return http.Response(json.dumps(res), status=401, mimetype='application/json')
-        #     if hr_token:
-        #         if hr_token.date_expiry < fields.Datetime.now():
-        #             new_token = hr_token._update_token()
-        #         res = {
-        #             "result": {
-        #                 "employee_id": hr_token.employee_id.id,
-        #                 "employee_name": hr_token.employee_id.name,
-        #                 "employee_department": {
-        #                     "id": hr_token.employee_id.department_id.id,
-        #                     "name": hr_token.employee_id.department_id.display_name
-        #                 },
-        #                 "employee_job": {
-        #                     "id": hr_token.employee_id.job_id.id,
-        #                     "name": hr_token.employee_id.job_id.name
-        #                 },
-        #                 "employee_work_phone": hr_token.employee_id.work_phone,
-        #                 "employee_work_email": hr_token.employee_id.work_email,
-        #                 "image_url": f"/web/image/hr.employee.public/{hr_token.employee_id.id}/image_1920",
-        #                 "token": hr_token.token,
-        #             }
-        #         }
-        #         return http.Response(json.dumps(res), status=200, mimetype='application/json')
-        #     else:
-        #         show_token_msg = True
-        # # =============================================================
-
+        # print('username: ', username)
+        # print('password: ', password)
         if not (username and password):
             res = {"result": {"error": f"username or password is missing"}}
             return http.Response(json.dumps(res), status=401, mimetype='application/json')
@@ -122,7 +88,7 @@ class HrApi(http.Controller):
         if employee.api_password != password:
             res = {"result": {"error": f"incorrect password"}}
             return http.Response(json.dumps(res), status=401, mimetype='application/json')
-        valid_token = request.env['hr.token'].sudo().get_valid_token(employee_id=employee.id, create=True)
+        valid_token = request.env['hr.token'].sudo().get_valid_token(employee_id=employee.id, device_token=device_token, create=True)
         res = {
             "result": {
                 "employee_id": employee.id,
@@ -222,6 +188,36 @@ class HrApi(http.Controller):
             }
         }
         return http.Response(json.dumps(res), status=200, mimetype='application/json')
+
+    @validate_token
+    @http.route('/api-hr/my-notification', type='http', auth='none', methods=['GET'], csrf=False)
+    def api_hr_my_notification(self, **params):
+        employee_id = request.context.get("employee_id")
+        if not employee_id:
+            res = {"result": {"error": "employee_id is missing in context"}}
+            return http.Response(json.dumps(res), status=400, mimetype='application/json')
+        data = []
+        notifications = request.env['hr.notify'].sudo().search([('employee_id', '=', employee_id)], order="id desc")
+        for notify in notifications:
+            data.append({
+                "id": notify.id,
+                "name": notify.name,
+                "body": notify.body,
+                "date": notify.date.isoformat(),
+                "model_name": notify.model_name,
+                "res_id": notify.res_id,
+                "is_read": notify.is_read,
+            })
+            notify.is_read = True
+        res = {
+            "result": {"data": data},
+        }
+        return http.Response(
+            json.dumps(res),
+            status=200,
+            mimetype='application/json'
+        )
+
 
     @validate_token
     @http.route("/api-hr/timeoff-board", methods=["GET"], type="http", auth="none", csrf=False)

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="flex_fleet_form_inherit" model="ir.ui.view">
+            <field name="name">flex_fleet.fleet.vehicle.form</field>
+            <field name="model">fleet.vehicle</field>
+            <field name="inherit_id" ref="fleet.fleet_vehicle_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[1]/group[1]/field[@name='company_id']" position="after">
+                    <field name="date_of_examination"/>
+                    <field name="insurance_date"/>
+                    <field name="operation_date"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

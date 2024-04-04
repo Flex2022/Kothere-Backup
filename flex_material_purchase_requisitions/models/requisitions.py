@@ -52,7 +52,7 @@ class RequisitionsLine(models.Model):
             ('internal', 'Internal Picking'),
             ('purchase', 'Purchase Order'),
         ],
-        deafult='internal',
+        default='internal',
         string='Requisition Action',
         required=True,
     )

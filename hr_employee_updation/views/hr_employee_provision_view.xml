@@ -36,8 +36,8 @@
             <field name="arch" type="xml">
                 <form string="Employee Provision Form">
                     <header>
-                        <button string="Submit" name="action_submit" type="object" states="draft" class="oe_highlight" groups="hr_employee_updation.group_accountant,hr_employee_updation.group_chief_accountant" />
-                        <button string="Done" name="action_done" type="object" states="submit" class="oe_highlight" groups="hr_employee_updation.group_chief_accountant"/>
+                        <button string="Submit" name="action_submit" type="object" invisible="states not in ('draft')"  class="oe_highlight" groups="hr_employee_updation.group_accountant,hr_employee_updation.group_chief_accountant" />
+                        <button string="Done" name="action_done" type="object" invisible="states not in ('submit')"  class="oe_highlight" groups="hr_employee_updation.group_chief_accountant"/>
                         <field name="state" widget="statusbar"/>
                     </header>
                     <sheet>

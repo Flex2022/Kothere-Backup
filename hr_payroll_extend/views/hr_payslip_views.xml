@@ -102,15 +102,17 @@
         <field name="arch" type="xml">
             <button name="close_payslip_run" position="replace"/>
             <button name="draft_payslip_run" position="replace">
-                <button string="Send To Accounting" name="action_sent_to_accounting" type="object" states="hr"
+                <button string="Send To Accounting" name="action_sent_to_accounting" type="object"
+                        invisible="states not in ('hr')"
                         class="oe_highlight" groups="hr.group_hr_user"/>
-                <button string="Send To CEO" name="action_sent_to_ceo" type="object" states="accounting"
+                <button string="Send To CEO" name="action_sent_to_ceo" type="object"
+                        invisible="states not in ('accounting')"
                         class="oe_highlight" groups="account.group_account_manager"/>
-                <button string="Adjust Request" type="action" states="ceo_approve" name="%(action_payroll_adjust)d"
+                <button string="Adjust Request" type="action" invisible="states not in ('ceo_approve')"  name="%(action_payroll_adjust)d"
                         class="oe_highlight" groups="hr_employee_updation.group_ceo_approval"/>
-                <button string="Send To HR" name="action_sent_to_hr" type="object" states="draft"
+                <button string="Send To HR" name="action_sent_to_hr" type="object"  invisible="states not in ('draft')"
                         class="oe_highlight" groups="hr_employee_updation.group_ceo_approval"/>
-                <button string="Done" name="action_done" type="object" states="ceo_approve" class="oe_highlight"
+                <button string="Done" name="action_done" type="object"  class="oe_highlight" invisible="states not in ('ceo_approve')"
                         groups="hr.group_hr_manager"/>
             </button>
             <xpath expr="//label[@for='name']" position="before">

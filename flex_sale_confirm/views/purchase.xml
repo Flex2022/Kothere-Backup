@@ -36,13 +36,13 @@
                 </xpath>
                 <xpath expr="//header/button[1]" position="before">
 
-                    <button name="action_submit" type="object" states="draft,sent" string="Submit Approval"
+                    <button name="action_submit" type="object" invisible="states not in ('draft', 'sent')" string="Submit Approval"
                             class="oe_highlight" groups="flex_sale.group_purchase_submit"/>
 
-                    <button name="action_finance" type="object" states="submit" string="Financial Approval"
+                    <button name="action_finance" type="object" invisible="states not in ('submit')"  string="Financial Approval"
                             class="oe_highlight" groups="flex_sale.group_purchase_finance"/>
 
-                    <button name="action_gm" type="object" states="finance" string="GM Approval"
+                    <button name="action_gm" type="object" invisible="states not in ('finance')"  string="GM Approval"
                             class="oe_highlight" groups="flex_sale.group_purchase_gm"/>
                 </xpath>
                 <xpath expr="//field[@name='id']" position="after">

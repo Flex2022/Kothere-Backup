@@ -13,6 +13,7 @@
         'views/invoice.xml',
         'views/hr_payslip.xml',
         'views/contract.xml',
+        'views/hr_employee.xml',
         'data/cron_job.xml',
     ],
 

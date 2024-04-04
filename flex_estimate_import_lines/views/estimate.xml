@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="ModelName_form_inherit" model="ir.ui.view">
+            <field name="name">job.estimate.form.view.inherit</field>
+            <field name="model">job.estimate</field>
+            <field name="inherit_id" ref="bi_job_cost_estimate_customer.job_estimate_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='job_type_id']" position="after">
+                    <!--                    <field name="excel_file"/>-->
+                    <field name="excel_file" widget="binary" filename="filename"/>
+                </xpath>
+                <xpath expr="//header/button[@name='job_confirm']" position="after">
+                    <button name="read_excel_file" string="Collection" type="object" class="oe_highlight"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

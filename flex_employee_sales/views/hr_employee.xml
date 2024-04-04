@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="flex_employee_sales_form_inherit_view_employee_form" model="ir.ui.view">
+            <field name="name">flex_employee_sales.view_employee_form</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='department_id']" position="after">
+                    <field name="apply_commission"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

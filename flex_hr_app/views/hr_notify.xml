@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hr_notify_tree" model="ir.ui.view">
+        <field name="name">hr_notify_tree</field>
+        <field name="model">hr.notify</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="body" optional="show"/>
+                <field name="employee_id" optional="hide"/>
+                <field name="date"/>
+                <field name="is_read" optional="hide"/>
+                <field name="model_name" optional="hide"/>
+                <field name="res_id" optional="hide"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="hr_notify_form" model="ir.ui.view">
+        <field name="name">hr_notify_form</field>
+        <field name="model">hr.notify</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="body"/>
+                        </group>
+                        <group>
+                            <field name="employee_id"/>
+                            <field name="date"/>
+                            <field name="is_read"/>
+                        </group>
+                        <group string="Record">
+                            <field name="model_name"/>
+                            <field name="res_id"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>
