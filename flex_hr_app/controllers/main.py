@@ -56,13 +56,17 @@ def validate_token(func):
 
 class HrApi(http.Controller):
 
+    def _get_field_selections(self, model_name, field_name):
+        field = request.env['ir.model.fields'].sudo().search([('model', '=', model_name), ('name', '=', field_name)])
+        return {sel.value: sel.name for sel in field.selection_ids}
+
     @http.route("/api-hr/login", methods=["GET"], type="http", auth="none", csrf=False)
     def api_hr_login(self, **params):
         headers = request.httprequest.headers
         # username = headers.get('username', False)
         # password = headers.get('password', False)
         # token = headers.get('token', '').strip()
-        device_token = headers.get('device_token', '').strip()
+        device_token = headers.get('deviceToken', '').strip()
         # print(f"headers: {headers}")
         _logger.info(f"\nheaders: {headers}")
         _logger.info(f"\ndevice_token: {device_token}")
@@ -285,14 +289,14 @@ class HrApi(http.Controller):
         # field_description = lambda model, key: request.env['ir.model.fields'].sudo()._get(model, key)['field_description']
         # all_states = ["draft", "confirm", "refuse", "validate1", "validate"]
 
-
-        state_info = {
-            "draft": _("To Submit"),
-            "confirm": _("To Approve"),
-            "refuse": _("Refused"),
-            "validate1": _("Second Approval"),
-            "validate": _("Approved")
-        }
+        # state_info = {
+        #     "draft": _("To Submit"),
+        #     "confirm": _("To Approve"),
+        #     "refuse": _("Refused"),
+        #     "validate1": _("Second Approval"),
+        #     "validate": _("Approved")
+        # }
+        state_info = self._get_field_selections('hr.leave', 'state')
         for state, leaves in leave_by_state:
             # print(f"state: {_selection_name('hr.leave', 'state', state, lang='ar_001')}")
             data[state] = {
@@ -417,7 +421,6 @@ class HrApi(http.Controller):
 
 
     # Loans
-
     @validate_token
     @http.route("/api-hr/my-loan", methods=["GET"], type="http", auth="none", csrf=False)
     def api_hr_my_loan(self, **params):
@@ -439,14 +442,16 @@ class HrApi(http.Controller):
         # field_description = lambda model, key: request.env['ir.model.fields'].sudo()._get(model, key)['field_description']
         # all_states = ["draft", "confirm", "refuse", "validate1", "validate"]
 
-        state_info = {
-            "draft": _("To Submit"),
-            "waiting_approval_1": _("Submitted"),
-            "approve": _("Approved"),
-            "refuse": _("Refused"),
-            "paid": _("Paid"),
-            "cancel": _("Cancelled")
-        }
+        # state_info = {
+        #     "draft": _("To Submit"),
+        #     "waiting_approval_1": _("Submitted"),
+        #     "approve": _("Approved"),
+        #     "refuse": _("Refused"),
+        #     "paid": _("Paid"),
+        #     "cancel": _("Cancelled")
+        # }
+
+        state_info = self._get_field_selections('hr.loan', 'state')
         for state, loans in loan_by_state:
             # print(f"state: {_selection_name('hr.loan', 'state', state, lang='ar_001')}")
             data[state] = {
@@ -517,6 +522,111 @@ class HrApi(http.Controller):
             res = {"result": {"error": f"{ex}"}}
             # 406: not acceptable
             return http.Response(json.dumps(res), status=406, mimetype='application/json')
+
+    @validate_token
+    @http.route("/api-hr/my-expense", methods=["GET"], type="http", auth="none", csrf=False)
+    def api_hr_my_expense(self, **params):
+        employee_id = request.context.get("employee_id")
+        if not employee_id:
+            res = {"result": {"error": "employee_id is missing in context"}}
+            return http.Response(json.dumps(res), status=400, mimetype='application/json')
+        # employee = request.env['hr.employee'].sudo().browse(employee_id)
+        domain = [('employee_id', '=', employee_id)]
+
+        expense_list = request.env['hr.expense'].sudo().search(domain)
+        EXPENSE = request.env['hr.expense'].sudo()
+        expense_by_state = [(state, EXPENSE.concat(*expenses)) for state, expenses in groupby(expense_list, itemgetter('state'))]
+        data = {}
+
+        state_info = self._get_field_selections('hr.expense', 'state')
+
+        for state, expenses in expense_by_state:
+            # print(f"state: {_selection_name('hr.loan', 'state', state, lang='ar_001')}")
+            data[state] = {
+                "expense_count": len(expenses),
+                "description": state_info[state],
+                "expenses": [{
+                    "name": exp.name,
+                    "employee_id": {
+                        "id": exp.employee_id.id,
+                        "name": exp.employee_id.name
+                    },
+                    "employee_department": {
+                        "id": exp.employee_id.department_id.id,
+                        "name": exp.employee_id.department_id.display_name
+                    },
+                    "employee_job": {
+                        "id": exp.employee_id.job_id.id,
+                        "name": exp.employee_id.job_id.name
+                    },
+                    "amount": exp.total_amount_currency,
+                    # "payment_mode": exp.payment_mode,
+                    "date": exp.date.isoformat(),
+                    "description": exp.description,
+                    "state": exp.state,
+                } for exp in expenses]
+            }
+        for state in state_info.keys():
+            if state not in data:
+                data[state] = {
+                    "expense_count": 0,
+                    "description": state_info[state],
+                    "expenses": []
+                }
+        res = {"result": data}
+        return http.Response(json.dumps(res), status=200, mimetype='application/json')
+
+    @validate_token
+    @http.route("/api-hr/expense-products", methods=["GET"], type="http", auth="none", csrf=False)
+    def api_hr_expense_products(self, **params):
+        employee_id = request.context.get("employee_id")
+        if not employee_id:
+            res = {"result": {"error": "employee_id is missing in context"}}
+            return http.Response(json.dumps(res), status=400, mimetype='application/json')
+        employee = request.env['hr.employee'].sudo().browse(employee_id)
+        domain = [('company_id', 'in', [employee.company_id.id, False]), ('can_be_expensed', '=', True)]
+
+        expense_products = request.env['product.product'].sudo().search(domain)
+
+        data = [{
+            "id": product.id,
+            "name": product.display_name,
+        } for product in expense_products]
+        res = {"result": data}
+        return http.Response(json.dumps(res), status=200, mimetype='application/json')
+
+    @validate_token
+    @http.route("/api-hr/create-expense", methods=["POST"], type="http", auth="none", csrf=False)
+    def api_hr_create_expense(self, **params):
+        employee_id = request.context.get("employee_id")
+        if not employee_id:
+            res = {"result": {"error": "employee_id is missing in context"}}
+            return http.Response(json.dumps(res), status=400, mimetype='application/json')
+        employee = request.env['hr.employee'].sudo().browse(employee_id)
+        # data = request.get_json_data()
+        payload = json.loads(request.httprequest.data or '{}')
+        try:
+            expense = request.env['hr.expense'].sudo().create({
+                'employee_id': employee.id,
+                'company_id': employee.company_id.id,
+                'currency_id': employee.company_id.currency_id.id,
+                'payment_mode': 'own_account',
+                'name': payload.get('name'),
+                'total_amount_currency': payload.get('amount'),
+                'product_id': payload.get('product_id'),
+                'date': payload.get('date'),
+                'description': payload.get('description'),
+                # 'tax_ids': [Command.clear()],
+                # 'sample': True,
+            })
+            data = {"msg": "expense created successfully", "expense_id": expense.id}
+            res = {"result": data}
+            return http.Response(json.dumps(res), status=200, mimetype='application/json')
+        except Exception as ex:
+            res = {"result": {"error": f"{ex}"}}
+            # 406: not acceptable
+            return http.Response(json.dumps(res), status=406, mimetype='application/json')
+
 
 
 
