@@ -211,6 +211,7 @@ class HrApi(http.Controller):
                 "model_name": notify.model_name,
                 "res_id": notify.res_id,
                 "is_read": notify.is_read,
+                "image_url": notify.image_url,
             })
             notify.is_read = True
         res = {
