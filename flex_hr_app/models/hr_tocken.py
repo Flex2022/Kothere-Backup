@@ -111,7 +111,7 @@ class HrToken(models.Model):
     def _send_android_notification(self, android_server_key, title, body, model_name=False, res_id=0):
         request_headers = {
             'Content-Type': 'application/json',
-            'Authorization': android_server_key,
+            'Authorization': f"key={android_server_key}",
         }
         for token in self.filtered('device_token'):
             request_body = {
