@@ -15,6 +15,7 @@ class BaseModel(models.AbstractModel):
         return [
             'hr.leave',
             'hr.loan',
+            'hr.expense',
         ]
 
     def write(self, vals):

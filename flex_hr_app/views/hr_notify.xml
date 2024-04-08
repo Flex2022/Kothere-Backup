@@ -12,6 +12,7 @@
                 <field name="is_read" optional="hide"/>
                 <field name="model_name" optional="hide"/>
                 <field name="res_id" optional="hide"/>
+                <field name="image_url" optional="hide"/>
             </tree>
         </field>
     </record>
@@ -35,6 +36,7 @@
                         <group string="Record">
                             <field name="model_name"/>
                             <field name="res_id"/>
+                            <field name="image_url"/>
                         </group>
                     </group>
                 </sheet>

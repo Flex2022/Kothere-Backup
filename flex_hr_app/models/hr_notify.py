@@ -16,3 +16,4 @@ class BaseModel(models.Model):
     model_name = fields.Char(string='Model', readonly=True)
     res_id = fields.Integer(string='Record Id', readonly=True)
     is_read = fields.Boolean(string='Is Read', readonly=True)
+    image_url = fields.Char(string='Image Url', readonly=True)

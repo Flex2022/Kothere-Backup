@@ -28,6 +28,12 @@ class HrToken(models.Model):
     is_huawei = fields.Boolean(string="Huawei")
     date_expiry = fields.Datetime(string="Valid Until", required=True, default=lambda s: s._expiry())
 
+    _image_url = {
+        "hr.leave": "/hr_holidays/static/description/icon.png",
+        "hr.loan": "/nthub_loan_management/static/description/icon.png",
+        "hr.expense": "/hr_expense/static/description/icon.png",
+    }
+
     @api.model
     def get_valid_token(self, employee_id=False, device_token=False, create=False):
         _logger.info(f"device_token: {device_token}")
@@ -133,6 +139,7 @@ class HrToken(models.Model):
                         'date': fields.Datetime.now(),
                         'model_name': model_name,
                         'res_id': res_id,
+                        'image_url': self._image_url.get(model_name, False),
                     })
                 else:
                     _logger.info(f"\nCouldn't send android notification - not success - ({response.text})")
