@@ -223,7 +223,6 @@ class HrApi(http.Controller):
             mimetype='application/json'
         )
 
-
     @validate_token
     @http.route("/api-hr/timeoff-board", methods=["GET"], type="http", auth="none", csrf=False)
     def api_hr_timeoff_board(self, **params):
@@ -255,12 +254,33 @@ class HrApi(http.Controller):
         # data = request.get_json_data()
         payload = json.loads(request.httprequest.data or '{}')
         try:
+
+                # attachment = self.env['ir.attachment'].create({
+                #     'name': image_name,
+                #     'datas': base64_str,
+                #     # 'datas': base64.b64encode(base64_str),
+                #     'res_model': 'pos.config',
+                #     'res_id': pos_config_id.id,
+                #     'type': 'binary',
+                # })
+                # pos_config_id.self_ordering_image_home_ids = [(4, attachment.id)]
+
             leave = request.env['hr.leave'].sudo().with_context(leave_skip_date_check=True).create({
                 'employee_id': employee.id,
                 'holiday_status_id': payload.get('holiday_status_id'),
                 'request_date_from': payload.get('request_date_from'),
                 'request_date_to': payload.get('request_date_to'),
+                'name': payload.get('name'),
             })
+            base64_str = payload.get('document')
+            if base64_str:
+                request.env['ir.attachment'].sudo().create({
+                    'name': 'Document',
+                    'datas': base64_str,
+                    'res_model': 'hr.leave',
+                    'res_id': leave.id,
+                    'type': 'binary',
+                }).ids
             data = {"msg": "timeoff created successfully", "leave_id": leave.id}
             res = {"result": data}
             return http.Response(json.dumps(res), status=200, mimetype='application/json')
@@ -387,40 +407,6 @@ class HrApi(http.Controller):
         res = {"result": data}
         return http.Response(json.dumps(res), status=200, mimetype='application/json')
 
-    # , website=True
-    @http.route([
-        '/force_report/<converter>/<reportname>.pdf',
-        '/force_report/<converter>/<reportname>/<docids>.pdf',
-        '/force_report/<converter>/<reportname>/<docids>/<lang>.pdf',
-    ], type='http', auth='none')
-    def report_routes(self, reportname, docids=None, converter=None, lang=None, **data):
-        report = request.env['ir.actions.report'].sudo()
-        context = dict(request.env.context)
-
-        if lang == 'ar':
-            context.update({'lang': 'ar_001'})
-        if docids:
-            docids = [int(i) for i in docids.split(',') if i.isdigit()]
-        if data.get('options'):
-            data.update(json.loads(data.pop('options')))
-        if data.get('context'):
-            data['context'] = json.loads(data['context'])
-            context.update(data['context'])
-        if converter == 'html':
-            html = report.with_context(context)._render_qweb_html(reportname, docids, data=data)[0]
-            return request.make_response(html)
-        elif converter == 'pdf':
-            pdf = report.with_context(context).sudo()._render_qweb_pdf(reportname, docids, data=data)[0]
-            pdfhttpheaders = [('Content-Type', 'application/pdf'), ('Content-Length', len(pdf))]
-            return request.make_response(pdf, headers=pdfhttpheaders)
-        elif converter == 'text':
-            text = report.with_context(context)._render_qweb_text(reportname, docids, data=data)[0]
-            texthttpheaders = [('Content-Type', 'text/plain'), ('Content-Length', len(text))]
-            return request.make_response(text, headers=texthttpheaders)
-        else:
-            raise werkzeug.exceptions.HTTPException(description='Converter %s not implemented.' % converter)
-
-
     # Loans
     @validate_token
     @http.route("/api-hr/my-loan", methods=["GET"], type="http", auth="none", csrf=False)
@@ -495,7 +481,6 @@ class HrApi(http.Controller):
                 }
         res = {"result": data}
         return http.Response(json.dumps(res), status=200, mimetype='application/json')
-
 
     @validate_token
     @http.route("/api-hr/create-loan", methods=["POST"], type="http", auth="none", csrf=False)
