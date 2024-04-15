@@ -107,7 +107,7 @@ class HrApi(http.Controller):
                 },
                 "employee_work_phone": employee.work_phone,
                 "employee_work_email": employee.work_email,
-                "image_url": f"/web/image/hr.employee.public/{employee.id}/image_1920",
+                "image_url": f"/web/force/image/hr.employee.public/{employee.id}/image_1920",
                 # =================================
                 "identification_id": employee.identification_id,
                 "children": employee.children,
@@ -188,7 +188,7 @@ class HrApi(http.Controller):
                 "salary_type": employee.contract_id.wage_type,
                 "basic_salary": employee.contract_id._get_contract_wage(),
                 # =================================
-                "image_url": f"/web/image/hr.employee.public/{employee.id}/image_1920",
+                "image_url": f"/web/force/image/hr.employee.public/{employee.id}/image_1920",
             }
         }
         return http.Response(json.dumps(res), status=200, mimetype='application/json')
@@ -254,17 +254,6 @@ class HrApi(http.Controller):
         # data = request.get_json_data()
         payload = json.loads(request.httprequest.data or '{}')
         try:
-
-                # attachment = self.env['ir.attachment'].create({
-                #     'name': image_name,
-                #     'datas': base64_str,
-                #     # 'datas': base64.b64encode(base64_str),
-                #     'res_model': 'pos.config',
-                #     'res_id': pos_config_id.id,
-                #     'type': 'binary',
-                # })
-                # pos_config_id.self_ordering_image_home_ids = [(4, attachment.id)]
-
             leave = request.env['hr.leave'].sudo().with_context(leave_skip_date_check=True).create({
                 'employee_id': employee.id,
                 'holiday_status_id': payload.get('holiday_status_id'),
