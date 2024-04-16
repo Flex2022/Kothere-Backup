@@ -11,6 +11,7 @@ _logger = logging.getLogger(__name__)
 from odoo.tools import groupby
 from operator import itemgetter
 import werkzeug.exceptions
+from odoo.tools import html2plaintext
 
 
 def validate_token(func):
@@ -29,26 +30,26 @@ def validate_token(func):
             res = {"result": {"error": "missing token"}}
             # 403: forbidden
             return http.Response(json.dumps(res), status=403, mimetype='application/json')
-        
+
         # Search for the hr_token using the token
         hr_token = request.env["hr.token"].sudo().search([("token", "=", token)], order="id DESC", limit=1)
-        
+
         # Validate the found hr_token
         if not hr_token:
             res = {"result": {"error": "invalid token"}}
             return http.Response(json.dumps(res), status=403, mimetype='application/json')
-        
+
         # Check if the token has expired
         if hr_token.date_expiry < fields.Datetime.now():
             res = {"result": {"error": "expired token"}}
             return http.Response(json.dumps(res), status=403, mimetype='application/json')
-        
+
         # Assuming request.update_context is a method to update the Odoo context,
         # which is not standard, you might intend to do something like this instead:
         # Update the environment context with the employee_id for subsequent operations
         request.env.context = dict(request.env.context, employee_id=hr_token.employee_id.id, lang=lang)
         # request.update_context(employee_id=hr_token.employee_id.id)
-        
+
         # Proceed with the original function
         return func(self, *args, **kwargs)
     return wrap
@@ -269,7 +270,7 @@ class HrApi(http.Controller):
                     'res_model': 'hr.leave',
                     'res_id': leave.id,
                     'type': 'binary',
-                }).ids
+                })
             data = {"msg": "timeoff created successfully", "leave_id": leave.id}
             res = {"result": data}
             return http.Response(json.dumps(res), status=200, mimetype='application/json')
@@ -338,7 +339,7 @@ class HrApi(http.Controller):
                 }
         res = {"result": data}
         return http.Response(json.dumps(res), status=200, mimetype='application/json')
-    
+
     @validate_token
     @http.route("/api-hr/my-payslip", methods=["GET"], type="http", auth="none", csrf=False)
     def api_hr_my_payslip(self, **params):
@@ -595,6 +596,195 @@ class HrApi(http.Controller):
                 # 'sample': True,
             })
             data = {"msg": "expense created successfully", "expense_id": expense.id}
+            res = {"result": data}
+            return http.Response(json.dumps(res), status=200, mimetype='application/json')
+        except Exception as ex:
+            res = {"result": {"error": f"{ex}"}}
+            # 406: not acceptable
+            return http.Response(json.dumps(res), status=406, mimetype='application/json')
+
+
+    # resignation
+    @validate_token
+    @http.route("/api-hr/my-resignation", methods=["GET"], type="http", auth="none", csrf=False)
+    def api_hr_my_resignation(self, **params):
+        employee_id = request.context.get("employee_id")
+        if not employee_id:
+            res = {"result": {"error": "employee_id is missing in context"}}
+            return http.Response(json.dumps(res), status=400, mimetype='application/json')
+        # employee = request.env['hr.employee'].sudo().browse(employee_id)
+        domain = [('employee_id', '=', employee_id), ('resignation_type', '=', 'resignation')]
+
+        resignation_list = request.env['flex.approval.resignation'].sudo().search(domain)
+        RESIGNATION = request.env['flex.approval.resignation'].sudo()
+        resignation_by_state = [(state, RESIGNATION.concat(*resignations)) for state, resignations in groupby(resignation_list, itemgetter('state'))]
+        data = {}
+        state_info = self._get_field_selections('flex.approval.resignation', 'state')
+        for state, resignations in resignation_by_state:
+            # print(f"state: {_selection_name('hr.resignation', 'state', state, lang='ar_001')}")
+            data[state] = {
+                "resignation_count": len(resignations),
+                "description": state_info[state],
+                "resignations": [{
+                    "name": resignation.name,
+                    "employee_id": {
+                        "id": resignation.employee_id.id,
+                        "name": resignation.employee_id.name
+                    },
+                    "employee_department": {
+                        "id": resignation.employee_id.department_id.id,
+                        "name": resignation.employee_id.department_id.display_name
+                    },
+                    "employee_job": {
+                        "id": resignation.employee_id.job_id.id,
+                        "name": resignation.employee_id.job_id.name
+                    },
+                    "resignation_date": resignation.resignation_date and resignation.resignation_date.isoformat(),
+                    "resignation_type": resignation.resignation_type,
+                    "types_of_end_services": resignation.types_of_end_services,
+                    "leave_date": resignation.leave_date and resignation.leave_date.isoformat(),
+                    "notice_period": resignation.notice_period,
+                    "note": html2plaintext(resignation.note),
+                    "approval_request_id": bool(resignation.approval_request_id) and {
+                        "id": resignation.approval_request_id.id,
+                        "name": resignation.approval_request_id.name,
+                        # "state": resignation.approval_request_id.name,
+                        "state": self._get_field_selections('approval.request', 'request_status')[resignation.approval_request_id.request_status],
+                        "date_confirmed": resignation.approval_request_id.date_confirmed and resignation.approval_request_id.date_confirmed.isoformat(),
+                        "reason": html2plaintext(resignation.approval_request_id.reason)
+                    },
+                    "state": resignation.state,
+                } for resignation in resignations]
+            }
+        for state in state_info.keys():
+            if state not in data:
+                data[state] = {
+                    "resignation_count": 0,
+                    "description": state_info[state],
+                    "resignations": []
+                }
+        res = {"result": data}
+        return http.Response(json.dumps(res), status=200, mimetype='application/json')
+
+    @validate_token
+    @http.route("/api-hr/create-resignation", methods=["POST"], type="http", auth="none", csrf=False)
+    def api_hr_create_resignation(self, **params):
+        employee_id = request.context.get("employee_id")
+        if not employee_id:
+            res = {"result": {"error": "employee_id is missing in context"}}
+            return http.Response(json.dumps(res), status=400, mimetype='application/json')
+        employee = request.env['hr.employee'].sudo().browse(employee_id)
+        # data = request.get_json_data()
+        payload = json.loads(request.httprequest.data or '{}')
+        try:
+            resignation = request.env['flex.approval.resignation'].sudo().create({
+                'employee_id': employee.id,
+                'company_id': employee.company_id.id,
+                "resignation_type": 'resignation',
+                "types_of_end_services": 'employees_resignation',
+                "leave_date": payload.get('leave_date'),
+                "notice_period": payload.get('notice_period'),
+                "note": payload.get('note'),
+            })
+            base64_str = payload.get('document')
+            if base64_str:
+                request.env['ir.attachment'].sudo().create({
+                    'name': 'Document',
+                    'datas': base64_str,
+                    'res_model': 'flex.approval.resignation',
+                    'res_id': resignation.id,
+                    'type': 'binary',
+                })
+            data = {"msg": "resignation created successfully", "resignation_id": resignation.id}
+            res = {"result": data}
+            return http.Response(json.dumps(res), status=200, mimetype='application/json')
+        except Exception as ex:
+            res = {"result": {"error": f"{ex}"}}
+            # 406: not acceptable
+            return http.Response(json.dumps(res), status=406, mimetype='application/json')
+
+
+    # renew_iqama
+    @validate_token
+    @http.route("/api-hr/my-renew_iqama", methods=["GET"], type="http", auth="none", csrf=False)
+    def api_hr_my_renew_iqama(self, **params):
+        employee_id = request.context.get("employee_id")
+        if not employee_id:
+            res = {"result": {"error": "employee_id is missing in context"}}
+            return http.Response(json.dumps(res), status=400, mimetype='application/json')
+        # employee = request.env['hr.employee'].sudo().browse(employee_id)
+        domain = [('employee_id', '=', employee_id)]
+
+        renew_iqama_list = request.env['flex.approval.renew_iqama'].sudo().search(domain)
+        IQAMA = request.env['flex.approval.renew_iqama'].sudo()
+        renew_iqama_by_state = [(state, IQAMA.concat(*renew_iqamas)) for state, renew_iqamas in groupby(renew_iqama_list, itemgetter('state'))]
+        data = {}
+        state_info = self._get_field_selections('flex.approval.renew_iqama', 'state')
+        for state, renew_iqamas in renew_iqama_by_state:
+            # print(f"state: {_selection_name('hr.renew_iqama', 'state', state, lang='ar_001')}")
+            data[state] = {
+                "renew_iqama_count": len(renew_iqamas),
+                "description": state_info[state],
+                "renew_iqamas": [{
+                    "name": renew_iqama.name,
+                    "employee_id": {
+                        "id": renew_iqama.employee_id.id,
+                        "name": renew_iqama.employee_id.name
+                    },
+                    "employee_department": {
+                        "id": renew_iqama.employee_id.department_id.id,
+                        "name": renew_iqama.employee_id.department_id.display_name
+                    },
+                    "employee_job": {
+                        "id": renew_iqama.employee_id.job_id.id,
+                        "name": renew_iqama.employee_id.job_id.name
+                    },
+                    "current_iqama_id": renew_iqama.current_iqama_id,
+                    "end_of_iqama": renew_iqama.end_of_iqama and renew_iqama.end_of_iqama.isoformat(),
+                    "new_iqama_id": renew_iqama.new_iqama_id,
+                    "renewal_date": renew_iqama.renewal_date and renew_iqama.renewal_date.isoformat(),
+                    "note": html2plaintext(renew_iqama.note),
+                    "state": renew_iqama.state,
+                } for renew_iqama in renew_iqamas]
+            }
+        for state in state_info.keys():
+            if state not in data:
+                data[state] = {
+                    "renew_iqama_count": 0,
+                    "description": state_info[state],
+                    "renew_iqamas": []
+                }
+        res = {"result": data}
+        return http.Response(json.dumps(res), status=200, mimetype='application/json')
+
+    @validate_token
+    @http.route("/api-hr/create-renew_iqama", methods=["POST"], type="http", auth="none", csrf=False)
+    def api_hr_create_renew_iqama(self, **params):
+        employee_id = request.context.get("employee_id")
+        if not employee_id:
+            res = {"result": {"error": "employee_id is missing in context"}}
+            return http.Response(json.dumps(res), status=400, mimetype='application/json')
+        employee = request.env['hr.employee'].sudo().browse(employee_id)
+        # data = request.get_json_data()
+        payload = json.loads(request.httprequest.data or '{}')
+        try:
+            renew_iqama = request.env['flex.approval.renew_iqama'].sudo().create({
+                'employee_id': employee.id,
+                'company_id': employee.company_id.id,
+                "new_iqama_id": payload.get('new_iqama_id'),
+                "renewal_date": payload.get('renewal_date'),
+                "note": payload.get('note'),
+            })
+            base64_str = payload.get('document')
+            if base64_str:
+                request.env['ir.attachment'].sudo().create({
+                    'name': 'Document',
+                    'datas': base64_str,
+                    'res_model': 'flex.approval.renew_iqama',
+                    'res_id': renew_iqama.id,
+                    'type': 'binary',
+                })
+            data = {"msg": "renew_iqama created successfully", "renew_iqama_id": renew_iqama.id}
             res = {"result": data}
             return http.Response(json.dumps(res), status=200, mimetype='application/json')
         except Exception as ex:

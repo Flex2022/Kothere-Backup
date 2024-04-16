@@ -10,7 +10,13 @@
     'sequence': 0,
     'price': 500.0,
     'currency': 'EUR',
-    'depends': ['hr'],
+    'depends': ['hr',
+                'hr_holidays',
+                'hr_expense',
+                'hr_payroll',
+                'nthub_loan_management',
+                'flex_kathiri_approvals',
+                ],
     'data': [
         # security
         'security/ir.model.access.csv',
