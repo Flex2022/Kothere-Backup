@@ -792,6 +792,98 @@ class HrApi(http.Controller):
             # 406: not acceptable
             return http.Response(json.dumps(res), status=406, mimetype='application/json')
 
+    # business_trip
+    @validate_token
+    @http.route("/api-hr/my-business_trip", methods=["GET"], type="http", auth="none", csrf=False)
+    def api_hr_my_business_trip(self, **params):
+        employee_id = request.context.get("employee_id")
+        if not employee_id:
+            res = {"result": {"error": "employee_id is missing in context"}}
+            return http.Response(json.dumps(res), status=400, mimetype='application/json')
+        # employee = request.env['hr.employee'].sudo().browse(employee_id)
+        domain = [('employee_id', '=', employee_id)]
+
+        business_trip_list = request.env['flex.approval.business_trip'].sudo().search(domain)
+        IQAMA = request.env['flex.approval.business_trip'].sudo()
+        business_trip_by_state = [(state, IQAMA.concat(*business_trips)) for state, business_trips in groupby(business_trip_list, itemgetter('state'))]
+        data = {}
+        state_info = self._get_field_selections('flex.approval.business_trip', 'state')
+        for state, business_trips in business_trip_by_state:
+            # print(f"state: {_selection_name('hr.business_trip', 'state', state, lang='ar_001')}")
+            data[state] = {
+                "business_trip_count": len(business_trips),
+                "description": state_info[state],
+                "business_trips": [{
+                    "name": business_trip.name,
+                    "employee_id": {
+                        "id": business_trip.employee_id.id,
+                        "name": business_trip.employee_id.name
+                    },
+                    "employee_department": {
+                        "id": business_trip.employee_id.department_id.id,
+                        "name": business_trip.employee_id.department_id.display_name
+                    },
+                    "employee_job": {
+                        "id": business_trip.employee_id.job_id.id,
+                        "name": business_trip.employee_id.job_id.name
+                    },
+                    "trip_type": business_trip.trip_type,
+                    "destination": business_trip.destination,
+                    "purpose": business_trip.purpose,
+                    "start_date": business_trip.start_date and business_trip.start_date.isoformat(),
+                    "end_date": business_trip.end_date and business_trip.end_date.isoformat(),
+                    "note": html2plaintext(business_trip.note),
+                    "state": business_trip.state,
+                } for business_trip in business_trips]
+            }
+        for state in state_info.keys():
+            if state not in data:
+                data[state] = {
+                    "business_trip_count": 0,
+                    "description": state_info[state],
+                    "business_trips": []
+                }
+        res = {"result": data}
+        return http.Response(json.dumps(res), status=200, mimetype='application/json')
+
+    @validate_token
+    @http.route("/api-hr/create-business_trip", methods=["POST"], type="http", auth="none", csrf=False)
+    def api_hr_create_business_trip(self, **params):
+        employee_id = request.context.get("employee_id")
+        if not employee_id:
+            res = {"result": {"error": "employee_id is missing in context"}}
+            return http.Response(json.dumps(res), status=400, mimetype='application/json')
+        employee = request.env['hr.employee'].sudo().browse(employee_id)
+        # data = request.get_json_data()
+        payload = json.loads(request.httprequest.data or '{}')
+        try:
+            business_trip = request.env['flex.approval.business_trip'].sudo().create({
+                'employee_id': employee.id,
+                'company_id': employee.company_id.id,
+                "trip_type": payload.get('trip_type'),
+                "destination": payload.get('destination'),
+                "purpose": payload.get('purpose'),
+                "start_date": payload.get('start_date'),
+                "end_date": payload.get('end_date'),
+                "note": payload.get('note'),
+            })
+            base64_str = payload.get('document')
+            if base64_str:
+                request.env['ir.attachment'].sudo().create({
+                    'name': 'Document',
+                    'datas': base64_str,
+                    'res_model': 'flex.approval.business_trip',
+                    'res_id': business_trip.id,
+                    'type': 'binary',
+                })
+            data = {"msg": "business_trip created successfully", "business_trip_id": business_trip.id}
+            res = {"result": data}
+            return http.Response(json.dumps(res), status=200, mimetype='application/json')
+        except Exception as ex:
+            res = {"result": {"error": f"{ex}"}}
+            # 406: not acceptable
+            return http.Response(json.dumps(res), status=406, mimetype='application/json')
+
 
 
 
