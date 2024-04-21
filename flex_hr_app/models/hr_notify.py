@@ -22,6 +22,9 @@ class BaseModel(models.Model):
         "hr.leave": "/hr_holidays/static/description/icon.png",
         "hr.loan": "/nthub_loan_management/static/description/icon.png",
         "hr.expense": "/hr_expense/static/description/icon.png",
+        "flex.approval.resignation": "/flex_kathiri_approvals/static/description/web-icon.png",
+        "flex.approval.renew_iqama": "/flex_kathiri_approvals/static/description/web-icon.png",
+        "flex.approval.business_trip": "/flex_kathiri_approvals/static/description/web-icon.png",
     }
 
     @api.depends('model_name')

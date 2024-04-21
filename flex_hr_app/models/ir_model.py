@@ -16,6 +16,9 @@ class BaseModel(models.AbstractModel):
             'hr.leave',
             'hr.loan',
             'hr.expense',
+            'flex.approval.resignation',
+            'flex.approval.renew_iqama',
+            'flex.approval.business_trip',
         ]
 
     def write(self, vals):
