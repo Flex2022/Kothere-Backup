@@ -14,6 +14,7 @@
     'license': 'OPL-1',
     'depends': ['base', 'hr_expense'],
     'data': [
+        'views/hr_expense.xml'
     ],
     'installable': True,
     'application': False,
