@@ -28,8 +28,11 @@
                     <button name="action_submit" type="object" string="Submit" invisible="state != 'draft'"
                             class="oe_highlight"/>
                     <button name="action_cancel" type="object" string="Cancel" invisible="state != 'draft'"/>
-                    <button name="action_approve" type="object" string="Approve"
+                    <button name="action_line_manager_approve" type="object" string="Approve"
                             invisible="state != 'waiting_approval_1'"
+                            class="oe_highlight"/>
+                    <button name="action_approve" type="object" string="Approve"
+                            invisible="state != 'line_manager_approve'"
                             class="oe_highlight" groups="nthub_loan_management.group_loan_admin"/>
                     <button name="action_refuse" type="object" string="Refuse"
                             invisible="state != 'waiting_approval_1'"
@@ -41,7 +44,7 @@
                             class="oe_highlight" groups="nthub_loan_management.group_loan_admin"
                             invisible="state != 'paid' or balance_amount == 0"/>
 
-                    <field name="state" widget="statusbar" statusbar_visible="draft,waiting_approval_1,approve,paid"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,waiting_approval_1,line_manager_approve,approve,paid"/>
                 </header>
 
                 <sheet>

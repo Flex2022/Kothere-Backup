@@ -33,7 +33,8 @@ class HrLoan(models.Model):
 
     name = fields.Char(string="Reference", default="New", readonly=True, help="Name of the loan")
     date = fields.Date(string="Date", default=fields.Date.today(), readonly=True, help="Date")
-    user_id = fields.Many2one('res.users', string="User", readonly=True, default=lambda self: self.env.user, help="User")
+    user_id = fields.Many2one('res.users', string="User", readonly=True, default=lambda self: self.env.user,
+                              help="User")
     employee_id = fields.Many2one('hr.employee', string="Employee", required=True, help="Employee")
     department_id = fields.Many2one('hr.department', related="employee_id.department_id", readonly=True,
                                     string="Department", help="Employee")
@@ -61,6 +62,7 @@ class HrLoan(models.Model):
     state = fields.Selection([
         ('draft', 'Draft'),
         ('waiting_approval_1', 'Submitted'),
+        ('line_manager_approve', 'Line Manager Approved'),
         ('approve', 'Approved'),
         ('refuse', 'Refused'),
         ('paid', 'Paid'),
@@ -87,7 +89,6 @@ class HrLoan(models.Model):
                 vals['name'] = self.env['ir.sequence'].next_by_code('hr.loan.seq')
         return super(HrLoan, self).create(vals_list)
 
-
     def compute_installment(self):
         """This automatically create the installment the employee need to pay to
         company based on payment start date and the no of installments.
@@ -111,6 +112,22 @@ class HrLoan(models.Model):
 
     def action_submit(self):
         self.write({'state': 'waiting_approval_1'})
+
+    def action_line_manager_approve(self):
+        """
+        Approve expense by line manager.
+        """
+        for expense in self:
+            # Check if the user is the line manager of the employee
+            if self.env.user.id != expense.employee_id.parent_id.user_id.id:
+                raise ValidationError("Only the line manager of the employee can approve this expense.")
+            if not expense.loan_lines:
+                raise ValidationError(_("Please Compute installment"))
+            if not expense.employee_id.related_partner:
+                raise ValidationError(_("Please link partner for employee"))
+            else:
+                # Update state to line manager approve
+                self.write({'state': 'line_manager_approve'})
 
     def action_cancel(self):
         self.write({'state': 'cancel'})
@@ -227,7 +244,6 @@ class HrEmployee(models.Model):
     related_partner = fields.Many2one('res.partner')
     loan_count = fields.Integer(string="Loan Count", compute='_compute_employee_loans')
 
-
     # @api.constrains('related_partner')
     # def check_identification_id(self):
     #     related_partner_exist = self.env['hr.employee'].search([('related_partner', '=', self.related_partner.id),('id', '!=', self.id)])
@@ -238,5 +254,4 @@ class HrEmployee(models.Model):
         """This compute the loan amount and total loans count of an employee.
             """
         self.loan_count = self.env['hr.loan'].search_count(
-            [('employee_id', '=', self.id), ('state', 'in', ('approve','paid'))])
-
+            [('employee_id', '=', self.id), ('state', 'in', ('approve', 'paid'))])
