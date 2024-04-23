@@ -123,7 +123,7 @@ class HrLoan(models.Model):
                 raise ValidationError("Only the line manager of the employee can approve this expense.")
             if not expense.loan_lines:
                 raise ValidationError(_("Please Compute installment"))
-            if not expense.employee_id.related_partner:
+            if not expense.employee_id.related_partner_id:
                 raise ValidationError(_("Please link partner for employee"))
             else:
                 # Update state to line manager approve
@@ -136,7 +136,7 @@ class HrLoan(models.Model):
         for data in self:
             if not data.loan_lines:
                 raise ValidationError(_("Please Compute installment"))
-            if not data.employee_id.related_partner:
+            if not data.employee_id.related_partner_id:
                 raise ValidationError(_("Please link partner for employee"))
             else:
                 self.write({'state': 'approve'})
@@ -180,10 +180,10 @@ class HrLoan(models.Model):
             'res_model': 'account.payment.loan',
             'view_id': self.env.ref('nthub_loan_management.view_account_payment_loan_form').id,
             'context': {
-                'default_partner_id': self.employee_id.related_partner.id,
+                'default_partner_id': self.employee_id.related_partner_id.id,
                 'default_amount': self.loan_amount,
                 'default_loan_id': self.id,
-                'default_communication': f"loan for {self.employee_id.related_partner.name} with {self.loan_amount} with ref {self.name}",
+                'default_communication': f"loan for {self.employee_id.related_partner_id.name} with {self.loan_amount} with ref {self.name}",
                 'active_model': 'hr.loan',
                 'active_ids': self.filtered(lambda p: p.balance_amount > 0).ids,
             },
@@ -198,10 +198,10 @@ class HrLoan(models.Model):
                 'date': fields.Date.today(),
                 'amount': self.balance_amount,
                 'payment_type': 'inbound',
-                'ref': f"Settlement for {self.employee_id.related_partner.name} with {self.balance_amount} with ref {self.name}",
+                'ref': f"Settlement for {self.employee_id.related_partner_id.name} with {self.balance_amount} with ref {self.name}",
                 # 'journal_id': self.env.company.loan_journal_id.id,
                 'currency_id': self.currency_id.id,
-                'partner_id': self.employee_id.related_partner.id,
+                'partner_id': self.employee_id.related_partner_id.id,
                 'payment_loan': True,
                 'loan_id': self.id,
 
@@ -211,7 +211,6 @@ class HrLoan(models.Model):
             self.update({'balance_amount': (self.total_amount - self.total_paid_amount)})
             for rec in self.loan_lines:
                 rec.update({'paid': True})
-
             return payment
 
     def write(self, vals):
@@ -243,12 +242,6 @@ class HrEmployee(models.Model):
 
     related_partner = fields.Many2one('res.partner')
     loan_count = fields.Integer(string="Loan Count", compute='_compute_employee_loans')
-
-    # @api.constrains('related_partner')
-    # def check_identification_id(self):
-    #     related_partner_exist = self.env['hr.employee'].search([('related_partner', '=', self.related_partner.id),('id', '!=', self.id)])
-    #     if related_partner_exist:
-    #         raise ValidationError("Related Partner is exist")
 
     def _compute_employee_loans(self):
         """This compute the loan amount and total loans count of an employee.
