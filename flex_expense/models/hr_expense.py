@@ -7,5 +7,5 @@ class HrExpense(models.Model):
     def _prepare_payments_vals(self):
         res = super(HrExpense, self)._prepare_payments_vals()
         if self.payment_mode == 'company_account':
-            res['partner_id'] = self.company_id.partner_id.id
+            res['partner_id'] = self.employee_id.work_contact_id.id
         return res
