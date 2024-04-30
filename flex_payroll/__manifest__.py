@@ -7,7 +7,7 @@
     'author': 'Abdalrahman Shahrour',
     'website': 'https://www.flex-ops.com',
     'license': 'AGPL-3',
-    'depends': ['base', 'hr', 'hr_payroll'],
+    'depends': ['base', 'hr', 'hr_payroll', 'l10n_sa_hr_payroll'],
     'data': ['views/payroll.xml',
              'data/cron.xml'],
     'installable': True,

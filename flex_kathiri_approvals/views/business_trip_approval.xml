@@ -18,7 +18,7 @@
                     <sheet>
                         <div name="button_box" class="oe_button_box">
                             <button name="action_view_expenses" class="oe_stat_button" type="object" icon="fa-money"
-                                    invisible="state != 'approved'">
+                                    invisible="state not in ('approved','ceo_approval')">
                                 <field name="expense_ids" widget="statinfo" string="Expenses"/>
                             </button>
                         </div>

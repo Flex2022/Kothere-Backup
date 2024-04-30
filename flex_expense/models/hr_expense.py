@@ -4,6 +4,10 @@ from odoo import api, fields, Command, models, _
 class HrExpense(models.Model):
     _inherit = "hr.expense"
 
+    request_type = fields.Selection([('miscellaneous', 'Miscellaneous'), ('custody_settlement', 'Custody Settlement'),
+                                     ('custody_request', 'Custody Request')], string="Request Type",
+                                    default='miscellaneous')
+
     def _prepare_payments_vals(self):
         res = super(HrExpense, self)._prepare_payments_vals()
         if self.payment_mode == 'company_account':

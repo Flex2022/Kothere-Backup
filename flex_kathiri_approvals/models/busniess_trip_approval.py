@@ -1,5 +1,5 @@
 from odoo import models, fields, api, _
-
+from odoo.exceptions import ValidationError
 
 class ApprovalBusinessTrip(models.Model):
     _name = 'flex.approval.business_trip'
@@ -58,7 +58,7 @@ class ApprovalBusinessTrip(models.Model):
         if self.state == 'direct_manager_approval':
             # Check if the user is the direct manager of the employee
             if user.id != self.employee_id.parent_id.user_id.id:
-                raise models.ValidationError(
+                raise ValidationError(
                     _("Only the direct manager (%s) is authorized to approve for the employee.")
                     % self.employee_id.parent_id.user_id.name)
             self.write({'state': 'department_manager_approval'})
@@ -66,7 +66,7 @@ class ApprovalBusinessTrip(models.Model):
         elif self.state == 'department_manager_approval':
             # Check if the user is the department manager
             if user.id != self.employee_id.department_id.manager_id.user_id.id:
-                raise models.ValidationError(
+                raise ValidationError(
                     _("Only the department manager (%s) is authorized to approve for the current department.")
                     % self.employee_id.department_id.manager_id.user_id.name)
             self.write({'state': 'hr_manager_approval'})
@@ -74,16 +74,25 @@ class ApprovalBusinessTrip(models.Model):
         elif self.state == 'hr_manager_approval':
             # Check if the user is from HR managers
             if not user.has_group('hr.group_hr_manager'):
-                raise models.ValidationError(
+                raise ValidationError(
                     _("Only HR managers are authorized to approve for the HR department."))
             self.write({'state': 'ceo_approval'})
 
         elif self.state == 'ceo_approval':
             # Check if the user is the CEO
-            if user != self.env.ref('flex_kathiri_approvals.group_ceo_approval').sudo().users:
-                raise models.ValidationError(
-                    _("Only the CEO (%s) is authorized to approve for the company.")
-                    % self.env.ref('base.group_system').sudo().users.mapped('name'))
+            if not user.has_group('flex_kathiri_approvals.group_ceo_approval'):
+                raise ValidationError(_("Only CEO is authorized to approve this."))
+
+            # should exist expenses and all of them are  in the state done
+            # Check if there are related expenses
+            expenses = self.expense_ids
+            if not expenses:
+                raise ValidationError(_("There are no expenses related to this business trip."))
+
+            # Check if all related expenses are in 'done' state
+            if any(expense.state != 'done' for expense in expenses):
+                raise ValidationError(_("All expenses related to this business trip must be in 'done' state."))
+
             self.write({'state': 'approved'})
 
     def action_reject_business_trip(self):

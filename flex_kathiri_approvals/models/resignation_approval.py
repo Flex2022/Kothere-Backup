@@ -1,5 +1,6 @@
 from odoo import models, fields, api, _
 from datetime import datetime
+from odoo.exceptions import ValidationError
 
 
 class ApprovalResignation(models.Model):
@@ -25,7 +26,7 @@ class ApprovalResignation(models.Model):
     approved_date = fields.Datetime('Resignation Approve Date', readonly=True)
     attachment_ids = fields.Many2many('ir.attachment', string='Attachments')
     expense_ids = fields.One2many('hr.expense', 'flex_approval_resignation_id', string='Expenses', copy=False)
-    approval_request_id = fields.Many2one('approval.request', 'Approval Request')
+    approval_request_id = fields.Many2one('approval.request', 'Approval Request', copy=False)
     types_of_end_services = fields.Selection(
         [('end_of_the_contract',
           'فسخ العقد من قبل العامل أو ترك العامل العمل لغير الحالات الواردة في المادة (81)'),
@@ -36,9 +37,9 @@ class ApprovalResignation(models.Model):
 
     state = fields.Selection([
         ('draft', 'Draft'),
-        ('direct_manager_approval', 'Direct Manager'),
-        ('department_manager_approval', 'Department Manager'),
-        ('hr_manager_approval', 'HR Manager'),
+        ('direct_manager_approval', 'Waiting Direct Manager'),
+        ('department_manager_approval', 'Wainting Department Manager'),
+        ('hr_manager_approval', 'Waiting HR Manager'),
         ('approved', 'Approved'),
         ('rejected', 'Rejected'),
     ], string='Status', default='draft', tracking=True, copy=False)
@@ -59,14 +60,14 @@ class ApprovalResignation(models.Model):
         if self.state == 'direct_manager_approval':
             # Check if the user is the direct manager of the employee
             if user != self.employee_id.parent_id.user_id:
-                raise models.ValidationError(_("Only the direct manager is authorized to approve for the employee."))
+                raise ValidationError(_("Only the direct manager is authorized to approve for the employee."))
 
             self.write({'state': 'department_manager_approval'})
 
         elif self.state == 'department_manager_approval':
             # Check if the user is the department manager
             if user != self.department_id.manager_id.user_id:
-                raise models.ValidationError(
+                raise ValidationError(
                     _("Only the department manager is authorized to approve for the current department."))
 
             self.write({'state': 'hr_manager_approval'})
@@ -74,7 +75,12 @@ class ApprovalResignation(models.Model):
         elif self.state == 'hr_manager_approval':
             # Check if the user is from HR managers
             if not user.has_group('hr.group_hr_manager'):
-                raise models.ValidationError(_("Only HR managers are authorized to approve for the HR department."))
+                raise ValidationError(_("Only HR managers are authorized to approve for the HR department."))
+
+            # Check if an approval request is associated with the resignation
+            if not self.approval_request_id:
+                raise ValidationError(
+                    _("There is no associated termination approval request for this resignation, pls create a Termination approval "))
 
             # End the employee's contract by updating the contract end date
             if self.employee_id.contract_id:
@@ -100,7 +106,7 @@ class ApprovalResignation(models.Model):
     def unlink(self):
         for approval in self:
             if approval.state not in ['draft', 'rejected']:
-                raise models.UserError(_("You can only delete records with 'Draft' or 'Rejected' state."))
+                raise ValidationError(_("You can only delete records with 'Draft' or 'Rejected' state."))
         return super(ApprovalResignation, self).unlink()
 
     def action_view_expenses(self):
@@ -121,7 +127,7 @@ class ApprovalResignation(models.Model):
         """
         category_id = self.company_id.flex_employee_resignation_request_approval_type
         if not category_id:
-            raise models.UserError(
+            raise ValidationError(
                 _("Please configure the approval category for resignation requests in the settings."))
 
         # Fetch the approval category

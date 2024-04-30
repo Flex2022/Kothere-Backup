@@ -3,13 +3,14 @@ from dateutil.relativedelta import relativedelta
 from datetime import timedelta
 
 
-
 class HrContract(models.Model):
     _inherit = 'hr.contract'
 
     call_allowance = fields.Float('Call Allowance', default=0.0)
     food_allowance = fields.Float('Food Allowance', default=0.0)
     position_allowance = fields.Float('Position Allowance', default=0.0)
+
+    total_wage_amount = fields.Float('Total Wage Amount', compute="compute_total_wage_amount", store=True)
 
     contract_type_duration = fields.Selection([
         ('3', '3 Months'),
@@ -23,6 +24,20 @@ class HrContract(models.Model):
     ], string='Contract Duration')
 
     # contract_end_date = fields.Date(string='Contract End Date', compute='_compute_end_date', store=True)
+
+    @api.depends('employee_id', 'wage', 'l10n_sa_housing_allowance', 'l10n_sa_transportation_allowance',
+                 'l10n_sa_other_allowances',
+                 'call_allowance', 'food_allowance', 'position_allowance')
+    def compute_total_wage_amount(self):
+        for contract in self:
+            total = contract.wage
+            total += contract.l10n_sa_housing_allowance
+            total += contract.l10n_sa_transportation_allowance
+            total += contract.l10n_sa_other_allowances
+            total += contract.call_allowance
+            total += contract.food_allowance
+            total += contract.position_allowance
+            contract.total_wage_amount = total
 
     @api.onchange('date_start', 'contract_type_duration')
     def _compute_end_date(self):
