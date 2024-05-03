@@ -94,6 +94,16 @@ class HrApi(http.Controller):
             res = {"result": {"error": f"incorrect password"}}
             return http.Response(json.dumps(res), status=401, mimetype='application/json')
         valid_token = request.env['hr.token'].sudo().get_valid_token(employee_id=employee.id, device_token=device_token, create=True)
+        contract = employee.contract_id
+        salary = contract.wage
+        allowance_fields = ['call_allowance', 'food_allowance', 'position_allowance']
+        # deduction_fields = []
+        for field_name in allowance_fields:
+            if field_name in contract:
+                salary += contract[field_name]
+        # for field_name in deduction_fields:
+        #     if field_name in contract:
+        #         salary -= contract[field_name]
         res = {
             "result": {
                 "employee_id": employee.id,
@@ -118,7 +128,8 @@ class HrApi(http.Controller):
                 "working_schedule": employee.contract_id.hours_per_week,
                 "contract_start_date": employee.first_contract_date and employee.first_contract_date.isoformat(),
                 "salary_type": employee.contract_id.wage_type,
-                "basic_salary": employee.contract_id._get_contract_wage(),
+                # "basic_salary": employee.contract_id._get_contract_wage(),
+                "basic_salary": salary,
                 # =================================
                 "token": valid_token,
             }
