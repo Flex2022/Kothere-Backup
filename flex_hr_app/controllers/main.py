@@ -74,7 +74,7 @@ class HrApi(http.Controller):
         auth_header = headers.get('Authorization')
         if not auth_header.startswith('Basic '):
             res = {"result": {"error": f"Authorization type should be 'Basic Auth'"}}
-            return http.Response(json.dumps(res), status=401, mimetype='application/json')
+            return http.Response(json.dumps(res), status=406, mimetype='application/json')
         # Get the base64 encoded string after 'Basic '
         encoded_credentials = auth_header[len('Basic '):]
         # Decode the base64 string
@@ -85,14 +85,14 @@ class HrApi(http.Controller):
         # print('password: ', password)
         if not (username and password):
             res = {"result": {"error": f"username or password is missing"}}
-            return http.Response(json.dumps(res), status=401, mimetype='application/json')
+            return http.Response(json.dumps(res), status=406, mimetype='application/json')
         employee = request.env['hr.employee'].sudo().search([('api_username', '=', username)], limit=1)
         if not employee:
             res = {"result": {"error": f"incorrect username"}}
-            return http.Response(json.dumps(res), status=401, mimetype='application/json')
+            return http.Response(json.dumps(res), status=406, mimetype='application/json')
         if employee.api_password != password:
             res = {"result": {"error": f"incorrect password"}}
-            return http.Response(json.dumps(res), status=401, mimetype='application/json')
+            return http.Response(json.dumps(res), status=406, mimetype='application/json')
         valid_token = request.env['hr.token'].sudo().get_valid_token(employee_id=employee.id, device_token=device_token, create=True)
         contract = employee.contract_id
         salary = contract.wage
