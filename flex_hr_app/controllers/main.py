@@ -175,6 +175,16 @@ class HrApi(http.Controller):
             res = {"result": {"error": "employee_id is missing in context"}}
             return http.Response(json.dumps(res), status=400, mimetype='application/json')
         employee = request.env['hr.employee'].sudo().browse(employee_id)
+        contract = employee.contract_id
+        salary = contract.wage
+        allowance_fields = ['call_allowance', 'food_allowance', 'position_allowance']
+        # deduction_fields = []
+        for field_name in allowance_fields:
+            if field_name in contract:
+                salary += contract[field_name]
+        # for field_name in deduction_fields:
+        #     if field_name in contract:
+        #         salary -= contract[field_name]
         res = {
             "result": {
                 "employee_id": employee.id,
@@ -198,7 +208,8 @@ class HrApi(http.Controller):
                 "working_schedule": employee.contract_id.hours_per_week,
                 "contract_start_date": employee.first_contract_date and employee.first_contract_date.isoformat(),
                 "salary_type": employee.contract_id.wage_type,
-                "basic_salary": employee.contract_id._get_contract_wage(),
+                # "basic_salary": employee.contract_id._get_contract_wage(),
+                "basic_salary": salary,
                 # =================================
                 "image_url": f"/web/force/image/hr.employee.public/{employee.id}/image_1920",
             }
