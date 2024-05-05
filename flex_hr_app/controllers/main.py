@@ -94,16 +94,16 @@ class HrApi(http.Controller):
             res = {"result": {"error": f"incorrect password"}}
             return http.Response(json.dumps(res), status=406, mimetype='application/json')
         valid_token = request.env['hr.token'].sudo().get_valid_token(employee_id=employee.id, device_token=device_token, create=True)
-        contract = employee.contract_id
-        salary = contract.wage
-        allowance_fields = ['call_allowance', 'food_allowance', 'position_allowance']
-        # deduction_fields = []
-        for field_name in allowance_fields:
-            if field_name in contract:
-                salary += contract[field_name]
-        # for field_name in deduction_fields:
+        # contract = employee.contract_id
+        # salary = contract.wage
+        # allowance_fields = ['call_allowance', 'food_allowance', 'position_allowance']
+        # # deduction_fields = []
+        # for field_name in allowance_fields:
         #     if field_name in contract:
-        #         salary -= contract[field_name]
+        #         salary += contract[field_name]
+        # # for field_name in deduction_fields:
+        # #     if field_name in contract:
+        # #         salary -= contract[field_name]
         res = {
             "result": {
                 "employee_id": employee.id,
@@ -129,7 +129,7 @@ class HrApi(http.Controller):
                 "contract_start_date": employee.first_contract_date and employee.first_contract_date.isoformat(),
                 "salary_type": employee.contract_id.wage_type,
                 # "basic_salary": employee.contract_id._get_contract_wage(),
-                "basic_salary": salary,
+                "basic_salary": employee.contract_id.total_wage_amount,
                 # =================================
                 "token": valid_token,
             }
@@ -175,16 +175,16 @@ class HrApi(http.Controller):
             res = {"result": {"error": "employee_id is missing in context"}}
             return http.Response(json.dumps(res), status=400, mimetype='application/json')
         employee = request.env['hr.employee'].sudo().browse(employee_id)
-        contract = employee.contract_id
-        salary = contract.wage
-        allowance_fields = ['call_allowance', 'food_allowance', 'position_allowance']
-        # deduction_fields = []
-        for field_name in allowance_fields:
-            if field_name in contract:
-                salary += contract[field_name]
-        # for field_name in deduction_fields:
+        # contract = employee.contract_id
+        # salary = contract.wage
+        # allowance_fields = ['call_allowance', 'food_allowance', 'position_allowance']
+        # # deduction_fields = []
+        # for field_name in allowance_fields:
         #     if field_name in contract:
-        #         salary -= contract[field_name]
+        #         salary += contract[field_name]
+        # # for field_name in deduction_fields:
+        # #     if field_name in contract:
+        # #         salary -= contract[field_name]
         res = {
             "result": {
                 "employee_id": employee.id,
@@ -209,7 +209,7 @@ class HrApi(http.Controller):
                 "contract_start_date": employee.first_contract_date and employee.first_contract_date.isoformat(),
                 "salary_type": employee.contract_id.wage_type,
                 # "basic_salary": employee.contract_id._get_contract_wage(),
-                "basic_salary": salary,
+                "basic_salary": employee.contract_id.total_wage_amount,
                 # =================================
                 "image_url": f"/web/force/image/hr.employee.public/{employee.id}/image_1920",
             }
@@ -561,6 +561,7 @@ class HrApi(http.Controller):
                     # "payment_mode": exp.payment_mode,
                     "date": exp.date.isoformat(),
                     "description": exp.description,
+                    "request_type": exp.request_type,
                     "state": exp.state,
                 } for exp in expenses]
             }
@@ -614,6 +615,7 @@ class HrApi(http.Controller):
                 'product_id': payload.get('product_id'),
                 'date': payload.get('date'),
                 'description': payload.get('description'),
+                'request_type': payload.get('request_type'),
                 # 'tax_ids': [Command.clear()],
                 # 'sample': True,
             })
@@ -767,6 +769,7 @@ class HrApi(http.Controller):
                     "renewal_date": renew_iqama.renewal_date and renew_iqama.renewal_date.isoformat(),
                     "note": html2plaintext(renew_iqama.note),
                     "state": renew_iqama.state,
+                    "create_date": renew_iqama.create_date.isoformat(),
                 } for renew_iqama in renew_iqamas]
             }
         for state in state_info.keys():
@@ -794,7 +797,7 @@ class HrApi(http.Controller):
                 'employee_id': employee.id,
                 'company_id': employee.company_id.id,
                 "new_iqama_id": payload.get('new_iqama_id'),
-                "renewal_date": payload.get('renewal_date'),
+                # "renewal_date": payload.get('renewal_date'),
                 "note": payload.get('note'),
             })
             base64_str = payload.get('document')
