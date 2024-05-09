@@ -124,19 +124,29 @@ class AccountMove(models.Model):
     @api.depends('invoice_origin')
     def _compute_contract_amount(self):
         for record in self:
-            record.contract_amount = False
+            record.contract_amount = 0.0
             if record.invoice_origin:
                 sale_order = self.env['sale.order'].search([('name', '=', record.invoice_origin)], limit=1)
-                record.contract_amount = sale_order.amount_total if sale_order else False
+                if sale_order:
+                    record.contract_amount = sale_order.amount_total
 
+    # @api.depends('invoice_origin')
+    # def _compute_project_invoice_from_sale_order(self):
+    #     for record in self:
+    #         if record.invoice_origin:
+    #             sale_order = self.env['sale.order'].search([('name', '=', record.invoice_origin)], limit=1)
+    #             record.project_invoice_from_sale_order = sale_order.project_invoice.id if sale_order else False
+    #         else:
+    #             record.project_invoice_from_sale_order = False
+    #
     @api.depends('invoice_origin')
     def _compute_project_invoice_from_sale_order(self):
         for record in self:
+            record.project_invoice_from_sale_order = False
             if record.invoice_origin:
                 sale_order = self.env['sale.order'].search([('name', '=', record.invoice_origin)], limit=1)
-                record.project_invoice_from_sale_order = sale_order.project_invoice.id if sale_order else False
-            else:
-                record.project_invoice_from_sale_order = False
+                if sale_order:
+                    record.project_invoice_from_sale_order = sale_order.project_invoice.id
 
     # @api.depends('invoice_origin')
     # def _compute_project_invoice_from_sale_order(self):
