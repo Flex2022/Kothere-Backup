@@ -45,10 +45,20 @@ class AccountMove(models.Model):
                                                       )
     deductions_no = fields.Integer('Deductions No', compute='_compute_origin_deductions_no_count', store=True)
 
+    is_out_invoice = fields.Boolean('Is Out Invoice', compute='_compute_is_out_invoice', store=False)
+
+    contract_amount = fields.Float(string='Contract Amount', compute='_compute_contract_amount', store=False)
+
+    project_manager = fields.Many2one('res.partner', string='Project Manager',
+                                      compute='_compute_project_manager', store=True)
+    projects_manager = fields.Many2one('res.partner', string='Projects Manager',
+                                       compute='_compute_projects_manager', store=True)
+
+
     @api.depends('line_ids.sale_line_ids')
     def _compute_origin_deductions_no_count(self):
         for move in self:
-            print(move.invoice_origin)
+            # print(move.invoice_origin)
             # order_id = move.line_ids.sale_line_ids.order_id
             # move.deductions_no = len(order_id.invoice_ids)
             count = 1
@@ -58,15 +68,6 @@ class AccountMove(models.Model):
             for invoice in sort_invoice_by_created_date:
                 invoice.deductions_no = count
                 count += 1
-
-    is_out_invoice = fields.Boolean('Is Out Invoice', compute='_compute_is_out_invoice', store=False)
-
-    contract_amount = fields.Float(string='Contract Amount', compute='_compute_contract_amount', store=False)
-
-    project_manager = fields.Many2one('res.partner', string='Project Manager',
-                                      compute='_compute_project_manager', store=True)
-    projects_manager = fields.Many2one('res.partner', string='Projects Manager',
-                                       compute='_compute_projects_manager', store=True)
 
     @api.depends('invoice_origin')
     def _compute_project_manager(self):
