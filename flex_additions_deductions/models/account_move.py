@@ -48,7 +48,7 @@ class AccountMove(models.Model):
 
     is_out_invoice = fields.Boolean('Is Out Invoice', compute='_compute_is_out_invoice', store=False)
 
-    contract_amount = fields.Float(string='Contract Amount', compute='_compute_contract_amount', store=False)
+    contract_amount = fields.Monetary(string='Contract Amount', compute='_compute_contract_amount', store=False)
 
     project_manager = fields.Many2one('res.partner', string='Project Manager',
                                       compute='_compute_project_manager', store=True)
