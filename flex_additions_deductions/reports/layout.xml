@@ -35,7 +35,6 @@
                         <u><span t-field="company.name" style="font-size: 14px;"></span></u>
                         <br/>
                         <u><span dir="rtl" style="font-size: 14px;margin-top:-5px;">اسم المشروع /<span dir="rtl" t-field="o.project_invoice_from_sale_order"/></span></u>
-
                     </p>
                     <p class="text-center" dir="rtl">
                         <u><span>المقاول:</span></u>
