@@ -17,6 +17,11 @@
             <field name="category_id" ref="flex_landing_order.flex_landing_order_category"/>
         </record>
 
+        <record id="flex_landing_order_group_landing_order_done" model="res.groups">
+            <field name="name">Can Close Landing Order</field>
+            <field name="category_id" ref="flex_landing_order.flex_landing_order_category"/>
+        </record>
+
 
     </data>
 </odoo>

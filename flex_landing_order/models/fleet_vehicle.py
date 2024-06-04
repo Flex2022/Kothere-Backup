@@ -17,6 +17,11 @@ class FleetVehicle(models.Model):
         }
 
     loading_order_count = fields.Integer(compute='_compute_loading_order_count', string='Loading Orders')
+    employee_id_dr = fields.Many2one('hr.employee', string='Driver Employee')
+
+    @api.onchange('driver_id')
+    def onchange_driver_id(self):
+        self.employee_id_dr = self.env['hr.employee'].search([('name', '=', self.driver_id.name)], limit=1)
 
     # @api.depends('car_model_id')
     def _compute_loading_order_count(self):

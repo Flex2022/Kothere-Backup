@@ -1,4 +1,5 @@
 from odoo import api, fields, models, _
+from odoo.exceptions import UserError
 
 
 class LandingOrder(models.Model):
@@ -8,6 +9,7 @@ class LandingOrder(models.Model):
     _rec_name = 'name'
 
     order_id = fields.Many2one('sale.order', string='Sale Order')
+    stock_picking_id = fields.Many2one('stock.picking', string='Stock Picking')
 
     name = fields.Char(string="Partner Reference", required=False, copy=False, readonly=True,
                        default=lambda self: _('New'))
@@ -15,7 +17,9 @@ class LandingOrder(models.Model):
         ('new', 'New'),
         ('receive', 'Receive'),
         ('delivery', 'Delivery'),
-        ('calculated', 'Calculated'),],
+        ('done', 'Done'),
+        ('canceled', 'Canceled')
+    ],
         string='State',
         default='new')
     date = fields.Date(string='Date', default=fields.Date.today())
@@ -26,7 +30,10 @@ class LandingOrder(models.Model):
     # Fleet
     car_model_id = fields.Many2one('fleet.vehicle', string='Car Model')
     driver_id = fields.Many2one('res.partner', string='Driver', related='car_model_id.driver_id')
+    driver_employee = fields.Many2one('hr.employee', string='Driver Employee', related='car_model_id.employee_id_dr')
     car_id = fields.Char(string='Car ID', related='car_model_id.license_plate')
+
+    cancelation_reason = fields.Text(string='Cancelation Reason')
 
     quantity = fields.Char(string='Quantity')
     kind = fields.Selection([
@@ -49,6 +56,7 @@ class LandingOrder(models.Model):
     from_receive_to_delivery_h_hour = fields.Float(string='From Receive To Delivery',
                                                    compute='_compute_from_receive_to_delivery', digits=(6, 2),
                                                    store=True)
+    reward_amount = fields.Float(string='Reward Amount')
 
     company_id = fields.Many2one(
         comodel_name='res.company',
@@ -64,7 +72,22 @@ class LandingOrder(models.Model):
             self.state = 'delivery'
             self.delivery_date = fields.Date.today()
         elif self.state == 'delivery':
-            self.state = 'calculated'
+            if not self.env.user.has_group('flex_landing_orders.flex_landing_order_group_landing_order_done'):
+                raise UserError(_('You do not have permission to perform this action'))
+            self.state = 'done'
+
+
+    def cancel_order_action(self):
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Cancel Reason',
+            'res_model': 'cancel.reason.wizard',
+            'view_mode': 'form',
+            'target': 'new',
+            'context': {'default_sale_order_id': self.id,
+                        'default_partner_id': self.partner_id.id}
+        }
+
 
     def set_as_new(self):
         self.state = 'new'
@@ -116,3 +139,19 @@ class LandingOrder(models.Model):
                 related_record = self.env[related_model].sudo().browse(field_value)
                 return related_record.name if related_record else field_value
         return field_value
+
+class CancelReasonWizard(models.TransientModel):
+    _name = 'cancel.reason.wizard'
+    _description = 'Cancel Reason Wizard'
+
+    reason = fields.Text(string='Reason', required=True)
+
+    def action_cancel(self):
+        self.ensure_one()
+        landing_order = self.env['landing.order'].browse(self.env.context.get('active_id'))
+        landing_order.write({
+            'cancelation_reason': self.reason,
+            'state': 'canceled',
+            'delivery_date': '',
+            'receive_date': '',
+        })

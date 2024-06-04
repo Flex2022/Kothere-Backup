@@ -22,5 +22,13 @@
                    eval="[(4, ref('flex_landing_order.flex_landing_order_group_landing_order_manager'))]"/>
         </record>
 
+        <record id="landing_order_super_rule" model="ir.rule">
+            <field name="name">Big Manager</field>
+            <field ref="model_landing_order" name="model_id"/>
+            <field name="domain_force">[(1,'=',1)]</field>
+            <field name="groups"
+                   eval="[(4, ref('flex_landing_order.flex_landing_order_group_landing_order_done'))]"/>
+        </record>
+
     </data>
 </odoo>
