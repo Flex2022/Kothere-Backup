@@ -9,9 +9,9 @@
     'license': 'AGPL-3',
     'depends': ['base', 'sale', 'contacts', 'fleet','flex_partner_unique_code', 'hr_payroll', 'stock'],
     'data': [
+        'security/groups.xml',
         'security/ir.model.access.csv',
         'data/data.xml',
-        'security/groups.xml',
         'security/rules.xml',
         'views/landing_orders.xml',
         'report/report.xml',
