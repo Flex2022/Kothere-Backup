@@ -91,7 +91,11 @@ class AccountMove(models.Model):
         for record in self:
             if record.invoice_origin:
                 sale_order = self.env['sale.order'].search([('name', '=', record.invoice_origin)], limit=1)
-                record.project_manager = sale_order.project_manager.id if sale_order else False
+                purchase_order = self.env['purchase.order'].search([('name', '=', record.invoice_origin)], limit=1)
+                if sale_order:
+                    record.project_manager = sale_order.project_manager.id
+                if purchase_order:
+                    record.project_manager = purchase_order.project_manager.id
             else:
                 record.project_manager = False
 
@@ -100,7 +104,11 @@ class AccountMove(models.Model):
         for record in self:
             if record.invoice_origin:
                 sale_order = self.env['sale.order'].search([('name', '=', record.invoice_origin)], limit=1)
-                record.projects_manager = sale_order.projects_manager.id if sale_order else False
+                purchase_order = self.env['purchase.order'].search([('name', '=', record.invoice_origin)], limit=1)
+                if sale_order:
+                    record.projects_manager = sale_order.projects_manager.id
+                if purchase_order:
+                    record.projects_manager = purchase_order.projects_manager.id
             else:
                 record.projects_manager = False
 
@@ -145,8 +153,11 @@ class AccountMove(models.Model):
             record.project_invoice_from_sale_order = False
             if record.invoice_origin:
                 sale_order = self.env['sale.order'].search([('name', '=', record.invoice_origin)], limit=1)
+                purchase_order = self.env['purchase.order'].search([('name', '=', record.invoice_origin)], limit=1)
                 if sale_order:
                     record.project_invoice_from_sale_order = sale_order.project_invoice.id
+                elif purchase_order:
+                    record.project_invoice_from_sale_order = purchase_order.project_invoice.id
 
     # @api.depends('invoice_origin')
     # def _compute_project_invoice_from_sale_order(self):

@@ -4,3 +4,4 @@ from . import account_move
 from . import additions
 from . import deductions
 from . import sale
+from . import purchase_order
