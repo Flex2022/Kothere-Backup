@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <menuitem id="menu_flex_approvals" name="Employee_Requests" sequence="10"
+    <menuitem id="menu_flex_approvals" name="Employee Requests" sequence="10"
               web_icon="flex_kathiri_approvals,static/description/web-icon.png">
-        <menuitem id="menu_flex_all_approvals"
-                  name="All Requests"
-                  sequence="10">
+        <menuitem id="menu_flex_all_approvals" name="All Requests" sequence="10">
             <menuitem id="menu_flex_approval_business_trip_action" name="Business Trip Requests"
                       action="action_approval_business_trip"/>
             <menuitem id="menu_flex_approval_employee_transfer_action" name="Employee Transfer Requests"
@@ -13,7 +11,17 @@
                       action="action_approval_renew_iqama"/>
             <menuitem id="menu_flex_approval_resignation_action" name="Resignation Requests"
                       action="action_approval_resignation"/>
+            <menuitem id="menu_flex_approval_medical_insurance" name="Medical Insurance Requests"
+                      action="action_approval_renew_medical_insurance"/>
         </menuitem>
-        <menuitem id="menu_employee_requests_config" name="Settings" action="action_flex_approvals_config" groups="base.group_system" sequence="100"/>
+        <menuitem id="menu_configuration" name="Configuration" sequence="100" groups="base.group_system">
+            <menuitem id="menu_employee_requests_config" name="Settings" action="action_flex_approvals_config"
+                      groups="base.group_system" sequence="10"/>
+            <!-- Menu Item for Medical Insurance Pack -->
+            <menuitem id="menu_medical_insurance_pack" name="Medical Insurance Packs"
+                      groups="base.group_system"
+                      action="action_medical_insurance_pack" sequence="20"/>
+        </menuitem>
+
     </menuitem>
 </odoo>

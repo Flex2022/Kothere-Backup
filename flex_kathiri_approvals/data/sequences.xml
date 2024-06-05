@@ -37,5 +37,14 @@
             <field name="prefix">RESIGN/</field>
             <field name="company_id" eval="False"/>
         </record>
+
+        <!-- Sequence for Medical Insurance Renewal Approval -->
+        <record id="seq_approval_renew_medical_insurance" model="ir.sequence">
+            <field name="name">Medical Insurance Renewal Approval</field>
+            <field name="code">flex.approval.renew_medical_insurance</field>
+            <field name="prefix">MI/</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
     </data>
 </odoo>

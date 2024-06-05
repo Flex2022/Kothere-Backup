@@ -25,5 +25,10 @@
             <field name="model_id" ref="model_flex_approval_resignation"/>
             <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
         </record>
+        <record id="flex_employee_requests_medical_insurance_own_record_rule" model="ir.rule">
+            <field name="name">Flex Employee Requests 'Medical Insurance': Company Records Only</field>
+            <field name="model_id" ref="model_flex_approval_renew_medical_insurance"/>
+            <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+        </record>
     </data>
 </odoo>

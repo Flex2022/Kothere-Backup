@@ -1,0 +1,174 @@
+<odoo>
+    <data>
+        <!-- Medical Insurance Renewal Approval Form View -->
+        <record id="view_approval_renew_medical_insurance_form" model="ir.ui.view">
+            <field name="name">flex.approval.renew_medical_insurance.form</field>
+            <field name="model">flex.approval.renew_medical_insurance</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button string="Submit for Approval" type="object" name="action_submit_for_approval"
+                                invisible="state != 'draft'"/>
+                        <button string="Approve" type="object" name="action_approve"
+                                invisible="state not in ('hr_manager_approval')"/>
+                        <button string="Reject" type="object" name="action_reject"
+                                invisible="state not in ('hr_manager_approval')"/>
+                        <field name="state" widget="statusbar" readonly="True"/>
+                    </header>
+                    <sheet>
+                        <div name="button_box" class="oe_button_box">
+                            <button name="action_view_expenses" class="oe_stat_button" type="object" icon="fa-money"
+                                    invisible="state not in ('approved')">
+                                <field name="expense_ids" widget="statinfo" string="Expenses"/>
+                            </button>
+                        </div>
+                        <div class="oe_title">
+                            <label for="name" placeholder="Sequence"/>
+                            <h1>
+                                <field name="name" placeholder="Sequence"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="company_id" invisible="1"/>
+                                <field name="currency_id" invisible="1"/>
+                                <field name="create_date" invisible="True" readonly="True"/>
+                                <field name="employee_id" readonly="state != 'draft'"/>
+                                <field name="employee_number" readonly="1"/>
+                                <field name="department_id" readonly="1"/>
+                                <field name="employee_job_id" readonly="1"/>
+                                <field name="insurance_company_id" readonly="state != 'draft'"/>
+                            </group>
+                            <group>
+                                <field name="insurance_date_from" readonly="state != 'draft'" required="True"/>
+                                <field name="insurance_date_to" readonly="state != 'draft'" required="True"/>
+                                <field name="pack_id" readonly="state != 'draft'" required="True"/>
+                                <field name="pack_amount" readonly="state != 'draft'" required="True"
+                                       options="{'no_create': True,'no_open':True}"/>
+                                <field name="sponsored_ids" widget="many2many_tags"
+                                       readonly="state != 'draft'"
+                                       domain="[('employee_id','=',employee_id)]"
+                                       options="{'no_create': True, 'no_open':True}"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page name="Note">
+                                <field name="note" widget="html" readonly="state != 'draft'"/>
+                            </page>
+                            <page name="Attachments">
+                                <field name="attachment_ids" widget="many2many_binary" string="Attach a file"
+                                       class="g-col-8" readonly="state != 'draft'"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids" options="{'post_refresh': 'recipients'}"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- Medical Insurance Renewal Approval Tree View -->
+        <record id="view_approval_renew_medical_insurance_tree" model="ir.ui.view">
+            <field name="name">flex.approval.renew_medical_insurance.tree</field>
+            <field name="model">flex.approval.renew_medical_insurance</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="company_id" column_invisible="1"/>
+                    <field name="currency_id" column_invisible="1"/>
+                    <field name="name"/>
+                    <field name="create_date"/>
+                    <field name="employee_id"/>
+                    <field name="employee_number"/>
+                    <field name="department_id"/>
+                    <field name="employee_job_id"/>
+                    <field name="insurance_company_id"/>
+                    <field name="pack_id"/>
+                    <field name="pack_amount"/>
+                    <field name="insurance_date_from"/>
+                    <field name="insurance_date_to"/>
+                    <field name="state" widget="badge"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Medical Insurance Renewal Approval Action -->
+        <record id="action_approval_renew_medical_insurance" model="ir.actions.act_window">
+            <field name="name">Medical Insurance Renewal Requests</field>
+            <field name="res_model">flex.approval.renew_medical_insurance</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+        <!-- Form View for Medical Insurance Pack -->
+        <record id="view_medical_insurance_pack_form" model="ir.ui.view">
+            <field name="name">flex.medical.insurance.pack.form</field>
+            <field name="model">flex.medical.insurance.pack</field>
+            <field name="arch" type="xml">
+                <form string="Medical Insurance Pack">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name"/>
+                            <h1>
+                                <field name="name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="currency_id" invisible="1"/>
+                                <field name="description"/>
+                                <field name="insurance_company_id"/>
+                                <field name="pack_amount"/>
+                                <field name="coverage_limit"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Coverage Details">
+                                <field name="coverage_details"/>
+                            </page>
+                            <page string="Terms and Conditions">
+                                <field name="terms_conditions"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids" options="{'post_refresh': 'recipients'}"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- Tree View for Medical Insurance Pack -->
+        <record id="view_medical_insurance_pack_tree" model="ir.ui.view">
+            <field name="name">flex.medical.insurance.pack.tree</field>
+            <field name="model">flex.medical.insurance.pack</field>
+            <field name="arch" type="xml">
+                <tree string="Medical Insurance Packs">
+                    <field name="company_id" column_invisible="1"/>
+                    <field name="currency_id" column_invisible="1"/>
+                    <field name="name"/>
+                    <field name="insurance_company_id"/>
+                    <field name="pack_amount"/>
+                    <field name="coverage_limit"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Action for Medical Insurance Pack -->
+        <record id="action_medical_insurance_pack" model="ir.actions.act_window">
+            <field name="name">Medical Insurance Packs</field>
+            <field name="res_model">flex.medical.insurance.pack</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first Medical Insurance Pack
+                </p>
+            </field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_hr_employee_form_inherit_medical_insurance" model="ir.ui.view">
+            <field name="name">hr.employee.form.inherit.medical_insurance</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook" position="inside">
+                    <page name="medical_insurance" string="Medical Insurance">
+                        <notebook>
+                            <page name="medical_insurance_request" string="Requests">
+                                <field name="medical_insurance_id" readonly="1">
+                                    <tree>
+                                        <field name="name"/>
+                                        <field name="create_date"/>
+                                        <field name="employee_id" column_invisible="1"/>
+                                        <field name="employee_number"/>
+                                        <field name="department_id" optional="hide"/>
+                                        <field name="employee_job_id" optional="hide"/>
+                                        <field name="insurance_company_id"/>
+                                        <field name="insurance_date_from"/>
+                                        <field name="insurance_date_to"/>
+                                        <field name="state" widget="badge"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page name="sponsored" string="Sponsored">
+                                <field name="medical_insurance_sponsored_ids"
+                                       context="{'default_employee_id': id}">
+                                    <tree editable="bottom">
+                                        <field name="employee_id" column_invisible="1"/>
+                                        <field name="name"/>
+                                        <field name="relation" placeholder="Son..."/>
+                                    </tree>
+                                </field>
+                            </page>
+
+                        </notebook>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
