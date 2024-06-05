@@ -48,7 +48,7 @@ class AccountMove(models.Model):
 
     is_out_invoice = fields.Boolean('Is Out Invoice', compute='_compute_is_out_invoice', store=False)
 
-    contract_amount = fields.Float(string='Contract Amount', compute='_compute_contract_amount', store=False)
+    contract_amount = fields.Float(string='Contract Amount', compute="_compute_contract_amount")
 
     project_manager = fields.Many2one('res.partner', string='Project Manager',
                                       compute='_compute_project_manager', store=True)
@@ -125,10 +125,10 @@ class AccountMove(models.Model):
     def _compute_contract_amount(self):
         for record in self:
             record.contract_amount = 0.0
-            # if record.invoice_origin:
-            #     sale_order = self.env['sale.order'].search([('name', '=', record.invoice_origin)], limit=1)
-            #     if sale_order:
-            #         record.contract_amount = float(sale_order.amount_total)
+            if record.invoice_origin:
+                sale_order = self.env['sale.order'].search([('name', '=', record.invoice_origin)], limit=1)
+                if sale_order:
+                    record.contract_amount = float(sale_order.amount_total)
 
     # @api.depends('invoice_origin')
     # def _compute_project_invoice_from_sale_order(self):
@@ -138,7 +138,7 @@ class AccountMove(models.Model):
     #             record.project_invoice_from_sale_order = sale_order.project_invoice.id if sale_order else False
     #         else:
     #             record.project_invoice_from_sale_order = False
-    #
+
     @api.depends('invoice_origin')
     def _compute_project_invoice_from_sale_order(self):
         for record in self:
