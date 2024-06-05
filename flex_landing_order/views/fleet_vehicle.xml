@@ -12,6 +12,9 @@
                         <field name="loading_order_count" widget="statinfo" string="Loading Order"/>
                     </button>
                 </xpath>
+                <xpath expr="//group[1]/group[1]/field[@name='driver_id']" position="after">
+                    <field name="employee_id_dr"/>
+                </xpath>
             </field>
         </record>
     </data>

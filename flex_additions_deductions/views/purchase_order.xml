@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="flex_additions_deductions_purchase_order_form_inherit" model="ir.ui.view">
+            <field name="name">flex_additions_deductions.purchase.order.form</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="project_invoice" invisible="company_id.flex_additions_deductions_ids == False"/>
+                    <field name="project_manager" invisible="company_id.flex_additions_deductions_ids == False"/>
+                    <field name="projects_manager" invisible="company_id.flex_additions_deductions_ids == False"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

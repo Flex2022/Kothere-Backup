@@ -21,7 +21,8 @@ class SaleOrder(models.Model):
             'view_mode': 'form',
             'view_type': 'form',
             'target': 'new',
-            'context': {'default_order_id': self.id},
+            'context': {'default_order_id': self.id,
+                        'default_partner_id': self.partner_id.id},
         }
 
     def get_all_landings(self):
@@ -33,7 +34,8 @@ class SaleOrder(models.Model):
             # 'view_type': 'tree,form',
             # 'target': 'new',
             'domain': [('order_id', '=', self.id)],
-            'context': {'default_order_id': self.id},
+            'context': {'default_order_id': self.id,
+                        'default_partner_id': self.partner_id.id},
         }
 
     def _compute_landing_orders_count(self):

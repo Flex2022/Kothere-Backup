@@ -10,23 +10,23 @@
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='partner_id']" position="after">
                     <field name="project_invoice_from_sale_order"
-                           invisible="there_is_access_from_company_id == False and move_type != 'out_invoice'"/>
+                           invisible="there_is_access_from_company_id == False and move_type not in ['out_invoice', 'in_invoice']"/>
                     <field name="deductions_no"
-                           invisible="there_is_access_from_company_id == False and move_type != 'out_invoice'"
+                           invisible="there_is_access_from_company_id == False and move_type not in ['out_invoice', 'in_invoice']"
                            readonly="1"/>
                     <field name="is_out_invoice"
                            invisible="1"
                            readonly="1"/>
                     <field name="project_manager"
-                           invisible="there_is_access_from_company_id == False and move_type != 'out_invoice'"
+                           invisible="there_is_access_from_company_id == False and move_type not in ['out_invoice', 'in_invoice']"
                            readonly="1"/>
                     <field name="projects_manager"
-                           invisible="there_is_access_from_company_id == False and move_type != 'out_invoice'"
+                           invisible="there_is_access_from_company_id == False and move_type not in ['out_invoice', 'in_invoice']"
                            readonly="1"/>
                 </xpath>
                 <xpath expr="//sheet/div[@name='button_box']" position="inside">
                     <button name="open_created_journal" type="object" class="oe_stat_button"
-                            icon="fa-pencil-square-o" invisible="there_is_access_from_company_id == False">
+                            icon="fa-pencil-square-o" invisible="there_is_access_from_company_id == False and move_type not in ['out_invoice', 'in_invoice']">
                         <field name="invoice_count" widget="statinfo" string="Deductions/Additions"/>
                     </button>
                 </xpath>
@@ -39,7 +39,8 @@
                 </xpath>
                 <xpath expr="//page[@name='aml_tab']" position="after">
                     <page string="Additions/Deductions" name="flex_additions_deductions_tab"
-                          invisible="there_is_access_from_company_id == False">
+                          invisible="there_is_access_from_company_id == False and move_type not in ['out_invoice', 'in_invoice']">
+
 
                         <h2>Deductions</h2>
                         <!--                       there_is_access_from_company_id == False-->
@@ -101,25 +102,25 @@
                                    options="{'currency_field': 'currency_id'}"/>
                             <field name="deductions_amount_type_discounts" widget='monetary'
                                    options="{'currency_field': 'currency_id'}"
-                                   invisible="there_is_access_from_company_id == False"/>
+                                   invisible="there_is_access_from_company_id == False and move_type not in ['out_invoice', 'in_invoice']"/>
                             <field name="deductions_amount_type_insurances" widget='monetary'
                                    options="{'currency_field': 'currency_id'}"
-                                   invisible="there_is_access_from_company_id == False"/>
+                                   invisible="there_is_access_from_company_id == False and move_type not in ['out_invoice', 'in_invoice']"/>
                             <field name="deductions_amount_type_advance_payment" widget='monetary'
                                    options="{'currency_field': 'currency_id'}"
-                                   invisible="there_is_access_from_company_id == False"/>
+                                   invisible="there_is_access_from_company_id == False and move_type not in ['out_invoice', 'in_invoice']"/>
                             <field name="deductions_amount_type_business_guarantee" widget='monetary'
                                    options="{'currency_field': 'currency_id'}"
-                                   invisible="there_is_access_from_company_id == False"/>
+                                   invisible="there_is_access_from_company_id == False and move_type not in ['out_invoice', 'in_invoice']"/>
                             <field name="deductions_amount_type_final_guarantee" widget='monetary'
                                    options="{'currency_field': 'currency_id'}"
-                                   invisible="there_is_access_from_company_id == False"/>
+                                   invisible="there_is_access_from_company_id == False and move_type not in ['out_invoice', 'in_invoice']"/>
                             <field name="deductions_amount" widget='monetary'
                                    options="{'currency_field': 'currency_id'}"
-                                   invisible="there_is_access_from_company_id == False"/>
+                                   invisible="there_is_access_from_company_id == False and move_type not in ['out_invoice', 'in_invoice']"/>
                             <field name="additions_amount" widget='monetary'
                                    options="{'currency_field': 'currency_id'}"
-                                   invisible="there_is_access_from_company_id == False"/>
+                                   invisible="there_is_access_from_company_id == False and move_type not in ['out_invoice', 'in_invoice']"/>
                             <div class="oe_subtotal_footer_separator oe_inline o_td_label">
                                 <label for="total_deductions"/>
                             </div>
@@ -143,14 +144,14 @@
                                    invisible="state == 'draft'"/>
 
                             <div class="oe_subtotal_footer_separator oe_inline o_td_label"
-                                 invisible="there_is_access_from_company_id == False">
+                                 invisible="there_is_access_from_company_id == False and move_type not in ['out_invoice', 'in_invoice']">
                                 <label for="all_total_deductions"/>
                             </div>
                             <field name="all_total_deductions" nolabel="1"
                                    class="oe_subtotal_footer_separator"
                                    widget='monetary'
                                    options="{'currency_field': 'currency_id'}"
-                                   invisible="there_is_access_from_company_id == False"/>
+                                   invisible="there_is_access_from_company_id == False and move_type not in ['out_invoice', 'in_invoice']"/>
                         </group>
 
                         <div class="clearfix"/>
