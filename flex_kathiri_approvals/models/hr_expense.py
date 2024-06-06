@@ -14,3 +14,5 @@ class HrExpense(models.Model):
 
     flex_approval_medical_insurance_id = fields.Many2one('flex.approval.renew_medical_insurance', string='Employee medical insurance',
                                                      copy=False)
+    flex_approval_exit_return_visa_id = fields.Many2one('flex.approval.exit_return_visa', string='Employee Exit Return Visa',
+                                                     copy=False)

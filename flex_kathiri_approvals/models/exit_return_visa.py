@@ -82,13 +82,24 @@ class ExitReturnVisa(models.Model):
                 'title': _("Approval Notification"),
                 'message': _('Your Exit Return Visa request %s has been approved.') % self.name,
             })
+            # Create an expense
+            hr_expense_id = self.env['hr.expense'].sudo().create({
+                'name': _('Exit Return Visa Expense for %s') % self.employee_id.name,
+                'employee_id': self.employee_id.id,
+                'product_id': self.env.ref('flex_kathiri_approvals.expense_product_visa').id,
+                'total_amount_currency': self.visa_amount,
+                'flex_approval_exit_return_visa_id': self.id,
+                'description': _('Exit return visa expense for employee %s') % self.employee_id.name,
+                'company_id': self.company_id.id,
+            })
+            hr_expense_id
 
     def action_reject(self):
         return {
             'name': _('Rejection Reason'),
             'view_mode': 'form',
             'view_id': False,
-            'res_model': 'exit.return.visa.reject.wizard',
+            'res_model': 'flex.approval.exit_return_visa.reject.wizard',
             'type': 'ir.actions.act_window',
             'target': 'new',
             'context': {
@@ -109,6 +120,6 @@ class ExitReturnVisa(models.Model):
         if isinstance(result['context'], str):
             result['context'] = eval(result['context'])
 
-        result['domain'] = [('flex_approval_medical_insurance_id', '=', self.id)]
-        result['context'].update({'default_flex_approval_medical_insurance_id': self.id})
+        result['domain'] = [('flex_approval_exit_return_visa_id', '=', self.id)]
+        result['context'].update({'default_flex_approval_exit_return_visa_id': self.id})
         return result
