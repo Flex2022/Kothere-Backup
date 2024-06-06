@@ -38,7 +38,7 @@
                                 <field name="partner_code"/>
                                 <field name="car_model_id"/>
                                 <field name="driver_id"/>
-                                <field name="driver_employee"/>
+                                <field name="driver_employee" invisible="1"/>
                                 <field name="car_id"/>
                                 <field name="receive_date" readonly="1"/>
                                 <field name="delivery_date" readonly="1"/>
