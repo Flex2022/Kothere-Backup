@@ -13,6 +13,8 @@
                       action="action_approval_resignation"/>
             <menuitem id="menu_flex_approval_medical_insurance" name="Medical Insurance Requests"
                       action="action_approval_renew_medical_insurance"/>
+            <menuitem id="menu_flex_approval_exit_return_visa" name="Exit Return visa Requests"
+                      action="action_exit_return_visa"/>
         </menuitem>
         <menuitem id="menu_configuration" name="Configuration" sequence="100" groups="base.group_system">
             <menuitem id="menu_employee_requests_config" name="Settings" action="action_flex_approvals_config"
@@ -22,6 +24,5 @@
                       groups="base.group_system"
                       action="action_medical_insurance_pack" sequence="20"/>
         </menuitem>
-
     </menuitem>
 </odoo>

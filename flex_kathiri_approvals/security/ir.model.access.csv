@@ -18,4 +18,5 @@ flex_access_medical_insurance_pack,flex_access_medical_insurance_pack,model_flex
 flex_approval_medical_insurance_reject_wizard_user,flex.approval.medical_insurance.reject.wizard,model_flex_approval_medical_insurance_reject_wizard,hr.group_hr_manager,1,1,1,1
 
 
-
+flex_approval_exit_return_visa_user,flex.approval.exit_return_visa,model_flex_approval_exit_return_visa,base.group_user,1,1,1,1
+flex_approval_exit_return_visa_reject_wizard_user,flex.approval.exit_return_visa.reject.wizard,model_flex_approval_exit_return_visa_reject_wizard,hr.group_hr_manager,1,1,1,1

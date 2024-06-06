@@ -1,0 +1,97 @@
+<odoo>
+    <data>
+
+        <!-- Exit Return Visa Form View -->
+        <record id="view_exit_return_visa_form" model="ir.ui.view">
+            <field name="name">flex.approval.exit_return_visa.form</field>
+            <field name="model">flex.approval.exit_return_visa</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button string="Submit for Approval" type="object" name="action_submit_for_approval"
+                                invisible="state != 'draft'"/>
+                        <button string="Approve" type="object" name="action_approve"
+                                invisible="state not in ('hr_manager_approval')"/>
+                        <button string="Reject" type="object" name="action_reject"
+                                invisible="state not in ('hr_manager_approval')"/>
+                        <field name="state" widget="statusbar" readonly="True"/>
+                    </header>
+                    <sheet>
+                        <div name="button_box" class="oe_button_box">
+                            <button name="action_view_expenses" class="oe_stat_button" type="object" icon="fa-money"
+                                    invisible="state not in ('approved')">
+                                <field name="expense_ids" widget="statinfo" string="Expenses"/>
+                            </button>
+                        </div>
+                        <div class="oe_title">
+                            <label for="name" placeholder="Sequence"/>
+                            <h1>
+                                <field name="name" placeholder="Sequence"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="company_id" invisible="1"/>
+                                <field name="currency_id" invisible="1"/>
+                                <field name="create_date" invisible="True" readonly="True"/>
+                                <field name="employee_id" readonly="state != 'draft'"/>
+                                <field name="employee_nationality" readonly="1"/>
+                                <field name="employee_number" readonly="1"/>
+                                <field name="employee_job_id" readonly="1"/>
+                                <field name="department_id" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="visa_date_from" readonly="state != 'draft'" required="True"/>
+                                <field name="visa_date_to" readonly="state != 'draft'" required="True"/>
+                                <field name="leave_id" readonly="1" groups="hr_holidays.group_hr_holidays_user"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page name="Note">
+                                <field name="note" widget="html" readonly="state != 'draft'"/>
+                            </page>
+                            <page name="Attachments">
+                                <field name="attachment_ids" widget="many2many_binary" string="Attach a file"
+                                       class="g-col-8" readonly="state != 'draft'"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids" options="{'post_refresh': 'recipients'}"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- Exit Return Visa Tree View -->
+        <record id="view_exit_return_visa_tree" model="ir.ui.view">
+            <field name="name">flex.approval.exit_return_visa.tree</field>
+            <field name="model">flex.approval.exit_return_visa</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="company_id" column_invisible="1"/>
+                    <field name="currency_id" column_invisible="1"/>
+                    <field name="name"/>
+                    <field name="create_date"/>
+                    <field name="employee_id"/>
+                    <field name="employee_number"/>
+                    <field name="department_id"/>
+                    <field name="employee_job_id"/>
+                    <field name="visa_date_from"/>
+                    <field name="visa_date_to"/>
+                    <field name="state" widget="badge"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Exit Return Visa Action -->
+        <record id="action_exit_return_visa" model="ir.actions.act_window">
+            <field name="name">Exit Return Visa Requests</field>
+            <field name="res_model">flex.approval.exit_return_visa</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+    </data>
+</odoo>

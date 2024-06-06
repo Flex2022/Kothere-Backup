@@ -3,7 +3,9 @@ from . import renew_iqama_approval
 from . import busniess_trip_approval
 from . import resignation_approval
 from . import medical_insurance_approval
+from . import exit_return_visa
 from . import hr_expense
+from . import hr_leave
 from . import res_company
 from . import settings
 from . import hr_employee
