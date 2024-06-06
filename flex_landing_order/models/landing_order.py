@@ -18,8 +18,7 @@ class LandingOrder(models.Model):
         ('receive', 'Receive'),
         ('delivery', 'Delivery'),
         ('done', 'Done'),
-        ('canceled', 'Canceled')
-    ],
+        ('canceled', 'Canceled')],
         string='State',
         default='new')
     date = fields.Date(string='Date', default=fields.Date.today())
@@ -72,8 +71,6 @@ class LandingOrder(models.Model):
             self.state = 'delivery'
             self.delivery_date = fields.Date.today()
         elif self.state == 'delivery':
-            if not self.env.user.has_group('flex_landing_orders.flex_landing_order_group_landing_order_done'):
-                raise UserError(_('You do not have permission to perform this action'))
             self.state = 'done'
 
 
