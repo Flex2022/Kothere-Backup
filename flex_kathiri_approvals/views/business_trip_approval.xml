@@ -85,6 +85,11 @@
             <field name="name">Business Trip Requests</field>
             <field name="res_model">flex.approval.business_trip</field>
             <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your Business Trip Request
+                </p>
+            </field>
         </record>
     </data>
 </odoo>

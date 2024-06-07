@@ -12,7 +12,13 @@ class HrExpense(models.Model):
     flex_approval_business_trip_id = fields.Many2one('flex.approval.business_trip', string='Employee Transfer',
                                                      copy=False)
 
-    flex_approval_medical_insurance_id = fields.Many2one('flex.approval.renew_medical_insurance', string='Employee medical insurance',
-                                                     copy=False)
-    flex_approval_exit_return_visa_id = fields.Many2one('flex.approval.exit_return_visa', string='Employee Exit Return Visa',
-                                                     copy=False)
+    flex_approval_medical_insurance_id = fields.Many2one('flex.approval.renew_medical_insurance',
+                                                         string='Employee medical insurance',
+                                                         copy=False)
+    flex_approval_exit_return_visa_id = fields.Many2one('flex.approval.exit_return_visa',
+                                                        string='Employee Exit Return Visa',
+                                                        copy=False)
+
+    flex_approval_renew_driving_license_id = fields.Many2one('flex.approval.renew_driving_license',
+                                                             string='Employee renewal driving license',
+                                                             copy=False)

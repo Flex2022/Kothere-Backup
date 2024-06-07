@@ -20,3 +20,8 @@ flex_approval_medical_insurance_reject_wizard_user,flex.approval.medical_insuran
 
 flex_approval_exit_return_visa_user,flex.approval.exit_return_visa,model_flex_approval_exit_return_visa,base.group_user,1,1,1,1
 flex_approval_exit_return_visa_reject_wizard_user,flex.approval.exit_return_visa.reject.wizard,model_flex_approval_exit_return_visa_reject_wizard,hr.group_hr_manager,1,1,1,1
+
+
+flex_approval_renew_driving_license_user,flex.approval.renew_driving_license,model_flex_approval_renew_driving_license,base.group_user,1,1,1,1
+flex_approval_renew_driving_license_reject_wizard_user,flex.approval.renew_driving_license.reject.wizard,model_flex_approval_renew_driving_license_reject_wizard,hr.group_hr_manager,1,1,1,1
+

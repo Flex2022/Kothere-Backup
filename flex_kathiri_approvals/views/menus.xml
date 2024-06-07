@@ -15,6 +15,8 @@
                       action="action_approval_renew_medical_insurance"/>
             <menuitem id="menu_flex_approval_exit_return_visa" name="Exit Return visa Requests"
                       action="action_exit_return_visa"/>
+            <menuitem id="menu_flex_approval_renew_driving_license" name="Renew Driving License"
+                      action="action_approval_renew_driving_license"/>
         </menuitem>
         <menuitem id="menu_configuration" name="Configuration" sequence="100" groups="base.group_system">
             <menuitem id="menu_employee_requests_config" name="Settings" action="action_flex_approvals_config"
