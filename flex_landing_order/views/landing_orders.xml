@@ -9,19 +9,19 @@
                 <form string="Landing Order">
                     <header>
                         <button name="action_state" type="object" string="Receive" class="oe_highlight"
-                                group="flex_landing_order.flex_landing_order_group_landing_order_manager"
+                                groups="flex_landing_order.flex_landing_order_group_landing_order_manager"
                                 invisible="state != 'new'"/>
                         <button name="action_state" type="object" string="Delivery" class="oe_highlight"
-                                group="flex_landing_order.flex_landing_order_group_landing_order_manager"
+                                groups="flex_landing_order.flex_landing_order_group_landing_order_manager"
                                 invisible="state != 'receive'"/>
                         <button name="action_state" type="object" string="Done" class="oe_highlight"
-                                group="flex_landing_order.flex_landing_order_group_landing_order_done"
+                                groups="flex_landing_order.flex_landing_order_group_landing_order_done"
                                 invisible="state != 'delivery'"/>
                         <button name="cancel_order_action" type="object" string="Cancel"
-                                group="flex_landing_order.flex_landing_order_group_landing_order_manager"
+                                groups="flex_landing_order.flex_landing_order_group_landing_order_manager"
                                 invisible="state == 'canceled'"/>
                         <button name="set_as_new" type="object" string="Set to New" class="oe_highlight"
-                                group="flex_landing_order.flex_landing_order_group_landing_order_manager"
+                                groups="flex_landing_order.flex_landing_order_group_landing_order_manager"
                                 invisible="state != 'canceled'"/>
 
                         <field name="state" widget="statusbar" statusbar_visible="new,receive,delivery,done"/>
