@@ -8,11 +8,14 @@
                 <form>
                     <header>
                         <button string="Submit for Approval" type="object" name="action_submit_for_approval"
+                                class="oe_highlight"
                                 invisible="state != 'draft'"/>
-                        <button string="Approve" type="object" name="action_approve"
-                                invisible="state not in ('hr_manager_approval')"/>
-                        <button string="Reject" type="object" name="action_reject"
-                                invisible="state not in ('hr_manager_approval')"/>
+                        <button name="action_approve" type="object" string="Approve"
+                                invisible="state != 'hr_manager_approval'"
+                                class="btn-success"/>
+                        <button name="action_reject" type="object" string="Reject"
+                                invisible="state != 'hr_manager_approval'"
+                                class="btn-danger"/>
                         <field name="state" widget="statusbar" readonly="True"/>
                     </header>
                     <sheet>
@@ -43,7 +46,7 @@
                                 <field name="last_vehicle_license_id" readonly="1"/>
                                 <field name="last_driving_license_date_from" readonly="1"/>
                                 <field name="last_driving_license_date_to" readonly="1"/>
-<!--                                <field name="driving_license_number" readonly="state != 'draft'"/>-->
+                                <!--                                <field name="driving_license_number" readonly="state != 'draft'"/>-->
                                 <field name="driving_license_date_from" readonly="state != 'draft'" required="True"/>
                                 <field name="driving_license_date_to" readonly="state != 'draft'" required="True"/>
                             </group>
@@ -85,7 +88,7 @@
                     <field name="last_vehicle_license_id" optional="hide"/>
                     <field name="last_driving_license_date_from" optional="hide"/>
                     <field name="last_driving_license_date_to" optional="hide"/>
-<!--                    <field name="driving_license_number" optional="show"/>-->
+                    <!--                    <field name="driving_license_number" optional="show"/>-->
                     <field name="driving_license_date_from" optional="show"/>
                     <field name="driving_license_date_to" optional="show"/>
                     <field name="state" widget="badge" optional="show"/>

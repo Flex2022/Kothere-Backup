@@ -30,3 +30,7 @@ flex_approval_starting_work_request_user,flex.approval.starting_work_request,mod
 flex_approval_starting_work_reject_wizard_user,flex.approval.starting_work.reject.wizard,model_flex_approval_starting_work_request_reject_wizard,hr.group_hr_manager,1,1,1,1
 
 
+flex_approval_renew_vehicle_insurance_request_user,flex.approval.renew_vehicle_insurance_request,model_flex_approval_renew_vehicle_insurance,base.group_user,1,1,1,1
+flex_approval_renew_vehicle_insurance_reject_wizard_user,flex.approval.renew_vehicle_insurance.reject.wizard,model_flex_approval_renew_vehicle_insurance_reject_wizard,hr.group_hr_manager,1,1,1,1
+
+

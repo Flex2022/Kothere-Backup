@@ -8,10 +8,13 @@
                 <form>
                     <header>
                         <button string="Submit for Approval" type="object" name="action_submit_for_approval"
+                                class="btn-primary"
                                 invisible="state != 'draft'"/>
                         <button string="Approve Renewal" type="object" name="action_approve_renewal"
+                                class="btn-success"
                                 invisible="state in ('draft', 'rejected','approved')"/>
                         <button string="Reject Renewal" type="object" name="action_reject_renewal"
+                                 class="btn-danger"
                                 invisible="state in ('draft', 'rejected', 'approved')"/>
                         <field name="state" widget="statusbar" readonly="True"/>
                     </header>

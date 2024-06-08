@@ -72,5 +72,14 @@
             <field name="company_id" eval="False"/>
         </record>
 
+        <!-- Sequence for renew vehicle insurance Approval -->
+        <record id="seq_renew_vehicle_insurance" model="ir.sequence">
+            <field name="name">Renew Vehicle Insurance</field>
+            <field name="code">flex.approval.renew_vehicle_insurance</field>
+            <field name="prefix">VI/</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
     </data>
 </odoo>

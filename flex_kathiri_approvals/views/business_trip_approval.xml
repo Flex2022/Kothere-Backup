@@ -8,11 +8,11 @@
                 <form>
                     <header>
                         <button string="Submit for Approval" type="object" name="action_submit_for_approval"
-                                invisible="state != 'draft'"/>
-                        <button string="Approve Business Trip" type="object" name="action_approve_business_trip"
-                                invisible="state in ('draft', 'rejected','approved')"/>
+                                class="oe_highlight" invisible="state != 'draft'"/>
+                        <button string="Approve" type="object" name="action_approve_business_trip"
+                                class="btn-success" invisible="state in ('draft', 'rejected','approved')"/>
                         <button string="Reject" type="object" name="action_reject_business_trip"
-                                invisible="state in ('draft', 'rejected', 'approved')"/>
+                                class="btn-danger" invisible="state in ('draft', 'rejected', 'approved')"/>
                         <field name="state" widget="statusbar" readonly="True"/>
                     </header>
                     <sheet>
@@ -37,7 +37,8 @@
                                 <field name="purpose" readonly="state != 'draft'"/>
                                 <field name="book_hotel" readonly="state != 'draft'"
                                        invisible="trip_type != 'external'" required="trip_type == 'external'"/>
-                                <field name="hotel_name" readonly="state != 'draft'" invisible="trip_type != 'external' or book_hotel != True"
+                                <field name="hotel_name" readonly="state != 'draft'"
+                                       invisible="trip_type != 'external' or book_hotel != True"
                                        required="trip_type == 'external' and book_hotel == True"/>
 
                             </group>

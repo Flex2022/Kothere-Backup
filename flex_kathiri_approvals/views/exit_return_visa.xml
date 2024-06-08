@@ -9,11 +9,14 @@
                 <form>
                     <header>
                         <button string="Submit for Approval" type="object" name="action_submit_for_approval"
+                                class="oe_highlight"
                                 invisible="state != 'draft'"/>
-                        <button string="Approve" type="object" name="action_approve"
-                                invisible="state not in ('hr_manager_approval')"/>
-                        <button string="Reject" type="object" name="action_reject"
-                                invisible="state not in ('hr_manager_approval')"/>
+                        <button name="action_approve" type="object" string="Approve"
+                                invisible="state != 'hr_manager_approval'"
+                                class="btn-success"/>
+                        <button name="action_reject" type="object" string="Reject"
+                                invisible="state != 'hr_manager_approval'"
+                                class="btn-danger"/>
                         <field name="state" widget="statusbar" readonly="True"/>
                     </header>
                     <sheet>

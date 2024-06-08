@@ -10,9 +10,9 @@
                         <button string="Submit for Approval" type="object" name="action_submit_for_approval"
                                 class="oe_highlight" invisible="state != 'draft'"/>
                         <button string="Approve Transfer" type="object" name="action_approve_transfer"
-                                class="oe_highlight" invisible="state in ('draft', 'approved','rejected')"/>
+                                class="btn-success" invisible="state in ('draft', 'approved','rejected')"/>
                         <button string="Reject Transfer" type="object" name="action_reject_transfer"
-                                class="oe_highlight" invisible="state in ('draft', 'rejected')"/>
+                                class="btn-danger" invisible="state in ('draft', 'rejected')"/>
                         <field name="state" widget="statusbar" readonly="True"/>
                     </header>
                     <sheet>

@@ -14,8 +14,16 @@
                             icon="fa-id-card">
                         <field name="license_count" widget="statinfo"/>
                     </button>
+                    <button name="action_view_insurances"
+                            string="Vehicle Insurances"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-car">
+                        <field name="vehicle_insurance_count" widget="statinfo"/>
+                    </button>
                 </xpath>
             </field>
         </record>
     </data>
 </odoo>
+

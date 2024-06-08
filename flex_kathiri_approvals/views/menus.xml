@@ -19,6 +19,8 @@
                       action="action_approval_renew_driving_license"/>
             <menuitem id="menu_flex_approval_work_starting_requests" name="Starting Work Requests"
                       action="action_approval_starting_work_request"/>
+            <menuitem id="menu_flex_approval_renew_vehicle_insurance_requests" name="Renew Vehicle Insurance"
+                      action="action_renew_vehicle_insurance"/>
         </menuitem>
         <menuitem id="menu_configuration" name="Configuration" sequence="100" groups="base.group_system">
             <menuitem id="menu_employee_requests_config" name="Settings" action="action_flex_approvals_config"
