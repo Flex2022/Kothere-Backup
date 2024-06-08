@@ -63,5 +63,14 @@
             <field name="company_id" eval="False"/>
         </record>
 
+        <!-- Sequence for Starting Work Request Approval -->
+        <record id="seq_flex_approval_starting_work_request" model="ir.sequence">
+            <field name="name">Starting Work Request Approval</field>
+            <field name="code">flex.approval.starting_work_request</field>
+            <field name="prefix">SW/</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
     </data>
 </odoo>

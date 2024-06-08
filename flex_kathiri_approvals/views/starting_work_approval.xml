@@ -1,0 +1,99 @@
+<odoo>
+    <data>
+        <!-- Form View for Starting Work Request -->
+        <record id="view_approval_starting_work_request_form" model="ir.ui.view">
+            <field name="name">flex.approval.starting_work_request.form</field>
+            <field name="model">flex.approval.starting_work_request</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button string="Submit for Approval" type="object" name="action_submit_for_approval"
+                                invisible="state != 'draft'"/>
+                        <button string="Approve" type="object" name="action_approve"
+                                invisible="state != 'hr_manager_approval'"/>
+                        <button string="Reject" type="object" name="action_reject"
+                                invisible="state != 'hr_manager_approval'"/>
+                        <field name="state" widget="statusbar" readonly="True"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" placeholder="Sequence"/>
+                            <h1>
+                                <field name="name" placeholder="Sequence"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="company_id" invisible="1"/>
+                                <field name="currency_id" invisible="1"/>
+                                <field name="request_type" readonly="state != 'draft'"/>
+                                <field name="employee_id" readonly="state != 'draft'"/>
+                                <field name="employee_number"/>
+                                <field name="iqama_id"/>
+                                <field name="employee_nationality" invisible="request_type != 'enter_from_vacation'"/>
+                                <field name="department_id"/>
+                                <field name="employee_job_id"/>
+                            </group>
+                            <group>
+                                <field name="direct_manager" invisible="request_type != 'enter_from_vacation'"/>
+                                <field name="hod" invisible="request_type != 'enter_from_vacation'"/>
+                                <field name="last_time_off_leave_id" invisible="request_type != 'enter_from_vacation'"/>
+                                <field name="start_date"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Note">
+                                <field name="note" widget="html"/>
+                            </page>
+                            <page string="Attachments">
+                                <field name="attachment_ids" widget="many2many_binary" string="Attach a file"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids" options="{'post_refresh': 'recipients'}"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- Tree View for Starting Work Request -->
+        <record id="view_approval_starting_work_request_tree" model="ir.ui.view">
+            <field name="name">flex.approval.starting_work_request.tree</field>
+            <field name="model">flex.approval.starting_work_request</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="request_type"/>
+                    <field name="employee_id"/>
+                    <field name="employee_number"/>
+                    <field name="iqama_id"/>
+                    <field name="department_id"/>
+                    <field name="employee_nationality" optional="hide"/>
+                    <field name="department_id" optional="hide"/>
+                    <field name="employee_job_id" optional="hide"/>
+                    <field name="direct_manager" optional="hide"/>
+                    <field name="hod" optional="hide"/>
+                    <field name="last_time_off_leave_id" optional="hide"/>
+                    <field name="start_date" optional="hide"/>
+                    <field name="state" widget="badge"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Action for Starting Work Request -->
+        <record id="action_approval_starting_work_request" model="ir.actions.act_window">
+            <field name="name">Starting Work Requests</field>
+            <field name="res_model">flex.approval.starting_work_request</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your First Starting Work Requests
+                </p>
+            </field>
+        </record>
+
+    </data>
+</odoo>

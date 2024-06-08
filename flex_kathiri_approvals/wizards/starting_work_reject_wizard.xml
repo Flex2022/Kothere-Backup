@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_flex_approval_starting_work_request_reject_wizard" model="ir.ui.view">
+        <field name="name">flex.approval.starting_work_request.reject.wizard.form</field>
+        <field name="model">flex.approval.starting_work_request.reject.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Starting Work Request Rejection">
+                <field name="reason" widget="text" placeholder="Enter the rejection reason..." required="1"/>
+                <footer>
+                    <button string="Confirm Rejection" type="object" name="action_confirm_rejection"
+                            class="oe_highlight"/>
+                    <button string="Cancel" class="oe_highlight" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_flex_approval_starting_work_request_reject_wizard" model="ir.actions.act_window">
+        <field name="name">Starting Work Request Rejection</field>
+        <field name="res_model">flex.approval.starting_work_request.reject.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>
