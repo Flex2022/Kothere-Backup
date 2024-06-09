@@ -33,7 +33,7 @@ class ApprovalRenewMedicalInsurance(models.Model):
                                      relation="medical_insurance_sponsored")
 
     attachment_ids = fields.Many2many('ir.attachment', string='Attachments')
-    expense_ids = fields.One2many('hr.expense', 'flex_approval_exit_return_visa_id', string='Expenses', copy=False)
+    expense_ids = fields.One2many('hr.expense', 'flex_approval_medical_insurance_id', string='Expenses', copy=False)
     note = fields.Html('Note')
 
     state = fields.Selection([
