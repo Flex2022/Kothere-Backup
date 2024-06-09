@@ -43,6 +43,7 @@
                                 <field name="hod" invisible="request_type != 'enter_from_vacation'"/>
                                 <field name="last_time_off_leave_id" invisible="request_type != 'enter_from_vacation'"/>
                                 <field name="start_date"/>
+                                <field name="contact_number" invisible="request_type != 'enter_from_vacation'" readonly="state != 'draft'"/>
                             </group>
                         </group>
                         <notebook>
@@ -76,6 +77,7 @@
                     <field name="iqama_id"/>
                     <field name="department_id"/>
                     <field name="employee_nationality" optional="hide"/>
+                    <field name="contact_number" optional="hide"/>
                     <field name="department_id" optional="hide"/>
                     <field name="employee_job_id" optional="hide"/>
                     <field name="direct_manager" optional="hide"/>

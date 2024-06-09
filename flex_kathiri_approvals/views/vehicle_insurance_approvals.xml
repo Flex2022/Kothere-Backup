@@ -19,6 +19,12 @@
                     <field name="state" widget="statusbar" readonly="True"/>
                 </header>
                 <sheet>
+                    <div name="button_box" class="oe_button_box">
+                        <button name="action_view_expenses" class="oe_stat_button" type="object" icon="fa-money"
+                                invisible="state not in ('approved')">
+                            <field name="expense_ids" widget="statinfo" string="Expenses"/>
+                        </button>
+                    </div>
                     <div class="oe_title">
                         <label for="name" placeholder="Sequence"/>
                         <h1>
@@ -37,8 +43,9 @@
                         <group>
                             <field name="vehicle_id" readonly="state != 'draft'"/>
                             <field name="last_vehicle_insurance_id"/>
-                            <field name="new_insurance_start_date"/>
-                            <field name="new_insurance_end_date"/>
+                            <field name="new_insurance_start_date" readonly="state != 'draft'"/>
+                            <field name="new_insurance_end_date" readonly="state != 'draft'"/>
+                            <field name="amount" readonly="state != 'draft'"/>
                         </group>
                     </group>
                     <notebook>
@@ -72,6 +79,7 @@
                 <field name="insurance_expiry_date"/>
                 <field name="new_insurance_start_date"/>
                 <field name="new_insurance_end_date"/>
+                <field name="amount"/>
                 <field name="state" widget="badge"/>
             </tree>
         </field>

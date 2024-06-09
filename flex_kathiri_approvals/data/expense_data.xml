@@ -10,6 +10,7 @@
             <field name="can_be_expensed" eval="True"/>
             <field name="sale_ok" eval="False"/>
             <field name="purchase_ok" eval="False"/>
+            <field name="company_id" eval="False"/>
         </record>
 
         <record id="expense_product_visa" model="product.product">
@@ -22,6 +23,7 @@
             <field name="can_be_expensed" eval="True"/>
             <field name="sale_ok" eval="False"/>
             <field name="purchase_ok" eval="False"/>
+            <field name="company_id" eval="False"/>
         </record>
 
         <record id="expense_product_driving_license" model="product.product">
@@ -34,6 +36,21 @@
             <field name="can_be_expensed" eval="True"/>
             <field name="sale_ok" eval="False"/>
             <field name="purchase_ok" eval="False"/>
+            <field name="company_id" eval="False"/>
         </record>
+
+        <record id="expense_product_vehicle_insurance" model="product.product">
+            <field name="name">Vehicle Insurance</field>
+            <field name="description">Expenses related to Vehicle insurance renewal</field>
+            <field name="standard_price">0.0</field>
+            <field name="uom_id" ref="uom.product_uom_unit"/>
+            <field name="uom_po_id" ref="uom.product_uom_unit"/>
+            <field name="default_code">VI_INS</field>
+            <field name="can_be_expensed" eval="True"/>
+            <field name="sale_ok" eval="False"/>
+            <field name="purchase_ok" eval="False"/>
+            <field name="company_id" eval="False"/>
+        </record>
+
     </data>
 </odoo>

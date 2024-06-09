@@ -22,3 +22,7 @@ class HrExpense(models.Model):
     flex_approval_renew_driving_license_id = fields.Many2one('flex.approval.renew_driving_license',
                                                              string='Employee renewal driving license',
                                                              copy=False)
+    flex_approval_vehicle_insurance_id = fields.Many2one('flex.approval.renew_vehicle_insurance',
+                                                             string='Employee renewal driving license',
+                                                             copy=False)
+

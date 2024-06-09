@@ -12,13 +12,6 @@ class HrLeave(models.Model):
         ('mission', 'Mission')
     ], string='Visa For', default="vacation")
 
-    # @api.onchange('request_unit_half')
-    # def request_unit_half(self):
-    #     for leave in self:
-    #         if leave.state == 'draft':
-    #             if leave.request_unit_half:
-    #                 leave.needs_visa = False
-
     def action_approve(self):
         res = super(HrLeave, self).action_approve()
         for leave in self:
@@ -33,3 +26,11 @@ class HrLeave(models.Model):
                     'leave_id': leave.id,
                 })
         return res
+
+    def action_refuse(self):
+        res = super(HrLeave, self).action_refuse()
+        for leave in self:
+            exit_return_visa_ids = self.env['flex.approval.exit_return_visa'].search([('leave_id', '=', leave.id)])
+            exit_return_visa_ids.write({'state': 'refused'})
+        return res
+

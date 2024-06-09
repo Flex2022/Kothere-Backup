@@ -30,9 +30,9 @@ class ApprovalRenewDrivingLicense(models.Model):
     last_vehicle_license_id = fields.Many2one('flex.approval.renew_driving_license',
                                               string='Last Approved Vehicle Driving license',
                                               compute='_compute_last_vehicle_license', store=True, readonly=True)
-    last_driving_license_date_from = fields.Date(string='License Start Date',
+    last_driving_license_date_from = fields.Date(string='Last License Start Date',
                                                  related="last_vehicle_license_id.driving_license_date_from")
-    last_driving_license_date_to = fields.Date(string='License End Date',
+    last_driving_license_date_to = fields.Date(string='Last License End Date',
                                                related="last_vehicle_license_id.driving_license_date_to")
 
     attachment_ids = fields.Many2many('ir.attachment', string='Attachments')
