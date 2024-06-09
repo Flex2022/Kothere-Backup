@@ -31,6 +31,6 @@ class HrLeave(models.Model):
         res = super(HrLeave, self).action_refuse()
         for leave in self:
             exit_return_visa_ids = self.env['flex.approval.exit_return_visa'].search([('leave_id', '=', leave.id)])
-            exit_return_visa_ids.write({'state': 'refused'})
+            exit_return_visa_ids.write({'state': 'rejected'})
         return res
 
