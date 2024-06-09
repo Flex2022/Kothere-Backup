@@ -99,7 +99,7 @@ class ApprovalRenewVehicleInsurance(models.Model):
 
             # Create an expense
             self.env['hr.expense'].create({
-                'name': _('Vehicle Insurance Renewal Expense for %s') % self.employee_id.name,
+                'name': _('Vehicle Insurance Renewal Expense for %s') % self.vehicle_id.name,
                 'employee_id': self.employee_id.id,
                 'product_id': self.env.ref('flex_kathiri_approvals.expense_product_vehicle_insurance').id,
                 'total_amount_currency': self.amount,
