@@ -9,9 +9,9 @@
                 <field name="employee_nationality"/>
             </xpath>
             <xpath expr="//field[@name='holiday_status_id']" position="after">
-                <field name="needs_visa" widget="boolean_toggle" readonly="state != 'draft'"/>
+                <field name="needs_visa" widget="boolean_toggle" readonly="state not in ('draft','confirm')"/>
                 <field name="visa_for" invisible="needs_visa == False" required="needs_visa == True"
-                       readonly="state != 'draft'"/>
+                       readonly="state not in ('draft','confirm')"/>
             </xpath>
         </field>
     </record>
