@@ -10,6 +10,7 @@ class PurchaseOrder(models.Model):
     partner_presenter_id = fields.Many2one('res.partner', compute="compute_partner_presenter_id", store=True)
     first_party_wishes = fields.Text('رغبات الطرف الأول')
     agreement_purpose = fields.Text('الغرض من العقد')
+    agreement_expense = fields.Text('الصرف بعد')
     agreement_condition_ids = fields.One2many('purchase.order.agreement_condition', 'purchase_order_id',
                                               string='Agreement Conditions')
 

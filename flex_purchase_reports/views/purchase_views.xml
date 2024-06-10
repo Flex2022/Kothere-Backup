@@ -46,6 +46,7 @@
                         <field name="partner_presenter_id" options="{'no_create': True}" readonly="1"/>
                         <field name="first_party_wishes"/>
                         <field name="agreement_purpose"/>
+                        <field name="agreement_expense"/>
                     </group>
                     <notebook>
                         <page string="Conditions">
