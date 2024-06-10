@@ -11,9 +11,16 @@
                 <xpath expr="//field[@name='partner_id']" position="after">
                     <field name="project_invoice_from_sale_order"
                            invisible="there_is_access_from_company_id == False and move_type not in ['out_invoice', 'in_invoice']"/>
+                    <label for="deductions_no" string="Deductions No:"/>
+                    <div class="oe_title">
                     <field name="deductions_no"
                            invisible="there_is_access_from_company_id == False and move_type not in ['out_invoice', 'in_invoice']"
-                           readonly="1"/>
+                           readonly="1" class="oe_inline" />
+                    <button name="update_origin_deductions_no_count" type="object" class="inline"
+                            icon="fa-refresh" invisible="there_is_access_from_company_id == False and move_type not in ['out_invoice', 'in_invoice']"/>
+                    </div>
+                    <field name="amount_before_deductions"/>
+                    <field name="amount_deductions_cur"/>
                     <field name="is_out_invoice"
                            invisible="1"
                            readonly="1"/>
@@ -23,6 +30,10 @@
                     <field name="projects_manager"
                            invisible="there_is_access_from_company_id == False and move_type not in ['out_invoice', 'in_invoice']"
                            readonly="1"/>
+                    <field name="invoice_line_ids_count" invisible="1"/>
+                    <field name="deductions_line_count" invisible="1"/>
+<!--                    <field name="past_deductions_no" invisible="1"/>-->
+
                 </xpath>
                 <xpath expr="//sheet/div[@name='button_box']" position="inside">
                     <button name="open_created_journal" type="object" class="oe_stat_button"
