@@ -15,6 +15,7 @@
         'security/ir.model.access.csv',
         'wizards/purchase_cost_report_wizard.xml',
         'reports/purchase_costs_report.xml',
+        'reports/purchase_agreement_report.xml',
         'views/purchase_views.xml',
 
     ],

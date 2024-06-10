@@ -1,0 +1,54 @@
+from odoo import models, fields, api
+from hijri_converter import Gregorian
+
+
+class PurchaseOrder(models.Model):
+    _inherit = 'purchase.order'
+
+    date_approve_hijri = fields.Char('Confirmation Date (Hijri)', compute="compute_date_approve_hijri")
+    partner_presenter_id = fields.Many2one('res.partner', compute="compute_partner_presenter_id", store=True)
+    first_party_wishes = fields.Text('رغبات الطرف الأول')
+    agreement_purpose = fields.Text('الغرض من العقد')
+    agreement_condition_ids = fields.One2many('purchase.order.agreement_condition', 'purchase_order_id',
+                                              string='Agreement Conditions')
+
+    def compute_date_approve_hijri(self):
+        for order in self:
+            if order.date_approve:
+                # Convert the Gregorian date to Hijri
+                gregorian_date = order.date_approve.date()
+                hijri_date = Gregorian(gregorian_date.year, gregorian_date.month, gregorian_date.day).to_hijri()
+                # Format the Hijri date as a string (e.g., "1445-10-01")
+                order.date_approve_hijri = f"{hijri_date.year}-{hijri_date.month:02}-{hijri_date.day:02}"
+            else:
+                order.date_approve_hijri = ''
+
+    @api.depends('partner_id')
+    def compute_partner_presenter_id(self):
+        for order in self:
+            order.partner_presenter_id = False
+            if order.partner_id:
+                child_ids = order.partner_id.child_ids.filtered(lambda contact: contact.type == 'contact')
+                if child_ids:
+                    order.partner_presenter_id = child_ids[0]
+
+    @api.model
+    def get_arabic_day_name(self, date):
+        day_name_dict = {
+            'Monday': 'الاثنين',
+            'Tuesday': 'الثلاثاء',
+            'Wednesday': 'الأربعاء',
+            'Thursday': 'الخميس',
+            'Friday': 'الجمعة',
+            'Saturday': 'السبت',
+            'Sunday': 'الأحد',
+        }
+        return day_name_dict[date.strftime('%A')]
+
+
+class PurchaseOrderAgreementCondition(models.Model):
+    _name = 'purchase.order.agreement_condition'
+    _description = 'Purchase Order Agreement Condition'
+
+    name = fields.Text('Condition', required=True)
+    purchase_order_id = fields.Many2one('purchase.order', string='Purchase Order', ondelete='cascade')

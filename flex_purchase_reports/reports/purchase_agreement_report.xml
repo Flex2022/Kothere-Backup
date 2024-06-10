@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <template id="purchase_agreement_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page" style="direction: rtl;">
+                        <div class="rtl">
+                            <div class="row">
+                                <div class="col-12">
+                                    <h2 class="text-center font-weight-bolder" style="text-decoration: underline;">عقد
+                                        إتفاق
+                                    </h2>
+                                </div>
+                            </div>
+                            <div class="row fw-bold mt-3">
+                                <div class="col-8"/>
+                                <div class="col-4">
+                                    <span>رقم العقد :</span>
+                                    <span t-field="o.name"/>
+                                    <br/>
+                                    <span>تاريخ العقد :</span>
+                                    <span t-if="o.date_approve" t-esc="o.date_approve.date()"/>
+                                </div>
+                            </div>
+                            <div class="row fw-bold mt-3">
+                                <!--                                <t t-if="o.date_approve" t-set="day_of_week"-->
+                                <!--                                   t-value="o.get_arabic_day_name(o.date_approve)"/>-->
+
+                                <div class="col-12">
+                                    <p class="text-justified">
+                                        إنه في يوم (
+
+                                        )
+                                        .
+                                        <span t-if="o.date_approve" t-field="o.date_approve_hijri"/>
+                                        ه الموافق
+                                        <span t-if="o.date_approve" t-esc="o.date_approve.date()"/>
+                                        م تم الإتفاق بين كل من:
+                                        <br/>
+                                        <br/>
+                                        1-
+                                        <span t-field="o.company_id"/>
+                                        (الطرف الأول)
+                                        <br/>
+                                        و عنوانها /
+                                        <span t-field="o.company_id.city"/>
+                                        -
+                                        <span t-field="o.company_id.state_id"/>
+
+                                        <span style="margin-right: 120px;">
+                                            ت :
+                                            <span t-field="o.company_id.phone"/>
+                                        </span>
+                                        <br/>
+                                        و يمثلها السيد (مشعل الكثيري) / الرئيس التنفيذي
+                                        <br/>
+                                        البريد الإلكتروني :
+                                        <span t-field="o.company_id.email"/>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row fw-bold mt-3">
+                                <div class="col-12">
+                                    <p class="text-justified">
+                                        2-
+                                        <span t-field="o.partner_id"/>
+                                        (الطرف الثاني)
+                                        <br/>
+                                        و عنوانها /
+                                        <span t-field="o.partner_id.city"/>
+                                        -
+                                        <span t-field="o.partner_id.state_id"/>
+
+                                        <span style="margin-right: 120px;">
+                                            ت :
+                                            <span t-field="o.partner_id.phone"/>
+                                        </span>
+                                        <br/>
+                                        و يمثلها السيد (
+                                        <span t-field="o.partner_presenter_id.name"/>
+                                        ) /
+                                        <span t-field="o.partner_presenter_id.function"/>
+                                        <br/>
+                                        البريد الإلكتروني :
+                                        <span t-field="o.partner_presenter_id.email"/>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-12">
+                                    <p class="text-justified">
+                                        تمهيد: حيث يقوم الطرف الأول بتنفيذ مشروع (
+                                        <span t-field="o.project_invoice"/>
+                                        ), و حيث يرغب الطرف الأول في إسناد
+                                        أعمال (
+                                        <span t-field="o.first_party_wishes"/>
+                                        ).
+                                        <br/>
+                                        إلى الطرف الثاني لتنفيذها من الباطن, طبقا للمواصفات الفنية و المخططات وجداول
+                                        الكميات الخاصة بالمشروع, و إقرار الطرف الثاني و إلتزامه بالتنفيذ نطاق ال‘مال
+                                        المسندة إليه من الطرف الأول و إتمامها و ضمانها.
+                                        <br/>
+                                        و اتفق الطرفان بكامل الأهلية المعتبرة شرعا من غير إكراه أو غرر أو جهالة على
+                                        مايلي :
+                                    </p>
+                                    <br/>
+                                    <div class="w-100 text-center">
+                                        <span class="h5 text-center fw-bold">البند الأول .. (الغرض من العقد)</span>
+                                    </div>
+                                    <p class="text-justified">
+                                        الغرص من العقد إسناد أعمال (
+                                        <span t-field="o.agreement_purpose"/>
+                                        ), حسب مواصفات المشروع و توجيهات المالك و الاستشاري
+                                        و ضمان الأعمال المبنية في العقد.
+                                    </p>
+                                    <br/>
+                                    <div class="w-100 text-center">
+                                        <span class="h5 text-center fw-bold">البند الثاني .. (معاينة الموقع و نطاق
+                                            الإتفاقة)
+                                        </span>
+                                    </div>
+                                    <p class="text-justified">
+                                        أقر الطرف الثاني أنه قد عاين الموقع معاينة منافية للجهالة ولا يحق له الرجوع على
+                                        الطرف الأول بأي مطالبات تنتج عن ذلك، ويقوم الطرف الثاني بالأعمال هذا العقد
+                                        بالموقع حسب مواصفات المشروع وتوجيهات المالك والاستشاري وضمان الأعمال المبينة في
+                                        العقد.
+                                    </p>
+                                    <br/>
+                                    <div class="w-100 text-center">
+                                        <span class="h5 text-center fw-bold">البند الثالث .. (التزامات الطرف الثاني)
+                                        </span>
+                                    </div>
+                                    <p class="text-justified">
+                                        1- يلتزم الطرف الثاني بكافة التزامات الطرف الأول تجاه صاحب العمل وما يترتب
+                                        عليها من تكاليف فيما يتعلق بالأعمال موضوع هذا العقد وفقاً لمواصفات ومخططات وشروط
+                                        المشروع ما لم يذكر خلاف ذلك في بنود العقد.
+                                        <br/>
+                                        2- يلتزم الطرف الثاني بتسليم الاعمال كاملة لمهندس الطرف الاول والاستشاري المشرف
+                                        دون أي ملاحظات.
+                                        <br/>
+                                        3- يلتزم الطرف الثاني بالتقيد بتعليمات الطرف الأول وصاحب العمل الاستشاري خلال
+                                        فترة التنفيذ حسب بنود هذا العقد.
+                                        <br/>
+                                        4- يلتزم الطرف الثاني بأي تعديل أو تغيير او اصلاح العيوب والملاحظات في الأعمال
+                                        قد يتم اقتراحه من قبل الاستشاري أو صاحب العمل دون أية مطالبة زائدة عن الاتفاق،
+                                        ودون أي تكلفة إضافية على الطرف الأول.
+                                        <br/>
+                                        5- يلتزم الطرف الثاني بأدوات السفتى لجميع السائقين والعاملين معه ويتحمل أي
+                                        غرامات أو جزاءات داتجه عن عدم الالتزام بتعليمات الأمن والسلامة.
+                                        <br/>
+                                        6- يلتزم الطرف
+                                        الثاني ان تكون جميع عمالته التي تقوم بتنفيذ الاعمال موضوع العقد نظاميه ويكون
+                                        مسئولا عن أي مخالفات ناتجه عن مخالفة عماله لأنظمة المملكة العربية السعودية وفي
+                                        حال صدور أي قرارات من وزارة العمل او الجهة المالكة للمشروع فإنه ملزم بتعديل
+                                        أوضاعه ولا يتحمل الطرف الأول أدني
+                                        مسئوليه بخصوص
+                                        ذلك.
+                                        <br/>
+                                        7- يلتزم الطرف الثاني بنقل المعدات والمواد وطواقم التشغيل من والى موقع المشروع
+                                        مع توفير السكن الخاص بطواقم التشغيل والعمال.
+                                        <br/>
+                                        8- يلتزم الطرف الثاني بتعيين فني عالي التأهيل للإشراف (مهندس او مراقب) على
+                                        أعماله خلال فترة تنفيذ الأعمال على أن يبقى متواجد بالموقع خلال التنفيذ.
+                                        <br/>
+                                        9- يلتزم الطرف الثاني بتوفير عدد كافي من العمالة المدرية والمعدات لتنفيذ كافة
+                                        الأعمال في الوقت المحدد ودون أي تأخير وفقا للجدول الزمني المعتمد من الطرف الأول.
+                                        <br/>
+                                        10- يلتزم الطرف الثاني بالفترات الموضوعة للمشروع لإنهاء البنود طبقا للجدول
+                                        الزمني للمشروع.
+                                    </p>
+                                    <br/>
+                                    <div class="w-100 text-center">
+                                        <span class="h5 text-center fw-bold">البند الرابع .. (إلتزامات الطرف الأول)
+                                        </span>
+                                    </div>
+                                    <p>
+                                        <ol style="margin-right: 20px;">
+                                            <t t-foreach="o.agreement_condition_ids" t-as="agreement_condition_id">
+                                                <li>
+                                                    <span t-esc="agreement_condition_id.name"/>
+                                                </li>
+                                            </t>
+                                        </ol>
+                                    </p>
+                                    <br/>
+                                    <div class="w-100 text-center">
+                                        <span class="h5 text-center fw-bold">البند الخامس .. (الأسعار)</span>
+                                    </div>
+                                    <table class="table table-bordered border-2 border-dark mt-3">
+                                        <tr>
+                                            <th>م</th>
+                                            <th width="40%">بيان الأعمال</th>
+                                            <th>الوحدة</th>
+                                            <th>الكمية</th>
+                                            <th>السعر</th>
+                                            <th>الإجمالي</th>
+                                        </tr>
+                                        <t t-set="cpt" t-value="1"/>
+                                        <t t-foreach="o.order_line" t-as="line_id">
+                                            <tr>
+                                                <td class="text-center">
+                                                    <span t-esc="cpt"/>
+                                                </td>
+                                                <td class="text-end">
+                                                    <span t-field="line_id.name"/>
+                                                </td>
+                                                <td class="text-center">
+                                                    <span t-field="line_id.product_uom"/>
+                                                </td>
+                                                <td class="text-center">
+                                                    <span t-field="line_id.product_qty"/>
+                                                </td>
+                                                <td class="text-center">
+                                                    <span t-field="line_id.price_unit"/>
+                                                </td>
+                                                <td class="text-center">
+                                                    <span t-field="line_id.price_subtotal"/>
+                                                </td>
+                                            </tr>
+                                            <t t-set="cpt" t-value="cpt + 1"/>
+                                        </t>
+                                    </table>
+
+                                    <br/>
+                                    <div class="w-100 text-center">
+                                        <span class="h5 text-center fw-bold">البند السادس .. (شروط السداد)</span>
+                                    </div>
+                                    <p class="text-justified">
+                                        - يتم عمل مستخلص للطرف الثاني بالأعمال المنفذة بعد حصر الكميات المعتمدة من
+                                        الاستشاري او مالك المشروع ويتم صرف الدفعات طبقا للجدول المرفق من حيث القيمة
+                                        والتوقيت ويتم الصرف بعد ) ( من تاريخ اعتماد المستخلص من الموقع .
+                                        <br/>
+                                        - يخصم من الطرف الثاني أي معدات أو مواد إضافية لازمة لتنفيذ العمل بحيث قام
+                                        بتوفير تلك المعدات والمواد الطرف الأول لصالح الطرف الثاني على أن يتم عمل بيان
+                                        بها من مندوب الطرف الأول بالموقع وتخصم من مستحقات الطرف الثاني بالتبعية من
+                                        مستخلصاته الدورية. - الطرف الأول غير مسئول على الإطلاق عن أي ارتفاع في أسعار
+                                        المواد أو تكلفة العمالة أو المعدات المطلوبة لتنفيذ العمل.
+                                    </p>
+                                    <br/>
+                                    <div class="w-100 text-center">
+                                        <span class="h5 text-center fw-bold">
+                                            البند السابع .. (التعاقد من الباطن والتنازل عن العقد)
+                                        </span>
+                                    </div>
+                                    <p class="text-justified">
+                                        لا يحق للطرف الثاني بأية حال من الأحوال التنازل عن أعمال هذا العقد أو أي جزء
+                                        منها إلى طرف ثالث إلا بموافقة الطرف الأول الخطية المسبقة
+                                        على ذلك.
+                                    </p>
+                                    <br/>
+                                    <div class="w-100 text-center">
+                                        <span class="h5 text-center fw-bold">
+                                            البند الثامن .. (غرامة التأخير)
+                                        </span>
+                                    </div>
+                                    <p class="text-justified">
+                                        في حال حدوث تأخير ناتج عن تقصير الطرف الثاني في القيام بالتزاماته المنصوص عليها
+                                        في هذا العقد، الأمر الذي يؤدى إلى تأخير تسليم المشروع، فإن الطرف الثاني يتحمل
+                                        غرامة التأخير المتوافقة مع قيمة أعماله كتلك التي تترتب على الطرف الأول لصاحب
+                                        العمل على أن لا تتجاوز غرامة التأخير نسبة (١٠%) من قيمة هذا العقد، أما إذا كان
+                                        التأخير بسبب أعمال الطرف الأول فإن الطرف الثاني غير مسئول عن ذلك.
+                                    </p>
+
+                                    <br/>
+                                    <div class="w-100 text-center">
+                                        <span class="h5 text-center fw-bold">
+                                            البند التاسع ... (تسوية النزاعات)
+                                        </span>
+                                    </div>
+                                    <p class="text-justified">
+                                        1- إذا وقع نزاع أيا كان نوعه بين الطرفين، لا سمح الله وتعذر حله ودياً خلال عشرة
+                                        أيام
+                                        من تاريخ إبلاغ أحد الطرفين للآخر خطياً، يتم عرض الخلاف على هيئة تحكيم من محكمين
+                                        إثنين، على أن يرشح كل طرف محكم واحد خلال خمسة أيام تلي العشر أيام المذكورة
+                                        أعلاه.
+                                        <br/>
+                                        2 - يرشح المحكمان محكماً ثالثاً مقبولاً من الطرفين خلال أسبوع واحد.
+                                        <br/>
+                                        3- يجب أن تصدر لجنة التحكيم قرارها خلال ثلاثة أسابيع من تاريخ تشكيلها على أقصى
+                                        تقدير.
+                                        <br/>
+                                        4- في حالة تأخر أو رفض أحد الطرفين تعيين محكم عنه يتم إحالة الخلاف إلى جهة
+                                        الاختصاص، على أن يكون الاختصاص المكاني محاكم مدينة بريدة، ويبقى الطرف الثاني
+                                        مسئولاً عن الأعمال بما في ذلك تطبيق البند السابع.
+                                    </p>
+
+                                    <br/>
+                                    <div class="w-100 text-center">
+                                        <span class="h5 text-center fw-bold">
+                                            البند العاشر .. (سحب العمل أو إيقاف المشروع أو إلغاءه)
+                                        </span>
+                                    </div>
+                                    <p class="text-justified">
+                                        يحق للطرف الأول سحب العمل من الطرف الثاني في الحالات التالية:
+                                        <br/>
+                                        1- إذا تأخر الطرف
+                                        الثاني في تنفيذ الأعمال أو تسبب في عرقلة سير المشروع.
+                                        <br/>
+                                        2- الامتناع عن التنفيذ أو
+                                        إيقاف سير العمل.
+                                        <br/>
+                                        3- التعاقد على كل أو جزء من العقد مع مقاول آخر أو أي طرف ثالث بدون موافقة الطرف
+                                        الأول.
+                                        <br/>
+                                        4- إذا أقر الاستشاري إلغاء تأهيل الطرف الثاني كمقاول من الباطن للمشروع.
+                                        <br/>
+                                        5- إذا أخل الطرف الثاني بأي بعد من بنود العقد.
+                                        <br/>
+                                        6- إذا تأخر الطرف الثاني في البدء بالعمل لمدة أسبوعين من تاريخ التعاقد.
+                                        <br/>
+                                        وللطرف الأول الحق في كل الحالات إكمال العمل على حساب الطرف الثاني دون الرجوع
+                                        إليه ويكون كلام الطرف الأول مقبول من الطرف الثاني.
+                                        <br/>
+                                        7- إذا توقف المشروع من قبل
+                                        الجهة المشرفة او المالكة لا يحق للطرف الثاني مطالبة الطرف الأول بأي شيء ويعتبر
+                                        تنفيذ العقد متوقف لحين إشعار أخر من الجهة المشرفة أو المالكة.
+                                        <br/>
+                                        8- في حالة إلغاء المشروع من قبل الجهة المالكة يلغى هذا العقد بموجبه وتشكل لجنة
+                                        من
+                                        قبل الطرفين لتصفيته حسابيا.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <record id="paperformat_purchase_agreement_report" model="report.paperformat">
+        <field name="name">A4 - Custom Report Purchase Agreement Form</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">7</field>
+        <field name="margin_bottom">7</field>
+        <field name="margin_left">7</field>
+        <field name="margin_right">7</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">7</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <!-- QWeb Reports -->
+    <record id="report_purchase_agreement" model="ir.actions.report">
+        <field name="name">عقد اتفاق</field>
+        <field name="model">purchase.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">flex_purchase_reports.purchase_agreement_template</field>
+        <field name="report_file">flex_purchase_reports.purchase_agreement_template</field>
+        <field name="binding_model_id" ref="purchase.model_purchase_order"/>
+        <field name="binding_type">report</field>
+        <!--        <field name="paperformat_id" ref="paperformat_purchase_agreement_report"/>-->
+    </record>
+</odoo>

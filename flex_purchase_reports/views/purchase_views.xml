@@ -34,4 +34,32 @@
         </field>
     </record>
 
+    <record id="view_order_form_inherit" model="ir.ui.view">
+        <field name="name">purchase.order.form.inherit</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="اتفاق العقد">
+                    <group>
+                        <field name="date_approve_hijri" invisible="1"/>
+                        <field name="partner_presenter_id" options="{'no_create': True}" readonly="1"/>
+                        <field name="first_party_wishes"/>
+                        <field name="agreement_purpose"/>
+                    </group>
+                    <notebook>
+                        <page string="Conditions">
+                            <field name="agreement_condition_ids">
+                                <tree editable="bottom">
+                                    <field name="purchase_order_id" column_invisible="1"/>
+                                    <field name="name"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
 </odoo>

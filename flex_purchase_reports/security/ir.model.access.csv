@@ -1,2 +1,3 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_purchase_cost_report_wizard,access.purchase.cost.report.wizard,model_purchase_cost_report_wizard,base.group_user,1,1,1,1
+access_purchase_order_agreement_condition_user, purchase.order.agreement_condition,model_purchase_order_agreement_condition,base.group_user,1,1,1,1
