@@ -46,6 +46,14 @@ class AccountMove(models.Model):
                                                       )
     deductions_no = fields.Integer('Deductions No', compute='_compute_origin_deductions_no_count', store=True)
 
+    # past_deductions_no_2 = fields.Integer('Deductions No2', defualt=lambda self: self.deductions_no - 1)
+
+    amount_before_deductions = fields.Float(string='Amount Before Deductions', compute='compute_amount_before_deductions')
+    amount_deductions_cur = fields.Float(string='Amount Before Deductionsd', compute='compute_amount_before_deductions')
+    # amount_before_deductions_str = fields.Char(string='Amount Before Deductions', compute='compute_str')
+    # amount_deductions_cur_str = fields.Char(string='Amount Before Deductions', compute='compute_str')
+
+
     is_out_invoice = fields.Boolean('Is Out Invoice', compute='_compute_is_out_invoice', store=False)
 
     contract_amount = fields.Float(string='Contract Amount', compute="_compute_contract_amount")
@@ -55,36 +63,69 @@ class AccountMove(models.Model):
     projects_manager = fields.Many2one('res.partner', string='Projects Manager',
                                        compute='_compute_projects_manager', store=True)
 
-    # @api.depends('line_ids.sale_line_ids')
-    # def _compute_origin_deductions_no_count(self):
-    #     for move in self:
-    #         # print(move.invoice_origin)
-    #         # order_id = move.line_ids.sale_line_ids.order_id
-    #         # move.deductions_no = len(order_id.invoice_ids)
-    #         count = 1
-    #         sort_invoice_by_created_date = self.env['account.move'].search(
-    #                 [('invoice_origin', '=', move.invoice_origin), ('move_type', '=', 'out_invoice')],
-    #                 order='create_date asc')
-    #         for invoice in sort_invoice_by_created_date:
-    #             invoice.deductions_no = count
-    #             count += 1
+    @api.depends('line_ids')
+    def compute_amount_before_deductions(self):
+        for move in self:
+            # Retrieve all invoices related to the current move, sorted by creation date
+            if move.project_invoice_from_sale_order:
+                invoices = self.env['account.move'].search([
+                    ('project_invoice_from_sale_order', '=', move.project_invoice_from_sale_order.id),
+                    ('move_type', 'in', ['out_invoice', 'in_invoice']),
+                ], order='create_date asc', limit=int(move.deductions_no - 1))
+                move.amount_before_deductions = sum(invoice.all_total_deductions for invoice in invoices)
+                invoices_2 = self.env['account.move'].search([
+                    ('project_invoice_from_sale_order', '=', move.project_invoice_from_sale_order.id),
+                    ('move_type', 'in', ['out_invoice', 'in_invoice']),
+                ], order='create_date asc', limit=int(move.deductions_no))
+                move.amount_deductions_cur = sum(invoice.all_total_deductions for invoice in invoices_2)
+            else:
+                move.amount_before_deductions = 0.0
+                move.amount_deductions_cur = 0.0
 
-    @api.depends('line_ids.sale_line_ids')
+
+    @api.depends('line_ids')
     def _compute_origin_deductions_no_count(self):
         for move in self:
             count = 0
             # Retrieve all invoices related to the current move, sorted by creation date
-            invoices = self.env['account.move'].search([
-                ('invoice_origin', '=', move.invoice_origin),
-                ('move_type', '=', 'out_invoice')
-            ], order='create_date asc')
+            if move.project_invoice_from_sale_order:
+                invoices = self.env['account.move'].search([
+                    ('project_invoice_from_sale_order', '=', move.project_invoice_from_sale_order.id),
+                    ('move_type', 'in', ['out_invoice', 'in_invoice']),
+                ], order='create_date asc')
 
-            # Iterate through each invoice and count them
-            for invoice in invoices:
-                count += 1
+                for invoice in invoices:
+                    count += 1
+                    if invoice.id == move.id:
+                        move.deductions_no = count
+                        # move.past_deductions_no = count - 1
 
-            # Update the deductions_no field of the current move with the count
-            move.deductions_no = count
+    def update_origin_deductions_no_count(self):
+        for move in self:
+            count = 0
+            # Retrieve all invoices related to the current move, sorted by creation date
+            if move.project_invoice_from_sale_order:
+                invoices = self.env['account.move'].search([
+                    ('project_invoice_from_sale_order', '=', move.project_invoice_from_sale_order.id),
+                    ('move_type', 'in', ['out_invoice', 'in_invoice']),
+                ], order='create_date asc')
+
+                for invoice in invoices:
+                    count += 1
+                    invoice.deductions_no = count
+                    # invoice.past_deductions_no = count - 1
+            if move.project_invoice_from_sale_order:
+                invoices = self.env['account.move'].search([
+                    ('project_invoice_from_sale_order', '=', move.project_invoice_from_sale_order.id),
+                    ('move_type', 'in', ['out_invoice', 'in_invoice']),
+                ], order='create_date asc', limit=int(move.deductions_no - 1))
+                move.amount_before_deductions = sum(invoice.all_total_deductions for invoice in invoices)
+                invoices_2 = self.env['account.move'].search([
+                    ('project_invoice_from_sale_order', '=', move.project_invoice_from_sale_order.id),
+                    ('move_type', 'in', ['out_invoice', 'in_invoice']),
+                ], order='create_date asc', limit=int(move.deductions_no))
+                move.amount_deductions_cur = sum(invoice.all_total_deductions for invoice in invoices_2)
+
 
     @api.depends('invoice_origin')
     def _compute_project_manager(self):
@@ -281,6 +322,9 @@ class AccountMove(models.Model):
 
                         }).action_post()
 
+
+    # deductions_no
+
     def action_post(self):
         res = super(AccountMove, self).action_post()
         if self.there_is_access_from_company_id:
@@ -317,6 +361,24 @@ class AccountMove(models.Model):
         res = super(AccountMove, self).write(vals)
         self.set_line_number()
         return res
+
+
+
+    invoice_line_ids_count = fields.Integer(string='Invoice Line Count', compute='_compute_invoice_line_ids_count')
+    deductions_line_count = fields.Integer(string='ded Count', compute='_compute_invoice_line_ids_count')
+
+    @api.depends('invoice_line_ids')
+    def _compute_invoice_line_ids_count(self):
+        for record in self:
+            record.invoice_line_ids_count = len(record.invoice_line_ids) + 1
+            record.deductions_line_count = len(record.invoice_line_ids) + 2
+
+    # def action_post(self):
+    #     res = super(AccountMove, self).action_post()
+    #     if self.there_is_access_from_company_id:
+    #         self.create_journal_entry_when_conferim()
+    #     return res
+
 
 
 class AccountMoveLine(models.Model):

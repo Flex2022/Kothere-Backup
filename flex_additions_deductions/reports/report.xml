@@ -107,6 +107,7 @@
                         </t>
                         <tr>
                             <td class="size1">
+                                <span t-esc="o.invoice_line_ids_count"/>
 
                             </td>
                             <td class="size2" style="border-left:none">
@@ -145,6 +146,7 @@
                         <tr>
                             <td class="size1">
 
+                                <span t-esc="o.deductions_line_count"/>
                             </td>
                             <td class="size2" style="border-left:none">
 
@@ -179,7 +181,7 @@
                         </tr>
                         <tr>
                             <td class="size1">
-                                1
+                                <span t-esc="o.deductions_line_count + 1"/>
                             </td>
                             <td class="size2" style="border-left:none">
                                 <div class="text-center" style="width:330px;">
@@ -217,7 +219,7 @@
                         </tr>
                         <tr>
                             <td class="size1">
-                                2
+                                <span t-esc="o.deductions_line_count + 2"/>
                             </td>
                             <td class="size2" style="border-left:none">
                                 <div class="text-end" style="margin-right:120px;width:200px;">خصم ضمان أعمال
@@ -252,7 +254,7 @@
                         </tr>
                         <tr>
                             <td class="size1">
-                                3
+                                <span t-esc="o.deductions_line_count + 3"/>
                             </td>
                             <td class="size2" style="border-left:none">
                                 <div class="text-end" style="margin-right:120px;width:200px;">خصم الدفعة المقدمة
@@ -287,7 +289,7 @@
                         </tr>
                         <tr>
                             <td class="size1">
-                                4
+                                <span t-esc="o.deductions_line_count + 4"/>
                             </td>
                             <td class="size2" style="border-left:none">
                                 <div class="text-center" style="width:330px;">
@@ -324,7 +326,7 @@
                         <t t-if="o.deductions_amount != 0.0">
                             <tr>
                                 <td class="size1">
-                                    5
+                                    <span t-esc="o.deductions_line_count + 5"/>
                                 </td>
                                 <td class="size2" style="border-left:none">
                                     <div class="text-end" style="margin-right:120px;width:200px;">إجمالي المحسوبات</div>
@@ -360,7 +362,7 @@
                         <t t-if="o.additions_amount != 0.0">
                             <tr>
                                 <td class="size1">
-                                    6
+                                    <span t-esc="o.deductions_line_count + 6"/>
                                 </td>
                                 <td class="size2" style="border-left:none">
                                     <div class="text-end" style="margin-right:120px;width:200px;">اجمالي الاضافات</div>
@@ -418,6 +420,92 @@
                             </td>
                             <td class="size4" style="border-right:0px;border-left:none;width:50px;">
                                 <span t-field="o.total_deductions"/>
+                            </td>
+                            <td class="size4" style="border-right:0px;border-left:none;width:50px;">
+
+
+                            </td>
+                            <td class="size4" style="border-right:0px;border-left:none;width:50px;">
+
+
+                            </td>
+                            <td class="size4" style="border-right:0px;width:50px;">
+
+
+                            </td>
+                        </tr>
+                        <tr style="width:50px;">
+                            <td class="size1" style="width:50px;">
+
+                            </td>
+                            <td class="size2" style="border-left:none;width:50px;">
+                                <div class="col-4" style="margin-right:100px;width:250px;font-size:14px;">
+                                    <u>
+                                        <span>اجمالي ما تم صرفه للمقاول حتى متتخلص رقم (</span>
+                                        <span t-esc="o.deductions_no - 1"/>
+                                        <span>) شامل قيمة الضريبة المضافة</span>
+                                    </u>
+                                </div>
+
+                            </td>
+                            <td class="size4" style="border-right:none;border-left:none;width:50px;">
+
+
+                            </td>
+                            <td class="size3" style="border-right:0px;border-left:none;width:50px;">
+
+
+                            </td>
+                            <td class="size4" style="border-right:0px;width:50px;">
+
+
+                            </td>
+                            <td class="size4" style="border-right:0px;border-left:none;width:50px;">
+                                <span t-field="o.amount_before_deductions"/>
+                            </td>
+                            <td class="size4" style="border-right:0px;border-left:none;width:50px;">
+
+
+                            </td>
+                            <td class="size4" style="border-right:0px;border-left:none;width:50px;">
+
+
+                            </td>
+                            <td class="size4" style="border-right:0px;width:50px;">
+
+
+                            </td>
+                        </tr>
+
+
+                        <tr style="width:50px;">
+                            <td class="size1" style="width:50px;">
+
+                            </td>
+                            <td class="size2" style="border-left:none;width:50px;">
+                                <div class="col-4" style="margin-right:100px;width:250px;font-size:14px;">
+                                    <u>
+                                        <span>اجمالي المبلغ المطلوب صرفه للمقاول حتى متتخلص رقم (</span>
+                                        <span t-field="o.deductions_no"/>
+                                        <span>ختامي) شامل قيمة الضريبة المضافة</span>
+                                    </u>
+                                </div>
+
+                            </td>
+                            <td class="size4" style="border-right:none;border-left:none;width:50px;">
+
+
+                            </td>
+                            <td class="size3" style="border-right:0px;border-left:none;width:50px;">
+
+
+                            </td>
+                            <td class="size4" style="border-right:0px;width:50px;">
+
+
+                            </td>
+                            <td class="size4" style="border-right:0px;border-left:none;width:50px;">
+                                <span t-field="o.amount_deductions_cur"/>
                             </td>
                             <td class="size4" style="border-right:0px;border-left:none;width:50px;">
 
@@ -520,16 +608,22 @@
                     <br/>
                     <div class="row" rtl="rtl">
                         <div class="col-auto col-3 mw-100 mb-2 text-center" dir="rtl">
-                            <span dir="rtl" style="font-size: 14px;">اعتماد مدير المشاريع م/<span dir="rtl" t-field="o.projects_manager"/></span>
+                            <span dir="rtl" style="font-size: 14px;">اعتماد مدير المشاريع م/
+                                <span dir="rtl" t-field="o.projects_manager"/>
+                            </span>
                             <!--                            <p class="m-0" t-field="o.po_number"/>-->
                         </div>
                         <div class="col-auto col-3 mw-100 mb-2 text-center" dir="rtl">
-                            <span dir="rtl" style="font-size: 14px;">مدير المشروع م/<span dir="rtl" t-field="o.projects_manager"/></span>
+                            <span dir="rtl" style="font-size: 14px;">مدير المشروع م/
+                                <span dir="rtl" t-field="o.projects_manager"/>
+                            </span>
                             <!--                            <p class="m-0" t-field="o.supplier"/>-->
                         </div>
 
                         <div class="col-auto col-3 mw-100 mb-2 text-center" dir="rtl">
-                            <span dir="rtl" style="font-size: 14px;">المقاول/<span dir="rtl" style="font-size: 14px;" t-field="o.partner_id"/></span>
+                            <span dir="rtl" style="font-size: 14px;">المقاول/
+                                <span dir="rtl" style="font-size: 14px;" t-field="o.partner_id"/>
+                            </span>
                             <!--                            <p class="m-0" t-field="o.invoice_origin"/>-->
                         </div>
                     </div>
@@ -561,7 +655,7 @@
                         </div>
 
                         <div class="col-auto col-3 mw-100 mb-2 text-center">
-<!--                            <span dir="rtl" style="font-size: 14px;">عيسى الصباح</span>-->
+                            <!--                            <span dir="rtl" style="font-size: 14px;">عيسى الصباح</span>-->
                             <!--                            <p class="m-0" t-field="o.invoice_origin"/>-->
                         </div>
                     </div>
