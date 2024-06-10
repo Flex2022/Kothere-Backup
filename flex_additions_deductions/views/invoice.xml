@@ -19,8 +19,8 @@
                     <button name="update_origin_deductions_no_count" type="object" class="inline"
                             icon="fa-refresh" invisible="there_is_access_from_company_id == False and move_type not in ['out_invoice', 'in_invoice']"/>
                     </div>
-                    <field name="amount_before_deductions"/>
-                    <field name="amount_deductions_cur"/>
+                    <field name="amount_before_deductions" invisible="1"/>
+                    <field name="amount_deductions_cur" invisible="1"/>
                     <field name="is_out_invoice"
                            invisible="1"
                            readonly="1"/>
