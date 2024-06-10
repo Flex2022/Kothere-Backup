@@ -2,6 +2,8 @@
 
 from odoo import models, fields, api, _
 from datetime import datetime, date
+
+
 # from odoo.exceptions import Warning, UserError
 
 class StockPicking(models.Model):
@@ -67,18 +69,19 @@ class StockPicking(models.Model):
                     user_id=user_id,
                     res_id=self.id,
 
-                    summary=_("PLZ deliver this custody for employee %s")% self.partner_id.name
+                    summary=_("PLZ deliver this custody for employee %s") % self.partner_id.name
                 )
                 activ_list.append(activity_id.id)
         [(4, 0, rec) for rec in activ_list]
 
+    # @api.onchange('move_ids_without_package')
+    # def onchange_move_lines(self):
+    #     for line in self.move_ids_without_package:
+    #         if line.serial_number:
+    #             custody_line = self.env['custody.property'].search(
+    #                 [('custody.name', '=', self.origin), ('product_id', '=', line.product_id.id)])
+    #             custody_line.serial_no = line.serial_number
 
-    @api.onchange('move_ids_without_package')
-    def onchange_move_lines(self):
-        for line in self.move_ids_without_package:
-            if line.serial_number:
-                custody_line = self.env['custody.property'].search([('custody.name','=',self.origin),('product_id','=',line.product_id.id)])
-                custody_line.serial_no = line.serial_number
 
 class StockMove(models.Model):
     _inherit = 'stock.move'
