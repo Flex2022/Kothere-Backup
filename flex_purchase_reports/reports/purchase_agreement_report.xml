@@ -25,15 +25,15 @@
                                 </div>
                             </div>
                             <div class="row fw-bold mt-3">
-                                <!--                                <t t-if="o.date_approve" t-set="day_of_week"-->
-                                <!--                                   t-value="o.get_arabic_day_name(o.date_approve)"/>-->
+                                <t t-if="o.date_approve" t-set="day_of_week"
+                                   t-value="o.get_arabic_day_name(o.date_approve)"/>
 
                                 <div class="col-12">
                                     <p class="text-justified">
                                         إنه في يوم (
-
+                                        <span t-esc="day_of_week"/>
                                         )
-                                        .
+                                       &amp;nbsp;
                                         <span t-if="o.date_approve" t-field="o.date_approve_hijri"/>
                                         ه الموافق
                                         <span t-if="o.date_approve" t-esc="o.date_approve.date()"/>

@@ -1,5 +1,6 @@
 from odoo import models, fields, api
 from hijri_converter import Gregorian
+import calendar
 
 
 class PurchaseOrder(models.Model):
@@ -34,16 +35,10 @@ class PurchaseOrder(models.Model):
 
     @api.model
     def get_arabic_day_name(self, date):
-        day_name_dict = {
-            'Monday': 'الاثنين',
-            'Tuesday': 'الثلاثاء',
-            'Wednesday': 'الأربعاء',
-            'Thursday': 'الخميس',
-            'Friday': 'الجمعة',
-            'Saturday': 'السبت',
-            'Sunday': 'الأحد',
-        }
-        return day_name_dict[date.strftime('%A')]
+        day_of_week_index = date.weekday()
+        # List of weekday names
+        weekday_names = ["الإثنين", "الثلثاء", "الأربعاء", "الخميس", "الجمعة", "السبت", "الأحد"]
+        return weekday_names[day_of_week_index]
 
 
 class PurchaseOrderAgreementCondition(models.Model):
