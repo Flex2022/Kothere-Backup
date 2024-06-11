@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_stock_move_report_wizard" model="ir.ui.view">
+        <field name="name">stock.move.report.wizard.form</field>
+        <field name="model">stock.move.report.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Stock Move Report">
+                <group>
+                    <field name="vehicle_ids" widget="many2many_tags"/>
+                </group>
+                <notebook>
+                    <page string="Results">
+                        <field name="line_ids" readonly="1">
+                            <tree>
+                                <field name="vehicle_id"/>
+                                <field name="product_id"/>
+                                <field name="description_picking" optional="hide"/>
+                                <field name="date" optional="hide"/>
+                                <field name="date_deadline" optional="hide"/>
+                                <field name="product_uom_qty" optional="hide"/>
+                                <field name="product_qty"/>
+                                <field name="product_uom"/>
+                            </tree>
+                        </field>
+                    </page>
+                </notebook>
+                <footer>
+<!--                    <button name="generate_lines" string="Generate Report" type="object" class="btn-primary"/>-->
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_stock_move_report_wizard" model="ir.actions.act_window">
+        <field name="name">Vehicle Stock Move Report</field>
+        <field name="res_model">stock.move.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="menu_action_vehicle_stock_moves_report_wizard"
+              name="Vehicle stock moves Report"
+              parent="stock.menu_warehouse_report"
+              sequence="360" action="action_stock_move_report_wizard"/>
+</odoo>

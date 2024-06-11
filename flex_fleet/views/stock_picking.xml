@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!-- Inherit the stock picking form view to add the vehicle_id field -->
+        <record id="view_picking_form_inherit_vehicle" model="ir.ui.view">
+            <field name="name">stock.picking.form.inherit.vehicle</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='move_ids_without_package']/tree" position="inside">
+                    <field name="vehicle_id" optional="hide" column_invisible="parent.picking_type_code != 'outgoing'"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
