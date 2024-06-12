@@ -13,11 +13,12 @@
                            invisible="there_is_access_from_company_id == False and move_type not in ['out_invoice', 'in_invoice']"/>
                     <label for="deductions_no" string="Deductions No:"/>
                     <div class="oe_title">
-                    <field name="deductions_no"
-                           invisible="there_is_access_from_company_id == False and move_type not in ['out_invoice', 'in_invoice']"
-                           readonly="1" class="oe_inline" />
-                    <button name="update_origin_deductions_no_count" type="object" class="inline"
-                            icon="fa-refresh" invisible="there_is_access_from_company_id == False and move_type not in ['out_invoice', 'in_invoice']"/>
+                        <field name="deductions_no"
+                               invisible="there_is_access_from_company_id == False and move_type not in ['out_invoice', 'in_invoice']"
+                               readonly="1" class="oe_inline"/>
+                        <button name="update_origin_deductions_no_count" type="object" class="inline"
+                                icon="fa-refresh"
+                                invisible="there_is_access_from_company_id == False and move_type not in ['out_invoice', 'in_invoice']"/>
                     </div>
                     <field name="amount_before_deductions" invisible="1"/>
                     <field name="amount_deductions_cur" invisible="1"/>
@@ -32,12 +33,13 @@
                            readonly="1"/>
                     <field name="invoice_line_ids_count" invisible="1"/>
                     <field name="deductions_line_count" invisible="1"/>
-<!--                    <field name="past_deductions_no" invisible="1"/>-->
+                    <!--                    <field name="past_deductions_no" invisible="1"/>-->
 
                 </xpath>
                 <xpath expr="//sheet/div[@name='button_box']" position="inside">
                     <button name="open_created_journal" type="object" class="oe_stat_button"
-                            icon="fa-pencil-square-o" invisible="there_is_access_from_company_id == False and move_type not in ['out_invoice', 'in_invoice']">
+                            icon="fa-pencil-square-o"
+                            invisible="there_is_access_from_company_id == False and move_type not in ['out_invoice', 'in_invoice']">
                         <field name="invoice_count" widget="statinfo" string="Deductions/Additions"/>
                     </button>
                 </xpath>
@@ -50,17 +52,41 @@
                 </xpath>
                 <xpath expr="//page[@name='aml_tab']" position="after">
                     <page string="Additions/Deductions" name="flex_additions_deductions_tab"
-                          invisible="there_is_access_from_company_id == False and move_type not in ['out_invoice', 'in_invoice']">
+                          invisible="there_is_access_from_company_id == False and move_type not in ['in_invoice']">
 
 
                         <h2>Deductions</h2>
                         <!--                       there_is_access_from_company_id == False-->
-                        <field name="flex_deductions_ids" widget="one2many_list">
+                        <field name="flex_deductions_ids" widget="one2many_list"
+                               invisible="move_type not in ['in_invoice']">
                             <tree editable="bottom">
                                 <field name="deductions_id" options="{'no_create': True}"/>
                                 <field name="name"/>
                                 <field name="is_percentage"/>
                                 <field name="tax_id"/>
+                                <field name="amount_deductions"/>
+                                <field name="percentage_or_value"/>
+                                <field name="amount"/>
+                            </tree>
+                            <form>
+                                <group>
+                                    <field name="deductions_id" options="{'no_create': True}"/>
+                                    <field name="name"/>
+                                    <field name="is_percentage"/>
+                                    <field name="tax_id" options="{'no_create': True}"/>
+                                    <field name="percentage_or_value"/>
+                                    <field name="amount"/>
+                                </group>
+                            </form>
+                        </field>
+                        <field name="flex_deductions_ids" widget="one2many_list"
+                               invisible="move_type not in ['out_invoice']">
+                            <tree editable="bottom">
+                                <field name="deductions_id" options="{'no_create': True}"/>
+                                <field name="name"/>
+                                <field name="is_percentage"/>
+                                <field name="tax_id"/>
+                                <!--                                <field name="amount_deductions"/>-->
                                 <field name="percentage_or_value"/>
                                 <field name="amount"/>
                             </tree>

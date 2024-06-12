@@ -240,7 +240,7 @@ class AccountMove(models.Model):
     # Compute Functions For Check Access
     def _compute_there_is_access_from_company_id(self):
         for record in self:
-            if record.move_type == 'out_invoice':
+            if record.move_type == 'out_invoice' or record.move_type == 'in_invoice':
                 if record.company_id.flex_additions_deductions_ids:
                     record.there_is_access_from_company_id = True
                 else:
@@ -327,7 +327,9 @@ class AccountMove(models.Model):
 
     def action_post(self):
         res = super(AccountMove, self).action_post()
+        print('action_post')
         if self.there_is_access_from_company_id:
+            print('action_post')
             self.create_journal_entry_when_conferim()
         return res
 
