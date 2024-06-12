@@ -6,7 +6,8 @@
         <field name="arch" type="xml">
             <form string="Stock Move Report">
                 <group>
-                    <field name="vehicle_ids" widget="many2many_tags"/>
+                    <field name="all_vehicles"/>
+                    <field name="vehicle_ids" widget="many2many_tags" invisible="all_vehicles == True"/>
                 </group>
                 <notebook>
                     <page string="Results">

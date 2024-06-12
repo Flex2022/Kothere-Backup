@@ -1,5 +1,6 @@
 from odoo import models, fields, api, _
 
+
 class StockMoveReportWizard(models.TransientModel):
     _name = 'stock.move.report.wizard'
     _description = 'Stock Move Report Wizard'
@@ -28,7 +29,9 @@ class StockMoveReportWizard(models.TransientModel):
     def _compute_generate_lines(self):
         for wizard in self:
             if wizard.vehicle_ids or wizard.all_vehicles:
-                domain = [('vehicle_id', '!=', False)] if wizard.all_vehicles else [('vehicle_id', 'in', wizard.vehicle_ids.ids)]
+                domain = [('vehicle_id', '!=', False)] if wizard.all_vehicles else [
+                    ('vehicle_id', 'in', wizard.vehicle_ids.ids)]
+                domain += [('company_id', 'in', self.env.user.company_id.ids)]
                 stock_moves = self.env['stock.move'].search(domain)
                 wizard.line_ids = [(6, 0, stock_moves.ids)]
             else:

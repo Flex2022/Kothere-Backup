@@ -12,6 +12,12 @@
                                 </div>
                             </div>
                             <div class="row">
+                                <div class="col-12 text-end">
+                                    <strong>Report Datetime:</strong>
+                                    <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/>
+                                </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-12 text-center">
                                     <table class="table table-bordered table-sm">
                                         <thead>
@@ -23,43 +29,59 @@
                                                     Product
                                                 </td>
                                                 <td>
-                                                    Picking Description
-                                                </td>
-                                                <td>
                                                     Date
                                                 </td>
                                                 <td>
-                                                    Quantity
+                                                    Demand
+                                                </td>
+                                                <td>
+                                                    Real Quantity
                                                 </td>
                                                 <td>
                                                     Unit
                                                 </td>
-
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            <t t-set="sum_product_qty" t-value="0.0"/>
+                                            <t t-set="sum_product_uom_qty" t-value="0.0"/>
                                             <t t-foreach="doc.line_ids" t-as="line">
                                                 <tr>
-                                                    <td>
+                                                    <td class="text-start">
                                                         <span t-field="line.vehicle_id"/>
                                                     </td>
-                                                    <td>
+                                                    <td class="text-start">
                                                         <span t-field="line.product_id"/>
                                                     </td>
-                                                    <td>
-                                                        <span t-field="line.description_picking"/>
-                                                    </td>
-                                                    <td>
+
+                                                    <td class="text-center">
                                                         <span t-field="line.date"/>
                                                     </td>
-                                                    <td>
+                                                    <td class="text-end">
+                                                        <span t-field="line.product_uom_qty"/>
+                                                    </td>
+                                                    <td class="text-end">
                                                         <span t-field="line.product_qty"/>
                                                     </td>
-                                                    <td>
+                                                    <td class="text-center">
                                                         <span t-field="line.product_uom"/>
                                                     </td>
                                                 </tr>
+                                                <t t-set="sum_product_qty"
+                                                   t-value="sum_product_qty + line.product_qty"/>
+                                                <t t-set="sum_product_uom_qty"
+                                                   t-value="sum_product_uom_qty + line.product_uom_qty"/>
                                             </t>
+                                            <tr>
+                                                <td colspan="3">Total</td>
+                                                <td class="text-end">
+                                                    <span t-esc="sum_product_uom_qty"/>
+                                                </td>
+                                                <td class="text-end">
+                                                    <span t-esc="sum_product_qty"/>
+                                                </td>
+                                                <td/>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
