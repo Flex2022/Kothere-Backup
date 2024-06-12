@@ -61,6 +61,20 @@ class DeductionsLines(models.Model):
                     else:
                         tax_id = 1
                     record.amount = record.percentage_or_value * tax_id
+            elif record.purchase_id:
+                if record.is_percentage:
+                    if record.tax_id:
+                        tax_id = record.tax_id.amount / 100 + 1
+                    else:
+                        tax_id = 1
+                    record.amount = record.percentage_or_value * record.amount_deductions * tax_id
+                else:
+
+                    if record.tax_id:
+                        tax_id = record.tax_id.amount / 100 + 1
+                    else:
+                        tax_id = 1
+                    record.amount = record.percentage_or_value * tax_id
 
     def create_journal_entry(self):
         self.env['account.move'].create({

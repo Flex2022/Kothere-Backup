@@ -11,7 +11,62 @@
                     <field name="project_invoice" invisible="company_id.flex_additions_deductions_ids == False"/>
                     <field name="project_manager" invisible="company_id.flex_additions_deductions_ids == False"/>
                     <field name="projects_manager" invisible="company_id.flex_additions_deductions_ids == False"/>
+                    <field name="there_is_access_from_company_id" invisible="1"/>
                 </xpath>
+
+                <xpath expr="//page[@name='purchase_delivery_invoice']" position="before">
+                    <page string="Additions/Deductions" name="flex_additions_deductions_tab"
+                          invisible="there_is_access_from_company_id == False">
+
+
+                        <h2>Deductions</h2>
+                        <field name="flex_deductions_ids" widget="one2many_list">
+                            <tree editable="bottom">
+                                <field name="deductions_id" options="{'no_create': True}"/>
+                                <field name="name"/>
+                                <field name="is_percentage"/>
+                                <field name="tax_id"/>
+                                <field name="amount_deductions"/>
+                                <field name="percentage_or_value"/>
+                                <field name="amount"/>
+                            </tree>
+                            <form>
+                                <group>
+                                    <field name="deductions_id" options="{'no_create': True}"/>
+                                    <field name="name"/>
+                                    <field name="is_percentage"/>
+                                    <field name="tax_id" options="{'no_create': True}"/>
+                                    <field name="percentage_or_value"/>
+                                    <field name="amount"/>
+                                </group>
+                            </form>
+                        </field>
+
+                        <h2>Additions</h2>
+                        <field name="flex_additions_ids" widget="one2many_list">
+                            <tree editable="bottom">
+                                <field name="additions_id" options="{'no_create': True}"/>
+                                <field name="name"/>
+                                <field name="is_percentage"/>
+                                <field name="tax_id" options="{'no_create': True}"/>
+                                <field name="percentage_or_value"/>
+                                <field name="amount"/>
+                            </tree>
+                            <form>
+                                <group>
+                                    <field name="additions_id"/>
+                                    <field name="name"/>
+                                    <field name="is_percentage"/>
+                                    <field name="tax_id"/>
+                                    <field name="percentage_or_value"/>
+                                    <field name="amount"/>
+                                </group>
+                            </form>
+                        </field>
+                    </page>
+                </xpath>
+
+
             </field>
         </record>
     </data>
