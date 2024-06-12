@@ -13,6 +13,7 @@
         'views/fleet_vehicle.xml',
         'views/stock_picking.xml',
         'wizards/vehicle_report_wizard.xml',
+        'reports/vehicle_moves_reports.xml',
 
     ],
     'installable': True,

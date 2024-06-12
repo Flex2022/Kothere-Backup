@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="stock_move_report_template">
+            <t t-call="web.html_container">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <t t-foreach="docs" t-as="doc">
+                            <div class="row">
+                                <div class="col-12 text-center">
+                                    <h3>Vehicles Moves</h3>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 text-center">
+                                    <table class="table table-bordered table-sm">
+                                        <thead>
+                                            <tr>
+                                                <td>
+                                                    Vehicle
+                                                </td>
+                                                <td>
+                                                    Product
+                                                </td>
+                                                <td>
+                                                    Picking Description
+                                                </td>
+                                                <td>
+                                                    Date
+                                                </td>
+                                                <td>
+                                                    Quantity
+                                                </td>
+                                                <td>
+                                                    Unit
+                                                </td>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <t t-foreach="doc.line_ids" t-as="line">
+                                                <tr>
+                                                    <td>
+                                                        <span t-field="line.vehicle_id"/>
+                                                    </td>
+                                                    <td>
+                                                        <span t-field="line.product_id"/>
+                                                    </td>
+                                                    <td>
+                                                        <span t-field="line.description_picking"/>
+                                                    </td>
+                                                    <td>
+                                                        <span t-field="line.date"/>
+                                                    </td>
+                                                    <td>
+                                                        <span t-field="line.product_qty"/>
+                                                    </td>
+                                                    <td>
+                                                        <span t-field="line.product_uom"/>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+                </t>
+            </t>
+        </template>
+
+        <record id="stock_move_report_wizard_print" model="ir.actions.report">
+            <field name="name">Vehicles Moves</field>
+            <field name="model">stock.move.report.wizard</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">flex_fleet.stock_move_report_template</field>
+            <field name="report_file">flex_fleet.stock_move_report_template</field>
+            <field name="print_report_name">'Vehicles moves'</field>
+            <field name="binding_model_id" ref="model_stock_move_report_wizard"/>
+            <field name="binding_type">report</field>
+        </record>
+
+    </data>
+</odoo>

@@ -17,15 +17,16 @@
                                 <field name="description_picking" optional="hide"/>
                                 <field name="date" optional="hide"/>
                                 <field name="date_deadline" optional="hide"/>
-                                <field name="product_uom_qty" optional="hide"/>
-                                <field name="product_qty"/>
+                                <field name="product_uom_qty" optional="hide" sum="totals"/>
+                                <field name="product_qty" sum="totals"/>
                                 <field name="product_uom"/>
                             </tree>
                         </field>
                     </page>
                 </notebook>
                 <footer>
-<!--                    <button name="generate_lines" string="Generate Report" type="object" class="btn-primary"/>-->
+                    <button name="action_print_pdf_report" string="Generate PDF Report" type="object"
+                            class="btn-primary"/>
                     <button string="Cancel" class="btn-secondary" special="cancel"/>
                 </footer>
             </form>
