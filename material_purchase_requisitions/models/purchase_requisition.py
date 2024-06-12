@@ -82,7 +82,7 @@ class MaterialPurchaseRequisition(models.Model):
     company_id = fields.Many2one(
         'res.company',
         string='Company',
-        default=lambda self: self.env.user.company_id,
+        default=lambda self: self.env.company,
         required=True,
         copy=True,
     )
@@ -326,6 +326,7 @@ class MaterialPurchaseRequisition(models.Model):
                                 'currency_id': rec.env.user.company_id.currency_id.id,
                                 'date_order': fields.Date.today(),
                                 #                                'company_id':rec.env.user.company_id.id,
+                                'project_invoice': rec.project_id.id,
                                 'company_id': rec.company_id.id,
                                 'custom_requisition_id': rec.id,
                                 'origin': rec.name,
