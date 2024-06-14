@@ -8,7 +8,7 @@ class LandingOrder(models.Model):
     _description = 'LandingOrder'
     _rec_name = 'name'
 
-    order_id = fields.Many2one('sale.order', string='Sale Order')
+    order_id = fields.Many2one('purchase.order', string='Purchase Order')
     stock_picking_id = fields.Many2one('stock.picking', string='Stock Picking')
 
     name = fields.Char(string="Partner Reference", required=False, copy=False, readonly=True,
@@ -79,7 +79,7 @@ class LandingOrder(models.Model):
             'res_model': 'cancel.reason.wizard',
             'view_mode': 'form',
             'target': 'new',
-            'context': {'default_sale_order_id': self.id,
+            'context': {'default_purchase_order_id': self.id,
                         'default_partner_id': self.partner_id.id}
         }
 

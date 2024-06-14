@@ -13,6 +13,7 @@
     'depends': ['base', 'purchase'],
     'data': [
         'security/ir.model.access.csv',
+        'security/security.xml',
         'wizards/purchase_cost_report_wizard.xml',
         'reports/purchase_costs_report.xml',
         'reports/purchase_agreement_report.xml',

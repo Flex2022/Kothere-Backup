@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="flex_landing_order_hr_payslip_form" model="ir.ui.view">
+            <field name="name">flex_landing_purchase_order.hr.payslip.form</field>
+            <field name="model">hr.payslip</field>
+            <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='payslip_run_id']" position="after">
+                    <label for="reward_amount" string="Total Rewards Employee " groups="hr.group_hr_user"/>
+                    <div groups="hr.group_hr_user">
+                        <field name="reward_amount" class="oe_inline"/>
+                        <field name="currency_id" class="oe_inline"/>
+                        <button name="update_reward_amount" string="" type="object" class="inline" icon="fa-refresh"/>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

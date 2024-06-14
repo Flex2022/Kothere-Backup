@@ -7,15 +7,27 @@ class Requisitions(models.Model):
     requisition_type = fields.Selection(
         string='Requisition Type',
         selection=[('buy', 'Buy'),
+                   ('service', 'Service'),
                    ('internal_picking', 'Internal Picking'),
                    ('sample', 'Sample')],
         required=False)
 
     @api.onchange('requisition_type')
-    def _chech_if_the_user_have_access_to_the_requisition_type(self):
+    def _check_if_the_user_have_access_to_the_requisition_type(self):
         for rec in self:
             if rec.requisition_type == 'buy':
-                if self.env.user.has_group('flex_material_purchase_requisitions.flex_material_purchase_requisitions_buy'):
+                if self.env.user.has_group(
+                        'flex_material_purchase_requisitions.flex_material_purchase_requisitions_buy'):
+                    pass
+                else:
+                    rec.requisition_type = False
+                    return {'warning': {
+                        'title': 'Warning!',
+                        'message': 'You do not have access to this requisition type',
+                    }}
+            elif rec.requisition_type == 'service':
+                if self.env.user.has_group(
+                        'flex_material_purchase_requisitions.flex_material_purchase_requisitions_service'):
                     pass
                 else:
                     rec.requisition_type = False
@@ -24,7 +36,8 @@ class Requisitions(models.Model):
                         'message': 'You do not have access to this requisition type',
                     }}
             elif rec.requisition_type == 'internal_picking':
-                if self.env.user.has_group('flex_material_purchase_requisitions.flex_material_purchase_requisitions_internal'):
+                if self.env.user.has_group(
+                        'flex_material_purchase_requisitions.flex_material_purchase_requisitions_internal'):
                     pass
                 else:
                     rec.requisition_type = False
@@ -33,7 +46,8 @@ class Requisitions(models.Model):
                         'message': 'You do not have access to this requisition type',
                     }}
             elif rec.requisition_type == 'sample':
-                if self.env.user.has_group('flex_material_purchase_requisitions.flex_material_purchase_requisitions_sample'):
+                if self.env.user.has_group(
+                        'flex_material_purchase_requisitions.flex_material_purchase_requisitions_sample'):
                     pass
                 else:
                     rec.requisition_type = False
@@ -41,7 +55,6 @@ class Requisitions(models.Model):
                         'title': 'Warning!',
                         'message': 'You do not have access to this requisition type',
                     }}
-
 
 
 class RequisitionsLine(models.Model):
@@ -61,6 +74,8 @@ class RequisitionsLine(models.Model):
     def onchange_requisition_type(self):
         for rec in self:
             if rec.requisition_id.requisition_type == 'buy':
+                rec.requisition_type = 'purchase'
+            elif rec.requisition_id.requisition_type == 'service':
                 rec.requisition_type = 'purchase'
             elif rec.requisition_id.requisition_type == 'internal_picking':
                 rec.requisition_type = 'internal'

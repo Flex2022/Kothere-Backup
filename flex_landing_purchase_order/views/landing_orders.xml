@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="landing_order_form_view" model="ir.ui.view">
+            <field name="name">landing.order.form</field>
+            <field name="model">landing.order</field>
+            <field name="arch" type="xml">
+                <form string="Landing Order">
+                    <header>
+                        <button name="action_state" type="object" string="Receive" class="oe_highlight"
+                                groups="flex_landing_purchase_order.flex_landing_order_group_landing_order_manager"
+                                invisible="state != 'new'"/>
+                        <button name="action_state" type="object" string="Delivery" class="oe_highlight"
+                                groups="flex_landing_purchase_order.flex_landing_order_group_landing_order_manager"
+                                invisible="state != 'receive'"/>
+                        <button name="action_state" type="object" string="Done" class="oe_highlight"
+                                groups="flex_landing_purchase_order.flex_landing_order_group_landing_order_done"
+                                invisible="state != 'delivery'"/>
+                        <button name="cancel_order_action" type="object" string="Cancel"
+                                groups="flex_landing_purchase_order.flex_landing_order_group_landing_order_manager"
+                                invisible="state == 'canceled'"/>
+                        <button name="set_as_new" type="object" string="Set to New" class="oe_highlight"
+                                groups="flex_landing_purchase_order.flex_landing_order_group_landing_order_manager"
+                                invisible="state != 'canceled'"/>
+
+                        <field name="state" widget="statusbar" statusbar_visible="new,receive,delivery,done"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group string="General Information">
+                                <field name="partner_id"/>
+                                <field name="partner_code"/>
+                                <field name="car_model_id"/>
+                                <field name="driver_id"/>
+                                <field name="driver_employee" invisible="1"/>
+                                <field name="car_id"/>
+                                <field name="receive_date" readonly="1"/>
+                                <field name="delivery_date" readonly="1"/>
+                            </group>
+
+                            <group string="Order Information">
+                                <group>
+                                    <field name="company_id" invisible="1"/>
+                                    <field name="order_id" string="Purchase Order" readonly="1"/>
+                                    <field name="stock_picking_id" string="Stock Picking" readonly="1"/>
+                                    <field name="create_date"/>
+                                    <field name="date"/>
+                                    <field name="h_date"/>
+                                    <field name="kind"/>
+                                    <field name="quantity"/>
+                                    <field name="reward_amount" readonly="state == 'done'"/>
+                                </group>
+                            </group>
+                        </group>
+
+                        <group string="Date Information">
+                            <group>
+                                <label for="from_receive_to_delivery_h"/>
+                                <div class="o_row mw-50" name="other_allowance">
+                                    <field name="from_receive_to_delivery_h" class="oe_inline o_hr_narrow_field"
+                                           nolabel="1"/>
+                                    <div class="mb-3">/Hours</div>
+                                </div>
+                            </group>
+                            <group>
+                                <label for="from_receive_to_delivery_d"/>
+                                <div class="o_row mw-50" name="other_allowance">
+                                    <field name="from_receive_to_delivery_d" class="oe_inline o_hr_narrow_field"
+                                           nolabel="1"/>
+                                    <div class="mb-3">/D</div>
+                                    <field name="from_receive_to_delivery_h_hour"
+                                           class="oe_inline o_hr_narrow_field" nolabel="1"/>
+                                    <div class="mb-3">/H</div>
+                                </div>
+                            </group>
+                        </group>
+                        <group string="Cancelation Information" invisible="state != 'canceled'">
+                            <field name="cancelation_reason" readonly="1"/>
+                        </group>
+                        <field name="message_follower_ids" widget="mail_followers" invisible="1"/>
+                        <field name="message_ids" widget="mail_thread" invisible="1"/>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="landing_order_tree_view" model="ir.ui.view">
+            <field name="name">landing.order.tree</field>
+            <field name="model">landing.order</field>
+            <field name="arch" type="xml">
+                <tree string="Landing Order" decoration-info="state == 'new'" decoration-muted="state == 'calculated'">
+                    <field name="name"/>
+                    <field name="create_date" optional="hide"/>
+                    <field name="partner_id" optional="hide"/>
+                    <field name="partner_code" optional="hide"/>
+                    <field name="car_model_id" optional="hide"/>
+                    <field name="driver_id" optional="hide"/>
+                    <field name="driver_employee" optional="hide"/>
+                    <field name="kind" optional="hide"/>
+                    <field name="quantity" optional="hide"/>
+                    <field name="from_receive_to_delivery_h" optional="hide"/>
+                    <field name="state" decoration-info="state == 'new'"
+                           decoration-muted="state == 'calculated'"/>
+                    <field name="reward_amount" optional="hide"/>
+                    <field name="cancelation_reason" optional="hide"/>
+
+                </tree>
+            </field>
+        </record>
+
+        <record id="landing_order_graph_view" model="ir.ui.view">
+            <field name="name">landing.order.graph</field>
+            <field name="model">landing.order</field>
+            <field name="arch" type="xml">
+                <graph string="Landing Order">
+                    <field name="name"/>
+                    <field name="create_date"/>
+                    <field name="partner_id"/>
+                    <field name="partner_code"/>
+                    <field name="driver_id"/>
+                    <field name="kind"/>
+                    <field name="quantity"/>
+                </graph>
+            </field>
+        </record>
+
+
+        <record id="landing_order_act_window" model="ir.actions.act_window">
+            <field name="name">Landing Order</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">landing.order</field>
+            <field name="view_mode">tree,form,graph</field>
+            <field name="context">{"search_default_name":1}</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    There is no examples click here to add new Landing Order.
+                </p>
+            </field>
+        </record>
+
+        <menuitem name="Landing Order" id="landing_order" parent="purchase.menu_purchase_root"
+                  action="landing_order_act_window"/>
+
+
+        <record id="view_cancel_reason_wizard_form" model="ir.ui.view">
+            <field name="name">cancel.reason.wizard.form</field>
+            <field name="model">cancel.reason.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Enter Cancellation Reason">
+                    <sheet>
+                        <group>
+                            <field name="reason"/>
+                        </group>
+                        <footer>
+                            <button string="Cancel Order" type="object" name="action_cancel" class="btn-primary"/>
+                            <button string="Close" class="btn-secondary" special="cancel"/>
+                        </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</odoo>

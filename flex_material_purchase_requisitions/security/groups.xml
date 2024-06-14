@@ -14,6 +14,12 @@
                    ref="flex_material_purchase_requisitions_category"/>
         </record>
 
+        <record id="flex_material_purchase_requisitions_service" model="res.groups">
+            <field name="name">Requisitions || Service</field>
+            <field name="category_id"
+                   ref="flex_material_purchase_requisitions_category"/>
+        </record>
+
         <record id="flex_material_purchase_requisitions_internal" model="res.groups">
             <field name="name">Requisitions || Internal</field>
             <field name="category_id"

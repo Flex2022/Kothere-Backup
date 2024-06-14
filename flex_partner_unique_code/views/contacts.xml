@@ -23,7 +23,6 @@
                         <field name="partner_code" readonly="1" />
                 </xpath>
 
-
             </field>
         </record>
 

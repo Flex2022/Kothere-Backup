@@ -5,10 +5,10 @@
             <field name="name">Landing Order</field>
             <field name="model">landing.order</field>
             <field name="report_type">qweb-pdf</field>
-            <field name="report_name">flex_landing_order.flex_landing_order_report</field>
-            <field name="report_file">flex_landing_order.flex_landing_order_report</field>
+            <field name="report_name">flex_landing_purchase_order.flex_landing_order_report</field>
+            <field name="report_file">flex_landing_purchase_order.flex_landing_order_report</field>
             <field name="print_report_name">'Landing Order'</field>
-            <field name="binding_model_id" ref="flex_landing_order.model_landing_order"/>
+            <field name="binding_model_id" ref="flex_landing_purchase_order.model_landing_order"/>
             <field name="binding_type">report</field>
         </record>
 
