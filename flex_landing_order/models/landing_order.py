@@ -9,6 +9,7 @@ class LandingOrder(models.Model):
     _rec_name = 'name'
 
     order_id = fields.Many2one('sale.order', string='Sale Order')
+    purchase_order_id = fields.Many2one('purchase.order', string='Purchase Order')
     stock_picking_id = fields.Many2one('stock.picking', string='Stock Picking')
 
     name = fields.Char(string="Partner Reference", required=False, copy=False, readonly=True,
