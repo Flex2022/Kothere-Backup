@@ -284,26 +284,48 @@ class AccountMove(models.Model):
                     property_account = record.partner_id.property_account_payable_id.id
                 if record.flex_deductions_ids:
                     for line in record.flex_deductions_ids:
-                        journal = self.env['account.move'].create({
-                            'ref': line.name,
-                            'move_type': 'entry',
-                            'source_Document_for_smart_button': record.name,
-                            'line_ids': [
-                                (0, 0, {
-                                    'name': line.name,
-                                    'partner_id': record.partner_id.id,
-                                    'account_id': property_account,
-                                    'credit': line.amount,
-                                }),
-                                (0, 0, {
-                                    'name': line.name,
-                                    'partner_id': record.partner_id.id,
-                                    'account_id': line.deductions_id.account_id.id,
-                                    'debit': line.amount,
-                                }),
-                            ],
+                        if record.move_type == 'in_invoice':
+                            journal = self.env['account.move'].create({
+                                'ref': line.name,
+                                'move_type': 'entry',
+                                'source_Document_for_smart_button': record.name,
+                                'line_ids': [
+                                    (0, 0, {
+                                        'name': line.name,
+                                        'partner_id': record.partner_id.id,
+                                        'account_id': line.deductions_id.account_id.id,
+                                        'credit': line.amount,
+                                    }),
+                                    (0, 0, {
+                                        'name': line.name,
+                                        'partner_id': record.partner_id.id,
+                                        'account_id': property_account,
+                                        'debit': line.amount,
+                                    }),
+                                ],
 
-                        }).action_post()
+                            }).action_post()
+                        if record.move_type == 'out_invoice':
+                            journal = self.env['account.move'].create({
+                                'ref': line.name,
+                                'move_type': 'entry',
+                                'source_Document_for_smart_button': record.name,
+                                'line_ids': [
+                                    (0, 0, {
+                                        'name': line.name,
+                                        'partner_id': record.partner_id.id,
+                                        'account_id': property_account,
+                                        'credit': line.amount,
+                                    }),
+                                    (0, 0, {
+                                        'name': line.name,
+                                        'partner_id': record.partner_id.id,
+                                        'account_id': line.deductions_id.account_id.id,
+                                        'debit': line.amount,
+                                    }),
+                                ],
+
+                            }).action_post()
                 if record.flex_additions_ids:
                     for line in record.flex_additions_ids:
                         journal = self.env['account.move'].create({
