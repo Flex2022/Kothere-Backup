@@ -64,6 +64,7 @@ class PurchaseOrder(models.Model):
                 'percentage_or_value': line.percentage_or_value,
                 'tax_id': line.tax_id.id,
             }) for line in self.flex_additions_ids],
+            'total_purchase': self.amount_total,
         }
         return invoice_vals
 
