@@ -24,8 +24,8 @@ class LandingOrder(models.Model):
         default='new')
     date = fields.Date(string='Date', default=fields.Date.today())
     h_date = fields.Date(string='H', default=fields.Date.today())
-    partner_id = fields.Many2one('res.partner', string='Customer', )
-    partner_code = fields.Char(string='Customer Code', related='partner_id.partner_code')
+    partner_id = fields.Many2one('res.partner', string='Vendor/Customer', )
+    partner_code = fields.Char(string='Vendor/Customer Code', related='partner_id.partner_code')
 
     # Fleet
     car_model_id = fields.Many2one('fleet.vehicle', string='Car Model')
