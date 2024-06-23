@@ -277,6 +277,11 @@ class AccountMove(models.Model):
     def create_journal_entry_when_conferim(self):
         for record in self:
             if record.there_is_access_from_company_id:
+                property_account = record.partner_id.property_account_receivable_id.id
+                if record.move_type == 'out_invoice':
+                    property_account = record.partner_id.property_account_receivable_id.id
+                if record.move_type == 'in_invoice':
+                    property_account = record.partner_id.property_account_payable_id.id
                 if record.flex_deductions_ids:
                     for line in record.flex_deductions_ids:
                         journal = self.env['account.move'].create({
@@ -287,7 +292,7 @@ class AccountMove(models.Model):
                                 (0, 0, {
                                     'name': line.name,
                                     'partner_id': record.partner_id.id,
-                                    'account_id': record.partner_id.property_account_receivable_id.id,
+                                    'account_id': property_account,
                                     'credit': line.amount,
                                 }),
                                 (0, 0, {
@@ -315,7 +320,7 @@ class AccountMove(models.Model):
                                 (0, 0, {
                                     'name': line.name,
                                     'partner_id': record.partner_id.id,
-                                    'account_id': record.partner_id.property_account_receivable_id.id,
+                                    'account_id': property_account,
                                     'debit': line.amount,
                                 }),
                             ],
