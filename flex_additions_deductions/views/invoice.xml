@@ -33,6 +33,7 @@
                            readonly="1"/>
                     <field name="invoice_line_ids_count" invisible="1"/>
                     <field name="deductions_line_count" invisible="1"/>
+                    <field name="total_purchase"/>
                     <!--                    <field name="past_deductions_no" invisible="1"/>-->
 
                 </xpath>
