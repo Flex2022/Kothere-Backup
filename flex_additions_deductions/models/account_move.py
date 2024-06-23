@@ -19,6 +19,8 @@ class AccountMove(models.Model):
     there_is_access_from_company_id = fields.Boolean(string='There Is Access From Company Id',
                                                      compute='_compute_there_is_access_from_company_id')
 
+    total_purchase = fields.Float(string='Total Purchase')
+
     # Lines Fields
     flex_deductions_ids = fields.One2many('deductions.lines', 'invoice_id', string='Deductions')
     flex_additions_ids = fields.One2many('additions.lines', 'invoice_id', string='Additions')
