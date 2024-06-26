@@ -29,7 +29,7 @@ class ApprovalStartingWorkRequest(models.Model):
     employee_job_id = fields.Many2one('hr.job', 'Job Position', compute="compute_related_employee_info", store=True)
     direct_manager = fields.Many2one('hr.employee', string='Direct Manager', compute="compute_related_employee_info",
                                      store=True)
-    number_of_days_late = fields.Integer(string='Number of days late', compute="compute_number_pf_days_late")
+    number_of_days_late = fields.Integer(string='Number of days late', compute="compute_number_of_days_late")
     hod = fields.Many2one('hr.employee', string='HOD', compute="compute_related_employee_info", store=True)
     start_date = fields.Date(string='Starting Date', required=True)
     request_type = fields.Selection([
