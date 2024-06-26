@@ -145,9 +145,10 @@ class ApprovalRenewMedicalInsurance(models.Model):
 class ApprovalRenewMedicalInsuranceSponsored(models.Model):
     _name = 'flex.approval.renew_medical_insurance.sponsored'
     _description = 'Sponsored Individuals for Medical Insurance Renewal'
+    _rec_name = 'partner_id'
 
     employee_id = fields.Many2one('hr.employee')
-    name = fields.Char(string='Name', required=True)
+    partner_id = fields.Many2one('res.partner' ,string='Name', required=True)
     relation = fields.Char(string='Relation')
 
 

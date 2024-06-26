@@ -17,14 +17,23 @@
                         <button name="action_reject" type="object" string="Reject"
                                 invisible="state != 'hr_manager_approval'"
                                 class="btn-danger"/>
+
+                        <button name="action_create_air_ticket" type="object" string="Create air ticket"
+                                invisible="state != 'approved'"/>
                         <field name="state" widget="statusbar" readonly="True"/>
                     </header>
                     <sheet>
                         <div name="button_box" class="oe_button_box">
-                            <button name="action_view_expenses" class="oe_stat_button" type="object" icon="fa-money"
+                            <!--                            <button name="action_view_expenses" class="oe_stat_button" type="object" icon="fa-money"-->
+                            <!--                                    invisible="state not in ('approved')">-->
+                            <!--                                <field name="expense_ids" widget="statinfo" string="Expenses"/>-->
+                            <!--                            </button>-->
+                            <button name="action_view_air_tickets" class="oe_stat_button" type="object" icon="fa-money"
                                     invisible="state not in ('approved')">
-                                <field name="expense_ids" widget="statinfo" string="Expenses"/>
+                                <field name="air_ticket_ids" widget="statinfo" string="Air Tickets"/>
                             </button>
+
+
                         </div>
                         <div class="oe_title">
                             <label for="name" placeholder="Sequence"/>
@@ -47,6 +56,10 @@
                                 <field name="visa_date_from" readonly="state != 'draft'" required="True"/>
                                 <field name="visa_date_to" readonly="state != 'draft'" required="True"/>
                                 <field name="leave_id" readonly="1" groups="hr_holidays.group_hr_holidays_user"/>
+                                <field name="sponsored_ids" widget="many2many_tags"
+                                       readonly="state != 'draft'"
+                                       domain="[('employee_id','=',employee_id)]"
+                                       options="{'no_create': True, 'no_open':True}"/>
                             </group>
                         </group>
                         <notebook>

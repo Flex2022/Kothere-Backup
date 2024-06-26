@@ -3,6 +3,8 @@
     <menuitem id="menu_flex_approvals" name="Employee Requests" sequence="10"
               web_icon="flex_kathiri_approvals,static/description/web-icon.png">
         <menuitem id="menu_flex_all_approvals" name="All Requests" sequence="10">
+            <menuitem id="menu_flex_approval_air_ticket_action" name="Air Ticket Requests"
+                      action="action_approval_air_ticket" sequence="20"/>
             <menuitem id="menu_flex_approval_business_trip_action" name="Business Trip Requests"
                       action="action_approval_business_trip"/>
             <menuitem id="menu_flex_approval_employee_transfer_action" name="Employee Transfer Requests"

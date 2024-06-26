@@ -81,5 +81,14 @@
             <field name="company_id" eval="False"/>
         </record>
 
+        <!-- Sequence for Air Ticket Approvals -->
+        <record id="sequence_approval_air_ticket" model="ir.sequence">
+            <field name="name">flex.approval.air_ticket</field>
+            <field name="code">flex.approval.air_ticket</field>
+            <field name="prefix">AIR_TICKET/</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
     </data>
 </odoo>

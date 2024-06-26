@@ -1,5 +1,6 @@
 from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
+from datetime import datetime
 
 
 class ApprovalStartingWorkRequest(models.Model):
@@ -28,7 +29,7 @@ class ApprovalStartingWorkRequest(models.Model):
     employee_job_id = fields.Many2one('hr.job', 'Job Position', compute="compute_related_employee_info", store=True)
     direct_manager = fields.Many2one('hr.employee', string='Direct Manager', compute="compute_related_employee_info",
                                      store=True)
-    contact_number = fields.Char(string='Contact Number', required=True)
+    number_of_days_late = fields.Integer(string='Number of days late', compute="compute_number_pf_days_late")
     hod = fields.Many2one('hr.employee', string='HOD', compute="compute_related_employee_info", store=True)
     start_date = fields.Date(string='Starting Date', required=True)
     request_type = fields.Selection([
@@ -36,7 +37,7 @@ class ApprovalStartingWorkRequest(models.Model):
         ('new_employee', 'New Employee')
     ], string='Request Type', required=True, default="enter_from_vacation")
     last_time_off_leave_id = fields.Many2one('hr.leave', string='Last Time Off Leave',
-                                          compute="compute_employee_last_time_off_leave", store=True)
+                                             compute="compute_employee_last_time_off_leave", store=True)
     last_time_off_leave_date_from = fields.Date(string='Last Leave Date From',
                                                 related="last_time_off_leave_id.request_date_from", store=True)
     last_time_off_leave_date_to = fields.Date(string='Last Leave Date To',
@@ -51,6 +52,18 @@ class ApprovalStartingWorkRequest(models.Model):
         ('approved', 'Approved'),
         ('rejected', 'Rejected'),
     ], string='Status', default='draft', tracking=True, copy=False)
+
+    @api.depends('last_time_off_leave_id', 'start_date', 'request_type')
+    def compute_number_of_days_late(self):
+        for approval in self:
+            approval.number_of_days_late = 0
+            if approval.last_time_off_leave_id.date_to and approval.start_date:
+                date_to = fields.Date.from_string(approval.last_time_off_leave_id.date_to)
+                starting_date = fields.Date.from_string(approval.start_date)
+                if date_to and starting_date:
+                    if starting_date > date_to:
+                        delta_days = (starting_date - date_to).days
+                        approval.number_of_days_late = delta_days
 
     @api.depends('employee_id')
     def compute_employee_last_time_off_leave(self):

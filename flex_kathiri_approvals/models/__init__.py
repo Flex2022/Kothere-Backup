@@ -13,3 +13,4 @@ from . import res_company
 from . import settings
 from . import hr_employee
 from . import fleet_vehicle
+from . import air_ticket_approval

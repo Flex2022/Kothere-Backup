@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!-- Form view -->
+        <record id="view_flex_approval_air_ticket_form" model="ir.ui.view">
+            <field name="name">flex.approval.air_ticket.form</field>
+            <field name="model">flex.approval.air_ticket</field>
+            <field name="arch" type="xml">
+                <form string="Air Ticket Approval">
+                    <header>
+                        <button string="Submit for Approval" class="oe_highlight" type="object"
+                                name="action_submit_for_approval"
+                                invisible="state != 'draft'"/>
+                        <!--                        <button string="HOD Approve" class="oe_highlight" type="object" name="action_hod_approve"-->
+                        <!--                                invisible="state != 'waiting_hod'"/>-->
+                        <button string="HR Manager Approve" class="oe_highlight" type="object"
+                                name="action_hr_manager_approve"
+                                invisible="state != 'waiting_hr_manager'"/>
+                        <!--                        <button string="Account Dept Manager Approve" class="oe_highlight" type="object"-->
+                        <!--                                name="action_account_dept_approve"-->
+                        <!--                                invisible="state != 'waiting_accounts_dept_manager'"/>-->
+                        <button string="CEO Approve" class="oe_highlight" type="object" name="action_ceo_approve"
+                                invisible="state != 'waiting_ceo_manager'"/>
+                        <button string="Create Purchase Order" class="oe_highlight" type="object"
+                                name="create_purchase_order" invisible="state != 'approved' or purchase_id"
+                                groups="purchase.group_purchase_user"/>
+                        <button string="Reject" type="object" name="action_reject"
+                                invisible="state in ('draft', 'approved','rejected')"/>
+
+                        <field name="state" widget="statusbar" readonly="True"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" placeholder="Sequence"/>
+                            <h1>
+                                <field name="name" placeholder="Sequence"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="partner_id" readonly="state != 'draft'"/>
+                                <!--                                <field name="department_id" readonly="1"/>-->
+                                <field name="date_from" readonly="state != 'draft'"/>
+                                <field name="date_to" readonly="state != 'draft'"/>
+                                <field name="departure_city" placeholder="Doha/Qatar"/>
+                                <field name="destination_city" placeholder="Riyadh/Saudi"/>
+                            </group>
+                            <group>
+                                <!--                                <field name="project_id" readonly="state != 'draft'"-->
+                                <!--                                       groups="project.group_project_user"/>-->
+                                <!--                                <field name="delivery_location" readonly="state != 'draft'" placeholder="Doha/Qatar"/>-->
+                                <field name="required_date" readonly="state != 'draft'"/>
+                                <field name="recommended_supplier" domain="[('is_company', '=', True)]"
+                                       readonly="state != 'draft'" context="{'default_is_company': True}"/>
+
+                                <field name="currency_id" invisible="1"/>
+                                <field name="purchase_id" readonly="True" groups="purchase.group_purchase_user"/>
+                                <field name="company_id" groups="base.group_multi_company"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page name="hr_admin_remarks" string="HR/Admin Remarks">
+                                <field name="hr_admin_note" placeholder="Remarks ... "/>
+                            </page>
+                            <page name="Attachments">
+                                <field name="attachment_ids" widget="many2many_binary" string="Attach a file"
+                                       class="g-col-8"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids" options="{'post_refresh': 'recipients'}"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- Tree view -->
+        <record id="view_flex_approval_air_ticket_tree" model="ir.ui.view">
+            <field name="name">flex.approval.air_ticket.tree</field>
+            <field name="model">flex.approval.air_ticket</field>
+            <field name="arch" type="xml">
+                <tree string="Air Ticket Approvals">
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <!--                    <field name="department_id"/>-->
+                    <field name="date_from"/>
+                    <field name="date_to"/>
+                    <field name="departure_city"/>
+                    <field name="destination_city"/>
+                    <field name="currency_id" optional="hide"/>
+                    <field name="company_id" optional="hide"/>
+                    <field name="state" widget="badge"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Action for opening form view -->
+        <record id="action_approval_air_ticket" model="ir.actions.act_window">
+            <field name="name">Air Ticket Approvals</field>
+            <field name="res_model">flex.approval.air_ticket</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Manage Air Ticket Approvals
+                </p>
+                <p>
+                    View and manage approvals for air tickets, including submission, approval, and rejection.
+                </p>
+            </field>
+        </record>
+
+    </data>
+</odoo>

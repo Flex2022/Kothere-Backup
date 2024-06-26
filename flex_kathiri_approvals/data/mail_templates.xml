@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Mail template for air ticket approval notification -->
+    <record id="mail_template_air_ticket_approval" model="mail.template">
+        <field name="name">Air Ticket Approval Notification</field>
+        <field name="model_id" ref="model_flex_approval_air_ticket"/>
+        <field name="subject">Air Ticket Approval Notification</field>
+        <field name="email_from">{{object.company_id.email or ''}}</field>
+        <field name="email_to">{{object.partner_id.email or ''}}</field>
+        <field name="auto_delete" eval="True"/>
+        <field name="body_html" type="html">
+            <p>Hello <t t-out="object.partner_id.name"/>,</p>
+            <p>Your air ticket request has been
+                <t t-if="object.state == 'approved'">approved</t>
+                <t t-else="object.state == 'rejected'">rejected</t>
+            </p>
+            <p>Details:</p>
+            <p>AIR Ticket Request Number:
+                <t t-out="object.name"/>
+            </p>
+            <p>Date From:
+                <t t-out="object.date_from"/>
+            </p>
+            <p>Date To:
+                <t t-out="object.date_to"/>
+            </p>
+            <p>Departure City:
+                <t t-out="object.departure_city"/>
+            </p>
+            <p>Destination City:
+                <t t-out="object.destination_city"/>
+            </p>
+        </field>
+    </record>
+
+</odoo>

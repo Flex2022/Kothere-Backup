@@ -7,3 +7,4 @@ from . import exit_return_visa_approval_reject
 from . import renew_driving_license_approval_reject
 from . import starting_work_reject_wizard
 from . import renew_vehicle_insurance
+from . import air_ticket_reject_wizard

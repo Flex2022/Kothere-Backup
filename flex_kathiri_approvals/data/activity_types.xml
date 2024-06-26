@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="mail_air_ticket_approval" model="mail.activity.type">
+        <field name="name">Air Ticket Approval</field>
+        <field name="icon">fa-dollar</field>
+        <field name="res_model">flex.approval.air_ticket</field>
+    </record>
+</odoo>

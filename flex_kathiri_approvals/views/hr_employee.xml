@@ -30,7 +30,7 @@
                                        context="{'default_employee_id': id}">
                                     <tree editable="bottom">
                                         <field name="employee_id" column_invisible="1"/>
-                                        <field name="name"/>
+                                        <field name="partner_id"/>
                                         <field name="relation" placeholder="Son..."/>
                                     </tree>
                                 </field>
