@@ -71,7 +71,8 @@ class ApprovalStartingWorkRequest(models.Model):
             if approval.employee_id:
                 last_leave = self.env['hr.leave'].search([
                     ('employee_id', '=', approval.employee_id.id),
-                    ('state', '=', 'validate')  # 'validate' is the state for approved leaves
+                    ('state', '=', 'validate'),  # 'validate' is the state for approved leaves
+                    ('company_id', '=', self.env.company.id)
                 ], order='request_date_to desc', limit=1)
                 approval.last_time_off_leave_id = last_leave.id if last_leave else None
 
