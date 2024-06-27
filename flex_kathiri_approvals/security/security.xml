@@ -30,5 +30,19 @@
             <field name="model_id" ref="model_flex_approval_renew_medical_insurance"/>
             <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
         </record>
+
+        <record id="flex_employee_requests_air_ticket_own_record_rule" model="ir.rule">
+            <field name="name">Flex Employee Requests 'Air ticket': Company Records Only</field>
+            <field name="model_id" ref="model_flex_approval_air_ticket"/>
+            <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record id="flex_employee_requests_exit_return_visa_own_record_rule" model="ir.rule">
+            <field name="name">Flex Employee Requests 'Exit Return Visa': Company Records Only</field>
+            <field name="model_id" ref="model_flex_approval_exit_return_visa"/>
+            <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+        </record>
+
+
     </data>
 </odoo>
