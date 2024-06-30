@@ -32,7 +32,7 @@
                                     <tree editable="bottom">
                                         <field name="employee_id" column_invisible="1"/>
                                         <field name="partner_id"
-                                               domain="[('company_id','=',parent.company_id),('company_id','=',False)]"/>
+                                               domain="['|',('company_id','=',parent.company_id),('company_id','=',False)]"/>
                                         <field name="relation" placeholder="Son..."/>
                                     </tree>
                                 </field>
