@@ -72,7 +72,7 @@ class ApprovalStartingWorkRequest(models.Model):
                 last_leave = self.env['hr.leave'].search([
                     ('employee_id', '=', approval.employee_id.id),
                     ('state', '=', 'validate'),  # 'validate' is the state for approved leaves
-                    ('company_id', '=', self.env.company.id)
+                    ('company_id', '=', self.company_id.id)
                 ], order='request_date_to desc', limit=1)
                 approval.last_time_off_leave_id = last_leave.id if last_leave else None
 
@@ -134,9 +134,9 @@ class ApprovalStartingWorkRequest(models.Model):
                 'default_starting_work_request_id': self.id,
             },
         }
-
-    def unlink(self):
-        for approval in self:
-            if approval.state not in ['draft']:
-                raise models.UserError(_("You can only delete records with 'Draft' state."))
-        return super(ApprovalStartingWorkRequest, self).unlink()
+    #
+    # def unlink(self):
+    #     for approval in self:
+    #         if approval.state not in ['draft']:
+    #             raise models.UserError(_("You can only delete records with 'Draft' state."))
+    #     return super(ApprovalStartingWorkRequest, self).unlink()
