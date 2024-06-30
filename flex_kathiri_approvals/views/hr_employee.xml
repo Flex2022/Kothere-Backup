@@ -8,6 +8,7 @@
             <field name="arch" type="xml">
                 <xpath expr="//notebook" position="inside">
                     <page name="medical_insurance" string="Medical Insurance">
+                        <field name="company_id" invisible="1"/>
                         <notebook>
                             <page name="medical_insurance_request" string="Requests">
                                 <field name="medical_insurance_id" readonly="1">
