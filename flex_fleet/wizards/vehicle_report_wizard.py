@@ -31,7 +31,7 @@ class StockMoveReportWizard(models.TransientModel):
             if wizard.vehicle_ids or wizard.all_vehicles:
                 domain = [('vehicle_id', '!=', False)] if wizard.all_vehicles else [
                     ('vehicle_id', 'in', wizard.vehicle_ids.ids)]
-                domain += [('company_id', 'in', self.env.user.company_id.ids)]
+                domain += [('company_id', 'in', self.env.company.ids)]
                 stock_moves = self.env['stock.move'].search(domain)
                 wizard.line_ids = [(6, 0, stock_moves.ids)]
             else:
