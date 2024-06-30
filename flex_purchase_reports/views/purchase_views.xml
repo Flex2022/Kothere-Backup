@@ -60,6 +60,15 @@
                     </notebook>
                 </page>
             </xpath>
+
+            <field name="user_id" position="after">
+                <field name="user_ids" widget="many2many_tags"/>
+            </field>
+
+            <field name="user_id" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+
         </field>
     </record>
 

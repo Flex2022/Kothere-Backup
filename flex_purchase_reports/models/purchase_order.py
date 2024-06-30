@@ -13,6 +13,12 @@ class PurchaseOrder(models.Model):
     agreement_expense = fields.Char('الصرف بعد')
     agreement_condition_ids = fields.One2many('purchase.order.agreement_condition', 'purchase_order_id',
                                               string='Agreement Conditions')
+    user_ids = fields.Many2many('res.users', string="Buyers", compute="compute_user_ids", readonly=False)
+
+    @api.depends('user_id')
+    def compute_user_ids(self):
+        for order in self:
+            order.user_ids = [(4, order.user_id.id)] if order.user_id else []
 
     def compute_date_approve_hijri(self):
         for order in self:
