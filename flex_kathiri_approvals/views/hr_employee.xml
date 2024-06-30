@@ -30,12 +30,12 @@
                                        context="{'default_employee_id': id}">
                                     <tree editable="bottom">
                                         <field name="employee_id" column_invisible="1"/>
-                                        <field name="partner_id"/>
+                                        <field name="partner_id"
+                                               domain="[('company_id','=',company_id),('company_id','=',False)]"/>
                                         <field name="relation" placeholder="Son..."/>
                                     </tree>
                                 </field>
                             </page>
-
                         </notebook>
                     </page>
                 </xpath>

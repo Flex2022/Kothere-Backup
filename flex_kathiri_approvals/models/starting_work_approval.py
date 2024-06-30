@@ -134,9 +134,9 @@ class ApprovalStartingWorkRequest(models.Model):
                 'default_starting_work_request_id': self.id,
             },
         }
-    #
-    # def unlink(self):
-    #     for approval in self:
-    #         if approval.state not in ['draft']:
-    #             raise models.UserError(_("You can only delete records with 'Draft' state."))
-    #     return super(ApprovalStartingWorkRequest, self).unlink()
+
+    def unlink(self):
+        for approval in self:
+            if approval.state not in ['draft']:
+                raise models.UserError(_("You can only delete records with 'Draft' state."))
+        return super(ApprovalStartingWorkRequest, self).unlink()
