@@ -23,7 +23,7 @@ class PurchaseOrder(models.Model):
     @api.depends('user_id', 'user_ids')
     def compute_user_ids(self):
         for order in self:
-            if not self.user_id.id in order.user_ids.ids:
+            if not order.user_id.id in order.user_ids.ids:
                 order.user_ids = [(4, order.user_id.id)] if order.user_id else []
 
     def compute_date_approve_hijri(self):
