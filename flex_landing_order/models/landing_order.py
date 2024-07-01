@@ -29,9 +29,10 @@ class LandingOrder(models.Model):
 
     # Fleet
     car_model_id = fields.Many2one('fleet.vehicle', string='Car Model')
-    driver_id = fields.Many2one('res.partner', string='Driver', related='car_model_id.driver_id')
-    driver_employee = fields.Many2one('hr.employee', string='Driver Employee', related='car_model_id.employee_id_dr')
-    car_id = fields.Char(string='Car ID', related='car_model_id.license_plate')
+    driver_id = fields.Many2one('res.partner', string='Driver', compute="compute_car_model_details", store=True)
+    driver_employee = fields.Many2one('hr.employee', string='Driver Employee', compute="compute_car_model_details",
+                                      store=True)
+    car_id = fields.Char(string='Car ID', compute="compute_car_model_details", store=True)
 
     cancelation_reason = fields.Text(string='Cancelation Reason')
 
@@ -62,6 +63,13 @@ class LandingOrder(models.Model):
         comodel_name='res.company',
         required=True, index=True,
         default=lambda self: self.env.company)
+
+    @api.onchange('car_model_id')
+    def onchange_car_model_id(self):
+        for order in self:
+            order.driver_id = order.car_model_id.driver_id.id if order.car_model_id.driver_id else False
+            order.driver_employee = order.car_model_id.employee_id_dr.id if order.car_model_id.employee_id_dr else False
+            order.car_id = order.car_model_id.license_plate
 
     def action_state(self):
         if self.state == 'new':
@@ -94,7 +102,7 @@ class LandingOrder(models.Model):
                 order.from_receive_to_delivery_h = (order.delivery_date - order.receive_date).total_seconds() / 3600
                 order.from_receive_to_delivery_d = (order.delivery_date - order.receive_date).days
                 order.from_receive_to_delivery_h_hour = order.from_receive_to_delivery_h - (
-                            order.from_receive_to_delivery_d * 24)
+                        order.from_receive_to_delivery_d * 24)
 
     @api.model_create_multi
     def create(self, vals_list):
