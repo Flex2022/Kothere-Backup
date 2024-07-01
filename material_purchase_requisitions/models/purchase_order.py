@@ -11,6 +11,12 @@ class PurchaseOrder(models.Model):
         copy=False
     )
 
+    alternative_po_ids = fields.One2many(
+        'purchase.order', related='purchase_group_id.order_ids', related_sudo=False, readonly=False,
+        domain="[('id', '!=', id), ('state', 'in', ['draft', 'sent', 'to approve'])]",
+        string="Alternative POs", check_company=True,
+        help="Other potential purchase orders for purchasing products")
+
 class PurchaseOrderLine(models.Model):
     _inherit = 'purchase.order.line'
     
