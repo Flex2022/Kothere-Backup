@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <template id="report_sale_price_english_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page" >
+                        <div class="rtl">
+                            <div class="row fw-bold mt-3">
+                                <div class="col-12">
+                                    <table class="table table-bordered">
+                                        <thead class="thead-info">
+                                            <tr>
+                                                <th colspan="4" class="text-center fw-bold"
+                                                    style="text-decoration: underline;">
+                                                    Quotaion
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    Date :
+                                                </td>
+                                                <td>
+                                                    <span t-esc="o.date_order"/>
+                                                </td>
+                                                <td>
+                                                    Project :
+                                                </td>
+                                                <td>
+                                                    <span t-field="o.project_invoice"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    Salesperson :
+                                                </td>
+                                                <td>
+                                                    <span t-field="o.user_id"/>
+                                                </td>
+                                                <td>
+                                                    Customer :
+                                                </td>
+                                                <td>
+                                                    <span t-field="o.partner_id"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    Phone :
+                                                </td>
+                                                <td>
+                                                    <span t-field="o.user_id.phone"/>
+                                                </td>
+                                                <td>
+                                                    Attention :
+                                                </td>
+                                                <td>
+                                                    <span t-field="o.attention"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2">
+
+                                                </td>
+                                                <td>
+                                                    Department :
+                                                </td>
+                                                <td>
+                                                    <span t-field="o.department_id"/>
+                                                </td>
+                                            </tr>
+                                            <tr/>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row fw-bold mt-3">
+                                <div class="col-12">
+                                    <table class="table table-bordered">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th colspan="5" class="text-center fw-bold"
+                                                    style="text-decoration: underline;">
+                                                    Price list
+                                                </th>
+                                            </tr>
+                                            <tr>
+                                                <th width="40%">
+                                                    Product
+                                                </th>
+                                                <th width="15%">
+                                                    Density
+                                                </th>
+                                                <th width="10%">
+                                                    Unit
+                                                </th>
+                                                <th width="15%">
+                                                    Price
+                                                </th>
+                                                <th width="20%">
+                                                    Trilla load per pill
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr t-foreach="o.order_line" t-as="line">
+                                                <td>
+                                                    <span t-field="line.product_id"/>
+                                                </td>
+                                                <th>
+                                                    <span t-field="line.product_id.volume"/>
+                                                </th>
+                                                <th>
+                                                    <span t-field="line.product_uom"/>
+                                                </th>
+                                                <th>
+                                                    <span t-field="line.price_unit"/>
+                                                </th>
+                                                <th>
+                                                    <span t-field="line.trilla_load_per_pill"/>
+                                                </th>
+                                            </tr>
+                                            <tr/>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row fw-bold mt-3">
+                                <div class="col-12">
+                                    <table class="table table-bordered">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th class="text-center fw-bold"
+                                                    style="text-decoration: underline;">
+                                                    Terms and payment conditions
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <t t-esc="o.note"/>
+                                                </td>
+                                            </tr>
+                                            <tr/>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+
+    <!-- QWeb Reports -->
+    <record id="report_sale_price_english" model="ir.actions.report">
+        <field name="name">English Quotation</field>
+        <field name="model">sale.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">flex_sale.report_sale_price_english_template</field>
+        <field name="report_file">flex_sale.report_sale_price_english_template</field>
+        <field name="print_report_name">'Quotation number %s' %(object.name)</field>
+        <field name="binding_model_id" ref="sale.model_sale_order"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

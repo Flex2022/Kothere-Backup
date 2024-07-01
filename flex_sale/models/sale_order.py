@@ -4,6 +4,9 @@ from odoo import models, api, fields
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
+    department_id = fields.Many2one('hr.department')
+    attention = fields.Char('Attention')
+
     # sale_order_cancel_reason.py
     def action_cancel(self):
         # Call the original cancel action
@@ -27,6 +30,7 @@ class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
 
     product_id_arabic = fields.Char(string='Arabic Name', compute="compute_product_id_arabic")
+    trilla_load_per_pill = fields.Char('Trilla load per pill')
 
     @api.depends('product_id')
     def compute_product_id_arabic(self):

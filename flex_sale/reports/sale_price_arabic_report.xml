@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <template id="report_sale_price_arabic_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-set="o" t-value="o.with_context(lang='ar_001')"/>
+                <t t-call="web.external_layout">
+                    <div class="page" style="direction: rtl;">
+                        <div class="rtl">
+                            <div class="row fw-bold mt-3">
+                                <div class="col-12">
+                                    <table class="table table-bordered">
+                                        <thead class="thead-info">
+                                            <tr>
+                                                <th colspan="4" class="text-center fw-bold"
+                                                    style="text-decoration: underline;">
+                                                    عرض الأسعار
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    التاريخ :
+                                                </td>
+                                                <td>
+                                                    <span t-esc="o.date_order"/>
+                                                </td>
+                                                <td>
+                                                    المشروع :
+                                                </td>
+                                                <td>
+                                                    <span t-field="o.project_invoice"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    المندوب :
+                                                </td>
+                                                <td>
+                                                    <span t-field="o.user_id"/>
+                                                </td>
+                                                <td>
+                                                    العميل :
+                                                </td>
+                                                <td>
+                                                    <span t-field="o.partner_id"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    الجوال :
+                                                </td>
+                                                <td>
+                                                    <span t-field="o.user_id.phone"/>
+                                                </td>
+                                                <td>
+                                                    العناية :
+                                                </td>
+                                                <td>
+                                                    <span t-field="o.attention"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2">
+
+                                                </td>
+                                                <td>
+                                                    القسم :
+                                                </td>
+                                                <td>
+                                                    <span t-field="o.department_id"/>
+                                                </td>
+                                            </tr>
+                                            <tr/>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row fw-bold mt-3">
+                                <div class="col-12">
+                                    <table class="table table-bordered bg-light">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th colspan="5" class="text-center fw-bold"
+                                                    style="text-decoration: underline;">
+                                                    قائمة الأسعار
+                                                </th>
+                                            </tr>
+                                            <tr>
+                                                <th width="40%">
+                                                    الصنف
+                                                </th>
+                                                <th width="15%">
+                                                    الكثافة
+                                                    <br/>
+                                                    حجم/م3
+                                                </th>
+                                                <th width="10%">
+                                                    الوحدة
+                                                </th>
+                                                <th width="15%">
+                                                    السعر
+                                                    <br/>
+                                                    ر.س
+                                                </th>
+                                                <th width="20%">
+                                                    حمولة التريلة بالحبة
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr t-foreach="o.order_line" t-as="line">
+                                                <td>
+                                                    <span t-field="line.product_id"/>
+                                                </td>
+                                                <th>
+                                                    <span t-field="line.product_id.volume"/>
+                                                </th>
+                                                <th>
+                                                    <span t-field="line.product_uom"/>
+                                                </th>
+                                                <th>
+                                                    <span t-field="line.price_unit"/>
+                                                </th>
+                                                <th>
+                                                    <span t-field="line.trilla_load_per_pill"/>
+                                                </th>
+                                            </tr>
+                                            <tr/>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row fw-bold mt-3">
+                                <div class="col-12">
+                                    <table class="table table-bordered">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th class="text-center fw-bold"
+                                                    style="text-decoration: underline;">
+                                                    معلومات الدفع و التوصيل
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <t t-esc="o.note"/>
+                                                </td>
+                                            </tr>
+                                            <tr/>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+
+    <!-- QWeb Reports -->
+    <record id="report_sale_price_arabic" model="ir.actions.report">
+        <field name="name">عرض سعر</field>
+        <field name="model">sale.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">flex_sale.report_sale_price_arabic_template</field>
+        <field name="report_file">flex_sale.report_sale_price_arabic_template</field>
+        <field name="print_report_name">'عرض الأسعار رقم - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="sale.model_sale_order"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

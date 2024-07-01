@@ -16,6 +16,8 @@
         'security/ir.model.access.csv',
         'views/sale_order.xml',
         'reports/sale_order_report_templates.xml',
+        'reports/sale_price_arabic_report.xml',
+        'reports/sale_price_english_report.xml',
         'wizards/cancel_sale_order_wizard.xml'
     ],
     'installable': True,
