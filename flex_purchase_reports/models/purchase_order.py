@@ -14,6 +14,11 @@ class PurchaseOrder(models.Model):
     agreement_condition_ids = fields.One2many('purchase.order.agreement_condition', 'purchase_order_id',
                                               string='Agreement Conditions')
     user_ids = fields.Many2many('res.users', string="Buyers", compute="compute_user_ids", readonly=False, store=True)
+    alternative_po_ids = fields.One2many(
+        'purchase.order', related='purchase_group_id.order_ids', related_sudo=False, readonly=False,
+        domain="[('id', '!=', id), ('state', 'in', ['draft', 'sent', 'to approve'])]",
+        string="Alternative POs", check_company=True,
+        help="Other potential purchase orders for purchasing products")
 
     @api.depends('user_id', 'user_ids')
     def compute_user_ids(self):

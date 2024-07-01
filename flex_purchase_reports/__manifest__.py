@@ -10,7 +10,7 @@
     'website': "https://flex-ops.com",
     'category': 'Inventory/Purchase',
     'license': 'OPL-1',
-    'depends': ['base', 'purchase'],
+    'depends': ['base', 'purchase', 'purchase_requisition'],
     'data': [
         'security/ir.model.access.csv',
         'security/security.xml',
