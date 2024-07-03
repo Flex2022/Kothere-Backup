@@ -64,7 +64,7 @@ class LandingOrder(models.Model):
         required=True, index=True,
         default=lambda self: self.env.company)
 
-    @api.onchange('car_model_id')
+    @api.depends('car_model_id')
     def compute_car_model_details(self):
         for order in self:
             order.driver_id = order.car_model_id.driver_id.id if order.car_model_id.driver_id else False
