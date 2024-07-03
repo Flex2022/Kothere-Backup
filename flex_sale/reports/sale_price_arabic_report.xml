@@ -138,7 +138,7 @@
                                     <table class="table table-bordered">
                                         <thead class="thead-light">
                                             <tr>
-                                                <th class="text-center fw-bold"
+                                                <th class="text-center fw-bold" colspan="2"
                                                     style="text-decoration: underline;">
                                                     معلومات الدفع و التوصيل
                                                 </th>
@@ -146,8 +146,43 @@
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td>
-                                                    <t t-esc="o.note"/>
+                                                <td class="w-25">
+                                                    ضريبة القيمة المضافة
+                                                </td>
+                                                <td class="w-75">
+                                                    الأسعار أعلاه لا تشمل ضريبة القيمة المضافة - 15%
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="w-25">
+                                                    طريقة الدفع و التوريد
+                                                </td>
+                                                <td class="w-75">
+                                                    من 3 إلى 4 أيام بعد التحويل
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="w-25">
+
+                                                </td>
+                                                <td class="w-75">
+
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="w-25">
+                                                    موقع التسليم
+                                                </td>
+                                                <td class="w-75">
+                                                    المدينة المنورة
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="w-25">
+                                                    رقم الحساب البنكي
+                                                </td>
+                                                <td class="w-75">
+                                                    <span t-field="o.company_id.bank_account_id"/>
                                                 </td>
                                             </tr>
                                             <tr/>

@@ -5,7 +5,7 @@
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="o">
                 <t t-call="web.external_layout">
-                    <div class="page" >
+                    <div class="page">
                         <div class="rtl">
                             <div class="row fw-bold mt-3">
                                 <div class="col-12">
@@ -133,16 +133,58 @@
                                     <table class="table table-bordered">
                                         <thead class="thead-light">
                                             <tr>
-                                                <th class="text-center fw-bold"
+                                                <th class="text-center fw-bold" colspan="2"
                                                     style="text-decoration: underline;">
-                                                    Terms and payment conditions
+                                                    Terms &amp; Payment Conditions
                                                 </th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td>
-                                                    <t t-esc="o.note"/>
+                                                <td class="w-25">
+                                                    Vat - 15%
+                                                </td>
+                                                <td class="w-75">
+                                                    Prices are excluding Vat
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="w-25">
+                                                    Payment Conditions
+                                                </td>
+                                                <td class="w-75">
+                                                    100% in advance
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="w-25">
+                                                    Delivery Period
+                                                </td>
+                                                <td class="w-75">
+                                                    2-3 Days after Transfer
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="w-25">
+                                                    Delivery Location
+                                                </td>
+                                                <td class="w-75">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="w-25">
+                                                    Other Validity
+                                                </td>
+                                                <td class="w-75">
+                                                    Month After Issued Date
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="w-25">
+                                                    Bank Account
+                                                </td>
+                                                <td class="w-75">
+                                                    <span t-field="o.company_id.bank_account_id"/>
                                                 </td>
                                             </tr>
                                             <tr/>
