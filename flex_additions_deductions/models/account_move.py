@@ -50,11 +50,11 @@ class AccountMove(models.Model):
 
     # past_deductions_no_2 = fields.Integer('Deductions No2', defualt=lambda self: self.deductions_no - 1)
 
-    amount_before_deductions = fields.Float(string='Amount Before Deductions', compute='compute_amount_before_deductions')
+    amount_before_deductions = fields.Float(string='Amount Before Deductions',
+                                            compute='compute_amount_before_deductions')
     amount_deductions_cur = fields.Float(string='Amount Before Deductionsd', compute='compute_amount_before_deductions')
     # amount_before_deductions_str = fields.Char(string='Amount Before Deductions', compute='compute_str')
     # amount_deductions_cur_str = fields.Char(string='Amount Before Deductions', compute='compute_str')
-
 
     is_out_invoice = fields.Boolean('Is Out Invoice', compute='_compute_is_out_invoice', store=False)
 
@@ -83,7 +83,6 @@ class AccountMove(models.Model):
             else:
                 move.amount_before_deductions = 0.0
                 move.amount_deductions_cur = 0.0
-
 
     @api.depends('line_ids')
     def _compute_origin_deductions_no_count(self):
@@ -127,7 +126,6 @@ class AccountMove(models.Model):
                     ('move_type', 'in', ['out_invoice', 'in_invoice']),
                 ], order='create_date asc', limit=int(move.deductions_no))
                 move.amount_deductions_cur = sum(invoice.all_total_deductions for invoice in invoices_2)
-
 
     @api.depends('invoice_origin')
     def _compute_project_manager(self):
@@ -247,7 +245,6 @@ class AccountMove(models.Model):
                 if record.company_id.flex_additions_deductions_ids:
                     record.there_is_access_from_company_id = True
 
-
     @api.depends('flex_deductions_ids')
     def _compute_deductions_amount(self):
         for record in self:
@@ -274,7 +271,7 @@ class AccountMove(models.Model):
         for record in self:
             record.additions_amount = sum(record.flex_additions_ids.mapped('amount'))
 
-    def create_journal_entry_when_conferim(self):
+    def create_journal_entry_when_confirm(self):
         for record in self:
             if record.there_is_access_from_company_id:
                 property_account = record.partner_id.property_account_receivable_id.id
@@ -349,14 +346,13 @@ class AccountMove(models.Model):
 
                         }).action_post()
 
-
     # deductions_no
 
     def action_post(self):
         res = super(AccountMove, self).action_post()
         for move in self:
             if move.there_is_access_from_company_id:
-                move.create_journal_entry_when_conferim()
+                move.create_journal_entry_when_confirm()
         return res
 
     def button_draft(self):
@@ -390,8 +386,6 @@ class AccountMove(models.Model):
         self.set_line_number()
         return res
 
-
-
     invoice_line_ids_count = fields.Integer(string='Invoice Line Count', compute='_compute_invoice_line_ids_count')
     deductions_line_count = fields.Integer(string='ded Count', compute='_compute_invoice_line_ids_count')
 
@@ -406,7 +400,6 @@ class AccountMove(models.Model):
     #     if self.there_is_access_from_company_id:
     #         self.create_journal_entry_when_conferim()
     #     return res
-
 
 
 class AccountMoveLine(models.Model):
