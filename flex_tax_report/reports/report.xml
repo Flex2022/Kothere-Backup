@@ -307,8 +307,7 @@
                         </thead>
                         <tbody class="invoice_tbody">
                             <t t-set="current_subtotal" t-value="0"/>
-                            <t t-set="lines"
-                               t-value="o.invoice_line_ids.sorted(key=lambda l: (-l.sequence, l.date, l.move_name, -l.id), reverse=True)"/>
+                            <t t-set="lines" t-value="o.invoice_line_ids.sorted(key=lambda l: (-l.sequence, l.date, l.move_name, -l.id), reverse=True)"/>
                             <t t-foreach="lines" t-as="line">
                                 <t t-set="current_subtotal" t-value="current_subtotal + line.price_total"/>
                                 <tr t-att-class="'bg-200 fw-bold o_line_section' if line.display_type == 'line_section' else 'fst-italic o_line_note' if line.display_type == 'line_note' else ''">
@@ -316,8 +315,7 @@
 
 
                                         <td class="text-center" dir="ltr">
-                                            <span t-esc="line.price_unit * line.quantity"
-                                                  t-options="{'widget': 'monetary', 'display_currency': line.currency_id}"/>
+                                            <span t-esc="line.price_unit * line.quantity" t-options="{'widget': 'monetary', 'display_currency': line.currency_id}"/>
                                         </td>
 
                                         <td class="text-center" dir="ltr">
@@ -357,10 +355,8 @@
                                     <tr class="is-subtotal text-end">
                                         <td colspan="99" class="text-center">
                                             <strong class="mx-4">الأجمالي الفرعي :</strong>
-                                            <span t-esc="current_subtotal"
-                                                  t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"
-                                                  dir="ltr"/>
-                                            display_currency": o.currency_id}" dir="ltr"/>
+                                            <span t-esc="current_subtotal" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}" dir="ltr"/>
+                                            display_currency": o.currency_id}" dir="ltr"/&gt;
                                             <strong class="mx-4" dir="rtl">
                                                 <strong dir="ltr">Subtotal :</strong>
                                             </strong>
@@ -416,67 +412,75 @@
                                     <span>الاجمالي بعد الضريبة</span>
                                 </div>
 
+                                <t t-if="o.deductions_amount_type_discounts != 0">
+                                    <div class="col-3 float-start">
+                                        <span>Discounts</span>
+                                    </div>
+                                    <div class="col-6 float-start text-center">
+                                        <span>
+                                            <t t-esc="round(o.deductions_amount_type_discounts,2)"/>
+                                        </span>
+                                    </div>
+                                    <div class="col-3 float-start" dir="rtl">
+                                        <span>الخصومات</span>
+                                    </div>
+                                    </t>
+                                <t t-if="o.deductions_amount_type_insurances != 0">
+                                    <div class="col-3 float-start">
+                                        <span>Insurances</span>
+                                    </div>
+                                    <div class="col-6 float-start text-center">
+                                        <span>
+                                            <t t-esc="round(o.deductions_amount_type_insurances,2)"/>
+                                        </span>
+                                    </div>
+                                    <div class="col-3 float-start" dir="rtl">
+                                        <span>التامينات</span>
+                                    </div>
+                                </t>
 
-                                <div class="col-3 float-start">
-                                    <span>Discounts</span>
-                                </div>
-                                <div class="col-6 float-start text-center">
-                                    <span>
-                                        <t t-esc="round(o.deductions_amount_type_discounts,2)"/>
-                                    </span>
-                                </div>
-                                <div class="col-3 float-start" dir="rtl">
-                                    <span>الخصومات</span>
-                                </div>
-
-                                <div class="col-3 float-start">
-                                    <span>Insurances</span>
-                                </div>
-                                <div class="col-6 float-start text-center">
-                                    <span>
-                                        <t t-esc="round(o.deductions_amount_type_insurances,2)"/>
-                                    </span>
-                                </div>
-                                <div class="col-3 float-start" dir="rtl">
-                                    <span>التامينات</span>
-                                </div>
+                                <t t-if="o.deductions_amount_type_business_guarantee != 0">
+                                    <div class="col-5 float-start">
+                                        <span>Business Guarantee</span>
+                                    </div>
+                                    <div class="col-4 float-start text-center">
+                                        <span>
+                                            <t t-esc="round(o.deductions_amount_type_business_guarantee,2)"/>
+                                        </span>
+                                    </div>
+                                    <div class="col-3 float-start" dir="rtl">
+                                        <span>ضمان اعمال</span>
+                                    </div>
+                                </t>
 
 
-                                <div class="col-5 float-start">
-                                    <span>Business Guarantee</span>
-                                </div>
-                                <div class="col-4 float-start text-center">
-                                    <span>
-                                        <t t-esc="round(o.deductions_amount_type_business_guarantee,2)"/>
-                                    </span>
-                                </div>
-                                <div class="col-3 float-start" dir="rtl">
-                                    <span>ضمان اعمال</span>
-                                </div>
+                                <t t-if="o.deductions_amount_type_final_guarantee != 0">
+                                    <div class="col-5 float-start">
+                                        <span>Final Guarantee</span>
+                                    </div>
+                                    <div class="col-4 float-start text-center">
+                                        <span>
+                                            <t t-esc="round(o.deductions_amount_type_final_guarantee,2)"/>
+                                        </span>
+                                    </div>
+                                    <div class="col-3 float-start" dir="rtl">
+                                        <span>ضمان نهائي</span>
+                                    </div>
+                                </t>
 
-                                <div class="col-5 float-start">
-                                    <span>Final Guarantee</span>
-                                </div>
-                                <div class="col-4 float-start text-center">
-                                    <span>
-                                        <t t-esc="round(o.deductions_amount_type_final_guarantee,2)"/>
-                                    </span>
-                                </div>
-                                <div class="col-3 float-start" dir="rtl">
-                                    <span>ضمان نهائي</span>
-                                </div>
-
-                                <div class="col-5 float-start">
-                                    <span>Advance Payment</span>
-                                </div>
-                                <div class="col-4 float-start text-center">
-                                    <span>
-                                        <t t-esc="round(o.deductions_amount_type_advance_payment,2)"/>
-                                    </span>
-                                </div>
-                                <div class="col-3 float-start" dir="rtl">
-                                    <span>دفعة مقدمة</span>
-                                </div>
+                                <t t-if="o.deductions_amount_type_advance_payment != 0">
+                                    <div class="col-5 float-start">
+                                        <span>Advance Payment</span>
+                                    </div>
+                                    <div class="col-4 float-start text-center">
+                                        <span>
+                                            <t t-esc="round(o.deductions_amount_type_advance_payment,2)"/>
+                                        </span>
+                                    </div>
+                                    <div class="col-3 float-start" dir="rtl">
+                                        <span>دفعة مقدمة</span>
+                                    </div>
+                                </t>
 
 
                                 <div class="col-5 float-start">
@@ -543,9 +547,7 @@
                                     <div class="col-8">
                                         <br/>
                                         <p>
-                                            <img t-if="o.l10n_sa_qr_code_str"
-                                                 style="display:block;"
-                                                 t-att-src="'/report/barcode/?barcode_type=%s&amp;value=%s&amp;width=%s&amp;height=%s'%('QR', quote_plus(o.l10n_sa_qr_code_str), 100, 100)"/>
+                                            <img t-if="o.l10n_sa_qr_code_str" style="display:block;" t-att-src="'/report/barcode/?barcode_type=%s&amp;value=%s&amp;width=%s&amp;height=%s'%('QR', quote_plus(o.l10n_sa_qr_code_str), 100, 100)"/>
                                         </p>
                                     </div>
                                 </div>
@@ -554,9 +556,7 @@
                         </div>
                     </div>
 
-                    <div class="text-muted mb-3"
-                         t-attf-style="#{'text-align:justify;text-justify:inter-word;' if o.company_id.terms_type != 'html' else ''}"
-                         t-if="not is_html_empty(o.narration)" name="comment">
+                    <div class="text-muted mb-3" t-attf-style="#{'text-align:justify;text-justify:inter-word;' if o.company_id.terms_type != 'html' else ''}" t-if="not is_html_empty(o.narration)" name="comment">
                         <span t-field="o.narration"/>
                     </div>
 
