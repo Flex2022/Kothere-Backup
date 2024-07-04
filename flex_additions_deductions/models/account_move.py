@@ -356,9 +356,7 @@ class AccountMove(models.Model):
 
     def action_post(self):
         res = super(AccountMove, self).action_post()
-        print('action_post')
         if self.there_is_access_from_company_id:
-            print('action_post')
             self.create_journal_entry_when_conferim()
         return res
 
