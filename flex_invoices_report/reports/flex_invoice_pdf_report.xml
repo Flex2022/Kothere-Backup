@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <template id="flex_invoices_pdf_report_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="row">
+                        <div class="col-12 text-center">
+                            <h2>Invoices Report</h2>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-12">
+                            <table class="table">
+                                <tr>
+                                    <td class="w-25">
+                                        Date From
+                                    </td>
+                                    <td class="w-25">
+                                        <span t-field="o.start_date">/</span>
+                                    </td>
+                                    <td class="w-25">
+                                        Date To
+                                    </td>
+                                    <td class="w-25">
+                                        <span t-field="o.end_date">/</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Customer/Vendor
+                                    </td>
+                                    <td>
+                                        <span t-field="o.partner_id">/</span>
+                                    </td>
+                                    <td>
+                                        Invoice Type
+                                    </td>
+                                    <td>
+                                        <span t-field="o.type">/</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Printing Date
+                                    </td>
+                                    <td>
+                                        <span t-esc="datetime.date.today()">/</span>
+                                    </td>
+                                    <td/>
+                                    <td/>
+                                </tr>
+                                <tr/>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="row mt-3">
+                        <div class="col-12">
+                            <h5>Results:</h5>
+                            <table class="table">
+                                <tr>
+                                    <th>Customer/Vendor</th>
+                                    <th>Date</th>
+                                    <th>Invoice Number</th>
+                                    <th>Description</th>
+                                    <th>Product</th>
+                                    <th>Quantity</th>
+                                    <th>Value</th>
+                                    <th>Taxes</th>
+                                    <th>Tax excl.</th>
+                                </tr>
+                                <tr t-foreach="o.line_ids" t-as="line">
+                                    <td>
+                                        <span t-field="line.partner_id"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="line.invoice_date"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="line.invoice_name"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="line.line_description"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="line.line_product_id"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="line.line_quantity" t-options='{"widget": "float", "decimal_precision": "Product Unit of Measure"}'/>
+                                    </td>
+                                    <td>
+                                        <span t-field="line.price_unit" t-options='{"widget": "monetary", "display_currency": currency}'/>
+                                    </td>
+                                    <td>
+                                        <span t-field="line.tax_ids"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="line.price_subtotal"/>
+                                    </td>
+                                </tr>
+                                <tr/>
+                            </table>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <record id="flex_invoices_pdf_report_action" model="ir.actions.report">
+        <field name="name">Invoices Report</field>
+        <field name="model">flex.account.move.report</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">flex_invoices_report.flex_invoices_pdf_report_template</field>
+        <field name="report_file">flex_invoices_report.flex_invoices_pdf_report_template</field>
+        <field name="print_report_name">'Invoices Report'</field>
+    </record>
+
+</odoo>

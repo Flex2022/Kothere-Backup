@@ -15,6 +15,7 @@
     'data': [
         'security/ir.model.access.csv',
         'wizards/account_move_report.xml',
+        'reports/flex_invoice_pdf_report.xml',
     ],
     'installable': True,
     'auto_install': False,

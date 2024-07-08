@@ -18,6 +18,9 @@
                             <tree editable="bottom">
                                 <field name="parent_id" column_invisible="1"/>
                                 <field name="move_line_id" column_invisible="1"/>
+                                <field name="company_id" column_invisible="1"/>
+                                <field name="currency_id" column_invisible="1"/>
+                                <field name="move_type"/>
                                 <field name="partner_id"/>
                                 <field name="invoice_date"/>
                                 <field name="invoice_name"/>
@@ -26,12 +29,14 @@
                                 <field name="line_quantity"/>
                                 <field name="price_unit"/>
                                 <field name="tax_ids" widget="many2many_tags"/>
+                                <field name="price_subtotal"/>
                             </tree>
                         </field>
                     </page>
                 </notebook>
                 <footer>
                     <button name="generate_report" string="Generate Report" type="object" class="btn-primary"/>
+                    <button name="generate_report_pdf" string="Generate PDF Report" type="object" class="btn-primary"/>
                     <button string="Cancel" class="btn-secondary" special="cancel"/>
                 </footer>
             </form>

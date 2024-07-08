@@ -1,4 +1,5 @@
-from odoo import models, fields, api
+from odoo import models, fields, api, _
+from odoo.exceptions import UserError
 
 
 class FlexInvoicesReport(models.TransientModel):
@@ -71,6 +72,29 @@ class FlexInvoicesReport(models.TransientModel):
             },
         }
 
+    @api.model
+    def _get_report_values(self, docids, data=None):
+        report_obj = self.env['ir.actions.report']
+        report = report_obj._get_report_from_name('flex_invoices_report.flex_invoices_pdf_report_action')
+        docargs = {
+            'doc_ids': docids,
+            'doc_model': report.model,
+            'docs': self,
+            'lines': self._lines(),
+        }
+        return docargs
+
+    def generate_report_pdf(self):
+        # Refresh the result
+        self.generate_report()
+
+        # Check if there are any lines to include in the report
+        if not self.line_ids:
+            raise UserError(_('No data to generate the report'))
+
+        data = {}
+        return self.env.ref('flex_invoices_report.flex_invoices_pdf_report_action').report_action(self, data=data)
+
 
 class FlexInvoicesLinesReport(models.TransientModel):
     _name = 'flex.account.move.line.report'
@@ -78,6 +102,9 @@ class FlexInvoicesLinesReport(models.TransientModel):
 
     parent_id = fields.Many2one('flex.account.move.report')
     move_line_id = fields.Many2one('account.move.line', string='move line')
+    company_id = fields.Many2one(related="move_line_id.company_id")
+    move_type = fields.Selection(related="move_line_id.move_id.move_type")
+    currency_id = fields.Many2one(related="move_line_id.currency_id")
     partner_id = fields.Many2one('res.partner', 'Customer/Vendor', related="move_line_id.move_id.partner_id")
     invoice_date = fields.Date('Date', related="move_line_id.move_id.invoice_date")
     invoice_name = fields.Char('Invoice Number', related="move_line_id.move_id.name")
@@ -86,3 +113,4 @@ class FlexInvoicesLinesReport(models.TransientModel):
     line_quantity = fields.Float('Quantity', related="move_line_id.quantity")
     price_unit = fields.Float('Value', related="move_line_id.price_unit")
     tax_ids = fields.Many2many('account.tax', 'Taxes', related="move_line_id.tax_ids")
+    price_subtotal = fields.Monetary('Tax excl.', related="move_line_id.price_subtotal")
