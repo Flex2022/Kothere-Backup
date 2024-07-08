@@ -482,31 +482,35 @@
                                     </div>
                                 </t>
 
+                                <t t-if="o.deductions_amount != 0">
+                                    <div class="col-5 float-start">
+                                        <span>Deductions Amount</span>
+                                    </div>
+                                    <div class="col-4 float-start text-center">
+                                        <span>
+                                            <t t-esc="round(o.deductions_amount,2)"/>
+                                        </span>
+                                    </div>
+                                    <div class="col-3 float-start" dir="rtl">
+                                        <span>اجمالي الحسميات</span>
+                                    </div>
+                                </t>
 
-                                <div class="col-5 float-start">
-                                    <span>Deductions Amount</span>
-                                </div>
-                                <div class="col-4 float-start text-center">
-                                    <span>
-                                        <t t-esc="round(o.deductions_amount,2)"/>
-                                    </span>
-                                </div>
-                                <div class="col-3 float-start" dir="rtl">
-                                    <span>اجمالي الحسميات</span>
-                                </div>
+                                <t t-if="o.additions_amount != 0">
+                                    <div class="col-5 float-start">
+                                        <span>Additions Amount</span>
+                                    </div>
+                                    <div class="col-4 float-start text-center">
+                                        <span>
+                                            <t t-esc="round(o.additions_amount,2)"/>
+                                        </span>
+                                    </div>
+                                    <div class="col-3 float-start" dir="rtl">
+                                        <span>اجمالي الاضافات</span>
+                                    </div>
+                                </t>
 
 
-                                <div class="col-5 float-start">
-                                    <span>Additions Amount</span>
-                                </div>
-                                <div class="col-4 float-start text-center">
-                                    <span>
-                                        <t t-esc="round(o.additions_amount,2)"/>
-                                    </span>
-                                </div>
-                                <div class="col-3 float-start" dir="rtl">
-                                    <span>اجمالي الاضافات</span>
-                                </div>
 
                                 <div class="col-5 float-start">
                                     <span>Amount Due</span>
@@ -519,6 +523,35 @@
                                 <div class="col-3 float-start" dir="rtl">
                                     <span>المبلغ المستحق</span>
                                 </div>
+
+                                <t t-if="o.deductions_amount == 0">
+                                    <br/>
+                                    <br/>
+                                </t>
+                                <t t-if="o.additions_amount == 0">
+                                    <br/>
+                                    <br/>
+                                </t>
+                                <t t-if="o.deductions_amount_type_advance_payment == 0">
+                                    <br/>
+                                </t>
+                                <t t-if="o.deductions_amount_type_final_guarantee == 0">
+                                    <br/>
+                                    <br/>
+                                </t>
+
+                                <t t-if="o.deductions_amount_type_business_guarantee == 0">
+                                    <br/>
+                                    <br/>
+                                </t>
+                                <t t-if="o.deductions_amount_type_insurances == 0">
+                                    <br/>
+                                    <br/>
+                                </t>
+                                <t t-if="o.deductions_amount_type_discounts == 0">
+                                    <br/>
+                                    <br/>
+                                </t>
 
 
                                 <!--                                <div class="col-3 float-start">-->
