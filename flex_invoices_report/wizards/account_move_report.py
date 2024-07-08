@@ -102,9 +102,9 @@ class FlexInvoicesLinesReport(models.TransientModel):
 
     parent_id = fields.Many2one('flex.account.move.report')
     move_line_id = fields.Many2one('account.move.line', string='move line')
-    company_id = fields.Many2one(related="move_line_id.company_id")
+    company_id = fields.Many2one('res.company', related="move_line_id.company_id")
     move_type = fields.Selection(related="move_line_id.move_id.move_type")
-    currency_id = fields.Many2one(related="move_line_id.currency_id")
+    currency_id = fields.Many2one('res.currency',related="move_line_id.currency_id")
     partner_id = fields.Many2one('res.partner', 'Customer/Vendor', related="move_line_id.move_id.partner_id")
     invoice_date = fields.Date('Date', related="move_line_id.move_id.invoice_date")
     invoice_name = fields.Char('Invoice Number', related="move_line_id.move_id.name")
