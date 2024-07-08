@@ -1,0 +1,849 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* nthub_loan_management
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-07-08 07:52+0000\n"
+"PO-Revision-Date: 2024-07-08 07:52+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: nthub_loan_management
+#: model_terms:ir.ui.view,arch_db:nthub_loan_management.report_loan
+msgid "<strong>Amount</strong>"
+msgstr "<strong>القيمة</strong>"
+
+#. module: nthub_loan_management
+#: model_terms:ir.ui.view,arch_db:nthub_loan_management.report_loan
+msgid "<strong>Balance Amount</strong>"
+msgstr "<strong>المبلغ المتبقي</strong>"
+
+#. module: nthub_loan_management
+#: model_terms:ir.ui.view,arch_db:nthub_loan_management.report_loan
+msgid "<strong>Date:</strong>"
+msgstr "<strong>التاريخ:</strong>"
+
+#. module: nthub_loan_management
+#: model_terms:ir.ui.view,arch_db:nthub_loan_management.report_loan
+msgid "<strong>Department:</strong>"
+msgstr "<strong>القسم:</strong>"
+
+#. module: nthub_loan_management
+#: model_terms:ir.ui.view,arch_db:nthub_loan_management.report_loan
+msgid "<strong>Employee:</strong>"
+msgstr "<strong>الموظف:</strong>"
+
+#. module: nthub_loan_management
+#: model_terms:ir.ui.view,arch_db:nthub_loan_management.report_loan
+msgid "<strong>Loan Amount:</strong>"
+msgstr "<strong>قيمة السلفة:</strong>"
+
+#. module: nthub_loan_management
+#: model_terms:ir.ui.view,arch_db:nthub_loan_management.report_loan
+msgid "<strong>Loan NO:</strong>"
+msgstr "<strong>رقم السلفة:</strong>"
+
+#. module: nthub_loan_management
+#: model_terms:ir.ui.view,arch_db:nthub_loan_management.report_loan
+msgid "<strong>Paid</strong>"
+msgstr "<strong>دُفِعَ</strong>"
+
+#. module: nthub_loan_management
+#: model_terms:ir.ui.view,arch_db:nthub_loan_management.report_loan
+msgid "<strong>Payment Date</strong>"
+msgstr "<strong>تاريخ الدفعة</strong>"
+
+#. module: nthub_loan_management
+#: model_terms:ir.ui.view,arch_db:nthub_loan_management.report_loan
+msgid "<strong>Payment:</strong>"
+msgstr "<strong>دفعة:</strong>"
+
+#. module: nthub_loan_management
+#: model_terms:ir.ui.view,arch_db:nthub_loan_management.report_loan
+msgid "<strong>Total Amount</strong>"
+msgstr "<strong>المبلغ الإجمالي</strong>"
+
+#. module: nthub_loan_management
+#: model_terms:ir.ui.view,arch_db:nthub_loan_management.report_loan
+msgid "<strong>Total Paid Amount</strong>"
+msgstr "<strong>المبلغ الإجمالي المدفوع</strong>"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,field_description:nthub_loan_management.field_hr_loan__message_needaction
+msgid "Action Needed"
+msgstr "الإجراء مطلوب"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,field_description:nthub_loan_management.field_hr_loan__activity_ids
+msgid "Activities"
+msgstr "الأنشطة"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,field_description:nthub_loan_management.field_hr_loan__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr "تزيين استثناء النشاط"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,field_description:nthub_loan_management.field_hr_loan__activity_state
+msgid "Activity State"
+msgstr "حالة النشاط"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,field_description:nthub_loan_management.field_hr_loan__activity_type_icon
+msgid "Activity Type Icon"
+msgstr "أيقونة نوع النشاط"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,field_description:nthub_loan_management.field_account_payment_loan__amount
+#: model:ir.model.fields,field_description:nthub_loan_management.field_hr_loan_line__amount
+#: model:ir.model.fields,help:nthub_loan_management.field_hr_loan_line__amount
+msgid "Amount"
+msgstr "القيمة"
+
+#. module: nthub_loan_management
+#: model_terms:ir.ui.view,arch_db:nthub_loan_management.hr_loan_form_view
+msgid "Approve"
+msgstr "الموافقة"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields.selection,name:nthub_loan_management.selection__hr_loan__state__approve
+msgid "Approved"
+msgstr "تمت الموافقة"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,field_description:nthub_loan_management.field_hr_loan__message_attachment_count
+msgid "Attachment Count"
+msgstr "عدد المرفقات"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,field_description:nthub_loan_management.field_hr_loan__balance_amount
+msgid "Balance Amount"
+msgstr "المبلغ المتبقي"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,help:nthub_loan_management.field_hr_loan__balance_amount
+msgid "Balance amount"
+msgstr "المبلغ المتبقي"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,help:nthub_loan_management.field_account_payment_loan__partner_bank_id
+msgid ""
+"Bank Account Number to which the invoice will be paid. A Company bank "
+"account if this is a Customer Invoice or Vendor Credit Note, otherwise a "
+"Partner bank account number."
+msgstr ""
+"رقم الحساب البنكي الذي سيتم دفع الفاتورة إليه. حساب بنك الشركة"
+"إذا كانت هذه فاتورة عميل أو مذكرة ائتمان للمورد، فسيكون حساب البنك الخاص بالشركة، وإلا "
+"فسيكون رقم حساب البنك للشريك."
+
+#. module: nthub_loan_management
+#: model_terms:ir.ui.view,arch_db:nthub_loan_management.hr_loan_form_view
+#: model_terms:ir.ui.view,arch_db:nthub_loan_management.view_account_payment_loan_form
+msgid "Cancel"
+msgstr "إلغاء"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields.selection,name:nthub_loan_management.selection__hr_loan__state__cancel
+msgid "Cancelled"
+msgstr "تم الإلغاء"
+
+#. module: nthub_loan_management
+#: model_terms:ir.actions.act_window,help:nthub_loan_management.action_hr_loan_request
+msgid "Click to create a new Loan request."
+msgstr "انقر لإنشاء طلب سلفة جديد."
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,help:nthub_loan_management.field_hr_payroll_structure__company_id
+#: model:ir.model.fields,help:nthub_loan_management.field_hr_salary_rule__company_id
+msgid "Comapny"
+msgstr "الشركة"
+
+#. module: nthub_loan_management
+#: model:ir.model,name:nthub_loan_management.model_res_company
+msgid "Companies"
+msgstr "الشركات"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,field_description:nthub_loan_management.field_account_payment_loan__company_id
+#: model:ir.model.fields,field_description:nthub_loan_management.field_hr_loan__company_id
+#: model:ir.model.fields,field_description:nthub_loan_management.field_hr_payroll_structure__company_id
+#: model:ir.model.fields,field_description:nthub_loan_management.field_hr_salary_rule__company_id
+#: model:ir.model.fields,help:nthub_loan_management.field_hr_loan__company_id
+msgid "Company"
+msgstr "الشركة"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,field_description:nthub_loan_management.field_account_payment_loan__currency_id
+msgid "Company Currency"
+msgstr "عملة الشركة"
+
+#. module: nthub_loan_management
+#: model_terms:ir.ui.view,arch_db:nthub_loan_management.hr_loan_form_view
+msgid "Compute Installment"
+msgstr "حساب القسط"
+
+#. module: nthub_loan_management
+#: model:ir.model,name:nthub_loan_management.model_res_config_settings
+msgid "Config Settings"
+msgstr "تهيئة الإعدادات "
+
+#. module: nthub_loan_management
+#: model:ir.ui.menu,name:nthub_loan_management.config_menu
+msgid "Configuration"
+msgstr "التهيئة"
+
+#. module: nthub_loan_management
+#: model_terms:ir.ui.view,arch_db:nthub_loan_management.view_account_payment_loan_form
+msgid "Create Payment"
+msgstr "إنشاء دفعة"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,field_description:nthub_loan_management.field_account_payment_loan__create_uid
+#: model:ir.model.fields,field_description:nthub_loan_management.field_hr_loan__create_uid
+#: model:ir.model.fields,field_description:nthub_loan_management.field_hr_loan_line__create_uid
+msgid "Created by"
+msgstr "تم الإنشاء بواسطة"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,field_description:nthub_loan_management.field_account_payment_loan__create_date
+#: model:ir.model.fields,field_description:nthub_loan_management.field_hr_loan__create_date
+#: model:ir.model.fields,field_description:nthub_loan_management.field_hr_loan_line__create_date
+msgid "Created on"
+msgstr "تم الإنشاء في"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,field_description:nthub_loan_management.field_res_company__credit_account_id
+#: model:ir.model.fields,field_description:nthub_loan_management.field_res_config_settings__credit_account_id
+msgid "Credit Account"
+msgstr "حساب الائتمان"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,field_description:nthub_loan_management.field_hr_loan__currency_id
+#: model:ir.model.fields,help:nthub_loan_management.field_hr_loan__currency_id
+msgid "Currency"
+msgstr "العملة"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,field_description:nthub_loan_management.field_hr_loan__date
+#: model:ir.model.fields,help:nthub_loan_management.field_hr_loan__date
+msgid "Date"
+msgstr "التاريخ"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,help:nthub_loan_management.field_hr_loan__payment_date
+#: model:ir.model.fields,help:nthub_loan_management.field_hr_loan_line__date
+msgid "Date of the payment"
+msgstr "تاريخ الدفعة"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,field_description:nthub_loan_management.field_res_company__debit_account_id
+#: model:ir.model.fields,field_description:nthub_loan_management.field_res_config_settings__debit_account_id
+msgid "Debit Account"
+msgstr "حساب الخصم"
+
+#. module: nthub_loan_management
+#: model_terms:ir.ui.view,arch_db:nthub_loan_management.res_config_settings_view_form_loan
+msgid "Define Credit account."
+msgstr "تحديد حساب الائتمان."
+
+#. module: nthub_loan_management
+#: model_terms:ir.ui.view,arch_db:nthub_loan_management.res_config_settings_view_form_loan
+msgid "Define Debit account."
+msgstr "تحديد حساب الخصم."
+
+#. module: nthub_loan_management
+#: model_terms:ir.ui.view,arch_db:nthub_loan_management.res_config_settings_view_form_loan
+msgid "Define Journal account."
+msgstr "تحديد حساب اليومية."
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,field_description:nthub_loan_management.field_hr_loan__department_id
+#: model_terms:ir.ui.view,arch_db:nthub_loan_management.view_loan_request_search_form
+msgid "Department"
+msgstr "القسم"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,field_description:nthub_loan_management.field_account_payment_loan__display_name
+#: model:ir.model.fields,field_description:nthub_loan_management.field_hr_loan__display_name
+#: model:ir.model.fields,field_description:nthub_loan_management.field_hr_loan_line__display_name
+msgid "Display Name"
+msgstr "عرض الاسم"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields.selection,name:nthub_loan_management.selection__hr_loan__state__draft
+msgid "Draft"
+msgstr "مسودة"
+
+#. module: nthub_loan_management
+#: model:ir.model,name:nthub_loan_management.model_hr_employee
+#: model:ir.model.fields,field_description:nthub_loan_management.field_account_payment_loan__partner_id
+#: model:ir.model.fields,field_description:nthub_loan_management.field_hr_loan__employee_id
+#: model:ir.model.fields,field_description:nthub_loan_management.field_hr_loan_line__employee_id
+#: model:ir.model.fields,help:nthub_loan_management.field_hr_loan__department_id
+#: model:ir.model.fields,help:nthub_loan_management.field_hr_loan__employee_id
+#: model:ir.model.fields,help:nthub_loan_management.field_hr_loan_line__employee_id
+#: model_terms:ir.ui.view,arch_db:nthub_loan_management.view_loan_request_search_form
+msgid "Employee"
+msgstr "الموظف"
+
+#. module: nthub_loan_management
+#: model:ir.actions.report,name:nthub_loan_management.employee_loan_report
+msgid "Employee Loan Report"
+msgstr "تقرير السلف للموظف"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,field_description:nthub_loan_management.field_hr_loan__message_follower_ids
+msgid "Followers"
+msgstr "المتابعون"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,field_description:nthub_loan_management.field_hr_loan__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "المتابعون (الشركاء)"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,help:nthub_loan_management.field_hr_loan__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr "أيقونة الخط الرهيبة مثل fa-tasks"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,field_description:nthub_loan_management.field_hr_loan__has_message
+msgid "Has Message"
+msgstr "يحتوي على رسالة"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,field_description:nthub_loan_management.field_account_payment_loan__id
+#: model:ir.model.fields,field_description:nthub_loan_management.field_hr_loan__id
+#: model:ir.model.fields,field_description:nthub_loan_management.field_hr_loan_line__id
+msgid "ID"
+msgstr "المعرف"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,field_description:nthub_loan_management.field_hr_loan__activity_exception_icon
+msgid "Icon"
+msgstr "الأيقونة"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,help:nthub_loan_management.field_hr_loan__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr "أيقونة للإشارة إلى نشاط استثنائي."
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,help:nthub_loan_management.field_hr_loan__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "إذا تم التحقق، فإن الرسائل الجديدة تتطلب اهتمامك."
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,help:nthub_loan_management.field_hr_loan__message_has_error
+#: model:ir.model.fields,help:nthub_loan_management.field_hr_loan__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr "إذا تم التحقق، فإن بعض الرسائل تحتوي على خطأ في التسليم."
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,field_description:nthub_loan_management.field_hr_payslip_input_type__input_id
+msgid "Input"
+msgstr "المدخل"
+
+#. module: nthub_loan_management
+#: model:ir.model,name:nthub_loan_management.model_hr_loan_line
+msgid "Installment Line"
+msgstr "خط القسط"
+
+#. module: nthub_loan_management
+#: model_terms:ir.ui.view,arch_db:nthub_loan_management.hr_loan_form_view
+msgid "Installments"
+msgstr "الأقساط"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,field_description:nthub_loan_management.field_hr_loan__message_is_follower
+msgid "Is Follower"
+msgstr "هل هو متابع"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,field_description:nthub_loan_management.field_hr_loan__job_position
+msgid "Job Position"
+msgstr "المنصب الوظيفي"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,help:nthub_loan_management.field_hr_loan__job_position
+msgid "Job position"
+msgstr "المنصب الوظيفي"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,field_description:nthub_loan_management.field_account_payment_loan__journal_id
+#: model:ir.model.fields,field_description:nthub_loan_management.field_res_company__loan_journal_id
+#: model:ir.model.fields,field_description:nthub_loan_management.field_res_config_settings__loan_journal_id
+msgid "Journal"
+msgstr "اليومية"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,field_description:nthub_loan_management.field_account_payment_loan__write_uid
+#: model:ir.model.fields,field_description:nthub_loan_management.field_hr_loan__write_uid
+#: model:ir.model.fields,field_description:nthub_loan_management.field_hr_loan_line__write_uid
+msgid "Last Updated by"
+msgstr "آخر تحديث بواسطة"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,field_description:nthub_loan_management.field_account_payment_loan__write_date
+#: model:ir.model.fields,field_description:nthub_loan_management.field_hr_loan__write_date
+#: model:ir.model.fields,field_description:nthub_loan_management.field_hr_loan_line__write_date
+msgid "Last Updated on"
+msgstr "آخر تحديث في"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields.selection,name:nthub_loan_management.selection__hr_loan__state__line_manager_approve
+msgid "Line Manager Approved"
+msgstr "تمت الموافقة من قبل المدير المباشر"
+
+#. module: nthub_loan_management
+#: model:hr.salary.rule,name:nthub_loan_management.hr_rule_loan
+#: model:ir.model.fields,field_description:nthub_loan_management.field_account_payment__loan_id
+#: model:ir.model.fields,field_description:nthub_loan_management.field_account_payment_loan__loan_id
+#: model:ir.model.fields,field_description:nthub_loan_management.field_hr_salary_rule__is_loan
+#: model:ir.model.fields,help:nthub_loan_management.field_hr_loan_line__loan_id
+#: model:ir.ui.menu,name:nthub_loan_management.menu_base_hr_loan_request
+#: model_terms:ir.ui.view,arch_db:nthub_loan_management.view_loan_request_search_form
+msgid "Loan"
+msgstr "سلفة"
+
+#. module: nthub_loan_management
+#: model:res.groups,name:nthub_loan_management.group_loan_admin
+msgid "Loan Admin"
+msgstr "مدير السلف"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,field_description:nthub_loan_management.field_hr_loan__loan_amount
+msgid "Loan Amount"
+msgstr "قيمة السلفة"
+
+#. module: nthub_loan_management
+#: model:ir.actions.act_window,name:nthub_loan_management.action_loan_management_general_config
+msgid "Loan Config"
+msgstr "تهيئة السلفة"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,field_description:nthub_loan_management.field_hr_employee__loan_count
+msgid "Loan Count"
+msgstr "عدد السلف"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,field_description:nthub_loan_management.field_hr_payslip_input__loan_line_id
+msgid "Loan Installment"
+msgstr "قسط السلفة"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,field_description:nthub_loan_management.field_hr_loan__loan_lines
+msgid "Loan Line"
+msgstr "خط السلفة"
+
+#. module: nthub_loan_management
+#: model:ir.module.category,name:nthub_loan_management.loan_management_category
+msgid "Loan Management"
+msgstr "إدارة السلف"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,field_description:nthub_loan_management.field_hr_loan_line__loan_id
+msgid "Loan Ref."
+msgstr "رقم السلفة"
+
+#. module: nthub_loan_management
+#: model:ir.model,name:nthub_loan_management.model_hr_loan
+#: model_terms:ir.ui.view,arch_db:nthub_loan_management.hr_loan_form_view
+msgid "Loan Request"
+msgstr "طلب سلفة"
+
+#. module: nthub_loan_management
+#: model_terms:ir.ui.view,arch_db:nthub_loan_management.hr_loan_tree_view
+msgid "Loan Requests"
+msgstr "طلبات السلف"
+
+#. module: nthub_loan_management
+#: model:res.groups,name:nthub_loan_management.group_loan_user
+msgid "Loan User"
+msgstr "مستخدم السلف"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,help:nthub_loan_management.field_hr_loan__loan_amount
+msgid "Loan amount"
+msgstr "قيمة السلفة"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,help:nthub_loan_management.field_hr_payslip_input__loan_line_id
+msgid "Loan installment"
+msgstr "قسط السلفة"
+
+#. module: nthub_loan_management
+#: model:ir.actions.act_window,name:nthub_loan_management.act_hr_employee_loan_request
+#: model:ir.actions.act_window,name:nthub_loan_management.act_hr_employee_loan_request_details
+#: model:ir.ui.menu,name:nthub_loan_management.menu_hr_loans_and_advances
+#: model_terms:ir.ui.view,arch_db:nthub_loan_management.res_config_settings_view_form_loan
+#: model_terms:ir.ui.view,arch_db:nthub_loan_management.view_employee_form_loan_inherit
+msgid "Loans"
+msgstr "السلف"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,field_description:nthub_loan_management.field_account_payment_loan__communication
+msgid "Memo"
+msgstr "المذكرة"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,field_description:nthub_loan_management.field_hr_loan__message_has_error
+msgid "Message Delivery error"
+msgstr "خطأ في تسليم الرسالة"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,field_description:nthub_loan_management.field_hr_loan__message_ids
+msgid "Messages"
+msgstr "الرسائل"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,field_description:nthub_loan_management.field_hr_loan__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr "الموعد النهائي لنشاطي"
+
+#. module: nthub_loan_management
+#: model_terms:ir.ui.view,arch_db:nthub_loan_management.view_loan_request_search_form
+msgid "My Requests"
+msgstr "طلباتي"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,help:nthub_loan_management.field_hr_loan__name
+msgid "Name of the loan"
+msgstr "اسم السلفة"
+
+#. module: nthub_loan_management
+#. odoo-python
+#: code:addons/nthub_loan_management/models/hr_loan.py:0
+#: code:addons/nthub_loan_management/models/hr_loan.py:0
+#, python-format
+msgid "New"
+msgstr "جديد"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,field_description:nthub_loan_management.field_hr_loan__activity_calendar_event_id
+msgid "Next Activity Calendar Event"
+msgstr "الحدث التالي في التقويم"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,field_description:nthub_loan_management.field_hr_loan__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr "الموعد النهائي للنشاط التالي"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,field_description:nthub_loan_management.field_hr_loan__activity_summary
+msgid "Next Activity Summary"
+msgstr "ملخص النشاط التالي"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,field_description:nthub_loan_management.field_hr_loan__activity_type_id
+msgid "Next Activity Type"
+msgstr "نوع النشاط التالي"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,field_description:nthub_loan_management.field_hr_loan__installment
+msgid "No Of Installments"
+msgstr "عدد الأقساط"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,field_description:nthub_loan_management.field_hr_loan__message_needaction_counter
+msgid "Number of Actions"
+msgstr "عدد الإجراءات"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,field_description:nthub_loan_management.field_hr_loan__message_has_error_counter
+msgid "Number of errors"
+msgstr "عدد الأخطاء"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,help:nthub_loan_management.field_hr_loan__installment
+msgid "Number of installments"
+msgstr "عدد الأقساط"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,help:nthub_loan_management.field_hr_loan__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr "عدد الرسائل التي تتطلب إجراء"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,help:nthub_loan_management.field_hr_loan__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "عدد الرسائل التي تحتوي على خطأ في التسليم"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,field_description:nthub_loan_management.field_hr_loan_line__paid
+#: model:ir.model.fields,help:nthub_loan_management.field_hr_loan_line__paid
+#: model:ir.model.fields.selection,name:nthub_loan_management.selection__hr_loan__state__paid
+msgid "Paid"
+msgstr "تم الدفع"
+
+#. module: nthub_loan_management
+#: model:ir.model,name:nthub_loan_management.model_hr_payslip
+msgid "Pay Slip"
+msgstr "إيصال الدفع "
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,field_description:nthub_loan_management.field_hr_loan__payment
+#: model:ir.model.fields,field_description:nthub_loan_management.field_hr_loan__payment_id
+msgid "Payment"
+msgstr "الدفعة"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,field_description:nthub_loan_management.field_account_payment_loan__payment_date
+#: model:ir.model.fields,field_description:nthub_loan_management.field_hr_loan_line__date
+msgid "Payment Date"
+msgstr "تاريخ الدفعة"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,field_description:nthub_loan_management.field_account_payment__payment_loan
+msgid "Payment Loan"
+msgstr "سلفة الدفع"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,field_description:nthub_loan_management.field_hr_loan__payment_date
+msgid "Payment Start Date"
+msgstr "تاريخ بدء الدفع"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,field_description:nthub_loan_management.field_account_payment_loan__payment_type
+msgid "Payment Type"
+msgstr "نوع الدفعة"
+
+#. module: nthub_loan_management
+#: model:ir.model,name:nthub_loan_management.model_account_payment
+msgid "Payments"
+msgstr "الدفعات"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,help:nthub_loan_management.field_hr_loan_line__payslip_id
+msgid "Payslip"
+msgstr "إيصال الدفع"
+
+#. module: nthub_loan_management
+#: model:ir.model,name:nthub_loan_management.model_hr_payslip_input
+msgid "Payslip Input"
+msgstr "مدخل إيصال الدفع "
+
+#. module: nthub_loan_management
+#: model:ir.model,name:nthub_loan_management.model_hr_payslip_input_type
+msgid "Payslip Input Type"
+msgstr "نوع مدخل إيصال الدفع "
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,field_description:nthub_loan_management.field_hr_loan_line__payslip_id
+msgid "Payslip Ref."
+msgstr "رقم إيصال الدفع"
+
+#. module: nthub_loan_management
+#. odoo-python
+#: code:addons/nthub_loan_management/models/hr_loan.py:0
+#: code:addons/nthub_loan_management/models/hr_loan.py:0
+#, python-format
+msgid "Please Compute installment"
+msgstr "يرجى حساب القسط"
+
+#. module: nthub_loan_management
+#. odoo-python
+#: code:addons/nthub_loan_management/models/hr_loan.py:0
+#: code:addons/nthub_loan_management/models/hr_loan.py:0
+#, python-format
+msgid "Please link partner for employee"
+msgstr "يرجى ربط الشريك بالموظف"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,field_description:nthub_loan_management.field_hr_loan__rating_ids
+msgid "Ratings"
+msgstr "التقييمات"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,field_description:nthub_loan_management.field_hr_loan__reason
+msgid "Reason"
+msgstr "السبب"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields.selection,name:nthub_loan_management.selection__account_payment_loan__payment_type__inbound
+msgid "Receive Money"
+msgstr "استلام الأموال"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,field_description:nthub_loan_management.field_account_payment_loan__partner_bank_id
+msgid "Recipient Bank"
+msgstr "البنك المستلم"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,field_description:nthub_loan_management.field_hr_loan__name
+msgid "Reference"
+msgstr "المرجع"
+
+#. module: nthub_loan_management
+#: model_terms:ir.ui.view,arch_db:nthub_loan_management.hr_loan_form_view
+msgid "Refuse"
+msgstr "الرفض"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields.selection,name:nthub_loan_management.selection__hr_loan__state__refuse
+msgid "Refused"
+msgstr "تم الرفض"
+
+#. module: nthub_loan_management
+#: model_terms:ir.ui.view,arch_db:nthub_loan_management.hr_loan_form_view
+#: model_terms:ir.ui.view,arch_db:nthub_loan_management.view_account_payment_loan_form
+msgid "Register Payment"
+msgstr "تسجيل الدفعة"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,field_description:nthub_loan_management.field_hr_employee__related_partner
+msgid "Related Partner"
+msgstr "الشريك المرتبط"
+
+#. module: nthub_loan_management
+#: model:ir.actions.act_window,name:nthub_loan_management.action_hr_loan_request
+#: model:ir.ui.menu,name:nthub_loan_management.menu_hr_loan_request
+msgid "Request for Loan"
+msgstr "طلب سلفة"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,field_description:nthub_loan_management.field_hr_loan__activity_user_id
+msgid "Responsible User"
+msgstr "المستخدم المسؤول"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,field_description:nthub_loan_management.field_hr_loan__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr "خطأ في تسليم الرسالة القصيرة"
+
+#. module: nthub_loan_management
+#: model:ir.model,name:nthub_loan_management.model_hr_salary_rule
+msgid "Salary Rule"
+msgstr "قاعدة الراتب "
+
+#. module: nthub_loan_management
+#: model:ir.model,name:nthub_loan_management.model_hr_payroll_structure
+msgid "Salary Structure"
+msgstr "هيكل الراتب "
+
+#. module: nthub_loan_management
+#: model:ir.model.fields.selection,name:nthub_loan_management.selection__account_payment_loan__payment_type__outbound
+msgid "Send Money"
+msgstr "إرسال الأموال"
+
+#. module: nthub_loan_management
+#: model:ir.ui.menu,name:nthub_loan_management.config_menu_action
+msgid "Settings"
+msgstr "الاعدادات"
+
+#. module: nthub_loan_management
+#: model_terms:ir.ui.view,arch_db:nthub_loan_management.hr_loan_form_view
+msgid "Settlement"
+msgstr "التسوية"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,field_description:nthub_loan_management.field_hr_loan__state
+msgid "State"
+msgstr "الحالة"
+
+#. module: nthub_loan_management
+#: model_terms:ir.ui.view,arch_db:nthub_loan_management.view_loan_request_search_form
+msgid "Status"
+msgstr "الحالة"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,help:nthub_loan_management.field_hr_loan__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+"الحالة استنادًا إلى الأنشطة\n"
+"متأخر: تاريخ الاستحقاق قد مر بالفعل\n"
+"اليوم: تاريخ النشاط هو اليوم\n"
+"مخطط: أنشطة مستقبلية."
+
+#. module: nthub_loan_management
+#: model_terms:ir.ui.view,arch_db:nthub_loan_management.hr_loan_form_view
+msgid "Submit"
+msgstr "إرسال"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields.selection,name:nthub_loan_management.selection__hr_loan__state__waiting_approval_1
+msgid "Submitted"
+msgstr "تم الإرسال"
+
+#. module: nthub_loan_management
+#. odoo-python
+#: code:addons/nthub_loan_management/models/hr_loan.py:0
+#, python-format
+msgid "The employee has already a installment in the same year"
+msgstr "الموظف لديه بالفعل قسط في نفس العام"
+
+#. module: nthub_loan_management
+#. odoo-python
+#: code:addons/nthub_loan_management/models/hr_loan.py:0
+#, python-format
+msgid "The employee has already a pending installment"
+msgstr "الموظف لديه بالفعل قسط معلق"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,field_description:nthub_loan_management.field_hr_loan__total_amount
+msgid "Total Amount"
+msgstr "إجمالي المبلغ"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,field_description:nthub_loan_management.field_hr_loan__total_paid_amount
+msgid "Total Paid Amount"
+msgstr "إجمالي المبلغ المدفوع"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,help:nthub_loan_management.field_hr_loan__total_amount
+msgid "Total loan amount"
+msgstr "إجمالي مبلغ السلفة"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,help:nthub_loan_management.field_hr_loan__total_paid_amount
+msgid "Total paid amount"
+msgstr "إجمالي المبلغ المدفوع"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,help:nthub_loan_management.field_hr_loan__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr "نوع النشاط الاستثنائي على السجل."
+
+#. module: nthub_loan_management
+#: model_terms:ir.actions.act_window,help:nthub_loan_management.action_hr_loan_request
+msgid "Use this menu to create loan requests."
+msgstr "استخدم هذا القائمة لإنشاء طلبات السلفة."
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,field_description:nthub_loan_management.field_hr_loan__user_id
+#: model:ir.model.fields,help:nthub_loan_management.field_hr_loan__user_id
+msgid "User"
+msgstr "المستخدم"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,field_description:nthub_loan_management.field_hr_loan__website_message_ids
+msgid "Website Messages"
+msgstr "رسائل الموقع"
+
+#. module: nthub_loan_management
+#: model:ir.model.fields,help:nthub_loan_management.field_hr_loan__website_message_ids
+msgid "Website communication history"
+msgstr "تاريخ التواصل على الموقع"
+
+#. module: nthub_loan_management
+#: model:ir.model,name:nthub_loan_management.model_account_payment_loan
+msgid "account.payment.loan"
+msgstr "حساب.الدفع.لسلفة"
+
+#. module: nthub_loan_management
+#. odoo-python
+#: code:addons/nthub_loan_management/models/hr_loan.py:0
+#, python-format
+msgid "amount in total months must be = loan amount"
+msgstr "المبلغ في الشهور الإجمالية يجب أن يكون = مبلغ السلفة"
