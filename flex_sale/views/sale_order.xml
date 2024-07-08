@@ -28,7 +28,16 @@
                 <field name="trilla_load_per_pill"/>
             </xpath>
 
-
+            <xpath expr="//notebook" position="inside">
+                <page string="Terms and conditions">
+                    <group>
+                        <group>
+                            <field name="tac_en_delivery_location"/>
+                            <field name="tac_ar_delivery_location"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
         </field>
     </record>
 </odoo>

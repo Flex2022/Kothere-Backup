@@ -163,10 +163,10 @@
                                             </tr>
                                             <tr>
                                                 <td class="w-25">
-
+                                                    الضريبة
                                                 </td>
                                                 <td class="w-75">
-
+                                                    الأسعار أعلاه لا تشمل ضريبة القيمة المضافة
                                                 </td>
                                             </tr>
                                             <tr>
@@ -174,7 +174,7 @@
                                                     موقع التسليم
                                                 </td>
                                                 <td class="w-75">
-                                                    المدينة المنورة
+                                                    <span t-field="o.tac_ar_delivery_location"/>
                                                 </td>
                                             </tr>
                                             <tr>

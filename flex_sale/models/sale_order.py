@@ -7,6 +7,9 @@ class SaleOrder(models.Model):
     department_id = fields.Many2one('hr.department')
     attention = fields.Char('Attention')
 
+    tac_en_delivery_location = fields.Char('Delivery Location (English)', placeholder="Delivery location (English)")
+    tac_ar_delivery_location = fields.Char('Delivery Location (Arabic)', placeholder="مككان التسليم باللغة العربية")
+
     # sale_order_cancel_reason.py
     def action_cancel(self):
         # Call the original cancel action

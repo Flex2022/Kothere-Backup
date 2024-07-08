@@ -8,6 +8,7 @@ class LandingOrder(models.Model):
     _description = 'LandingOrder'
     _rec_name = 'name'
 
+    company_id = fields.Many2one('res.company', required=True, default=lambda self: self.env.company)
     order_id = fields.Many2one('sale.order', string='Sale Order')
     purchase_order_id = fields.Many2one('purchase.order', string='Purchase Order')
     stock_picking_id = fields.Many2one('stock.picking', string='Stock Picking')
@@ -58,11 +59,54 @@ class LandingOrder(models.Model):
                                                    compute='_compute_from_receive_to_delivery', digits=(6, 2),
                                                    store=True)
     reward_amount = fields.Float(string='Reward Amount')
-
+    qr_code = fields.Char(string="QR Code", compute='_compute_qr_code', store=True)
     company_id = fields.Many2one(
         comodel_name='res.company',
         required=True, index=True,
         default=lambda self: self.env.company)
+    purchase_product_ids = fields.Many2many('product.product', compute="compute_purchase_product_ids")
+
+    def create_sale_order(self):
+        SaleOrder = self.env['sale.order']
+        for order in self:
+            # if order.state != 'new':
+            #     raise UserError(_("You can only create a sale order from a 'New' state landing order."))
+
+            # Prepare sale order values
+            sale_order_values = {
+                'company_id': order.company_id.id,
+                'partner_id': order.partner_id.id,
+                'date_order': fields.Datetime.now(),
+                'order_line': [(0, 0, {'product_id': product_id.id, 'product_uom_qty': order.quantity}) for product_id in
+                                       order.purchase_product_ids]
+            }
+
+            try:
+                # Create sale order
+                sale_order = SaleOrder.create(sale_order_values)
+                order.order_id = sale_order.id
+            except Exception as e:
+                raise UserError(_("Error while creating sale order: %s" % str(e)))
+
+    @api.depends('purchase_order_id')
+    def compute_purchase_product_ids(self):
+        for order in self:
+            if order.purchase_order_id:
+                order.purchase_product_ids = order.purchase_order_id.order_line.mapped('product_id')
+            else:
+                order.purchase_product_ids = False
+
+    @api.depends('partner_id', 'car_model_id', 'driver_id', 'date', 'kind', 'quantity')
+    def _compute_qr_code(self):
+        for order in self:
+            qrcode = "Factory name : %s" % order.partner_id.name if order.partner_id else ""
+            qrcode += ", Factory code : %s" % order.partner_id.partner_code if order.partner_id.partner_code else ""
+            qrcode += ", Car Number : %s" % order.car_model_id.name if order.car_model_id else ""
+            qrcode += ", Driver Name : %s" % order.driver_id.name if order.driver_id else ""
+            qrcode += ", Date : %s" % order.date if order.date else ""
+            qrcode += ", Cement Type : %s" % order.kind if order.kind else ""
+            qrcode += ", Quantity : %s" % order.quantity if order.quantity else ""
+            order.qr_code = qrcode
 
     @api.depends('car_model_id')
     def compute_car_model_details(self):

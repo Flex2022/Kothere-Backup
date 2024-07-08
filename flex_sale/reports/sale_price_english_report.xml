@@ -169,6 +169,7 @@
                                                     Delivery Location
                                                 </td>
                                                 <td class="w-75">
+                                                   <span t-field="o.tac_en_delivery_location"/>
                                                 </td>
                                             </tr>
                                             <tr>

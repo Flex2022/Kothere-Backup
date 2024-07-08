@@ -259,6 +259,15 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <p t-if="o.qr_code">
+                                    <img style="display:block;"
+                                         t-att-src="'/report/barcode/?barcode_type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('QR', quote_plus(o.qr_code), 130, 130)"
+                                         alt="QR Code"/>
+                                </p>
+                            </div>
+                        </div>
                     </t>
                 </t>
             </t>

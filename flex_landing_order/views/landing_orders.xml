@@ -20,6 +20,9 @@
                         <button name="cancel_order_action" type="object" string="Cancel"
                                 groups="flex_landing_order.flex_landing_order_group_landing_order_manager"
                                 invisible="state == 'canceled'"/>
+                        <button name="create_sale_order" type="object" string="Create Sale Order" class="oe_highlight"
+                                groups="sales_team.group_sale_manager"
+                                invisible="order_id != False"/>
                         <button name="set_as_new" type="object" string="Set to New" class="oe_highlight"
                                 groups="flex_landing_order.flex_landing_order_group_landing_order_manager"
                                 invisible="state != 'canceled'"/>
@@ -34,6 +37,7 @@
                         </div>
                         <group>
                             <group string="General Information">
+                                <field name="qr_code" invisible="0"/>
                                 <field name="partner_id"/>
                                 <field name="partner_code"/>
                                 <field name="car_model_id"/>
@@ -42,6 +46,7 @@
                                 <field name="car_id"/>
                                 <field name="receive_date" readonly="1"/>
                                 <field name="delivery_date" readonly="1"/>
+                                <field name="purchase_product_ids" widget="many2many_tags" readonly="state != 'draft'"/>
                             </group>
 
                             <group string="Order Information">
