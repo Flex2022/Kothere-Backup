@@ -67,9 +67,8 @@
                                     <th>Description</th>
                                     <th>Product</th>
                                     <th>Quantity</th>
-                                    <th>Value</th>
+                                    <th>Tax incl.</th>
                                     <th>Taxes</th>
-                                    <th>Tax excl.</th>
                                 </tr>
                                 <tr t-foreach="o.line_ids" t-as="line">
                                     <td>
@@ -88,16 +87,14 @@
                                         <span t-field="line.line_product_id"/>
                                     </td>
                                     <td>
-                                        <span t-field="line.line_quantity" t-options='{"widget": "float", "decimal_precision": "Product Unit of Measure"}'/>
+                                        <span t-field="line.line_quantity"
+                                              t-options='{"widget": "float", "decimal_precision": "Product Unit of Measure"}'/>
                                     </td>
                                     <td>
-                                        <span t-field="line.price_unit" t-options='{"widget": "monetary", "display_currency": currency}'/>
+                                        <span t-field="line.price_total"/>
                                     </td>
                                     <td>
-                                        <span t-field="line.tax_ids"/>
-                                    </td>
-                                    <td>
-                                        <span t-field="line.price_subtotal"/>
+                                        <span t-field="line.tax_value"/>
                                     </td>
                                 </tr>
                                 <tr/>

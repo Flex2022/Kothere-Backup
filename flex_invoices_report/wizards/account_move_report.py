@@ -104,13 +104,20 @@ class FlexInvoicesLinesReport(models.TransientModel):
     move_line_id = fields.Many2one('account.move.line', string='move line')
     company_id = fields.Many2one('res.company', related="move_line_id.company_id")
     move_type = fields.Selection(related="move_line_id.move_id.move_type")
-    currency_id = fields.Many2one('res.currency',related="move_line_id.currency_id")
+    currency_id = fields.Many2one('res.currency', related="move_line_id.currency_id")
     partner_id = fields.Many2one('res.partner', 'Customer/Vendor', related="move_line_id.move_id.partner_id")
     invoice_date = fields.Date('Date', related="move_line_id.move_id.invoice_date")
     invoice_name = fields.Char('Invoice Number', related="move_line_id.move_id.name")
     line_description = fields.Char('Description', related="move_line_id.name")
     line_product_id = fields.Many2one('product.product', 'Product', related="move_line_id.product_id")
     line_quantity = fields.Float('Quantity', related="move_line_id.quantity")
-    price_unit = fields.Float('Value', related="move_line_id.price_unit")
+    price_unit = fields.Float('Price Unit', related="move_line_id.price_unit")
     tax_ids = fields.Many2many('account.tax', 'Taxes', related="move_line_id.tax_ids")
     price_subtotal = fields.Monetary('Tax excl.', related="move_line_id.price_subtotal")
+    price_total = fields.Monetary('Tax incl.', related="move_line_id.price_total")
+    tax_value = fields.Monetary('Taxes Value', compute="compute_taxes_value", store=True)
+
+    @api.depends('price_subtotal', 'price_total')
+    def compute_taxes_value(self):
+        for line in self:
+            line.tax_value = line.price_total - line.price_subtotal
