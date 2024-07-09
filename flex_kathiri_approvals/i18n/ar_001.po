@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 17.0+e-20231218\n"
+"Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-08 09:13+0000\n"
-"PO-Revision-Date: 2024-06-08 09:13+0000\n"
+"POT-Creation-Date: 2024-07-08 13:39+0000\n"
+"PO-Revision-Date: 2024-07-08 13:39+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,6 +16,56 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: flex_kathiri_approvals
+#: model:mail.template,body_html:flex_kathiri_approvals.mail_template_air_ticket_approval
+msgid ""
+"<p>Hello <t t-out=\"object.partner_id.name\"></t>,</p>\n"
+"            <p>Your air ticket request has been\n"
+"                <t t-if=\"object.state == 'approved'\">approved</t>\n"
+"                <t t-else=\"object.state == 'rejected'\">rejected</t>\n"
+"            </p>\n"
+"            <p>Details:</p>\n"
+"            <p>AIR Ticket Request Number:\n"
+"                <t t-out=\"object.name\"></t>\n"
+"            </p>\n"
+"            <p>Date From:\n"
+"                <t t-out=\"object.date_from\"></t>\n"
+"            </p>\n"
+"            <p>Date To:\n"
+"                <t t-out=\"object.date_to\"></t>\n"
+"            </p>\n"
+"            <p>Departure City:\n"
+"                <t t-out=\"object.departure_city\"></t>\n"
+"            </p>\n"
+"            <p>Destination City:\n"
+"                <t t-out=\"object.destination_city\"></t>\n"
+"            </p>\n"
+"        "
+msgstr ""
+"<p>مرحبَا <t t-out=\"object.partner_id.name\"></t>,</p>\n"
+"            <p>طلب حجز تذكرتك قد تم\n"
+"                <t t-if=\"object.state == 'approved'\">الموافقة عليه</t>\n"
+"                <t t-else=\"object.state == 'rejected'\">رفضه</t>\n"
+"            </p>\n"
+"            <p>التفاصيل:</p>\n"
+"            <p>رقم طلب حجز التذكرة الجوية:\n"
+"                <t t-out=\"object.name\"></t>\n"
+"            </p>\n"
+"            <p>من التاريخ:\n"
+"                <t t-out=\"object.date_from\"></t>\n"
+"            </p>\n"
+"            <p>إلى التاريخ:\n"
+"                <t t-out=\"object.date_to\"></t>\n"
+"            </p>\n"
+"            <p>مدينة المغادرة:\n"
+"                <t t-out=\"object.departure_city\"></t>\n"
+"            </p>\n"
+"            <p>مدينة الوجهة:\n"
+"                <t t-out=\"object.destination_city\"></t>\n"
+"            </p>\n"
+"        "
+
+#. module: flex_kathiri_approvals
+#: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_air_ticket__message_needaction
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_business_trip__message_needaction
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_employee_transfer__message_needaction
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_exit_return_visa__message_needaction
@@ -27,7 +77,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_starting_work_request__message_needaction
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_medical_insurance_pack__message_needaction
 msgid "Action Needed"
-msgstr "الإجراءات اللازمة"
+msgstr "الإجراء المطلوب"
 
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_business_trip__activity_ids
@@ -41,9 +91,15 @@ msgstr "الإجراءات اللازمة"
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_starting_work_request__activity_ids
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_medical_insurance_pack__activity_ids
 msgid "Activities"
-msgstr "أنشطة"
+msgstr "الأنشطة"
 
 #. module: flex_kathiri_approvals
+#: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_air_ticket__activity_ids
+msgid "Activity"
+msgstr "النشاط"
+
+#. module: flex_kathiri_approvals
+#: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_air_ticket__activity_exception_decoration
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_business_trip__activity_exception_decoration
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_employee_transfer__activity_exception_decoration
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_exit_return_visa__activity_exception_decoration
@@ -55,9 +111,10 @@ msgstr "أنشطة"
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_starting_work_request__activity_exception_decoration
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_medical_insurance_pack__activity_exception_decoration
 msgid "Activity Exception Decoration"
-msgstr "زخرفة استثناء النشاط"
+msgstr "تزيين النشاط المستثنى"
 
 #. module: flex_kathiri_approvals
+#: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_air_ticket__activity_state
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_business_trip__activity_state
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_employee_transfer__activity_state
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_exit_return_visa__activity_state
@@ -72,6 +129,7 @@ msgid "Activity State"
 msgstr "حالة النشاط"
 
 #. module: flex_kathiri_approvals
+#: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_air_ticket__activity_type_icon
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_business_trip__activity_type_icon
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_employee_transfer__activity_type_icon
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_exit_return_visa__activity_type_icon
@@ -83,7 +141,58 @@ msgstr "حالة النشاط"
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_starting_work_request__activity_type_icon
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_medical_insurance_pack__activity_type_icon
 msgid "Activity Type Icon"
-msgstr "رمز نوع النشاط"
+msgstr "أيقونة نوع النشاط"
+
+#. module: flex_kathiri_approvals
+#: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_exit_return_visa__air_ticket_ids
+#: model:product.template,name:flex_kathiri_approvals.product_product_air_ticket_product_template
+msgid "Air Ticket"
+msgstr "تذكرة طيران"
+
+#. module: flex_kathiri_approvals
+#: model:mail.activity.type,name:flex_kathiri_approvals.mail_air_ticket_approval
+#: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.view_flex_approval_air_ticket_form
+msgid "Air Ticket Approval"
+msgstr "موافقة تذكرة الطيران"
+
+#. module: flex_kathiri_approvals
+#: model:mail.template,name:flex_kathiri_approvals.mail_template_air_ticket_approval
+#: model:mail.template,subject:flex_kathiri_approvals.mail_template_air_ticket_approval
+msgid "Air Ticket Approval Notification"
+msgstr "إشعار موافقة تذكرة الطيران"
+
+#. module: flex_kathiri_approvals
+#: model:ir.actions.act_window,name:flex_kathiri_approvals.action_approval_air_ticket
+#: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.view_flex_approval_air_ticket_tree
+msgid "Air Ticket Approvals"
+msgstr "موافقات تذكرة الطيران"
+
+#. module: flex_kathiri_approvals
+#. odoo-python
+#: code:addons/flex_kathiri_approvals/models/exit_return_visa.py:0
+#, python-format
+msgid "Air Ticket Created"
+msgstr "تم إنشاء تذكرة الطيران"
+
+#. module: flex_kathiri_approvals
+#: model:ir.model,name:flex_kathiri_approvals.model_flex_approval_air_ticket_reject_wizard
+msgid "Air Ticket Rejection Wizard"
+msgstr "نافذة رفض تذكرة الطيران"
+
+#. module: flex_kathiri_approvals
+#: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_air_ticket_reject_wizard__air_ticket_id
+msgid "Air Ticket Request"
+msgstr "طلب تذكرة الطيران"
+
+#. module: flex_kathiri_approvals
+#: model:ir.ui.menu,name:flex_kathiri_approvals.menu_flex_approval_air_ticket_action
+msgid "Air Ticket Requests"
+msgstr "طلبات تذكرة الطيران"
+
+#. module: flex_kathiri_approvals
+#: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.view_exit_return_visa_form
+msgid "Air Tickets"
+msgstr "تذاكر الطيران"
 
 #. module: flex_kathiri_approvals
 #: model:ir.ui.menu,name:flex_kathiri_approvals.menu_flex_all_approvals
@@ -101,6 +210,13 @@ msgstr "يجب أن تكون جميع النفقات المتعلقة برحلة
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_employee_transfer__new_employee_id
 msgid "Alternative Employee"
 msgstr "الموظف البديل"
+
+#. module: flex_kathiri_approvals
+#. odoo-python
+#: code:addons/flex_kathiri_approvals/models/exit_return_visa.py:0
+#, python-format
+msgid "An air ticket has been created for Exit Return Visa %s"
+msgstr "تم إنشاء تذكرة طيران لتأشيرة العودة"
 
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_res_company__flex_employee_resignation_request_approval_type
@@ -127,7 +243,12 @@ msgstr "إشعار الموافقة"
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_resignation__approval_request_id
 msgid "Approval Request"
-msgstr "طلب القبول"
+msgstr "طلب الموافقة"
+
+#. module: flex_kathiri_approvals
+#: model:ir.model,name:flex_kathiri_approvals.model_flex_approval_air_ticket
+msgid "Approval for Air Tickets"
+msgstr "الموافقة على تذاكر الطيران"
 
 #. module: flex_kathiri_approvals
 #: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.view_approval_business_trip_form
@@ -137,24 +258,25 @@ msgstr "طلب القبول"
 #: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.view_exit_return_visa_form
 #: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.view_renew_vehicle_insurance_form
 msgid "Approve"
-msgstr "إعتمد"
+msgstr "الموافقة"
 
 #. module: flex_kathiri_approvals
 #: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.view_approval_renew_iqama_form
 msgid "Approve Renewal"
-msgstr "إعتمد"
+msgstr "الموافقة على التجديد"
 
 #. module: flex_kathiri_approvals
 #: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.view_approval_resignation_form
 msgid "Approve Resignation"
-msgstr "إعتمد"
+msgstr "الموافقة على الاستقالة"
 
 #. module: flex_kathiri_approvals
 #: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.view_flex_approval_employee_transfer_form
 msgid "Approve Transfer"
-msgstr "إعتمد"
+msgstr "الموافقة على النقل"
 
 #. module: flex_kathiri_approvals
+#: model:ir.model.fields.selection,name:flex_kathiri_approvals.selection__flex_approval_air_ticket__state__approved
 #: model:ir.model.fields.selection,name:flex_kathiri_approvals.selection__flex_approval_business_trip__state__approved
 #: model:ir.model.fields.selection,name:flex_kathiri_approvals.selection__flex_approval_employee_transfer__state__approved
 #: model:ir.model.fields.selection,name:flex_kathiri_approvals.selection__flex_approval_exit_return_visa__state__approved
@@ -165,12 +287,12 @@ msgstr "إعتمد"
 #: model:ir.model.fields.selection,name:flex_kathiri_approvals.selection__flex_approval_resignation__state__approved
 #: model:ir.model.fields.selection,name:flex_kathiri_approvals.selection__flex_approval_starting_work_request__state__approved
 msgid "Approved"
-msgstr "معتمد"
+msgstr "تمت الموافقة"
 
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_renew_driving_license__vehicle_id
 msgid "Assigned Vehicle"
-msgstr "المركبة المخصصة"
+msgstr "المركبة المعينة"
 
 #. module: flex_kathiri_approvals
 #: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.view_approval_business_trip_form
@@ -180,12 +302,14 @@ msgstr "المركبة المخصصة"
 #: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.view_approval_resignation_form
 #: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.view_approval_starting_work_request_form
 #: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.view_exit_return_visa_form
+#: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.view_flex_approval_air_ticket_form
 #: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.view_flex_approval_employee_transfer_form
 #: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.view_renew_vehicle_insurance_form
 msgid "Attach a file"
 msgstr "إرفاق ملف"
 
 #. module: flex_kathiri_approvals
+#: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_air_ticket__message_attachment_count
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_business_trip__message_attachment_count
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_employee_transfer__message_attachment_count
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_exit_return_visa__message_attachment_count
@@ -200,6 +324,7 @@ msgid "Attachment Count"
 msgstr "عدد المرفقات"
 
 #. module: flex_kathiri_approvals
+#: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_air_ticket__attachment_ids
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_business_trip__attachment_ids
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_employee_transfer__attachment_ids
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_exit_return_visa__attachment_ids
@@ -215,6 +340,11 @@ msgid "Attachments"
 msgstr "المرفقات"
 
 #. module: flex_kathiri_approvals
+#: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_air_ticket__partner_id
+msgid "Beneficiary"
+msgstr "المستفيد"
+
+#. module: flex_kathiri_approvals
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_business_trip__book_hotel
 msgid "Book Hotel"
 msgstr "حجز فندق"
@@ -227,12 +357,12 @@ msgstr "الموافقة على رحلة العمل"
 #. module: flex_kathiri_approvals
 #: model:ir.model,name:flex_kathiri_approvals.model_flex_approval_business_trip_reject_wizard
 msgid "Business Trip Rejection Wizard"
-msgstr "معالج رفض رحلة العمل"
+msgstr "نافذة رفض رحلة العمل"
 
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_business_trip_reject_wizard__business_trip_id
 msgid "Business Trip Request"
-msgstr "طلب رحلة عمل"
+msgstr "طلب رحلة العمل"
 
 #. module: flex_kathiri_approvals
 #: model:ir.actions.act_window,name:flex_kathiri_approvals.action_approval_business_trip
@@ -243,14 +373,20 @@ msgstr "طلبات رحلات العمل "
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields.selection,name:flex_kathiri_approvals.selection__flex_approval_business_trip__state__ceo_approval
 msgid "CEO Approval"
-msgstr "موافقة الرئيس التنفيذي"
+msgstr "موافقة المدير التنفيذي"
 
 #. module: flex_kathiri_approvals
 #: model:res.groups,name:flex_kathiri_approvals.group_ceo_approval
 msgid "CEO Approval (Business Trip)"
-msgstr "موافقة الرئيس التنفيذي (رحلة عمل)"
+msgstr "موافقة المدير التنفيذي (رحلة عمل)"
 
 #. module: flex_kathiri_approvals
+#: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.view_flex_approval_air_ticket_form
+msgid "CEO Approve"
+msgstr "موافقة المدير التنفيذي"
+
+#. module: flex_kathiri_approvals
+#: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.view_flex_approval_ait_ticket_reject_wizard_form
 #: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.view_flex_approval_business_trip_reject_wizard_form
 #: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.view_flex_approval_employee_transfer_reject_wizard_form
 #: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.view_flex_approval_exit_return_visa_reject_wizard_form
@@ -264,9 +400,16 @@ msgid "Cancel"
 msgstr "إلغاء"
 
 #. module: flex_kathiri_approvals
+#. odoo-python
+#: code:addons/flex_kathiri_approvals/models/exit_return_visa.py:0
+#, python-format
+msgid "Cannot submit for approval: Maximum 2 sponsored allowed."
+msgstr "لا يمكن تقديم الطلب للموافقة: الحد الأقصى المسموح به هو 2."
+
+#. module: flex_kathiri_approvals
 #: model_terms:ir.actions.act_window,help:flex_kathiri_approvals.action_flex_approval_employee_transfer
 msgid "Click to create a new employee transfer approval request."
-msgstr "انقر لإنشاء طلب موافقة نقل موظف جديد"
+msgstr "انقر لإنشاء طلب نقل موظف جديد."
 
 #. module: flex_kathiri_approvals
 #: model:ir.model,name:flex_kathiri_approvals.model_res_company
@@ -274,6 +417,7 @@ msgid "Companies"
 msgstr "الشركات"
 
 #. module: flex_kathiri_approvals
+#: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_air_ticket__company_id
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_business_trip__company_id
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_employee_transfer__company_id
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_exit_return_visa__company_id
@@ -285,7 +429,7 @@ msgstr "الشركات"
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_starting_work_request__company_id
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_medical_insurance_pack__company_id
 msgid "Company"
-msgstr "شركة"
+msgstr "الشركة"
 
 #. module: flex_kathiri_approvals
 #: model:ir.model,name:flex_kathiri_approvals.model_res_config_settings
@@ -295,9 +439,10 @@ msgstr "تهيئة الإعدادات "
 #. module: flex_kathiri_approvals
 #: model:ir.ui.menu,name:flex_kathiri_approvals.menu_configuration
 msgid "Configuration"
-msgstr "الإعدادات"
+msgstr "التهيئة"
 
 #. module: flex_kathiri_approvals
+#: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.view_flex_approval_ait_ticket_reject_wizard_form
 #: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.view_flex_approval_business_trip_reject_wizard_form
 #: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.view_flex_approval_employee_transfer_reject_wizard_form
 #: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.view_flex_approval_exit_return_visa_reject_wizard_form
@@ -321,36 +466,48 @@ msgid "Coverage Limit"
 msgstr "حد التغطية"
 
 #. module: flex_kathiri_approvals
+#: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.view_flex_approval_air_ticket_form
+msgid "Create Purchase Order"
+msgstr "إنشاء أمر شراء"
+
+#. module: flex_kathiri_approvals
 #: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.view_approval_resignation_form
 msgid "Create Termination"
-msgstr "إنشاء الإنهاء"
+msgstr "إنشاء إنهاء"
+
+#. module: flex_kathiri_approvals
+#: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.view_exit_return_visa_form
+msgid "Create air ticket"
+msgstr "إنشاء تذكرة طيران"
 
 #. module: flex_kathiri_approvals
 #: model_terms:ir.actions.act_window,help:flex_kathiri_approvals.action_approval_business_trip
 msgid "Create your Business Trip Request"
-msgstr "نشئ طلب رحلة العمل الخاص بك"
+msgstr "إنشاء طلب رحلة عملك"
 
 #. module: flex_kathiri_approvals
 #: model_terms:ir.actions.act_window,help:flex_kathiri_approvals.action_approval_renew_driving_license
 msgid "Create your First Driving License Request"
-msgstr "قم بإنشاء طلب رخصة القيادة الأول الخاص بك"
+msgstr "إنشاء طلب رخصة القيادة الأولى"
 
 #. module: flex_kathiri_approvals
 #: model_terms:ir.actions.act_window,help:flex_kathiri_approvals.action_approval_starting_work_request
 msgid "Create your First Starting Work Requests"
-msgstr "قم بإنشاء طلبات العمل الأولى الخاصة بك"
+msgstr "إنشاء طلبات بدء العمل الأولى"
 
 #. module: flex_kathiri_approvals
 #: model_terms:ir.actions.act_window,help:flex_kathiri_approvals.action_medical_insurance_pack
 msgid "Create your first Medical Insurance Pack"
-msgstr "أنشئ حزمة التأمين الطبي الأولى الخاصة بك"
+msgstr "إنشاء حزمة التأمين الطبي الأولى"
 
 #. module: flex_kathiri_approvals
 #: model_terms:ir.actions.act_window,help:flex_kathiri_approvals.action_renew_vehicle_insurance
 msgid "Create your first Renew Vehicle Insurance"
-msgstr "أنشئ أول تجديد لتأمين السيارة"
+msgstr "إنشاء تجديد التأمين على المركبة الأولى"
 
 #. module: flex_kathiri_approvals
+#: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_air_ticket__create_uid
+#: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_air_ticket_reject_wizard__create_uid
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_business_trip__create_uid
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_business_trip_reject_wizard__create_uid
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_employee_transfer__create_uid
@@ -372,9 +529,11 @@ msgstr "أنشئ أول تجديد لتأمين السيارة"
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_starting_work_request_reject_wizard__create_uid
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_medical_insurance_pack__create_uid
 msgid "Created by"
-msgstr "انشأ من قبل"
+msgstr "تم إنشاؤه بواسطة"
 
 #. module: flex_kathiri_approvals
+#: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_air_ticket__create_date
+#: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_air_ticket_reject_wizard__create_date
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_business_trip__create_date
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_business_trip_reject_wizard__create_date
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_employee_transfer__create_date
@@ -396,9 +555,10 @@ msgstr "انشأ من قبل"
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_starting_work_request_reject_wizard__create_date
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_medical_insurance_pack__create_date
 msgid "Created on"
-msgstr "تم إنشاؤها فى"
+msgstr "تم الإنشاء في"
 
 #. module: flex_kathiri_approvals
+#: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_air_ticket__currency_id
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_exit_return_visa__currency_id
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_renew_driving_license__currency_id
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_renew_medical_insurance__currency_id
@@ -406,7 +566,7 @@ msgstr "تم إنشاؤها فى"
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_starting_work_request__currency_id
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_medical_insurance_pack__currency_id
 msgid "Currency"
-msgstr "عملة"
+msgstr "العملة"
 
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_employee_transfer__current_department_id
@@ -416,36 +576,46 @@ msgstr "القسم الحالي"
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields.selection,name:flex_kathiri_approvals.selection__flex_approval_employee_transfer__state__current_department_approval
 msgid "Current Department Approval"
-msgstr "موافقة الدائرة الحالية"
+msgstr "موافقة القسم الحالي"
 
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_renew_iqama__end_of_iqama
 msgid "Current Expiry Date"
-msgstr "تاريخ انتهاء الصلاحية الحالي"
+msgstr "تاريخ انتهاء الإقامة الحالي"
 
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_renew_iqama__current_iqama_id
 msgid "Current Iqama ID"
-msgstr "معرف الإقامة الحالي"
+msgstr "رقم الإقامة الحالي"
 
 #. module: flex_kathiri_approvals
 #. odoo-python
 #: code:addons/flex_kathiri_approvals/models/employee_transfer_approval.py:0
 #, python-format
 msgid "Current and new departments must not be the same."
-msgstr "يجب ألا تكون الإدارات الحالية والجديدة هي نفسها."
+msgstr "يجب ألا تكون الأقسام الحالية والجديدة هي نفسها."
 
 #. module: flex_kathiri_approvals
 #. odoo-python
 #: code:addons/flex_kathiri_approvals/models/employee_transfer_approval.py:0
 #, python-format
 msgid "Current and new employee must not be the same."
-msgstr "يجب ألا يكون الموظف الحالي والجديد هو نفسه."
+msgstr "يجب ألا يكون الموظفين الحاليين والجديدين هم نفسهم."
+
+#. module: flex_kathiri_approvals
+#: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_air_ticket__date_from
+msgid "Date From"
+msgstr "تاريخ البدء"
+
+#. module: flex_kathiri_approvals
+#: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_air_ticket__date_to
+msgid "Date To"
+msgstr "تاريخ الانتهاء"
 
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields.selection,name:flex_kathiri_approvals.selection__flex_approval_resignation__resignation_type__death
 msgid "Death"
-msgstr "موت"
+msgstr "الوفاة"
 
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_business_trip__department_id
@@ -457,7 +627,7 @@ msgstr "موت"
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_resignation__department_id
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_starting_work_request__department_id
 msgid "Department"
-msgstr "قسم"
+msgstr "القسم"
 
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields.selection,name:flex_kathiri_approvals.selection__flex_approval_business_trip__state__department_manager_approval
@@ -465,9 +635,14 @@ msgid "Department Manager Approval"
 msgstr "موافقة مدير القسم"
 
 #. module: flex_kathiri_approvals
+#: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_air_ticket__departure_city
+msgid "Departure City"
+msgstr "مدينة المغادرة"
+
+#. module: flex_kathiri_approvals
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_medical_insurance_pack__description
 msgid "Description"
-msgstr "وصف"
+msgstr "الوصف"
 
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields,help:flex_kathiri_approvals.field_flex_medical_insurance_pack__description
@@ -477,12 +652,17 @@ msgstr "وصف حزمة التأمين"
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_business_trip__destination
 msgid "Destination"
-msgstr "وجهة"
+msgstr "الوجهة"
+
+#. module: flex_kathiri_approvals
+#: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_air_ticket__destination_city
+msgid "Destination City"
+msgstr "مدينة الوجهة"
 
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields,help:flex_kathiri_approvals.field_flex_medical_insurance_pack__coverage_details
 msgid "Details of the insurance coverage"
-msgstr "تفاصيل التغطية التأمينية"
+msgstr "تفاصيل تغطية التأمين"
 
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_starting_work_request__direct_manager
@@ -496,6 +676,8 @@ msgid "Direct Manager Approval"
 msgstr "موافقة المدير المباشر"
 
 #. module: flex_kathiri_approvals
+#: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_air_ticket__display_name
+#: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_air_ticket_reject_wizard__display_name
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_business_trip__display_name
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_business_trip_reject_wizard__display_name
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_employee_transfer__display_name
@@ -517,9 +699,15 @@ msgstr "موافقة المدير المباشر"
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_starting_work_request_reject_wizard__display_name
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_medical_insurance_pack__display_name
 msgid "Display Name"
-msgstr "اسم العرض"
+msgstr "الاسم الظاهر"
 
 #. module: flex_kathiri_approvals
+#: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.view_flex_approval_air_ticket_form
+msgid "Doha/Qatar"
+msgstr "الدوحة/قطر"
+
+#. module: flex_kathiri_approvals
+#: model:ir.model.fields.selection,name:flex_kathiri_approvals.selection__flex_approval_air_ticket__state__draft
 #: model:ir.model.fields.selection,name:flex_kathiri_approvals.selection__flex_approval_business_trip__state__draft
 #: model:ir.model.fields.selection,name:flex_kathiri_approvals.selection__flex_approval_employee_transfer__state__draft
 #: model:ir.model.fields.selection,name:flex_kathiri_approvals.selection__flex_approval_exit_return_visa__state__draft
@@ -535,7 +723,7 @@ msgstr "مسودة"
 #. module: flex_kathiri_approvals
 #: model:product.template,name:flex_kathiri_approvals.expense_product_driving_license_product_template
 msgid "Driving License Expense"
-msgstr "مصاريف رخصة القيادة"
+msgstr "نفقات رخصة القيادة"
 
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_renew_driving_license_reject_wizard__renew_driving_license_id
@@ -545,7 +733,7 @@ msgstr "تجديد رخصة القيادة"
 #. module: flex_kathiri_approvals
 #: model:ir.model,name:flex_kathiri_approvals.model_flex_approval_renew_driving_license_reject_wizard
 msgid "Driving License Renewal Rejection Wizard"
-msgstr "معالج رفض تجديد رخصة القيادة"
+msgstr "نافذة رفض تجديد رخصة القيادة"
 
 #. module: flex_kathiri_approvals
 #: model:ir.actions.act_window,name:flex_kathiri_approvals.action_approval_renew_driving_license
@@ -561,28 +749,28 @@ msgstr "رخص القيادة"
 #. module: flex_kathiri_approvals
 #: model:ir.model,name:flex_kathiri_approvals.model_flex_approval_renew_driving_license
 msgid "Driving license Renewal Approval"
-msgstr "الموافقة على تجديد رخصة القيادة"
+msgstr "موافقة تجديد رخصة القيادة"
 
 #. module: flex_kathiri_approvals
 #. odoo-python
 #: code:addons/flex_kathiri_approvals/models/renew_driving_license.py:0
 #, python-format
 msgid "Driving license Renewal Expense for %s"
-msgstr "نفقات تجديد رخصة القيادة لـ %s"
+msgstr "نفقات تجديد رخصة القيادة لـ"
 
 #. module: flex_kathiri_approvals
 #. odoo-python
 #: code:addons/flex_kathiri_approvals/wizards/renew_driving_license_approval_reject.py:0
 #, python-format
 msgid "Driving license Renewal rejected with reason: %s"
-msgstr "تم رفض تجديد رخصة القيادة للسبب: %s"
+msgstr "تم رفض تجديد رخصة القيادة بسبب: "
 
 #. module: flex_kathiri_approvals
 #. odoo-python
 #: code:addons/flex_kathiri_approvals/models/renew_driving_license.py:0
 #, python-format
 msgid "Driving license renewal expense for employee %s"
-msgstr "نفقات تجديد رخصة القيادة للموظف %s"
+msgstr "نفقات تجديد رخصة القيادة للموظف "
 
 #. module: flex_kathiri_approvals
 #: model:ir.model,name:flex_kathiri_approvals.model_hr_employee
@@ -607,7 +795,7 @@ msgstr "موافقة الموظف"
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_hr_expense__flex_approval_exit_return_visa_id
 msgid "Employee Exit Return Visa"
-msgstr "تأشيرة خروج وعودة الموظف"
+msgstr "تأشيرة الخروج والعودة للموظف"
 
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_exit_return_visa__employee_number
@@ -627,7 +815,7 @@ msgstr "طلبات الموظفين"
 #. module: flex_kathiri_approvals
 #: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.res_config_settings_view_form
 msgid "Employee Requests Configuration"
-msgstr "تكوين طلبات الموظف"
+msgstr "تهيئة طلبات الموظفين"
 
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_hr_expense__flex_approval_resignation_id
@@ -644,12 +832,12 @@ msgstr "نقل الموظف"
 #. module: flex_kathiri_approvals
 #: model:ir.model,name:flex_kathiri_approvals.model_flex_approval_employee_transfer
 msgid "Employee Transfer Approval"
-msgstr "الموافقة على نقل الموظف"
+msgstr "موافقة نقل الموظف"
 
 #. module: flex_kathiri_approvals
 #: model:ir.model,name:flex_kathiri_approvals.model_flex_approval_employee_transfer_reject_wizard
 msgid "Employee Transfer Rejection Wizard"
-msgstr "معالج رفض نقل الموظف"
+msgstr "نافذة رفض نقل الموظف"
 
 #. module: flex_kathiri_approvals
 #: model:ir.actions.act_window,name:flex_kathiri_approvals.action_flex_approval_employee_transfer
@@ -660,10 +848,11 @@ msgstr "طلبات نقل موظف"
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_hr_expense__flex_approval_medical_insurance_id
 msgid "Employee medical insurance"
-msgstr "التأمين الطبي للموظفين"
+msgstr "تأمين الموظف الطبي"
 
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_hr_expense__flex_approval_renew_driving_license_id
+#: model:ir.model.fields,field_description:flex_kathiri_approvals.field_hr_expense__flex_approval_vehicle_insurance_id
 msgid "Employee renewal driving license"
 msgstr "تجديد رخصة القيادة للموظف"
 
@@ -675,9 +864,10 @@ msgstr "تاريخ الانتهاء"
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields.selection,name:flex_kathiri_approvals.selection__flex_approval_starting_work_request__request_type__enter_from_vacation
 msgid "Enter From Vacation"
-msgstr "أدخل من الإجازة"
+msgstr "الدخول من الإجازة"
 
 #. module: flex_kathiri_approvals
+#: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.view_flex_approval_ait_ticket_reject_wizard_form
 #: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.view_flex_approval_business_trip_reject_wizard_form
 #: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.view_flex_approval_employee_transfer_reject_wizard_form
 #: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.view_flex_approval_exit_return_visa_reject_wizard_form
@@ -692,24 +882,17 @@ msgstr "أدخل سبب الرفض..."
 #. module: flex_kathiri_approvals
 #: model:ir.model,name:flex_kathiri_approvals.model_flex_approval_exit_return_visa
 msgid "Exit Return Visa"
-msgstr "تأشيرة خروج وعودة"
-
-#. module: flex_kathiri_approvals
-#. odoo-python
-#: code:addons/flex_kathiri_approvals/models/exit_return_visa.py:0
-#, python-format
-msgid "Exit Return Visa Expense for %s"
-msgstr "الخروج من نفقات تأشيرة العودة لـ %s"
+msgstr "تأشيرة الخروج والعودة"
 
 #. module: flex_kathiri_approvals
 #: model:ir.model,name:flex_kathiri_approvals.model_flex_approval_exit_return_visa_reject_wizard
 msgid "Exit Return Visa Rejection Wizard"
-msgstr "معالج رفض تأشيرة الخروج والعودة"
+msgstr "نافذة رفض تأشيرة الخروج والعودة"
 
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_exit_return_visa_reject_wizard__exit_return_visa_id
 msgid "Exit Return Visa Request"
-msgstr "طلب تأشيرة خروج وعودة"
+msgstr "طلب تأشيرة الخروج والعودة"
 
 #. module: flex_kathiri_approvals
 #: model:ir.actions.act_window,name:flex_kathiri_approvals.action_exit_return_visa
@@ -721,19 +904,12 @@ msgstr "طلبات تأشيرة الخروج والعودة"
 #: code:addons/flex_kathiri_approvals/wizards/exit_return_visa_approval_reject.py:0
 #, python-format
 msgid "Exit Return Visa rejected with reason: %s"
-msgstr "تم رفض تأشيرة الخروج والعودة للسبب: %s"
+msgstr "تم رفض تأشيرة الخروج والعودة بسبب: "
 
 #. module: flex_kathiri_approvals
 #: model:ir.ui.menu,name:flex_kathiri_approvals.menu_flex_approval_exit_return_visa
 msgid "Exit Return visa Requests"
 msgstr "طلبات تأشيرة الخروج والعودة"
-
-#. module: flex_kathiri_approvals
-#. odoo-python
-#: code:addons/flex_kathiri_approvals/models/exit_return_visa.py:0
-#, python-format
-msgid "Exit return visa expense for employee %s"
-msgstr "نفقات تأشيرة الخروج والعودة للموظف %s"
 
 #. module: flex_kathiri_approvals
 #: model:ir.model,name:flex_kathiri_approvals.model_hr_expense
@@ -743,35 +919,40 @@ msgstr "النفقة "
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_business_trip__expense_ids
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_employee_transfer__expense_ids
-#: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_exit_return_visa__expense_ids
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_renew_driving_license__expense_ids
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_renew_iqama__expense_ids
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_renew_medical_insurance__expense_ids
+#: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_renew_vehicle_insurance__expense_ids
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_resignation__expense_ids
 #: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.view_approval_business_trip_form
 #: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.view_approval_renew_driving_license_form
 #: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.view_approval_renew_iqama_form
 #: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.view_approval_renew_medical_insurance_form
 #: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.view_approval_resignation_form
-#: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.view_exit_return_visa_form
 #: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.view_flex_approval_employee_transfer_form
+#: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.view_renew_vehicle_insurance_form
 msgid "Expenses"
-msgstr "نفقات"
+msgstr "النفقات"
+
+#. module: flex_kathiri_approvals
+#: model_terms:product.template,description:flex_kathiri_approvals.expense_product_vehicle_insurance_product_template
+msgid "Expenses related to Vehicle insurance renewal"
+msgstr "نفقات تجديد تأمين السيارة"
 
 #. module: flex_kathiri_approvals
 #: model_terms:product.template,description:flex_kathiri_approvals.expense_product_driving_license_product_template
 msgid "Expenses related to driving license renewal and processing"
-msgstr "المصاريف المتعلقة بتجديد رخصة القيادة ومعالجتها"
+msgstr "نفقات تجديد رخصة القيادة ومعالجتها"
 
 #. module: flex_kathiri_approvals
 #: model_terms:product.template,description:flex_kathiri_approvals.expense_product_medical_insurance_product_template
 msgid "Expenses related to medical insurance renewal"
-msgstr "المصاريف المتعلقة بتجديد التأمين الطبي"
+msgstr "نفقات تجديد التأمين الطبي"
 
 #. module: flex_kathiri_approvals
 #: model_terms:product.template,description:flex_kathiri_approvals.expense_product_visa_product_template
 msgid "Expenses related to visa application and processing"
-msgstr "النفقات المتعلقة بطلب التأشيرة ومعالجتها"
+msgstr "نفقات تقديم الطلبات ومعالجتها"
 
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields.selection,name:flex_kathiri_approvals.selection__flex_approval_business_trip__trip_type__external
@@ -780,6 +961,12 @@ msgid "External"
 msgstr "خارجي"
 
 #. module: flex_kathiri_approvals
+#: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_air_ticket__flex_approval_exit_return_visa_id
+msgid "Flex Approval Exit Return Visa"
+msgstr "موافقة تأشيرة الخروج والعودة المرنة"
+
+#. module: flex_kathiri_approvals
+#: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_air_ticket__message_follower_ids
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_business_trip__message_follower_ids
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_employee_transfer__message_follower_ids
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_exit_return_visa__message_follower_ids
@@ -791,9 +978,10 @@ msgstr "خارجي"
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_starting_work_request__message_follower_ids
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_medical_insurance_pack__message_follower_ids
 msgid "Followers"
-msgstr "متابعون"
+msgstr "المتابعون"
 
 #. module: flex_kathiri_approvals
+#: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_air_ticket__message_partner_ids
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_business_trip__message_partner_ids
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_employee_transfer__message_partner_ids
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_exit_return_visa__message_partner_ids
@@ -808,6 +996,7 @@ msgid "Followers (Partners)"
 msgstr "المتابعون (الشركاء)"
 
 #. module: flex_kathiri_approvals
+#: model:ir.model.fields,help:flex_kathiri_approvals.field_flex_approval_air_ticket__activity_type_icon
 #: model:ir.model.fields,help:flex_kathiri_approvals.field_flex_approval_business_trip__activity_type_icon
 #: model:ir.model.fields,help:flex_kathiri_approvals.field_flex_approval_employee_transfer__activity_type_icon
 #: model:ir.model.fields,help:flex_kathiri_approvals.field_flex_approval_exit_return_visa__activity_type_icon
@@ -819,7 +1008,7 @@ msgstr "المتابعون (الشركاء)"
 #: model:ir.model.fields,help:flex_kathiri_approvals.field_flex_approval_starting_work_request__activity_type_icon
 #: model:ir.model.fields,help:flex_kathiri_approvals.field_flex_medical_insurance_pack__activity_type_icon
 msgid "Font awesome icon e.g. fa-tasks"
-msgstr "رمز الخط الرائع على سبيل المثال. مهام كرة القدم"
+msgstr "أيقونة الخط الرهيب مثل fa-tasks"
 
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_starting_work_request__hod
@@ -838,6 +1027,22 @@ msgid "HR Manager Approval"
 msgstr "موافقة مدير الموارد البشرية"
 
 #. module: flex_kathiri_approvals
+#: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.view_flex_approval_air_ticket_form
+msgid "HR Manager Approve"
+msgstr "موافقة مدير الموارد البشرية"
+
+#. module: flex_kathiri_approvals
+#: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_air_ticket__hr_admin_note
+msgid "HR/ADMIN Remarks"
+msgstr "ملاحظات الموارد البشرية/الإدارة"
+
+#. module: flex_kathiri_approvals
+#: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.view_flex_approval_air_ticket_form
+msgid "HR/Admin Remarks"
+msgstr "ملاحظات الموارد البشرية/الإدارة"
+
+#. module: flex_kathiri_approvals
+#: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_air_ticket__has_message
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_business_trip__has_message
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_employee_transfer__has_message
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_exit_return_visa__has_message
@@ -849,14 +1054,16 @@ msgstr "موافقة مدير الموارد البشرية"
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_starting_work_request__has_message
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_medical_insurance_pack__has_message
 msgid "Has Message"
-msgstr "لديه رسالة"
+msgstr "يحتوي على رسالة"
 
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_business_trip__hotel_name
 msgid "Hotel Name"
-msgstr "اسم فندق"
+msgstr "اسم الفندق"
 
 #. module: flex_kathiri_approvals
+#: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_air_ticket__id
+#: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_air_ticket_reject_wizard__id
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_business_trip__id
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_business_trip_reject_wizard__id
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_employee_transfer__id
@@ -878,9 +1085,10 @@ msgstr "اسم فندق"
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_starting_work_request_reject_wizard__id
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_medical_insurance_pack__id
 msgid "ID"
-msgstr ""
+msgstr "المعرف"
 
 #. module: flex_kathiri_approvals
+#: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_air_ticket__activity_exception_icon
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_business_trip__activity_exception_icon
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_employee_transfer__activity_exception_icon
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_exit_return_visa__activity_exception_icon
@@ -892,9 +1100,10 @@ msgstr ""
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_starting_work_request__activity_exception_icon
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_medical_insurance_pack__activity_exception_icon
 msgid "Icon"
-msgstr ""
+msgstr "الأيقونة"
 
 #. module: flex_kathiri_approvals
+#: model:ir.model.fields,help:flex_kathiri_approvals.field_flex_approval_air_ticket__activity_exception_icon
 #: model:ir.model.fields,help:flex_kathiri_approvals.field_flex_approval_business_trip__activity_exception_icon
 #: model:ir.model.fields,help:flex_kathiri_approvals.field_flex_approval_employee_transfer__activity_exception_icon
 #: model:ir.model.fields,help:flex_kathiri_approvals.field_flex_approval_exit_return_visa__activity_exception_icon
@@ -906,9 +1115,10 @@ msgstr ""
 #: model:ir.model.fields,help:flex_kathiri_approvals.field_flex_approval_starting_work_request__activity_exception_icon
 #: model:ir.model.fields,help:flex_kathiri_approvals.field_flex_medical_insurance_pack__activity_exception_icon
 msgid "Icon to indicate an exception activity."
-msgstr ""
+msgstr "أيقونة للإشارة إلى نشاط استثناء"
 
 #. module: flex_kathiri_approvals
+#: model:ir.model.fields,help:flex_kathiri_approvals.field_flex_approval_air_ticket__message_needaction
 #: model:ir.model.fields,help:flex_kathiri_approvals.field_flex_approval_business_trip__message_needaction
 #: model:ir.model.fields,help:flex_kathiri_approvals.field_flex_approval_employee_transfer__message_needaction
 #: model:ir.model.fields,help:flex_kathiri_approvals.field_flex_approval_exit_return_visa__message_needaction
@@ -920,9 +1130,11 @@ msgstr ""
 #: model:ir.model.fields,help:flex_kathiri_approvals.field_flex_approval_starting_work_request__message_needaction
 #: model:ir.model.fields,help:flex_kathiri_approvals.field_flex_medical_insurance_pack__message_needaction
 msgid "If checked, new messages require your attention."
-msgstr "إذا تم تحديدها، فإن الرسائل الجديدة تتطلب انتباهك."
+msgstr "إذا تم التحقق، فإن الرسائل الجديدة تتطلب اهتمامك."
 
 #. module: flex_kathiri_approvals
+#: model:ir.model.fields,help:flex_kathiri_approvals.field_flex_approval_air_ticket__message_has_error
+#: model:ir.model.fields,help:flex_kathiri_approvals.field_flex_approval_air_ticket__message_has_sms_error
 #: model:ir.model.fields,help:flex_kathiri_approvals.field_flex_approval_business_trip__message_has_error
 #: model:ir.model.fields,help:flex_kathiri_approvals.field_flex_approval_business_trip__message_has_sms_error
 #: model:ir.model.fields,help:flex_kathiri_approvals.field_flex_approval_employee_transfer__message_has_error
@@ -944,7 +1156,12 @@ msgstr "إذا تم تحديدها، فإن الرسائل الجديدة تتط
 #: model:ir.model.fields,help:flex_kathiri_approvals.field_flex_medical_insurance_pack__message_has_error
 #: model:ir.model.fields,help:flex_kathiri_approvals.field_flex_medical_insurance_pack__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
-msgstr "إذا تم تحديده، فإن بعض الرسائل تحتوي على خطأ في التسليم."
+msgstr "إذا تم التحقق، فإن بعض الرسائل لديها خطأ في التسليم."
+
+#. module: flex_kathiri_approvals
+#: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_renew_vehicle_insurance__amount
+msgid "Insurance Amount"
+msgstr "مبلغ التأمين"
 
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_renew_medical_insurance__insurance_company_id
@@ -976,14 +1193,15 @@ msgstr "داخلي"
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_starting_work_request__iqama_id
 msgid "Iqama ID"
-msgstr "معرف الإقامة"
+msgstr "رقم الإقامة"
 
 #. module: flex_kathiri_approvals
 #: model:ir.model,name:flex_kathiri_approvals.model_flex_approval_renew_iqama
 msgid "Iqama Renewal Approval"
-msgstr "الموافقة على تجديد الإقامة"
+msgstr "موافقة تجديد الإقامة"
 
 #. module: flex_kathiri_approvals
+#: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_air_ticket__message_is_follower
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_business_trip__message_is_follower
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_employee_transfer__message_is_follower
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_exit_return_visa__message_is_follower
@@ -995,7 +1213,7 @@ msgstr "الموافقة على تجديد الإقامة"
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_starting_work_request__message_is_follower
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_medical_insurance_pack__message_is_follower
 msgid "Is Follower"
-msgstr "هو متابع"
+msgstr "هل هو متابع"
 
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_exit_return_visa__employee_job_id
@@ -1004,12 +1222,12 @@ msgstr "هو متابع"
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_renew_vehicle_insurance__employee_job_id
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_starting_work_request__employee_job_id
 msgid "Job Position"
-msgstr "وظيفه"
+msgstr "المسمى الوظيفي"
 
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_renew_driving_license__last_vehicle_license_id
 msgid "Last Approved Vehicle Driving license"
-msgstr "آخر رخصة قيادة مركبة معتمدة"
+msgstr "آخر رخصة قيادة معتمدة للمركبة"
 
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_starting_work_request__last_time_off_leave_date_from
@@ -1019,14 +1237,26 @@ msgstr "تاريخ آخر إجازة من"
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_starting_work_request__last_time_off_leave_date_to
 msgid "Last Leave Date To"
-msgstr "تاريخ الإجازة الأخير إلى"
+msgstr "تاريخ آخر إجازة إلى"
+
+#. module: flex_kathiri_approvals
+#: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_renew_driving_license__last_driving_license_date_to
+msgid "Last License End Date"
+msgstr "تاريخ انتهاء الرخصة الأخيرة"
+
+#. module: flex_kathiri_approvals
+#: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_renew_driving_license__last_driving_license_date_from
+msgid "Last License Start Date"
+msgstr "تاريخ بدء الرخصة الأخيرة"
 
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_starting_work_request__last_time_off_leave_id
 msgid "Last Time Off Leave"
-msgstr "آخر مرة إجازة"
+msgstr "آخر إجازة"
 
 #. module: flex_kathiri_approvals
+#: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_air_ticket__write_uid
+#: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_air_ticket_reject_wizard__write_uid
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_business_trip__write_uid
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_business_trip_reject_wizard__write_uid
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_employee_transfer__write_uid
@@ -1051,6 +1281,8 @@ msgid "Last Updated by"
 msgstr "آخر تحديث بواسطة"
 
 #. module: flex_kathiri_approvals
+#: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_air_ticket__write_date
+#: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_air_ticket_reject_wizard__write_date
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_business_trip__write_date
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_business_trip_reject_wizard__write_date
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_employee_transfer__write_date
@@ -1072,7 +1304,7 @@ msgstr "آخر تحديث بواسطة"
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_starting_work_request_reject_wizard__write_date
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_medical_insurance_pack__write_date
 msgid "Last Updated on"
-msgstr "آخر تحديث بتاريخ"
+msgstr "آخر تحديث في"
 
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_renew_vehicle_insurance__last_vehicle_insurance_id
@@ -1082,34 +1314,37 @@ msgstr "آخر تأمين للمركبة"
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_exit_return_visa__leave_id
 msgid "Leave"
-msgstr "مغادرة"
+msgstr "المغادرة"
 
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_resignation__leave_date
 msgid "Leave Date"
-msgstr "تاريخ مغادرة"
+msgstr "تاريخ المغادرة"
 
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_renew_driving_license__driving_license_date_to
-#: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_renew_driving_license__last_driving_license_date_to
 msgid "License End Date"
-msgstr "تاريخ انتهاء الترخيص"
+msgstr "تاريخ انتهاء الرخصة"
 
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_renew_driving_license__driving_license_date_from
-#: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_renew_driving_license__last_driving_license_date_from
 msgid "License Start Date"
-msgstr "تاريخ بدء الترخيص"
+msgstr "تاريخ بدء الرخصة"
+
+#. module: flex_kathiri_approvals
+#: model_terms:ir.actions.act_window,help:flex_kathiri_approvals.action_approval_air_ticket
+msgid "Manage Air Ticket Approvals"
+msgstr "إدارة موافقات تذاكر الطيران"
 
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields.selection,name:flex_kathiri_approvals.selection__flex_approval_renew_iqama__state__department_manager_approval
 msgid "Manager Approval"
-msgstr "موافقة مدير"
+msgstr "موافقة المدير"
 
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields,help:flex_kathiri_approvals.field_flex_medical_insurance_pack__coverage_limit
 msgid "Maximum coverage limit of the package"
-msgstr "الحد الأقصى لتغطية الباقة"
+msgstr "الحد الأقصى للتغطية للحزمة"
 
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_hr_employee__medical_insurance_id
@@ -1121,12 +1356,12 @@ msgstr "التأمين الطبي"
 #. module: flex_kathiri_approvals
 #: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.view_medical_insurance_pack_form
 msgid "Medical Insurance Pack"
-msgstr "باقة التأمين الطبي"
+msgstr "حزمة التأمين الطبي"
 
 #. module: flex_kathiri_approvals
 #: model:ir.model,name:flex_kathiri_approvals.model_flex_medical_insurance_pack
 msgid "Medical Insurance Package"
-msgstr "باقة التأمين الطبي"
+msgstr "حزمة التأمين الطبي"
 
 #. module: flex_kathiri_approvals
 #: model:ir.actions.act_window,name:flex_kathiri_approvals.action_medical_insurance_pack
@@ -1143,14 +1378,14 @@ msgstr "معالج رفض التأمين الطبي"
 #. module: flex_kathiri_approvals
 #: model:ir.model,name:flex_kathiri_approvals.model_flex_approval_renew_medical_insurance
 msgid "Medical Insurance Renewal Approval"
-msgstr "الموافقة على تجديد التأمين الطبي"
+msgstr "موافقة تجديد التأمين الطبي"
 
 #. module: flex_kathiri_approvals
 #. odoo-python
 #: code:addons/flex_kathiri_approvals/models/medical_insurance_approval.py:0
 #, python-format
 msgid "Medical Insurance Renewal Expense for %s"
-msgstr "نفقات تجديد التأمين الطبي لـ %s"
+msgstr "نفقات تجديد التأمين الطبي لـ "
 
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_medical_insurance_reject_wizard__renew_medical_insurance_id
@@ -1167,7 +1402,7 @@ msgstr "طلبات تجديد التأمين الطبي"
 #: code:addons/flex_kathiri_approvals/wizards/medical_insurance_approval_reject.py:0
 #, python-format
 msgid "Medical Insurance Renewal rejected with reason: %s"
-msgstr "تم رفض تجديد التأمين الطبي للسبب: %s"
+msgstr "تم رفض تجديد التأمين الطبي بسبب: "
 
 #. module: flex_kathiri_approvals
 #: model:ir.ui.menu,name:flex_kathiri_approvals.menu_flex_approval_medical_insurance
@@ -1177,16 +1412,17 @@ msgstr "طلبات التأمين الطبي"
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_hr_employee__medical_insurance_sponsored_ids
 msgid "Medical Insurance Sponsored"
-msgstr "التأمين الطبي برعاية"
+msgstr "التأمين الطبي المدعوم"
 
 #. module: flex_kathiri_approvals
 #. odoo-python
 #: code:addons/flex_kathiri_approvals/models/medical_insurance_approval.py:0
 #, python-format
 msgid "Medical insurance renewal expense for employee %s"
-msgstr "مصاريف تجديد التأمين الطبي للموظف %s"
+msgstr "نفقات تجديد التأمين الطبي للموظف "
 
 #. module: flex_kathiri_approvals
+#: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_air_ticket__message_has_error
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_business_trip__message_has_error
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_employee_transfer__message_has_error
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_exit_return_visa__message_has_error
@@ -1201,6 +1437,7 @@ msgid "Message Delivery error"
 msgstr "خطأ في تسليم الرسالة"
 
 #. module: flex_kathiri_approvals
+#: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_air_ticket__message_ids
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_business_trip__message_ids
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_employee_transfer__message_ids
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_exit_return_visa__message_ids
@@ -1212,7 +1449,7 @@ msgstr "خطأ في تسليم الرسالة"
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_starting_work_request__message_ids
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_medical_insurance_pack__message_ids
 msgid "Messages"
-msgstr "رسائل"
+msgstr "الرسائل"
 
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields.selection,name:flex_kathiri_approvals.selection__flex_approval_exit_return_visa__visa_for__mission
@@ -1221,6 +1458,7 @@ msgid "Mission"
 msgstr "مهمة"
 
 #. module: flex_kathiri_approvals
+#: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_air_ticket__my_activity_date_deadline
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_business_trip__my_activity_date_deadline
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_employee_transfer__my_activity_date_deadline
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_exit_return_visa__my_activity_date_deadline
@@ -1232,27 +1470,30 @@ msgstr "مهمة"
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_starting_work_request__my_activity_date_deadline
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_medical_insurance_pack__my_activity_date_deadline
 msgid "My Activity Deadline"
-msgstr "الموعد النهائي لنشاطي"
+msgstr "مهلة نشاطي"
 
 #. module: flex_kathiri_approvals
-#: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_renew_medical_insurance_sponsored__name
+#: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_renew_medical_insurance_sponsored__partner_id
 msgid "Name"
-msgstr "اسم"
+msgstr "الاسم"
 
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_exit_return_visa__employee_nationality
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_starting_work_request__employee_nationality
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_hr_leave__employee_nationality
 msgid "Nationality (country)"
-msgstr "الجنسية"
+msgstr "الجنسية (البلد)"
 
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_hr_leave__needs_visa
 msgid "Needs Visa"
-msgstr "يحتاج إلى تأشيرة"
+msgstr "يحتاج تأشيرة"
 
 #. module: flex_kathiri_approvals
 #. odoo-python
+#: code:addons/flex_kathiri_approvals/models/air_ticket_approval.py:0
+#: code:addons/flex_kathiri_approvals/models/air_ticket_approval.py:0
+#: code:addons/flex_kathiri_approvals/models/air_ticket_approval.py:0
 #: code:addons/flex_kathiri_approvals/models/busniess_trip_approval.py:0
 #: code:addons/flex_kathiri_approvals/models/busniess_trip_approval.py:0
 #: code:addons/flex_kathiri_approvals/models/busniess_trip_approval.py:0
@@ -1291,7 +1532,7 @@ msgstr "جديد"
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_employee_transfer__new_department_id
 msgid "New Department"
-msgstr "قسم جديد"
+msgstr "القسم الجديد"
 
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields.selection,name:flex_kathiri_approvals.selection__flex_approval_starting_work_request__request_type__new_employee
@@ -1301,7 +1542,7 @@ msgstr "موظف جديد"
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_renew_iqama__renewal_date
 msgid "New Expiry Date"
-msgstr "تاريخ انتهاء الصلاحية الجديد"
+msgstr "تاريخ الانتهاء الجديد"
 
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_renew_vehicle_insurance__new_insurance_end_date
@@ -1316,9 +1557,10 @@ msgstr "تاريخ بدء التأمين الجديد"
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_renew_iqama__new_iqama_id
 msgid "New Iqama ID"
-msgstr "معرف الإقامة الجديد"
+msgstr "رقم الإقامة الجديد"
 
 #. module: flex_kathiri_approvals
+#: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_air_ticket__activity_calendar_event_id
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_business_trip__activity_calendar_event_id
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_employee_transfer__activity_calendar_event_id
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_exit_return_visa__activity_calendar_event_id
@@ -1330,9 +1572,10 @@ msgstr "معرف الإقامة الجديد"
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_starting_work_request__activity_calendar_event_id
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_medical_insurance_pack__activity_calendar_event_id
 msgid "Next Activity Calendar Event"
-msgstr "حدث تقويم النشاط التالي"
+msgstr "النشاط التالي في التقويم"
 
 #. module: flex_kathiri_approvals
+#: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_air_ticket__activity_date_deadline
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_business_trip__activity_date_deadline
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_employee_transfer__activity_date_deadline
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_exit_return_visa__activity_date_deadline
@@ -1344,9 +1587,10 @@ msgstr "حدث تقويم النشاط التالي"
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_starting_work_request__activity_date_deadline
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_medical_insurance_pack__activity_date_deadline
 msgid "Next Activity Deadline"
-msgstr "الموعد النهائي للنشاط التالي"
+msgstr "مهلة النشاط التالي"
 
 #. module: flex_kathiri_approvals
+#: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_air_ticket__activity_summary
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_business_trip__activity_summary
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_employee_transfer__activity_summary
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_exit_return_visa__activity_summary
@@ -1361,6 +1605,7 @@ msgid "Next Activity Summary"
 msgstr "ملخص النشاط التالي"
 
 #. module: flex_kathiri_approvals
+#: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_air_ticket__activity_type_id
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_business_trip__activity_type_id
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_employee_transfer__activity_type_id
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_exit_return_visa__activity_type_id
@@ -1386,14 +1631,20 @@ msgstr "نوع النشاط التالي"
 #: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.view_approval_starting_work_request_form
 #: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.view_renew_vehicle_insurance_form
 msgid "Note"
-msgstr "ملحوظة"
+msgstr "ملاحظة"
 
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_resignation__notice_period
 msgid "Notice Period (days)"
-msgstr "فترة الإشعار (بالأيام)"
+msgstr "فترة الإشعار (أيام)"
 
 #. module: flex_kathiri_approvals
+#: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_air_ticket__name
+msgid "Number"
+msgstr "الرقم"
+
+#. module: flex_kathiri_approvals
+#: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_air_ticket__message_needaction_counter
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_business_trip__message_needaction_counter
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_employee_transfer__message_needaction_counter
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_exit_return_visa__message_needaction_counter
@@ -1408,6 +1659,12 @@ msgid "Number of Actions"
 msgstr "عدد الإجراءات"
 
 #. module: flex_kathiri_approvals
+#: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_starting_work_request__number_of_days_late
+msgid "Number of days late"
+msgstr "عدد الأيام المتأخرة"
+
+#. module: flex_kathiri_approvals
+#: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_air_ticket__message_has_error_counter
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_business_trip__message_has_error_counter
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_employee_transfer__message_has_error_counter
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_exit_return_visa__message_has_error_counter
@@ -1422,6 +1679,7 @@ msgid "Number of errors"
 msgstr "عدد الأخطاء"
 
 #. module: flex_kathiri_approvals
+#: model:ir.model.fields,help:flex_kathiri_approvals.field_flex_approval_air_ticket__message_needaction_counter
 #: model:ir.model.fields,help:flex_kathiri_approvals.field_flex_approval_business_trip__message_needaction_counter
 #: model:ir.model.fields,help:flex_kathiri_approvals.field_flex_approval_employee_transfer__message_needaction_counter
 #: model:ir.model.fields,help:flex_kathiri_approvals.field_flex_approval_exit_return_visa__message_needaction_counter
@@ -1433,9 +1691,10 @@ msgstr "عدد الأخطاء"
 #: model:ir.model.fields,help:flex_kathiri_approvals.field_flex_approval_starting_work_request__message_needaction_counter
 #: model:ir.model.fields,help:flex_kathiri_approvals.field_flex_medical_insurance_pack__message_needaction_counter
 msgid "Number of messages requiring action"
-msgstr "عدد الرسائل التي تتطلب اتخاذ إجراء"
+msgstr "عدد الرسائل التي تتطلب إجراء"
 
 #. module: flex_kathiri_approvals
+#: model:ir.model.fields,help:flex_kathiri_approvals.field_flex_approval_air_ticket__message_has_error_counter
 #: model:ir.model.fields,help:flex_kathiri_approvals.field_flex_approval_business_trip__message_has_error_counter
 #: model:ir.model.fields,help:flex_kathiri_approvals.field_flex_approval_employee_transfer__message_has_error_counter
 #: model:ir.model.fields,help:flex_kathiri_approvals.field_flex_approval_exit_return_visa__message_has_error_counter
@@ -1447,14 +1706,28 @@ msgstr "عدد الرسائل التي تتطلب اتخاذ إجراء"
 #: model:ir.model.fields,help:flex_kathiri_approvals.field_flex_approval_starting_work_request__message_has_error_counter
 #: model:ir.model.fields,help:flex_kathiri_approvals.field_flex_medical_insurance_pack__message_has_error_counter
 msgid "Number of messages with delivery error"
-msgstr "عدد الرسائل التي بها خطأ في التسليم"
+msgstr "عدد الرسائل التي تحتوي على خطأ في التسليم"
+
+#. module: flex_kathiri_approvals
+#. odoo-python
+#: code:addons/flex_kathiri_approvals/models/air_ticket_approval.py:0
+#, python-format
+msgid "Only Admin Manager or HR Manager can approve this."
+msgstr "يمكن لمدير الإدارة أو مدير الموارد البشرية فقط الموافقة على هذا"
+
+#. module: flex_kathiri_approvals
+#. odoo-python
+#: code:addons/flex_kathiri_approvals/models/air_ticket_approval.py:0
+#, python-format
+msgid "Only CEO can approve this."
+msgstr "يمكن للرئيس التنفيذي فقط الموافقة على هذا"
 
 #. module: flex_kathiri_approvals
 #. odoo-python
 #: code:addons/flex_kathiri_approvals/models/busniess_trip_approval.py:0
 #, python-format
 msgid "Only CEO is authorized to approve this."
-msgstr "الرئيس التنفيذي فقط هو المخول بالموافقة على ذلك."
+msgstr "يمكن للرئيس التنفيذي فقط الموافقة على هذا"
 
 #. module: flex_kathiri_approvals
 #. odoo-python
@@ -1468,7 +1741,14 @@ msgstr "الرئيس التنفيذي فقط هو المخول بالموافق�
 #: code:addons/flex_kathiri_approvals/models/vehicle_insurance_approval.py:0
 #, python-format
 msgid "Only HR managers are authorized to approve for the HR department."
-msgstr "يحق لمديري الموارد البشرية فقط الموافقة على قسم الموارد البشرية."
+msgstr "يمكن لمدراء الموارد البشرية فقط الموافقة لقسم الموارد البشرية"
+
+#. module: flex_kathiri_approvals
+#. odoo-python
+#: code:addons/flex_kathiri_approvals/models/air_ticket_approval.py:0
+#, python-format
+msgid "Only approved air ticket requests can generate a purchase order."
+msgstr "يمكن لطلبات تذاكر الطيران الموافق عليها فقط إصدار أمر شراء"
 
 #. module: flex_kathiri_approvals
 #. odoo-python
@@ -1476,9 +1756,11 @@ msgstr "يحق لمديري الموارد البشرية فقط الموافق�
 #: code:addons/flex_kathiri_approvals/models/employee_transfer_approval.py:0
 #, python-format
 msgid ""
-"Only the HR managers are authorized to approve the transfer for the "
+"Only the HR managers are authorized to approve the transfer for the"
 "employee."
-msgstr "يحق لمديري الموارد البشرية فقط الموافقة على نقل الموظف."
+msgstr ""
+"يمكن لمدراء الموارد البشرية فقط الموافقة على النقل"
+"الموظف"
 
 #. module: flex_kathiri_approvals
 #. odoo-python
@@ -1487,7 +1769,9 @@ msgstr "يحق لمديري الموارد البشرية فقط الموافق�
 msgid ""
 "Only the department manager (%s) is authorized to approve for the current "
 "department."
-msgstr "فقط مدير القسم (%s) هو المخول بالموافقة على القسم الحالي."
+msgstr ""
+"يمكن لمدير القسم فقط الموافقة على القسم"
+"الحالي."
 
 #. module: flex_kathiri_approvals
 #. odoo-python
@@ -1496,7 +1780,9 @@ msgstr "فقط مدير القسم (%s) هو المخول بالموافقة ع�
 msgid ""
 "Only the department manager (%s) is authorized to approve the transfer for "
 "the current department."
-msgstr "فقط مدير القسم (%s) هو المخول بالموافقة على النقل للقسم الحالي ."
+msgstr ""
+"يمكن لمدير القسم فقط الموافقة على النقل لل"
+"القسم الحالي"
 
 #. module: flex_kathiri_approvals
 #. odoo-python
@@ -1506,7 +1792,9 @@ msgstr "فقط مدير القسم (%s) هو المخول بالموافقة ع�
 msgid ""
 "Only the department manager is authorized to approve for the current "
 "department."
-msgstr "يحق لمدير القسم فقط الموافقة على القسم الحالي."
+msgstr ""
+"يمكن لمدير القسم فقط الموافقة على النقل لل"
+"القسم الحالي"
 
 #. module: flex_kathiri_approvals
 #. odoo-python
@@ -1515,7 +1803,7 @@ msgstr "يحق لمدير القسم فقط الموافقة على القسم �
 msgid ""
 "Only the direct manager (%s) is authorized to approve for the employee."
 msgstr ""
-"يحق فقط للمدير المباشر (%s) الموافقة على الموظف."
+"يمكن للمدير المباشر فقط الموافقة على الموظف"
 
 #. module: flex_kathiri_approvals
 #. odoo-python
@@ -1523,12 +1811,12 @@ msgstr ""
 #: code:addons/flex_kathiri_approvals/models/resignation_approval.py:0
 #, python-format
 msgid "Only the direct manager is authorized to approve for the employee."
-msgstr "يحق فقط للمدير المباشر الموافقة على الموظف."
+msgstr "يمكن للمدير المباشر فقط الموافقة على الموظف"
 
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_renew_medical_insurance__pack_id
 msgid "Pack"
-msgstr "حزمة"
+msgstr "الحزمة"
 
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_renew_medical_insurance__pack_amount
@@ -1548,19 +1836,26 @@ msgid ""
 "Please configure the approval category for resignation requests in the "
 "settings."
 msgstr ""
-"الرجاء تكوين فئة الموافقة لطلبات الاستقالة في الإعدادات."
+"يرجى تكوين فئة الموافقة لطلبات الاستقالة في"
+"الإعدادات"
 
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_medical_insurance_pack__pack_amount
 msgid "Premium Amount"
-msgstr "مبلغ القسط"
+msgstr "مبلغ الاشتراك"
+
+#. module: flex_kathiri_approvals
+#: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_air_ticket__purchase_id
+msgid "Purchase Order"
+msgstr "أمر الشراء"
 
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_business_trip__purpose
 msgid "Purpose"
-msgstr "غاية"
+msgstr "الغرض"
 
 #. module: flex_kathiri_approvals
+#: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_air_ticket__rating_ids
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_business_trip__rating_ids
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_employee_transfer__rating_ids
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_exit_return_visa__rating_ids
@@ -1575,15 +1870,21 @@ msgid "Ratings"
 msgstr "التقييمات"
 
 #. module: flex_kathiri_approvals
+#: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_air_ticket__recommended_supplier
+msgid "Recommended Supplier"
+msgstr "المورد الموصى به"
+
+#. module: flex_kathiri_approvals
 #: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.view_approval_business_trip_form
 #: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.view_approval_renew_driving_license_form
 #: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.view_approval_renew_medical_insurance_form
 #: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.view_approval_starting_work_request_form
 #: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.view_exit_return_visa_form
+#: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.view_flex_approval_air_ticket_form
 #: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.view_flex_approval_renew_vehicle_insurance_reject_wizard
 #: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.view_renew_vehicle_insurance_form
 msgid "Reject"
-msgstr "يرفض"
+msgstr "رفض"
 
 #. module: flex_kathiri_approvals
 #: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.view_approval_renew_iqama_form
@@ -1601,6 +1902,7 @@ msgid "Reject Transfer"
 msgstr "رفض النقل"
 
 #. module: flex_kathiri_approvals
+#: model:ir.model.fields.selection,name:flex_kathiri_approvals.selection__flex_approval_air_ticket__state__rejected
 #: model:ir.model.fields.selection,name:flex_kathiri_approvals.selection__flex_approval_business_trip__state__rejected
 #: model:ir.model.fields.selection,name:flex_kathiri_approvals.selection__flex_approval_employee_transfer__state__rejected
 #: model:ir.model.fields.selection,name:flex_kathiri_approvals.selection__flex_approval_exit_return_visa__state__rejected
@@ -1626,6 +1928,7 @@ msgstr "إشعار الرفض"
 
 #. module: flex_kathiri_approvals
 #. odoo-python
+#: code:addons/flex_kathiri_approvals/models/air_ticket_approval.py:0
 #: code:addons/flex_kathiri_approvals/models/busniess_trip_approval.py:0
 #: code:addons/flex_kathiri_approvals/models/employee_transfer_approval.py:0
 #: code:addons/flex_kathiri_approvals/models/exit_return_visa.py:0
@@ -1635,6 +1938,7 @@ msgstr "إشعار الرفض"
 #: code:addons/flex_kathiri_approvals/models/resignation_approval.py:0
 #: code:addons/flex_kathiri_approvals/models/starting_work_approval.py:0
 #: code:addons/flex_kathiri_approvals/models/vehicle_insurance_approval.py:0
+#: model:ir.actions.act_window,name:flex_kathiri_approvals.action_flex_approval_ait_ticket_reject_wizard
 #: model:ir.actions.act_window,name:flex_kathiri_approvals.action_flex_approval_business_trip_reject_wizard
 #: model:ir.actions.act_window,name:flex_kathiri_approvals.action_flex_approval_employee_transfer_reject_wizard
 #: model:ir.actions.act_window,name:flex_kathiri_approvals.action_flex_approval_exit_return_visa_reject_wizard
@@ -1642,6 +1946,7 @@ msgstr "إشعار الرفض"
 #: model:ir.actions.act_window,name:flex_kathiri_approvals.action_flex_approval_renew_driving_license_reject_wizard
 #: model:ir.actions.act_window,name:flex_kathiri_approvals.action_flex_approval_renew_iqama_id_reject_wizard
 #: model:ir.actions.act_window,name:flex_kathiri_approvals.action_flex_approval_resignation_reject_wizard
+#: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_air_ticket_reject_wizard__reason
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_business_trip_reject_wizard__reason
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_employee_transfer_reject_wizard__reason
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_exit_return_visa_reject_wizard__reason
@@ -1658,7 +1963,12 @@ msgstr "سبب الرفض"
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_renew_medical_insurance_sponsored__relation
 msgid "Relation"
-msgstr "علاقة"
+msgstr "العلاقة"
+
+#. module: flex_kathiri_approvals
+#: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.view_flex_approval_air_ticket_form
+msgid "Remarks ..."
+msgstr "ملاحظات ..."
 
 #. module: flex_kathiri_approvals
 #: model:ir.ui.menu,name:flex_kathiri_approvals.menu_flex_approval_renew_driving_license
@@ -1688,22 +1998,22 @@ msgstr "طلبات تجديد الاقامة"
 #: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.view_renew_vehicle_insurance_search
 #: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.view_renew_vehicle_insurance_tree
 msgid "Renew Vehicle Insurance"
-msgstr "تجديد التأمين على المركبات"
+msgstr "تجديد تأمين المركبات"
 
 #. module: flex_kathiri_approvals
 #: model:ir.model,name:flex_kathiri_approvals.model_flex_approval_renew_vehicle_insurance
 msgid "Renew Vehicle Insurance Approval"
-msgstr "تجديد الموافقة على تأمين المركبات"
+msgstr "موافقة تجديد تأمين المركبات"
 
 #. module: flex_kathiri_approvals
 #: model:ir.model,name:flex_kathiri_approvals.model_flex_approval_renew_vehicle_insurance_reject_wizard
 msgid "Renew Vehicle Insurance Rejection Wizard"
-msgstr "معالج رفض تجديد التأمين على المركبات"
+msgstr "نافذة رفض تجديد تأمين المركبات"
 
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_renew_vehicle_insurance_reject_wizard__renew_vehicle_insurance_id
 msgid "Renew Vehicle Insurance Request"
-msgstr "تجديد طلب تأمين المركبة"
+msgstr "طلب تجديد تأمين المركبات"
 
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_starting_work_request__request_type
@@ -1711,9 +2021,19 @@ msgid "Request Type"
 msgstr "نوع الطلب"
 
 #. module: flex_kathiri_approvals
+#: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_air_ticket__request_date
+msgid "Requested Date"
+msgstr "تاريخ الطلب"
+
+#. module: flex_kathiri_approvals
 #: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.view_hr_employee_form_inherit_medical_insurance
 msgid "Requests"
 msgstr "الطلبات"
+
+#. module: flex_kathiri_approvals
+#: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_air_ticket__required_date
+msgid "Required Date"
+msgstr "تاريخ الاستلام"
 
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields.selection,name:flex_kathiri_approvals.selection__flex_approval_resignation__resignation_type__resignation
@@ -1723,7 +2043,7 @@ msgstr "استقالة"
 #. module: flex_kathiri_approvals
 #: model:ir.model,name:flex_kathiri_approvals.model_flex_approval_resignation
 msgid "Resignation Approval"
-msgstr "الموافقة على الاستقالة"
+msgstr "موافقة الاستقالة"
 
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_resignation__approved_date
@@ -1738,7 +2058,7 @@ msgstr "تاريخ إنشاء الاستقالة"
 #. module: flex_kathiri_approvals
 #: model:ir.model,name:flex_kathiri_approvals.model_flex_approval_resignation_reject_wizard
 msgid "Resignation Rejection Wizard"
-msgstr "معالج رفض الاستقالة"
+msgstr "نافذة رفض الاستقالة"
 
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_resignation_reject_wizard__resignation_id
@@ -1757,6 +2077,7 @@ msgid "Resignation Type"
 msgstr "نوع الاستقالة"
 
 #. module: flex_kathiri_approvals
+#: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_air_ticket__activity_user_id
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_business_trip__activity_user_id
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_employee_transfer__activity_user_id
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_exit_return_visa__activity_user_id
@@ -1771,6 +2092,12 @@ msgid "Responsible User"
 msgstr "المستخدم المسؤول"
 
 #. module: flex_kathiri_approvals
+#: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.view_flex_approval_air_ticket_form
+msgid "Riyadh/Saudi"
+msgstr "الرياض/السعودية"
+
+#. module: flex_kathiri_approvals
+#: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_air_ticket__message_has_sms_error
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_business_trip__message_has_sms_error
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_employee_transfer__message_has_sms_error
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_exit_return_visa__message_has_sms_error
@@ -1789,7 +2116,7 @@ msgstr "خطأ في تسليم الرسائل القصيرة"
 #: model:ir.model.fields,help:flex_kathiri_approvals.field_res_config_settings__flex_employee_resignation_request_approval_type
 #: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.res_config_settings_view_form
 msgid "Select the approval category for handling resignation requests."
-msgstr "حدد فئة الموافقة للتعامل مع طلبات الاستقالة."
+msgstr "اختر فئة الموافقة لمعالجة طلبات الاستقالة"
 
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_business_trip__name
@@ -1807,10 +2134,11 @@ msgstr "حدد فئة الموافقة للتعامل مع طلبات الاست
 #: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.view_approval_resignation_form
 #: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.view_approval_starting_work_request_form
 #: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.view_exit_return_visa_form
+#: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.view_flex_approval_air_ticket_form
 #: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.view_flex_approval_employee_transfer_form
 #: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.view_renew_vehicle_insurance_form
 msgid "Sequence"
-msgstr "تسلسل"
+msgstr "التسلسل"
 
 #. module: flex_kathiri_approvals
 #: model:ir.actions.act_window,name:flex_kathiri_approvals.action_flex_approvals_config
@@ -1824,15 +2152,16 @@ msgid "Son..."
 msgstr "ابن..."
 
 #. module: flex_kathiri_approvals
+#: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_exit_return_visa__sponsored_ids
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_renew_medical_insurance__sponsored_ids
 #: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.view_hr_employee_form_inherit_medical_insurance
 msgid "Sponsored"
-msgstr "المكفولون"
+msgstr "مكفول"
 
 #. module: flex_kathiri_approvals
 #: model:ir.model,name:flex_kathiri_approvals.model_flex_approval_renew_medical_insurance_sponsored
 msgid "Sponsored Individuals for Medical Insurance Renewal"
-msgstr "الأفراد المكفولون لتجديد التأمين الطبي"
+msgstr "الأفراد المكفولين لتجديد التأمين الطبي"
 
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_business_trip__start_date
@@ -1852,33 +2181,34 @@ msgstr "طلب بدء العمل"
 #. module: flex_kathiri_approvals
 #: model:ir.model,name:flex_kathiri_approvals.model_flex_approval_starting_work_request
 msgid "Starting Work Request Approval"
-msgstr "بدء الموافقة على طلب العمل"
+msgstr "موافقة طلب بدء العمل"
 
 #. module: flex_kathiri_approvals
 #: model:ir.actions.act_window,name:flex_kathiri_approvals.action_flex_approval_starting_work_request_reject_wizard
 #: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.view_flex_approval_starting_work_request_reject_wizard
 msgid "Starting Work Request Rejection"
-msgstr "بدء رفض طلب العمل"
+msgstr "رفض طلب بدء العمل"
 
 #. module: flex_kathiri_approvals
 #: model:ir.model,name:flex_kathiri_approvals.model_flex_approval_starting_work_request_reject_wizard
 msgid "Starting Work Request Rejection Wizard"
-msgstr "بدء معالج رفض طلب العمل"
+msgstr "نافذة رفض طلب بدء العمل"
 
 #. module: flex_kathiri_approvals
 #. odoo-python
 #: code:addons/flex_kathiri_approvals/wizards/starting_work_reject_wizard.py:0
 #, python-format
 msgid "Starting Work Request rejected with reason: %s"
-msgstr "تم رفض طلب بدء العمل للسبب: %s"
+msgstr "تم رفض طلب بدء العمل بسبب: "
 
 #. module: flex_kathiri_approvals
 #: model:ir.actions.act_window,name:flex_kathiri_approvals.action_approval_starting_work_request
 #: model:ir.ui.menu,name:flex_kathiri_approvals.menu_flex_approval_work_starting_requests
 msgid "Starting Work Requests"
-msgstr "بدء طلبات العمل"
+msgstr "طلبات بدء العمل"
 
 #. module: flex_kathiri_approvals
+#: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_air_ticket__state
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_business_trip__state
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_employee_transfer__state
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_exit_return_visa__state
@@ -1889,9 +2219,10 @@ msgstr "بدء طلبات العمل"
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_resignation__state
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_starting_work_request__state
 msgid "Status"
-msgstr "حالة"
+msgstr "الحالة"
 
 #. module: flex_kathiri_approvals
+#: model:ir.model.fields,help:flex_kathiri_approvals.field_flex_approval_air_ticket__activity_state
 #: model:ir.model.fields,help:flex_kathiri_approvals.field_flex_approval_business_trip__activity_state
 #: model:ir.model.fields,help:flex_kathiri_approvals.field_flex_approval_employee_transfer__activity_state
 #: model:ir.model.fields,help:flex_kathiri_approvals.field_flex_approval_exit_return_visa__activity_state
@@ -1909,9 +2240,9 @@ msgid ""
 "Planned: Future activities."
 msgstr ""
 "الحالة بناءً على الأنشطة\n"
-"متأخر: لقد مر تاريخ الاستحقاق بالفعل\n"
+"متأخر: تاريخ الاستحقاق قد مر بالفعل\n"
 "اليوم: تاريخ النشاط هو اليوم\n"
-"المخطط لها: الأنشطة المستقبلية."
+"مخطط: أنشطة مستقبلية."
 
 #. module: flex_kathiri_approvals
 #: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.view_approval_business_trip_form
@@ -1921,45 +2252,46 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.view_approval_resignation_form
 #: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.view_approval_starting_work_request_form
 #: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.view_exit_return_visa_form
+#: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.view_flex_approval_air_ticket_form
 #: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.view_flex_approval_employee_transfer_form
 #: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.view_renew_vehicle_insurance_form
 msgid "Submit for Approval"
-msgstr "تقدم للحصول على موافقة"
+msgstr "تقديم للموافقة"
 
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields.selection,name:flex_kathiri_approvals.selection__flex_approval_resignation__resignation_type__termination
 msgid "Termination"
-msgstr "فسخ عقد"
+msgstr "إنهاء"
 
 #. module: flex_kathiri_approvals
 #. odoo-python
 #: code:addons/flex_kathiri_approvals/models/resignation_approval.py:0
 #, python-format
 msgid "Termination Approval Request"
-msgstr "طلب الموافقة على الإنهاء"
+msgstr "طلب موافقة الإنهاء"
 
 #. module: flex_kathiri_approvals
 #. odoo-python
 #: code:addons/flex_kathiri_approvals/models/resignation_approval.py:0
 #, python-format
 msgid "Termination approval request for employee %s."
-msgstr "طلب الموافقة على إنهاء الخدمة للموظف %s."
+msgstr "طلب موافقة الإنهاء للموظف ."
 
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_medical_insurance_pack__terms_conditions
 #: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.view_medical_insurance_pack_form
 msgid "Terms and Conditions"
-msgstr "الأحكام والشروط"
+msgstr "الشروط والأحكام"
 
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields,help:flex_kathiri_approvals.field_flex_medical_insurance_pack__terms_conditions
 msgid "Terms and conditions of the package"
-msgstr "شروط وأحكام الباقة"
+msgstr "الشروط والأحكام للحزمة"
 
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields,help:flex_kathiri_approvals.field_flex_medical_insurance_pack__pack_amount
 msgid "The amount of the insurance premium"
-msgstr "مبلغ قسط التأمين"
+msgstr "مبلغ القسط التأميني"
 
 #. module: flex_kathiri_approvals
 #. odoo-python
@@ -1968,14 +2300,16 @@ msgstr "مبلغ قسط التأمين"
 msgid ""
 "The new driving license dates must be later than the last approved driving "
 "license dates for this vehicle."
-msgstr "يجب أن تكون تواريخ رخصة القيادة الجديدة متأخرة عن آخر تواريخ رخصة القيادة المعتمدة لهذه السيارة."
+msgstr ""
+"يجب أن تكون تواريخ رخصة القيادة الجديدة لاحقة من تواريخ الرخصة السابقة"
+"الموافق عليها لهذه المركبة."
 
 #. module: flex_kathiri_approvals
 #. odoo-python
 #: code:addons/flex_kathiri_approvals/models/busniess_trip_approval.py:0
 #, python-format
 msgid "There are no expenses related to this business trip."
-msgstr "لا توجد نفقات تتعلق برحلة العمل هذه."
+msgstr "لا توجد مصاريف متعلقة بهذه الرحلة العملية."
 
 #. module: flex_kathiri_approvals
 #. odoo-python
@@ -1984,7 +2318,17 @@ msgstr "لا توجد نفقات تتعلق برحلة العمل هذه."
 msgid ""
 "There is no associated termination approval request for this resignation, "
 "pls create a Termination approval "
-msgstr "لا يوجد طلب موافقة على الإنهاء مرتبط بهذه الاستقالة، يرجى إنشاء موافقة على الإنهاء "
+msgstr ""
+"لا يوجد طلب موافقة إنهاء مرتبط بهذه الاستقالة ، "
+"يرجى إنشاء موافقة إنهاء"
+
+
+#. module: flex_kathiri_approvals
+#. odoo-python
+#: code:addons/flex_kathiri_approvals/wizards/air_ticket_reject_wizard.py:0
+#, python-format
+msgid "This Air ticket rejected with reason: %s"
+msgstr "تم رفض تذكرة الطيران بسبب: "
 
 #. module: flex_kathiri_approvals
 #: model:ir.model,name:flex_kathiri_approvals.model_hr_leave
@@ -1994,7 +2338,7 @@ msgstr "الإجازات "
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_employee_transfer__transfer_date
 msgid "Transfer Date"
-msgstr "تاريخ التحويل"
+msgstr "تاريخ النقل"
 
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_employee_transfer__transfer_reason
@@ -2005,7 +2349,7 @@ msgstr "سبب النقل"
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_employee_transfer__name
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_employee_transfer_reject_wizard__transfer_id
 msgid "Transfer Request"
-msgstr "طلب نقل"
+msgstr "طلب النقل"
 
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_employee_transfer__transfer_type
@@ -2020,7 +2364,7 @@ msgstr "نوع النقل"
 #: code:addons/flex_kathiri_approvals/wizards/resignation_reject_wizard.py:0
 #, python-format
 msgid "Transfer rejected with reason: %s"
-msgstr "تم رفض النقل للسبب: %s"
+msgstr "تم رفض النقل بسبب: "
 
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_business_trip__trip_type
@@ -2028,6 +2372,7 @@ msgid "Trip Type"
 msgstr "نوع الرحلة"
 
 #. module: flex_kathiri_approvals
+#: model:ir.model.fields,help:flex_kathiri_approvals.field_flex_approval_air_ticket__activity_exception_decoration
 #: model:ir.model.fields,help:flex_kathiri_approvals.field_flex_approval_business_trip__activity_exception_decoration
 #: model:ir.model.fields,help:flex_kathiri_approvals.field_flex_approval_employee_transfer__activity_exception_decoration
 #: model:ir.model.fields,help:flex_kathiri_approvals.field_flex_approval_exit_return_visa__activity_exception_decoration
@@ -2039,18 +2384,18 @@ msgstr "نوع الرحلة"
 #: model:ir.model.fields,help:flex_kathiri_approvals.field_flex_approval_starting_work_request__activity_exception_decoration
 #: model:ir.model.fields,help:flex_kathiri_approvals.field_flex_medical_insurance_pack__activity_exception_decoration
 msgid "Type of the exception activity on record."
-msgstr "نوع نشاط الاستثناء المسجل."
+msgstr "نوع النشاط الاستثنائي على السجل."
 
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_resignation__types_of_end_services
 msgid "Types Of End Services"
-msgstr "أنواع الخدمات النهائية"
+msgstr "أنواع خدمات النهاية"
 
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields.selection,name:flex_kathiri_approvals.selection__flex_approval_exit_return_visa__visa_for__vacation
 #: model:ir.model.fields.selection,name:flex_kathiri_approvals.selection__hr_leave__visa_for__vacation
 msgid "Vacation"
-msgstr "أجازة"
+msgstr "إجازة"
 
 #. module: flex_kathiri_approvals
 #: model:ir.model,name:flex_kathiri_approvals.model_fleet_vehicle
@@ -2059,23 +2404,51 @@ msgid "Vehicle"
 msgstr "المركبة"
 
 #. module: flex_kathiri_approvals
+#: model:product.template,name:flex_kathiri_approvals.expense_product_vehicle_insurance_product_template
+msgid "Vehicle Insurance"
+msgstr "تأمين المركبات"
+
+#. module: flex_kathiri_approvals
+#. odoo-python
+#: code:addons/flex_kathiri_approvals/models/vehicle_insurance_approval.py:0
+#, python-format
+msgid "Vehicle Insurance Renewal Expense for %s"
+msgstr "تكاليف تجديد تأمين المركبات لـ "
+
+#. module: flex_kathiri_approvals
 #: model:ir.actions.act_window,name:flex_kathiri_approvals.action_flex_approval_renew_vehicle_insurance_reject_wizard
 #: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.view_flex_approval_renew_vehicle_insurance_reject_wizard
 msgid "Vehicle Insurance Renewal Rejection"
-msgstr "رفض تجديد تأمين المركبة"
+msgstr "رفض تجديد تأمين المركبات"
 
 #. module: flex_kathiri_approvals
 #. odoo-python
 #: code:addons/flex_kathiri_approvals/wizards/renew_vehicle_insurance.py:0
 #, python-format
 msgid "Vehicle Insurance Renewal rejected with reason: %s"
-msgstr "تم رفض تجديد تأمين المركبة للسبب: %s"
+msgstr "تم رفض تجديد تأمين المركبات بسبب: "
 
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_fleet_vehicle__vehicle_insurance_count
 #: model_terms:ir.ui.view,arch_db:flex_kathiri_approvals.fleet_vehicle_form_view
 msgid "Vehicle Insurances"
-msgstr "تأمينات المركبات"
+msgstr "تأمين المركبات"
+
+#. module: flex_kathiri_approvals
+#. odoo-python
+#: code:addons/flex_kathiri_approvals/models/vehicle_insurance_approval.py:0
+#, python-format
+msgid "Vehicle insurance renewal expense for employee %s"
+msgstr "تكاليف تجديد تأمين المركبات للموظف "
+
+#. module: flex_kathiri_approvals
+#: model_terms:ir.actions.act_window,help:flex_kathiri_approvals.action_approval_air_ticket
+msgid ""
+"View and manage approvals for air tickets, including submission, approval, "
+"and rejection."
+msgstr ""
+"عرض وإدارة الموافقات لتذاكر الطيران ، بما في ذلك التقديم والموافقة, "
+" والرفض."
 
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_exit_return_visa__visa_amount
@@ -2090,23 +2463,23 @@ msgstr "تاريخ انتهاء التأشيرة"
 #. module: flex_kathiri_approvals
 #: model:product.template,name:flex_kathiri_approvals.expense_product_visa_product_template
 msgid "Visa Expense"
-msgstr "نفقات التأشيرة"
+msgstr "تكاليف التأشيرة"
 
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_exit_return_visa__visa_for
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_hr_leave__visa_for
 msgid "Visa For"
-msgstr "تأشيرة ل"
+msgstr "التأشيرة ل"
 
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_exit_return_visa__visa_date_from
 msgid "Visa Start Date"
-msgstr "تاريخ بدء التأشيرة"
+msgstr ""
 
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields.selection,name:flex_kathiri_approvals.selection__flex_approval_resignation__state__department_manager_approval
 msgid "Wainting Department Manager"
-msgstr "مدير قسم التمنيع"
+msgstr "في انتظار مدير القسم"
 
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields.selection,name:flex_kathiri_approvals.selection__flex_approval_resignation__state__direct_manager_approval
@@ -2116,9 +2489,10 @@ msgstr "في انتظار المدير المباشر"
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields.selection,name:flex_kathiri_approvals.selection__flex_approval_resignation__state__hr_manager_approval
 msgid "Waiting HR Manager"
-msgstr "انتظار مدير الموارد البشرية"
+msgstr "في انتظار مدير الموارد البشرية"
 
 #. module: flex_kathiri_approvals
+#: model:ir.model.fields.selection,name:flex_kathiri_approvals.selection__flex_approval_air_ticket__state__waiting_hr_manager
 #: model:ir.model.fields.selection,name:flex_kathiri_approvals.selection__flex_approval_exit_return_visa__state__hr_manager_approval
 #: model:ir.model.fields.selection,name:flex_kathiri_approvals.selection__flex_approval_renew_driving_license__state__hr_manager_approval
 #: model:ir.model.fields.selection,name:flex_kathiri_approvals.selection__flex_approval_renew_medical_insurance__state__hr_manager_approval
@@ -2128,6 +2502,7 @@ msgid "Waiting HR Manager Approval"
 msgstr "في انتظار موافقة مدير الموارد البشرية"
 
 #. module: flex_kathiri_approvals
+#: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_air_ticket__website_message_ids
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_business_trip__website_message_ids
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_employee_transfer__website_message_ids
 #: model:ir.model.fields,field_description:flex_kathiri_approvals.field_flex_approval_exit_return_visa__website_message_ids
@@ -2142,6 +2517,7 @@ msgid "Website Messages"
 msgstr "رسائل الموقع"
 
 #. module: flex_kathiri_approvals
+#: model:ir.model.fields,help:flex_kathiri_approvals.field_flex_approval_air_ticket__website_message_ids
 #: model:ir.model.fields,help:flex_kathiri_approvals.field_flex_approval_business_trip__website_message_ids
 #: model:ir.model.fields,help:flex_kathiri_approvals.field_flex_approval_employee_transfer__website_message_ids
 #: model:ir.model.fields,help:flex_kathiri_approvals.field_flex_approval_exit_return_visa__website_message_ids
@@ -2153,7 +2529,14 @@ msgstr "رسائل الموقع"
 #: model:ir.model.fields,help:flex_kathiri_approvals.field_flex_approval_starting_work_request__website_message_ids
 #: model:ir.model.fields,help:flex_kathiri_approvals.field_flex_medical_insurance_pack__website_message_ids
 msgid "Website communication history"
-msgstr "تاريخ اتصالات الموقع"
+msgstr "سجل التواصل عبر الموقع"
+
+#. module: flex_kathiri_approvals
+#. odoo-python
+#: code:addons/flex_kathiri_approvals/models/air_ticket_approval.py:0
+#, python-format
+msgid "You can only delete records in Draft state."
+msgstr "يمكنك فقط حذف السجلات في حالة المسودة."
 
 #. module: flex_kathiri_approvals
 #. odoo-python
@@ -2165,7 +2548,7 @@ msgstr "تاريخ اتصالات الموقع"
 #: code:addons/flex_kathiri_approvals/models/resignation_approval.py:0
 #, python-format
 msgid "You can only delete records with 'Draft' or 'Rejected' state."
-msgstr "يمكنك فقط حذف السجلات ذات الحالة "مسودة" أو "مرفوضة"."
+msgstr "يمكنك فقط حذف السجلات بحالة 'مسودة' أو 'مرفوضة'."
 
 #. module: flex_kathiri_approvals
 #. odoo-python
@@ -2174,112 +2557,119 @@ msgstr "يمكنك فقط حذف السجلات ذات الحالة "مسودة"
 #: code:addons/flex_kathiri_approvals/models/vehicle_insurance_approval.py:0
 #, python-format
 msgid "You can only delete records with 'Draft' state."
-msgstr "يمكنك فقط حذف السجلات ذات الحالة "مسودة"."
+msgstr "يمكنك فقط حذف السجلات بحالة 'مسودة'."
+
+#. module: flex_kathiri_approvals
+#. odoo-python
+#: code:addons/flex_kathiri_approvals/models/exit_return_visa.py:0
+#, python-format
+msgid "You cannot create an air ticket for unapproved visas."
+msgstr "لا يمكنك إنشاء تذكرة طيران للتأشيرات غير المعتمدة."
 
 #. module: flex_kathiri_approvals
 #. odoo-python
 #: code:addons/flex_kathiri_approvals/models/renew_driving_license.py:0
 #, python-format
 msgid "You have an approval notification for Driving license Renewal %s"
-msgstr "لديك إشعار بالموافقة على تجديد رخصة القيادة %s"
+msgstr "لديك إشعار موافقة لتجديد رخصة القيادة "
 
 #. module: flex_kathiri_approvals
 #. odoo-python
 #: code:addons/flex_kathiri_approvals/models/exit_return_visa.py:0
 #, python-format
 msgid "You have an approval notification for Exit Return Visa %s"
-msgstr "لديك إشعار بالموافقة على تأشيرة الخروج والعودة %s"
+msgstr "لديك إشعار موافقة لتأشيرة العودة "
 
 #. module: flex_kathiri_approvals
 #. odoo-python
 #: code:addons/flex_kathiri_approvals/models/medical_insurance_approval.py:0
 #, python-format
 msgid "You have an approval notification for Medical Insurance Renewal %s"
-msgstr "لديك إشعار بالموافقة على تجديد التأمين الطبي %s"
+msgstr "لديك إشعار موافقة لتجديد التأمين الطبي "
 
 #. module: flex_kathiri_approvals
 #. odoo-python
 #: code:addons/flex_kathiri_approvals/models/vehicle_insurance_approval.py:0
 #, python-format
 msgid "You have an approval notification for Renew Vehicle Insurance %s"
-msgstr "لديك إشعار بالموافقة على تجديد التأمين على المركبات %s"
+msgstr "لديك إشعار موافقة لتجديد تأمين المركبات "
 
 #. module: flex_kathiri_approvals
 #. odoo-python
 #: code:addons/flex_kathiri_approvals/models/starting_work_approval.py:0
 #, python-format
 msgid "You have an approval notification for Starting Work Request %s"
-msgstr "لديك إشعار بالموافقة على طلب بدء العمل %s"
+msgstr "لديك إشعار موافقة لطلب بدء العمل "
 
 #. module: flex_kathiri_approvals
 #. odoo-python
 #: code:addons/flex_kathiri_approvals/models/renew_driving_license.py:0
 #, python-format
 msgid "Your Driving license Renewal request %s has been approved."
-msgstr "تمت الموافقة على طلب تجديد رخصة القيادة الخاص بك %s."
+msgstr "تمت الموافقة على طلب تجديد رخصة القيادة ."
 
 #. module: flex_kathiri_approvals
 #. odoo-python
 #: code:addons/flex_kathiri_approvals/wizards/renew_driving_license_approval_reject.py:0
 #, python-format
 msgid "Your Driving license Renewal request %s has been rejected."
-msgstr "لقد تم رفض طلب تجديد رخصة القيادة %s."
+msgstr "تم رفض طلب تجديد رخصة القيادة ."
 
 #. module: flex_kathiri_approvals
 #. odoo-python
 #: code:addons/flex_kathiri_approvals/models/exit_return_visa.py:0
 #, python-format
 msgid "Your Exit Return Visa request %s has been approved."
-msgstr "لقد تمت الموافقة على طلب تأشيرة الخروج والعودة %s."
+msgstr "تمت الموافقة على طلب تأشيرة العودة ."
 
 #. module: flex_kathiri_approvals
 #. odoo-python
 #: code:addons/flex_kathiri_approvals/wizards/exit_return_visa_approval_reject.py:0
 #, python-format
 msgid "Your Exit Return Visa request %s has been rejected."
-msgstr "لقد تم رفض طلب تأشيرة الخروج والعودة %s."
+msgstr "تم رفض طلب تأشيرة العودة ."
 
 #. module: flex_kathiri_approvals
 #. odoo-python
 #: code:addons/flex_kathiri_approvals/models/medical_insurance_approval.py:0
 #, python-format
 msgid "Your Medical Insurance Renewal request %s has been approved."
-msgstr "تمت الموافقة على طلب تجديد التأمين الطبي الخاص بك %s."
+msgstr "تمت الموافقة على طلب تجديد التأمين الطبي ."
 
 #. module: flex_kathiri_approvals
 #. odoo-python
 #: code:addons/flex_kathiri_approvals/wizards/medical_insurance_approval_reject.py:0
 #, python-format
 msgid "Your Medical Insurance Renewal request %s has been rejected."
-msgstr "لقد تم رفض طلب تجديد التأمين الطبي الخاص بك %s."
+msgstr "تم رفض طلب تجديد التأمين الطبي ."
 
 #. module: flex_kathiri_approvals
 #. odoo-python
 #: code:addons/flex_kathiri_approvals/models/vehicle_insurance_approval.py:0
 #, python-format
 msgid "Your Renew Vehicle Insurance request %s has been approved."
-msgstr "لقد تمت الموافقة على طلب تجديد تأمين المركبة الخاص بك %s."
+msgstr "تمت الموافقة على طلب تجديد تأمين المركبات ."
 
 #. module: flex_kathiri_approvals
 #. odoo-python
 #: code:addons/flex_kathiri_approvals/models/starting_work_approval.py:0
 #, python-format
 msgid "Your Starting Work Request %s has been approved."
-msgstr "تمت الموافقة على طلب بدء العمل الخاص بك %s."
+msgstr "تمت الموافقة على طلب بدء العمل ."
 
 #. module: flex_kathiri_approvals
 #. odoo-python
 #: code:addons/flex_kathiri_approvals/wizards/starting_work_reject_wizard.py:0
 #, python-format
 msgid "Your Starting Work Request %s has been rejected."
-msgstr "لقد تم رفض طلب بدء العمل الخاص بك %s."
+msgstr "تم رفض طلب بدء العمل ."
 
 #. module: flex_kathiri_approvals
 #. odoo-python
 #: code:addons/flex_kathiri_approvals/wizards/renew_vehicle_insurance.py:0
 #, python-format
 msgid "Your Vehicle Insurance Renewal request %s has been rejected."
-msgstr "لقد تم رفض طلب تجديد تأمين المركبة الخاص بك %s."
+msgstr "تم رفض طلب تجديد تأمين المركبات ."
 
 #. module: flex_kathiri_approvals
 #: model:ir.model.fields.selection,name:flex_kathiri_approvals.selection__flex_approval_resignation__types_of_end_services__employees_resignation
