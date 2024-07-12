@@ -77,8 +77,9 @@ class LandingOrder(models.Model):
                 'company_id': order.company_id.id,
                 'partner_id': order.partner_id.id,
                 'date_order': fields.Datetime.now(),
-                'order_line': [(0, 0, {'product_id': product_id.id, 'product_uom_qty': order.quantity}) for product_id in
-                                       order.purchase_product_ids]
+                'order_line': [(0, 0, {'product_id': product_id.id, 'product_uom_qty': order.quantity}) for product_id
+                               in
+                               order.purchase_product_ids]
             }
 
             try:
@@ -99,14 +100,22 @@ class LandingOrder(models.Model):
     @api.depends('partner_id', 'car_model_id', 'driver_id', 'date', 'kind', 'quantity')
     def _compute_qr_code(self):
         for order in self:
+            # get the king display name
+
             qrcode = "Factory name : %s" % order.partner_id.name if order.partner_id else ""
             qrcode += ", Factory code : %s" % order.partner_id.partner_code if order.partner_id.partner_code else ""
             qrcode += ", Car Number : %s" % order.car_model_id.name if order.car_model_id else ""
             qrcode += ", Driver Name : %s" % order.driver_id.name if order.driver_id else ""
             qrcode += ", Date : %s" % order.date if order.date else ""
-            qrcode += ", Cement Type : %s" % order.kind if order.kind else ""
+            qrcode += ", Cement Type : %s" % self.get_kind_selection_display_name() if order.kind else ""
             qrcode += ", Quantity : %s" % order.quantity if order.quantity else ""
             order.qr_code = qrcode
+
+    def get_kind_selection_display_name(self):
+        # Assuming self.my_field is the selected value
+        selected_value = self.kind
+        display_name = dict(self._fields['kind'].selection).get(selected_value)
+        return display_name
 
     @api.depends('car_model_id')
     def compute_car_model_details(self):
