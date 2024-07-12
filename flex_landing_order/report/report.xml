@@ -73,15 +73,15 @@
                                 <strong>Kind:</strong>
                             </div>
                             <div class="col-4 p-2 text-center">
-                                <span class="m-0" t-field="o.partner_id.name"/>
+                                <strong class="m-0" t-field="o.partner_id.name">/</strong>
                                 <br/>
-                                <span class="m-0" t-field="o.driver_id.name"/>
+                                <strong class="m-0" t-field="o.driver_id.name">/</strong>
                                 <br/>
-                                <span class="m-0" t-field="o.car_id"/>
+                                <strong class="m-0" t-field="o.car_id">/</strong>
                                 <br/>
-                                <span class="m-0" t-field="o.quantity"/>
+                                <strong class="m-0" t-field="o.quantity">/</strong>
                                 <br/>
-                                <span class="m-0" t-field="o.kind"/>
+                                <strong class="m-0" t-field="o.kind">/</strong>
                             </div>
                             <div class="col-4 p-2" dir="rtl">
                                 <strong>السادة/ شركة الاسمنت:</strong>
