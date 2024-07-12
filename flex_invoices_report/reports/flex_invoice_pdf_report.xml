@@ -90,10 +90,10 @@
                                         <span t-field="line.line_quantity"
                                               t-options='{"widget": "float", "decimal_precision": "Product Unit of Measure"}'/>
                                     </td>
-                                    <td>
+                                    <td class="text-end">
                                         <span t-field="line.price_total"/>
                                     </td>
-                                    <td>
+                                    <td class="text-end">
                                         <span t-field="line.tax_value"/>
                                     </td>
                                 </tr>
