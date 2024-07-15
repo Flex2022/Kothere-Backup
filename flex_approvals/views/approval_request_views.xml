@@ -17,7 +17,7 @@
 
                 <button name="action_cancel" position="after">
                     <field name="create_job_position" invisible="1"/>
-                    <button name="create_new_job_position" class="btn-primary" string="Create New Job Position" data-hotkey="J" invisible="not create_job_position"/>
+                    <button name="create_new_job_position" class="btn-primary" type="object" string="Create New Job Position" data-hotkey="J" invisible="not create_job_position"/>
                 </button>
 
                 <xpath expr="//field[@name='has_location']" position="after">
