@@ -9,6 +9,7 @@
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='has_location']" position="after">
                     <field name="has_appointment_type" widget="radio" options="{'horizontal': true}"/>
+                    <field name="create_job_position" widget="boolean_toggle"/>
                 </xpath>
             </field>
         </record>

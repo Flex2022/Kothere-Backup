@@ -32,9 +32,9 @@ class HrAttendance(models.Model):
 
                 if hour_from:
                     check_in_hour = local_check_in.hour + \
-                        (local_check_in.minute / 60)
+                                    (local_check_in.minute / 60)
                     rec.undertime = (
-                        check_in_hour - hour_from) if check_in_hour > hour_from else 0
+                            check_in_hour - hour_from) if check_in_hour > hour_from else 0
                 else:
                     rec.undertime = 0
             else:
@@ -55,7 +55,7 @@ class HrAttendance(models.Model):
                     hour_to = 0
                 if hour_to:
                     check_out_hour = local_check_out.hour + \
-                        (local_check_out.minute / 60)
+                                     (local_check_out.minute / 60)
                     rec.overtime = (check_out_hour -
                                     hour_to) if check_out_hour > hour_to else 0
                 else:
@@ -65,7 +65,5 @@ class HrAttendance(models.Model):
 
     check_in = fields.Datetime(
         string="Check In", default=False, required=False)  # Overide
-    undertime = fields.Float(string="Retard", compute="_compute_undertime")
-    overtime = fields.Float(string='Heure(s) supplémentaire',
-                            compute="_compute_overtime")
-    
+    undertime = fields.Float(string="Lateness", compute="_compute_undertime")
+    overtime = fields.Float(string='Extra hours', compute="_compute_overtime")

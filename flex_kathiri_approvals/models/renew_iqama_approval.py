@@ -106,7 +106,6 @@ class ApprovalRenewIqama(models.Model):
                 raise models.ValidationError(_("Only HR managers are authorized to approve for the HR department."))
 
             self.write({'state': 'approved'})
-            self.employee_id.iqama_id = self.new_iqama_id
             self.employee_id.end_of_iqama = self.renewal_date
 
     def action_reject_renewal(self):

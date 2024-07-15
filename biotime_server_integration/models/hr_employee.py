@@ -11,5 +11,5 @@ class HrEmployee(models.Model):
     _sql_constraints = [
         ('biotime_code_unique',
          'unique(biotime_code)',
-         'Veuillez choisir code biotime unique!')
+         'Please choose unique biotime code!')
     ]

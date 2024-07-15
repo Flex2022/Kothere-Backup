@@ -6,9 +6,9 @@ class BiotimeTransaction(models.Model):
     _name = 'biotime.transaction'
     _order = 'punch_time'
 
-    server_id = fields.Many2one('biotime.server', string="Nom du serveur")
-    employee_id = fields.Many2one('hr.employee', string='Employé(e)')
-    employee_code = fields.Char(string="Code de l'employé(e)")
+    server_id = fields.Many2one('biotime.server', string="Server Name")
+    employee_id = fields.Many2one('hr.employee', string='Employee')
+    employee_code = fields.Char(string="Employee Code")
     punch_state = fields.Selection([
         ('I', 'Check in'),
         ('O', 'Check out'),
@@ -25,5 +25,5 @@ class BiotimeTransaction(models.Model):
         ('4', 'Card'),
         ('15', 'Face'),
         ('25', 'Palm')
-    ], string='Type de verification')
+    ], string='Verification Type')
     punch_time = fields.Datetime(string='Punching Time')

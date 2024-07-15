@@ -10,10 +10,7 @@
     'depends': ['base', 'approvals', 'hr', 'mail'],
     'data': ['views/approval_category_views.xml',
              'views/approval_request_views.xml',
-             # 'views/approval_template_views.xml',
-             # 'views/approval_views.xml',
              ],
-    # 'demo': [''],
     'installable': True,
     'auto_install': False,
 }

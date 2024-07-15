@@ -22,17 +22,17 @@ _logger = logging.getLogger(__name__)
 class BiotimeServer(models.Model):
     _name = 'biotime.server'
 
-    name = fields.Char(string="Nom du serveur",
-                       required=True, default="Serveur x")
-    server_ip = fields.Char(string='Addresse IP', required=True)
+    name = fields.Char(string="Server name",
+                       required=True, default="Server x")
+    server_ip = fields.Char(string='IP Address', required=True)
     server_port = fields.Char(string='Port', required=True)
-    username = fields.Char(string="Nom d'utilisateur", required=True)
-    password = fields.Char(string="Mot de passe", required=True)
+    username = fields.Char(string="User name", required=True)
+    password = fields.Char(string="Password", required=True)
 
     _sql_constraints = [
         ('biotime_server_name_unique',
          'unique(name)',
-         'Veuillez choisir un nom unique pour chaque serveur !')
+         'Please choose a unique name for each server!')
     ]
 
     def test_connection(self):
@@ -47,18 +47,18 @@ class BiotimeServer(models.Model):
                         'type': 'ir.actions.client',
                         'tag': 'display_notification',
                         'params': {
-                            'title': "Succés",
-                            'message': "Connexion établie avec succès.",
+                            'title': "Success",
+                            'message': "Connection established successfully.",
                             'sticky': False,
                         }
                     }
                 else:
                     raise UserError(
-                        _("Impossible de récupérer le token JWT, vérifiez les paramètres de connexion et la disponibilité du serveur Biotime."))
+                        _("Unable to retrieve JWT token, check connection settings and Biotime server availability."))
             else:
-                raise UserError(_('Problème lors du test de connexion.'))
+                raise UserError(_('Problem during connection test.'))
         except error:
-            raise UserError(_('Problème lors du test de connexion.', error))
+            raise UserError(_('Problem during connection test.', error))
 
     def download_employees(self):
         employee_obj = self.env['hr.employee']
@@ -192,8 +192,8 @@ class BiotimeServer(models.Model):
                             'type': 'ir.actions.client',
                             'tag': 'display_notification',
                             'params': {
-                                'title': "Succés",
-                                'message': "Transactions téléchargées avec succès depuis Biotime.",
+                                'title': "Success",
+                                'message': "Transactions successfully downloaded from Biotime.",
                                 'sticky': False,
                             }
                         }
@@ -232,7 +232,7 @@ class BiotimeServer(models.Model):
 
         if (check_in_line and check_out_line) or len(check_in_line) > 1 or len(check_out_line) > 1:
             raise UserError(
-                _("Une transaction '{}' ne doit appartenir qu'à une seule fiche de temps.".format(str(punch_time))))
+                _("A transaction '{}' must only belong to a single time card.".format(str(punch_time))))
         elif check_in_line:
             return 'I', check_in_line
         elif check_out_line:
@@ -321,7 +321,7 @@ class BiotimeServer(models.Model):
         local_tz = pytz.timezone(self.env.user.partner_id.tz or 'GMT')
 
         if not len(biotime_transaction_obj.search([])):
-            raise UserError(_("Aucune transaction existante."))
+            raise UserError(_("No existing transactions."))
 
         for transaction in biotime_transaction_obj.search([], order="punch_time asc"):
             if transaction.employee_id and transaction.employee_id.biotime_shift_id:
@@ -336,8 +336,8 @@ class BiotimeServer(models.Model):
             'type': 'ir.actions.client',
             'tag': 'display_notification',
             'params': {
-                'title': "Succés",
-                'message': "Présences synchronisées avec Biotime.",
+                'title': "Success",
+                'message': "Attendance synchronized with Biotime.",
                 'sticky': False,
             }
         }
