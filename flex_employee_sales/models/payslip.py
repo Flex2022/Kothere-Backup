@@ -6,6 +6,7 @@ class Payslip(models.Model):
 
     total_sales = fields.Float(string='Total Sales Employee', compute='_compute_total_sales', store=True)
     total_all_sales = fields.Float(string='Total Sales', compute='_compute_all_total_sales', store=True)
+    total_sale_quantity = fields.Float(string='Total Sale Quantity', compute='_compute_all_total_sales', store=True)
 
     @api.depends('employee_id', 'date_from', 'date_to')
     def _compute_total_sales(self):
@@ -57,6 +58,16 @@ class Payslip(models.Model):
                     total_sales_2 += invoice.amount_total
             payslip.total_all_sales = total_sales_2
 
+            total_sale_quantity = 0
+            if all_invoice_based_on_date_range:
+                for invoice in all_invoice_based_on_date_range:
+                    lines = invoice.invoice_line_ids
+                    for line in lines:
+                        total_sale_quantity += line.quantity
+            payslip.total_sale_quantity = total_sale_quantity
+
+
+
 
     @api.depends('employee_id', 'date_from', 'date_to')
     def _compute_all_total_sales(self):
@@ -74,3 +85,11 @@ class Payslip(models.Model):
                 for invoice in all_invoice_for_employee:
                     total_sales += invoice.amount_total
             payslip.total_all_sales = total_sales
+
+            total_sale_quantity = 0
+            if all_invoice_for_employee:
+                for invoice in all_invoice_for_employee:
+                    lines = invoice.invoice_line_ids
+                    for line in lines:
+                        total_sale_quantity += line.quantity
+            payslip.total_sale_quantity = total_sale_quantity
