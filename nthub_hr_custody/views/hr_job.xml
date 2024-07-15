@@ -8,7 +8,6 @@
             <field name="arch" type="xml">
                 <xpath expr="//notebook" position="inside">
                     <page string="Custody Properties">
-                        <group>
                             <field name="property_ids" widget="one2many" nolabel="1">
                                 <tree editable="bottom">
                                     <field name="product_id"/>
@@ -20,7 +19,6 @@
                                     <field name="image" optional="show"/>
                                 </tree>
                             </field>
-                        </group>
                     </page>
                 </xpath>
             </field>
