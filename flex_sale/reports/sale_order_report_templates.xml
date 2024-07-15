@@ -10,7 +10,7 @@
         <xpath expr="//th[@name='th_description']" position="replace">
             <th name="th_product_english" class="text-start">English Name</th>
             <th name="th_product_arabic" class="text-start">Arabic Name</th>
-            <th name="th_description" class="text-start d-none" >Description</th>
+            <th name="th_description" class="text-start d-none">Description</th>
         </xpath>
 
         <xpath expr="//td[@name='td_name']" position="replace">
@@ -20,10 +20,18 @@
             <td name="td_name_arabic">
                 <span t-field="line.product_id_arabic"></span>
             </td>
-            <td name="td_name" class="d-none" >
+            <td name="td_name" class="d-none">
                 <span t-field="line.name"></span>
             </td>
         </xpath>
+
+        <xpath expr="//div[@id='informations']" position="after">
+            <div t-if="doc.tac_en_delivery_location" class="col-auto col-12 mw-100 mb-2">
+                <strong>Delivery Location: </strong>
+                <span t-field="doc.tac_en_delivery_location"></span>
+            </div>
+        </xpath>
+
 
     </template>
 </odoo>
