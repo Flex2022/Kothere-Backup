@@ -68,7 +68,7 @@ class ApprovalRenewIqama(models.Model):
     def compute_current_current_iqama_id(self):
         for approval in self:
             if approval.state == 'draft':
-                approval.current_iqama_id = approval.employee_id.iqama_id.id
+                approval.current_iqama_id = approval.employee_id.iqama_id
                 approval.end_of_iqama = approval.employee_id.end_of_iqama
 
     @api.model
