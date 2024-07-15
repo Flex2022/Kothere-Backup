@@ -22,8 +22,20 @@ class ApprovalRequest(models.Model):
         ('external', 'External'),
         ('internal', 'Internal'), ], string="Appointment Type", )
     create_job_position = fields.Boolean(related="category_id.create_job_position")
-    hr_job_ids = fields.Many2one('hr.job', 'approval_job_id')
+    hr_job_ids = fields.One2many('hr.job', 'approval_job_id')
     hr_job_position_count = fields.Integer(compute="compute_hr_job_position_count")
+    job_position = fields.Char('Job position title')
+
+    def action_approve(self, approver=None):
+        res = super(ApprovalRequest, self).action_approve(approver)
+        for approval in self:
+            self.env['hr.job'].sudo().create({
+                'name': approval.job_position,
+                'description': approval.reason,
+                'no_of_recruitment': approval.quantity,
+                'approval_job_id': approval.id,
+            })
+        return res
 
     def compute_hr_job_position_count(self):
         for approval in self:
@@ -41,6 +53,7 @@ class ApprovalRequest(models.Model):
             'view_id': self.env.ref('hr.view_hr_job_form').id,
             'target': 'new',
             'context': dict(self._context, **{
+                'default_name': '',
                 'default_description': self.reason,
                 'default_approval_job_id': self.id,
             })
@@ -58,6 +71,7 @@ class ApprovalRequest(models.Model):
             result['domain'] = [('id', 'in', hr_job_ids.ids)]
         elif hr_job_ids:
             form_view = [(self.env.ref('hr.view_hr_job_form').id, 'form')]
+            result['domain'] = [('id', 'in', hr_job_ids.ids)]
             result['views'] = form_view
             result['res_id'] = hr_job_ids.id
         return result

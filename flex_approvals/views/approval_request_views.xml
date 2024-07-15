@@ -9,16 +9,16 @@
             <field name="arch" type="xml">
 
                 <div name="button_box" position="inside">
-                    <button name="action_view_hr_jobs" class="oe_stat_button" icon="fa-book" type="object" invisible="not hr_job_ids">
-                        <field name="hr_job_ids" invisible="1"/>
-                        <field name="hr_job_position_count" widget="statinfo" string="Job Positions" options="{'reload_on_button': true}"/>
+                    <button name="action_view_hr_jobs" class="oe_stat_button" icon="fa-book" type="object">
+<!--                            invisible="not hr_job_ids">-->
+                        <field name="hr_job_ids" widget="statinfo" string="Job Positions" options="{'reload_on_button': true}"/>
                     </button>
                 </div>
 
-                <button name="action_cancel" position="after">
-                    <field name="create_job_position" invisible="1"/>
-                    <button name="create_new_job_position" class="btn-primary" type="object" string="Create New Job Position" data-hotkey="J" invisible="not create_job_position"/>
-                </button>
+                <!--                <button name="action_cancel" position="after">-->
+                <!--                    <field name="create_job_position" invisible="1"/>-->
+                <!--                    <button name="create_new_job_position" class="btn-primary" type="object" string="Create New Job Position" data-hotkey="J" invisible="not create_job_position"/>-->
+                <!--                </button>-->
 
                 <xpath expr="//field[@name='has_location']" position="after">
                     <field name="has_appointment_type" invisible="1"/>
@@ -29,6 +29,11 @@
                     <field name="appointment_type" invisible="has_appointment_type == 'no'"
                            readonly="request_status != 'new'" required="has_appointment_type == 'required'"/>
                 </xpath>
+
+                <field name="category_id" position="after">
+                    <field name="create_job_position" invisible="1"/>
+                    <field name="job_position" required="create_job_position" invisible="not create_job_position"/>
+                </field>
 
             </field>
         </record>
