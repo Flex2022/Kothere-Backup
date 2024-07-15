@@ -1,4 +1,5 @@
 from odoo import models, fields, api, _
+from datetime import timedelta
 
 
 class ApprovalRenewIqama(models.Model):
@@ -22,7 +23,11 @@ class ApprovalRenewIqama(models.Model):
     current_iqama_id = fields.Char(string='Current Iqama ID', compute='compute_current_current_iqama_id', store=True)
     end_of_iqama = fields.Date(string='Current Expiry Date', compute='compute_current_current_iqama_id', store=True)
     new_iqama_id = fields.Char(string='New Iqama ID')
-    renewal_date = fields.Date(string='New Expiry Date')
+    renewal_start_date = fields.Date(string='Renewal Starting Date')
+    renewal_period = fields.Selection(
+        [('three_months', '3 Months'), ('six_months', 'Six Months'), ('nine_months', 'Nine Months'),
+         ('one_year', 'One Year')], string="Renewal period")
+    renewal_date = fields.Date(string='New Expiry Date', compute='compute_renewal_period')
     attachment_ids = fields.Many2many('ir.attachment', string='Attachments')
     expense_ids = fields.One2many('hr.expense', 'flex_approval_iqama_id', string='Expenses', copy=False)
     note = fields.Html('Note')
@@ -36,11 +41,34 @@ class ApprovalRenewIqama(models.Model):
         ('rejected', 'Rejected'),
     ], string='Status', default='draft', tracking=True, copy=False)
 
+    @api.depends('end_of_iqama', 'renewal_period')
+    def compute_renewal_period(self):
+        for approval in self:
+            approval.renewal_date = False
+            if approval.renewal_period and approval.end_of_iqama:
+                if approval.renewal_period == 'three_months':
+                    approval.renewal_date = approval.end_of_iqama + timedelta(days=90)
+                elif approval.renewal_period == 'six_months':
+                    approval.renewal_date = approval.end_of_iqama + timedelta(days=180)
+                elif approval.renewal_period == 'nine_months':
+                    approval.renewal_date = approval.end_of_iqama + timedelta(days=270)
+                elif approval.renewal_period == 'one_year':
+                    approval.renewal_date = approval.end_of_iqama + timedelta(days=365)
+            elif approval.renewal_period and approval.renewal_start_date and not approval.end_of_iqama:
+                if approval.renewal_period == 'three_months':
+                    approval.renewal_date = approval.renewal_start_date + timedelta(days=90)
+                elif approval.renewal_period == 'six_months':
+                    approval.renewal_date = approval.renewal_start_date + timedelta(days=180)
+                elif approval.renewal_period == 'nine_months':
+                    approval.renewal_date = approval.renewal_start_date + timedelta(days=270)
+                elif approval.renewal_period == 'one_year':
+                    approval.renewal_date = approval.renewal_start_date + timedelta(days=365)
+
     @api.depends('employee_id')
     def compute_current_current_iqama_id(self):
         for approval in self:
             if approval.state == 'draft':
-                approval.current_iqama_id = approval.employee_id.iqama_id
+                approval.current_iqama_id = approval.employee_id.iqama_id.id
                 approval.end_of_iqama = approval.employee_id.end_of_iqama
 
     @api.model
