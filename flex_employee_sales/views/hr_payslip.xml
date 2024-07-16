@@ -24,11 +24,8 @@
                     <label for="total_sale_quantity" string="Total Sales Quantities: " groups="hr.group_hr_user"/>
                     <div groups="hr.group_hr_user">
                         <field name="total_sale_quantity" class="oe_inline"/>
-                        <field name="currency_id" class="oe_inline"/>
                         <button name="update_sale_total" string="" type="object" class="inline" icon="fa-refresh"/>
                     </div>
-
-                    total_sale_quantity
                 </xpath>
             </field>
         </record>
