@@ -61,7 +61,7 @@
                             <field name="employee_id"/>
                             <field name="department_id"/>
                             <field name="job_position"/>
-                            <field name="loan_type_id"/>
+                            <field name="loan_type_id" readonly="state != 'draft'"/>
                             <field name="loan_type_amount"/>
                             <field name="loan_amount" readonly="state == 'approve'"/>
                             <field name="installment" readonly="state == 'approve'"/>
