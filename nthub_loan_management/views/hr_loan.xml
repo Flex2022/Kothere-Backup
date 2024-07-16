@@ -44,7 +44,8 @@
                             class="oe_highlight" groups="nthub_loan_management.group_loan_admin"
                             invisible="state != 'paid' or balance_amount == 0"/>
 
-                    <field name="state" widget="statusbar" statusbar_visible="draft,waiting_approval_1,line_manager_approve,approve,paid"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,waiting_approval_1,line_manager_approve,approve,paid"/>
                 </header>
 
                 <sheet>
@@ -60,6 +61,8 @@
                             <field name="employee_id"/>
                             <field name="department_id"/>
                             <field name="job_position"/>
+                            <field name="loan_type_id"/>
+                            <field name="loan_type_amount"/>
                             <field name="loan_amount" readonly="state == 'approve'"/>
                             <field name="installment" readonly="state == 'approve'"/>
                             <field name="payment_date" readonly="state == 'approve'"/>
@@ -192,4 +195,44 @@
             </xpath>
         </field>
     </record>
+    <record id="hr_loan_type_view_form" model="ir.ui.view">
+        <field name="name">hr.loan.type.view.form</field>
+        <field name="model">hr.loan.type</field>
+        <field name="arch" type="xml">
+            <form string="Loan Type">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="amount"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Tree View -->
+    <record id="hr_loan_type_view_tree" model="ir.ui.view">
+        <field name="name">hr.loan.type.view.tree</field>
+        <field name="model">hr.loan.type</field>
+        <field name="arch" type="xml">
+            <tree string="Loan Types">
+                <field name="name"/>
+                <field name="amount"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_hr_loan_type" model="ir.actions.act_window">
+        <field name="name">Loan Types</field>
+        <field name="res_model">hr.loan.type</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="hr_loan_type_view_tree"/>
+    </record>
+
+    <!-- Menu Item -->
+    <menuitem id="menu_hr_loan_type" name="Loan Types" parent="nthub_loan_management.config_menu"
+              action="action_hr_loan_type" sequence="10"/>
+
+
 </odoo>

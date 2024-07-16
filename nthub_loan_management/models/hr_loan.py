@@ -68,6 +68,14 @@ class HrLoan(models.Model):
         ('paid', 'Paid'),
         ('cancel', 'Cancelled'),
     ], string="State", default='draft', tracking=True, copy=False, )
+    loan_type_id = fields.Many2one('hr.loan.type', string="Loan Type", help="Loan type", required=True)
+    loan_type_amount = fields.Float(related="loan_type_id.amount", string="Loan Limit Amount")
+
+    @api.constrains('loan_amount')
+    def _check_loan_amount(self):
+        for rec in self:
+            if rec.loan_amount > rec.loan_type_amount:
+                raise ValidationError(_("Loan amount can not be greater than loan limit amount"))
 
     def _check_loan(self):
         loan_count = self.env['hr.loan'].search_count(
@@ -76,7 +84,7 @@ class HrLoan(models.Model):
         if loan_count:
             raise ValidationError(_("The employee has already a pending installment"))
         loan_date = self.env['hr.loan'].search([
-            ('employee_id', '=', res.employee_id.id), ('state', 'in', ('approve', 'paid'))])
+            ('employee_id', '=', self.employee_id.id), ('state', 'in', ('approve', 'paid'))])
         current_year = date.today().year
         for lo in loan_date:
             if lo.date.year == current_year:
@@ -248,3 +256,11 @@ class HrEmployee(models.Model):
             """
         self.loan_count = self.env['hr.loan'].search_count(
             [('employee_id', '=', self.id), ('state', 'in', ('approve', 'paid'))])
+
+
+class HrLoanType(models.Model):
+    _name = "hr.loan.type"
+    _description = "Loan Type"
+
+    name = fields.Char(string="Name", required=True)
+    amount = fields.Float(string="amount", required=True)

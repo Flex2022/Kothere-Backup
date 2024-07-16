@@ -10,6 +10,10 @@ class PurchaseOrder(models.Model):
         'stock.picking',
         string='Stock Picking',
     )
+    attachment_ids = fields.Many2many(
+        'ir.attachment',
+        string='Attachments',
+    )
 
 
 class PurchaseOrderLine(models.Model):

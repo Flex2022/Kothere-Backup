@@ -7,3 +7,4 @@ access_hr_loan_line_officer,hr.loan.line.group_hr_user,model_hr_loan_line,hr.gro
 access_hr_loan_manager,hr.loan,model_hr_loan,hr.group_hr_manager,1,1,1,1
 access_hr_loan_line_manager,hr.loan.line,model_hr_loan_line,hr.group_hr_manager,1,1,1,1
 access_account_payment_loan,account.payment.loan,model_account_payment_loan,hr.group_hr_manager,1,1,1,1
+access_hr_loan_type,hr.loan.type,model_hr_loan_type,hr.group_hr_manager,1,1,1,1
