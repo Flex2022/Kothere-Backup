@@ -68,14 +68,8 @@ class HrLoan(models.Model):
         ('paid', 'Paid'),
         ('cancel', 'Cancelled'),
     ], string="State", default='draft', tracking=True, copy=False, )
-    loan_type_id = fields.Many2one('hr.loan.type', string="Loan Type", help="Loan type", required=True)
+    loan_type_id = fields.Many2one('hr.loan.type', string="Loan Type", help="Loan type", required=False)
     loan_type_amount = fields.Float(related="loan_type_id.amount", string="Loan Limit Amount")
-
-    @api.constrains('loan_amount')
-    def _check_loan_amount(self):
-        for rec in self:
-            if rec.loan_amount > rec.loan_type_amount:
-                raise ValidationError(_("Loan amount can not be greater than loan limit amount"))
 
     def _check_loan(self):
         loan_count = self.env['hr.loan'].search_count(
@@ -119,7 +113,14 @@ class HrLoan(models.Model):
         return self.write({'state': 'refuse'})
 
     def action_submit(self):
-        self.write({'state': 'waiting_approval_1'})
+        for rec in self:
+            if not rec.loan_type_id:
+                raise ValidationError(_("Please select loan type"))
+            if not rec.loan_amount:
+                raise ValidationError(_("Please enter loan amount"))
+            if rec.loan_amount > rec.loan_type_amount:
+                raise ValidationError(_("Loan amount can not be greater than loan limit amount"))
+            self.write({'state': 'waiting_approval_1'})
 
     def action_line_manager_approve(self):
         """
@@ -131,8 +132,13 @@ class HrLoan(models.Model):
                 raise ValidationError("Only the line manager of the employee can approve this expense.")
             if not expense.loan_lines:
                 raise ValidationError(_("Please Compute installment"))
-            if not expense.employee_id.related_partner_id:
+            if not expense.employee_id.related_partner:
                 raise ValidationError(_("Please link partner for employee"))
+            wage = expense.employee_id.contract_id.wage
+            loan_percentage = wage / 4
+            for line in expense.loan_lines:
+                if line.amount > loan_percentage:
+                    raise ValidationError(_("The installment must not exceed 25% of the employee’s basic salary."))
             else:
                 # Update state to line manager approve
                 self.write({'state': 'line_manager_approve'})
@@ -140,11 +146,14 @@ class HrLoan(models.Model):
     def action_cancel(self):
         self.write({'state': 'cancel'})
 
+    def action_reset_to_draft(self):
+        self.write({'state': 'draft'})
+
     def action_approve(self):
         for data in self:
             if not data.loan_lines:
                 raise ValidationError(_("Please Compute installment"))
-            if not data.employee_id.related_partner_id:
+            if not data.employee_id.related_partner:
                 raise ValidationError(_("Please link partner for employee"))
             else:
                 self.write({'state': 'approve'})
@@ -188,10 +197,10 @@ class HrLoan(models.Model):
             'res_model': 'account.payment.loan',
             'view_id': self.env.ref('nthub_loan_management.view_account_payment_loan_form').id,
             'context': {
-                'default_partner_id': self.employee_id.related_partner_id.id,
+                'default_partner_id': self.employee_id.related_partner.id,
                 'default_amount': self.loan_amount,
                 'default_loan_id': self.id,
-                'default_communication': f"loan for {self.employee_id.related_partner_id.name} with {self.loan_amount} with ref {self.name}",
+                'default_communication': f"loan for {self.employee_id.related_partner.name} with {self.loan_amount} with ref {self.name}",
                 'active_model': 'hr.loan',
                 'active_ids': self.filtered(lambda p: p.balance_amount > 0).ids,
             },
@@ -206,10 +215,10 @@ class HrLoan(models.Model):
                 'date': fields.Date.today(),
                 'amount': self.balance_amount,
                 'payment_type': 'inbound',
-                'ref': f"Settlement for {self.employee_id.related_partner_id.name} with {self.balance_amount} with ref {self.name}",
+                'ref': f"Settlement for {self.employee_id.related_partner.name} with {self.balance_amount} with ref {self.name}",
                 # 'journal_id': self.env.company.loan_journal_id.id,
                 'currency_id': self.currency_id.id,
-                'partner_id': self.employee_id.related_partner_id.id,
+                'partner_id': self.employee_id.related_partner.id,
                 'payment_loan': True,
                 'loan_id': self.id,
 

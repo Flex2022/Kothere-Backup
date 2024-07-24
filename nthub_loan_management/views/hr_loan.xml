@@ -31,6 +31,8 @@
                     <button name="action_line_manager_approve" type="object" string="Approve"
                             invisible="state != 'waiting_approval_1'"
                             class="oe_highlight"/>
+                    <button name="action_reset_to_draft" type="object" string="Reset To Draft"
+                            invisible="state not in ('cancel', 'waiting_approval_1')"/>
                     <button name="action_approve" type="object" string="Approve"
                             invisible="state != 'line_manager_approve'"
                             class="oe_highlight" groups="nthub_loan_management.group_loan_admin"/>
@@ -63,7 +65,7 @@
                             <field name="job_position"/>
                             <field name="loan_type_id" readonly="state != 'draft'"/>
                             <field name="loan_type_amount"/>
-                            <field name="loan_amount" readonly="state == 'approve'"/>
+                            <field name="loan_amount" readonly="state != 'draft'"/>
                             <field name="installment" readonly="state == 'approve'"/>
                             <field name="payment_date" readonly="state == 'approve'"/>
                             <field name="payment_id" readonly="1"/>
