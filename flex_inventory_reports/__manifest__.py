@@ -1,0 +1,15 @@
+{
+    'name': 'Flex Inventory Reports',
+    'version': '1.0',
+    'summary': 'Flex Inventory Reports',
+    'description': 'Flex Inventory Reports',
+    'category': 'Inventory',
+    'author': 'Abdalrahman Shahrour',
+    'website': 'https://www.flex-ops.com',
+    'license': 'AGPL-3',
+    'depends': ['base', 'stock'],
+    'data': ['views/move_analysis.xml',
+             'views/move_history.xml'],
+    'installable': True,
+    'auto_install': False,
+}
