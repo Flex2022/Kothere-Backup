@@ -8,8 +8,9 @@
     'website': 'https://www.flex-ops.com',
     'license': 'AGPL-3',
     'depends': ['base', 'stock'],
-    'data': ['views/move_analysis.xml',
-             'views/move_history.xml'],
+    'data': ['data/ir.serveraction.xml',
+             'views/move_analysis.xml',
+             'views/move_history.xml',],
     'installable': True,
     'auto_install': False,
 }

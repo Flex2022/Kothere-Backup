@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+<!--        server action-->
+        <record id="flex_inventory_reports_server_action" model="ir.actions.server">
+            <field name="name">Get Partners</field>
+            <field name="model_id" ref="base.model_account_move_line"/>
+            <field name="state">code</field>
+            <field name="code">action = self.get_partner_values()</field>
+        </record>
+
+    </data>
+</odoo>
