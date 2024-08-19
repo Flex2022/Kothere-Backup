@@ -914,3 +914,339 @@ class HrApi(http.Controller):
 
 
 
+
+    @validate_token
+    @http.route("/api-hr/check-in", methods=["POST"], type="http", auth="none", csrf=False)
+    def api_hr_check_in(self, **post):
+        employee_id = request.context.get("employee_id")
+        if not employee_id:
+            res = {"result": {
+                "success": False,
+                "Message": "employee_id is missing in context"
+                }
+            }
+            return http.Response(json.dumps(res), status=400, mimetype='application/json')
+        employee = request.env['hr.employee'].sudo().browse(employee_id)
+        payload = json.loads(request.httprequest.data or '{}')
+        if not payload.get('latitude') or not payload.get('longitude'):
+            res = {
+                "result":
+                    {
+                        "success": False,
+                        "Message": "latitude and longitude are required"
+                    }
+            }
+            return http.Response(json.dumps(res), status=400, mimetype='application/json')
+        try:
+            today = datetime.now().strftime('%Y-%m-%d')
+            attendance = request.env['hr.attendance'].sudo().search([
+                ('employee_id', '=', employee.id),
+                ('check_in', '>=', today + ' 00:00:00'),
+                ('check_in', '<=', today + ' 23:59:59'),
+                ('check_out', '=', False)
+            ])
+            if attendance:
+                res = {
+                    "result":
+                        {
+                            "success": False,
+                            "Message": "you already checked-in today",
+                            "id": attendance.id
+                        }
+                }
+
+            else:
+                check_in = request.env['hr.attendance'].sudo().create({
+                    'employee_id': employee.id,
+                    'check_in': datetime.now(),
+                    'check_out': False,
+                    'in_mode': 'other',
+                    'in_latitude': payload.get('latitude'),
+                    'in_longitude': payload.get('longitude'),
+                })
+                data = {
+                    "success": True,
+                    "Message": "check-in created successfully",
+                    "id": check_in.id
+                }
+                res = {
+                    "result": data
+                }
+            return http.Response(json.dumps(res), status=200, mimetype='application/json')
+        except Exception as ex:
+            res = {"result":
+                       {
+                            "success": False,
+                           "Message": f"{ex}"
+                       }
+            }
+            # 406: not acceptable
+            return http.Response(json.dumps(res), status=406, mimetype='application/json')
+
+    @validate_token
+    @http.route("/api-hr/check-out", methods=["POST"], type="http", auth="none", csrf=False)
+    def api_hr_check_out(self, **post):
+        employee_id = request.context.get("employee_id")
+        if not employee_id:
+            res = {"result": {
+                "success": False,
+                "Message": "employee_id is missing in context"}
+            }
+            return http.Response(json.dumps(res), status=400, mimetype='application/json')
+        employee = request.env['hr.employee'].sudo().browse(employee_id)
+        payload = json.loads(request.httprequest.data or '{}')
+        if not payload.get('latitude') or not payload.get('longitude'):
+            res = {
+                "result":
+                    {
+                        "success": False,
+                        "Message": "latitude and longitude are required"
+                    }
+            }
+            return http.Response(json.dumps(res), status=400, mimetype='application/json')
+        attendance_id = post.get('attendance_id')
+        # if not attendance_id:
+        #     res = {"result": {
+        #         "success": False,
+        #         "Message": "attendance_id is missing"}
+        #     }
+        #     return http.Response(json.dumps(res), status=400, mimetype='application/json')
+        if attendance_id:
+            attendance = request.env['hr.attendance'].sudo().search([('id', '=', attendance_id)])
+            if not attendance:
+                res = {"result": {
+                    "success": False,
+                    "Message": "attendance not found"}
+                }
+                return http.Response(json.dumps(res), status=400, mimetype='application/json')
+        else:
+            today = datetime.now().strftime('%Y-%m-%d')
+            attendance = request.env['hr.attendance'].sudo().search([
+                ('employee_id', '=', employee.id),
+                ('check_in', '>=', today + ' 00:00:00'),
+                ('check_in', '<=', today + ' 23:59:59'),
+                ('check_out', '=', False)
+            ], order='id desc', limit=1)
+            if not attendance:
+                res = {"result": {
+                    "success": False,
+                    "Message": "you did not check-in today"}
+                }
+                return http.Response(json.dumps(res), status=400, mimetype='application/json')
+        try:
+            attendance.write({
+                'check_out': datetime.now(),
+                'out_mode': 'other',
+                'out_latitude': post.get('latitude'),
+                'out_longitude': post.get('longitude'),
+            })
+            data = {
+                "result": {
+                    "success": True,
+                    "Message": "check-out created successfully", "id": attendance.id, "worked_hours": attendance.worked_hours, "overtime_hours": attendance.overtime_hours
+                }
+            }
+            res = {"result": data}
+            return http.Response(json.dumps(res), status=200, mimetype='application/json')
+        except Exception as ex:
+            res = {"result": {
+                    "success": False,
+                    "Message": f"{ex}"}
+            }
+            # 406: not acceptable
+            return http.Response(json.dumps(res), status=406, mimetype='application/json')
+
+    @validate_token
+    @http.route("/api-hr/my-attendance_status", methods=["GET"], type="http", auth="none", csrf=False)
+    def get_attendance_status(self, **params):
+        employee_id = request.context.get("employee_id")
+        if not employee_id:
+            res = {"result": {
+                "success": False,
+                "Message": "employee_id is missing in context"}
+            }
+            return http.Response(json.dumps(res), status=400, mimetype='application/json')
+        employee = request.env['hr.employee'].sudo().browse(employee_id)
+        now = datetime.now()
+        domain = [('employee_id', '=', employee.id), ('check_in', '>=', now.strftime('%Y-%m-%d 00:00:00')), ('check_in', '<=', now.strftime('%Y-%m-%d 23:59:59'))]
+        attendance = request.env['hr.attendance'].sudo().search(domain)
+        if attendance:
+            attendance_check_in_status = []
+            attendance_check_out_status = []
+            for att in attendance:
+                if not att.check_out:
+                    attendance_check_in_status.append(att)
+                else:
+                    attendance_check_out_status.append(att)
+            data = {
+                "check_in": [{
+                    "check_in": att.check_in.strftime('%Y-%m-%d %H:%M:%S'),
+                    "check_out": att.check_out.strftime('%Y-%m-%d %H:%M:%S') if att.check_out else False,
+                    "worked_hours": att.worked_hours if att.worked_hours else False,
+                    "overtime_hours": att.overtime_hours if att.overtime_hours else False,
+                    "in_mode": att.in_mode if att.in_mode else False,
+                    "in_latitude": att.in_latitude if att.in_latitude else False,
+                    "in_longitude": att.in_longitude if att.in_longitude else False,
+                    "out_mode": att.out_mode if att.out_mode else False,
+                    "out_latitude": att.out_latitude if att.out_latitude else False,
+                    "out_longitude": att.out_longitude if att.out_longitude else False,
+
+                } for att in attendance_check_in_status],
+                "check_out": [{
+                    "check_in": att.check_in.strftime('%Y-%m-%d %H:%M:%S'),
+                    "check_out": att.check_out.strftime('%Y-%m-%d %H:%M:%S') if att.check_out else False,
+                    "worked_hours": att.worked_hours if att.worked_hours else False,
+                    "overtime_hours": att.overtime_hours if att.overtime_hours else False,
+                    "in_mode": att.in_mode if att.in_mode else False,
+                    "in_latitude": att.in_latitude if att.in_latitude else False,
+                    "in_longitude": att.in_longitude if att.in_longitude else False,
+                    "out_mode": att.out_mode if att.out_mode else False,
+                    "out_latitude": att.out_latitude if att.out_latitude else False,
+                    "out_longitude": att.out_longitude if att.out_longitude else False,
+
+                } for att in attendance_check_out_status]
+            }
+            res = {
+                "result": {
+                    "success": True,
+                    "data": data
+                }
+            }
+
+            return http.Response(json.dumps(res), status=200, mimetype='application/json')
+        else:
+            data = {
+                "check_in": [],
+                "check_out": [],
+            }
+            res = {
+                "result": {
+                    "success": True,
+                    "data": data}
+            }
+            return http.Response(json.dumps(res), status=200, mimetype='application/json')
+
+    @validate_token
+    @http.route("/api-hr/my-attendance-by-id", methods=["GET"], type="http", auth="none", csrf=False)
+    def get_attendance_by_id(self, **params):
+        employee_id = request.context.get("employee_id")
+        if not employee_id:
+            res = {"result": {
+                "success": False,
+                "Message": "employee_id is missing in context"}}
+            return http.Response(json.dumps(res), status=400, mimetype='application/json')
+        attendance_id = params.get('attendance_id')
+        if not attendance_id:
+            res = {"result": {
+                "success": False,
+                "Message": "attendance_id is missing"}}
+            return http.Response(json.dumps(res), status=400, mimetype='application/json')
+        attendance = request.env['hr.attendance'].sudo().search([('id', '=', attendance_id)])
+        if not attendance:
+            res = {"result": {
+                "success": False,
+                "Message": "attendance not found"}}
+            return http.Response(json.dumps(res), status=400, mimetype='application/json')
+        data = {
+            "check_in": attendance.check_in.strftime('%Y-%m-%d %H:%M:%S'),
+            "check_out": attendance.check_out.strftime('%Y-%m-%d %H:%M:%S') if attendance.check_out else False,
+            "worked_hours": attendance.worked_hours,
+            "overtime_hours": attendance.overtime_hours,
+        }
+        res = {
+            "result": {
+                "success": True,
+                "data": data
+            }
+        }
+        return http.Response(json.dumps(res), status=200, mimetype='application/json')
+
+
+    @validate_token
+    @http.route("/api-hr/change-password", methods=["POST"], type="http", auth="none", csrf=False)
+    def change_password(self, **post):
+        employee_id = request.context.get("employee_id")
+        if not employee_id:
+            res = {
+                "result": {
+                "success": False,
+                "Message": "employee_id is missing"
+                }
+            }
+            return http.Response(json.dumps(res), status=400, mimetype='application/json')
+        payload = json.loads(request.httprequest.data or '{}')
+        employee = request.env['hr.employee'].sudo().browse(employee_id)
+        old_password = payload.get("old_password")
+        new_password = payload.get("new_password")
+        if not old_password or not new_password:
+            res = {"result": {
+                "success": False,
+                "Message": "old_password or new_password is missing"}}
+            return http.Response(json.dumps(res), status=400, mimetype='application/json')
+        if not employee.api_password:
+            res = {"result":
+                       {
+                            "success": False,
+                           "Message": "password not set"}}
+            return http.Response(json.dumps(res), status=400, mimetype='application/json')
+        if employee.api_password == old_password:
+            employee.api_password = new_password
+            res = {"result": {
+                "success": True,
+                "Message": "password changed successfully"}}
+            return http.Response(json.dumps(res), status=200, mimetype='application/json')
+        else:
+            res = {"result": {
+                "success": False,
+                "Message": "old_password is incorrect"}}
+            return http.Response(json.dumps(res), status=400, mimetype='application/json')
+
+    @validate_token
+    @http.route("/api-hr/my-attendance-status", methods=["GET"], type="http", auth="none", csrf=False)
+    def get_my_attendance_status(self):
+        employee_id = request.context.get("employee_id")
+        if not employee_id:
+            res = {
+                "result": {
+                    "success": False,
+                    "Message": "employee_id is missing"
+                }
+            }
+            return http.Response(json.dumps(res), status=400, mimetype='application/json')
+        employee = request.env['hr.employee'].sudo().browse(employee_id)
+        if not employee:
+            res = {
+                "result": {
+                    "success": False,
+                    "Message": "employee not found"
+                }
+            }
+            return http.Response(json.dumps(res), status=400, mimetype='application/json')
+
+        now = datetime.now()
+        domain = [('employee_id', '=', employee.id), ('check_in', '>=', now.strftime('%Y-%m-%d 00:00:00')), ('check_in', '<=', now.strftime('%Y-%m-%d 23:59:59'))]
+        attendance = request.env['hr.attendance'].sudo().search(domain, order='check_in desc', limit=1)
+        if not attendance:
+            res = {
+                "result": {
+                    "success": False,
+                    "Message": "no attendance found"
+                }
+            }
+            return http.Response(json.dumps(res), status=200, mimetype='application/json')
+        attendance = attendance[0]
+        if attendance.check_out:
+            res = {
+                "result": {
+                    "success": True,
+                    "status": "checked-out",
+                }
+            }
+        else:
+            res = {
+                "result": {
+                    "success": True,
+                    "status": "checked-in",
+                }
+            }
+        return http.Response(json.dumps(res), status=200, mimetype='application/json')

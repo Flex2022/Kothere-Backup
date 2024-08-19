@@ -16,6 +16,8 @@
                 'hr_payroll',
                 'nthub_loan_management',
                 'flex_kathiri_approvals',
+                'hr_attendance',
+
                 ],
     'data': [
         # security
