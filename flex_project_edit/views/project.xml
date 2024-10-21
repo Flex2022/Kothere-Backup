@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="flex_project_edit_project_project_form" model="ir.ui.view">
+            <field name="name">flex_project_edit.project.project.form</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.edit_project"/>
+            <field name="arch" type="xml">
+
+
+                <xpath expr="//group[1]/group[1]/field[@name='company_id']" position="after">
+                    <field name="project_number"/>
+                    <field name="project_owner"/>
+                    <field name="contact_value" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                </xpath>
+
+
+                <field name="date" position="after">
+                    <field name="expected_dry_cost" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                    <field name="preliminaries" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                    <field name="contingency_reserve" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                    <field name="expected_salaries" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                    <field name="expected_net_profit" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                </field>
+
+
+            </field>
+        </record>
+    </data>
+</odoo>
