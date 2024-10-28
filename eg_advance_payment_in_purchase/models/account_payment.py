@@ -28,7 +28,7 @@ class AccountPayment(models.Model):
                 res.purchase_id = purchase_id.id
             invoice_id = self.env["account.move"].search([("name", "=", vals['ref'])], limit=1)
             if invoice_id and not res.purchase_id:
-                purchase_id = self.env["purchase.order"].search([("name", "=", invoice_id.origin)], limit=1)
+                purchase_id = self.env["purchase.order"].search([("name", "=", invoice_id.invoice_origin)], limit=1)
                 if purchase_id:
                     res.purchase_id = purchase_id.id
         return res
