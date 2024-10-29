@@ -125,12 +125,6 @@
         </field>
     </record>
 
-
-    <!--loan menu-->
-    <menuitem name="Loans"
-              id="menu_hr_loans_and_advances" web_icon="nthub_loan_management,static/description/icon.png"
-              sequence="20"/>
-
     <record id="action_hr_loan_request" model="ir.actions.act_window">
         <field name="name">Request for Loan</field>
         <field name="res_model">hr.loan</field>

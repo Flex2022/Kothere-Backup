@@ -1,6 +1,6 @@
 {
     'name': 'Flex HR Connector',
-    'version': '17.0.0.1',
+    'version': '0.1',
     'summary': 'HR Integration',
     'description': '',
     'category': 'Human Resources',
@@ -8,8 +8,8 @@
     'website': "https://flex-ops.com",
     'license': 'OPL-1',
     'sequence': 0,
-    'price': 500.0,
-    'currency': 'EUR',
+    # 'price': 500.0,
+    # 'currency': 'EUR',
     'depends': ['hr',
                 'hr_holidays',
                 'hr_expense',
@@ -29,7 +29,7 @@
         # reports
         'reports/report.xml',
     ],
-    'application': True,
-    'installable': True,
-    'auto_install': False,
+    # 'application': True,
+    # 'installable': True,
+    # 'auto_install': False,
 }
