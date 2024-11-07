@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Inherit Form View to Modify it -->
+        <record id="view_repair_order_form_inherit" model="ir.ui.view">
+            <field name="name">view.repair.order.form.inherit</field>
+            <field name="model">repair.order</field>
+            <field name="inherit_id" ref="repair.view_repair_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@name='button_box']" position="inside">
+                    <field name="requisition_purchase_ids" invisible="1"/>
+                    <button type="object" name="action_view_purchase_requisitions" class="oe_stat_button"
+                            icon="fa-building">
+                        <div class="o_field_widget o_stat_info">
+                            <span class="o_stat_value" widget="statinfo">
+                                <field name="requisition_purchase_ids" widget="statinfo" nolabel="1" class="mr4"
+                                       readonly="1"/>
+                            </span>
+                            <span class="o_stat_text">Requisition Purchase Orders</span>
+                        </div>
+                    </button>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="material_purchase_requisition_form_view_inherit" model="ir.ui.view">
+            <field name="name">material.purchase.requisition.form.view.inherit</field>
+            <field name="model">material.purchase.requisition</field>
+            <field name="inherit_id" ref="material_purchase_requisitions.material_purchase_requisition_form_view"/>
+            <field name="arch" type="xml">
+                <field name="analytic_account_id" position="after">
+                      <field name="repair_id" invisible="not repair_id"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>

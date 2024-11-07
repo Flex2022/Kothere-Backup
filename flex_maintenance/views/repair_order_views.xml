@@ -14,20 +14,7 @@
                     <field name="driver_id"/>
                     <field name="maintenance_request_id" readonly="1"/>
                 </xpath>
-                <xpath expr="//div[@name='button_box']" position="inside">
-                    <button type="object" name="get_purchase_order" class="oe_stat_button" icon="fa-building">
-                        <div class="o_field_widget o_stat_info">
-                            <span class="o_stat_value" widget="statinfo">
-                                <field name="purchase_count" widget="statinfo" nolabel="1" class="mr4" readonly="1"/>
-                            </span>
-                            <span class="o_stat_text">Purchase Order</span>
-                        </div>
-                    </button>
-                </xpath>
-
             </field>
         </record>
-
-
     </data>
 </odoo>
