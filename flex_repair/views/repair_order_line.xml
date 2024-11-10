@@ -17,6 +17,8 @@
                 <field name="quantity"/>
                 <field name="product_uom"/>
                 <field name="picked"/>
+                <field name="product_valuation" readonly="1"/>
+                <field name="product_valuation_currency_id" invisible="1"/>
             </tree>
         </field>
     </record>
