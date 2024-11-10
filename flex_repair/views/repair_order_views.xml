@@ -23,13 +23,29 @@
             </field>
         </record>
 
+        <!-- Inherit the repair order tree view and add enhancements -->
+        <record id="view_repair_order_tree_inherit" model="ir.ui.view">
+            <field name="name">repair.order.tree.inherit</field>
+            <field name="model">repair.order</field>
+            <field name="inherit_id" ref="repair.view_repair_order_tree"/>
+            <field name="arch" type="xml">
+
+                <!-- Add a new column for product valuation -->
+                <field name="state" position="before">
+                    <field name="product_valuation" readonly="1"/>
+                    <field name="product_valuation_currency_id" invisible="1"/>
+                </field>
+            </field>
+        </record>
+
+
         <record id="material_purchase_requisition_form_view_inherit" model="ir.ui.view">
             <field name="name">material.purchase.requisition.form.view.inherit</field>
             <field name="model">material.purchase.requisition</field>
             <field name="inherit_id" ref="material_purchase_requisitions.material_purchase_requisition_form_view"/>
             <field name="arch" type="xml">
                 <field name="analytic_account_id" position="after">
-                      <field name="repair_id" invisible="not repair_id"/>
+                    <field name="repair_id" invisible="not repair_id"/>
                 </field>
             </field>
         </record>

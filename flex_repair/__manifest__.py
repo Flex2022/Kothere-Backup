@@ -14,9 +14,10 @@
     'author': 'HACHEMI Mohamed Ramzi (Flex-Ops)',
     'website': 'https://flex-ops.com',
     'license': 'OPL-1',
-    'depends': ['base', 'repair', 'flex_maintenance','material_purchase_requisitions'],
+    'depends': ['base', 'repair', 'flex_maintenance','material_purchase_requisitions','stock'],
     'data': [
-        'views/repair_order_views.xml'
+        'views/repair_order_views.xml',
+        'views/repair_order_line.xml',
     ],
     'installable': True,
     'auto_install': False,

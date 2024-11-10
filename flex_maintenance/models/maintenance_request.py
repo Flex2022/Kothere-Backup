@@ -12,6 +12,12 @@ class MaintenanceRequest(models.Model):
     kilometres_number = fields.Integer(string='Kilometres Number', related='vehicle_id.kilometres_number')
     repair_count = fields.Integer(string='Repair Count', compute='_compute_repair_count')
 
+    actual_hours_number = fields.Float(string='Actual Hours Number', readonly=False)
+    actual_kilometres_number = fields.Float(string='Actual Kilometres Number', related='vehicle_id.odometer',
+                                            readonly=False)
+    odometer_unit = fields.Selection([('kilometers', 'km'), ('miles', 'mi')], 'Odometer Unit', default='kilometers',
+                                     required=True, related="vehicle_id.odometer_unit", readonly=False)
+
     def _compute_repair_count(self):
         for rec in self:
             rec.repair_count = self.env['repair.order'].search_count([('maintenance_request_id', '=', rec.id)])
@@ -31,7 +37,6 @@ class MaintenanceRequest(models.Model):
             if repair_order_vals:
                 repair = self.env['repair.order'].sudo().create(repair_order_vals)
                 repair._get_picking_type()
-
 
     def get_repair_order(self):
         return {

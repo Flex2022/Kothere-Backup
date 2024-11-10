@@ -34,6 +34,21 @@
                                style="width: fit-content;"/>
                         <span>kilometers</span>
                     </div>
+
+                    <label for="actual_hours_number"  invisible="not recurring_maintenance"/>
+                    <div class="o_inline" invisible="not recurring_maintenance">
+                        <field name="actual_hours_number" widget="float_time" placeholder="Hours" class="ms-0"
+                               style="width: fit-content;"/>
+                        <span>hours</span>
+                    </div>
+
+                    <label for="actual_kilometres_number" class="ms-0" style="width: fit-content;"
+                           invisible="not recurring_maintenance"/>
+                    <div class="o_row o_hr_narrow_field" invisible="not recurring_maintenance">
+                        <field name="actual_kilometres_number" widget="float" placeholder="Kilometers" class="ms-0"
+                               style="width: fit-content;"/>
+                        <field name="odometer_unit"/>
+                    </div>
                 </xpath>
                 <xpath expr="//field[@name='workcenter_id']" position="replace">
                     <field name="workcenter_id" invisible="maintenance_for!= 'workcenter'"
@@ -54,8 +69,8 @@
                            groups="base.group_no_one"/>
                 </xpath>
                 <xpath expr="//button[@name='reset_equipment_request']" position="after">
-                    <button name="create_repair_order" string="Create Repair Order" type="object" invisible="repair_count > 0"/>
-
+                    <button name="create_repair_order" string="Create Repair Order" type="object"
+                            invisible="repair_count > 0"/>
                 </xpath>
                 <xpath expr="//sheet/div[1]" position="before">
                     <div name="button_box" class="oe_button_box">
@@ -72,7 +87,6 @@
                 </xpath>
             </field>
         </record>
-
 
     </data>
 </odoo>
