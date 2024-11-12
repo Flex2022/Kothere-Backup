@@ -26,13 +26,13 @@ class JobCostLine(models.Model):
                 rec.total_cost = rec.product_qty * rec.cost_price
 
     # @api.depends('purchase_order_line_ids', 'purchase_order_line_ids.product_qty')
-    @api.depends('purchase_order_line_ids', 'purchase_order_line_ids.product_qty',
+    @api.depends('purchase_order_line_ids', 'purchase_order_line_ids.product_qty','purchase_order_line_ids.price_total',
                  'purchase_order_line_ids.order_id.state')
     def _compute_actual_quantity(self):
         for rec in self:
             # rec.actual_quantity = sum([p.product_qty for p in rec.purchase_order_line_ids])
-            rec.actual_quantity = sum(
-                [p.order_id.state in ['purchase', 'done'] and p.product_qty for p in rec.purchase_order_line_ids])
+            rec.actual_quantity = sum([p.order_id.state in ['purchase', 'done'] and p.product_qty for p in rec.purchase_order_line_ids])
+            rec.actual_value = sum([p.order_id.state in ['purchase', 'done'] and p.price_total for p in rec.purchase_order_line_ids])
 
     @api.depends('timesheet_line_ids', 'timesheet_line_ids.unit_amount')
     def _compute_actual_hour(self):
@@ -152,4 +152,8 @@ class JobCostLine(models.Model):
     actual_hour = fields.Float(
         string='Actual Timesheet Hours',
         compute='_compute_actual_hour',
+    )
+    actual_value = fields.Float(
+        string='Actual Purchased Value',
+        compute='_compute_actual_quantity',
     )

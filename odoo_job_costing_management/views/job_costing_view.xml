@@ -92,6 +92,7 @@
                                         <field name="uom_id"/>
                                         <field name="cost_price" sum="Total"/>
                                         <field name="actual_quantity" sum="Total"/>
+                                        <field name="actual_value" sum="Total"/>
                                         <field name="actual_invoice_quantity" sum="Total"/>
                                         <field name="total_cost" widget="monetary" sum="Total"/>
                                         <field name="currency_id" invisible="1"/>
@@ -135,6 +136,7 @@
                                         <field name="uom_id"/>
                                         <field name="cost_price" sum="Total"/>
                                         <field name="actual_quantity" sum="Total"/>
+                                        <field name="actual_value" sum="Total"/>
                                         <field name="actual_invoice_quantity" sum="Total"/>
                                         <field name="total_cost" widget="monetary" sum="Total"/>
                                         <field name="currency_id" invisible="1"/>
@@ -240,6 +242,7 @@
                     <field name="uom_id" invisible="job_type == 'labour'" optional="hide"/>
                     <field name="actual_quantity"/>
                     <field name="actual_invoice_quantity"/>
+                     <field name="actual_value"/>
                     <field name="hours" invisible="job_type != 'labour'"/>
                     <field name="actual_hour"/>
                     <field name="cost_price"/>
