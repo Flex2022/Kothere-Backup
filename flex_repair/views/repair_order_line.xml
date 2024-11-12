@@ -11,7 +11,6 @@
                 <field name="repair_license_plate"/>
                 <field name="repair_driver_id"/>
                 <field name="repair_maintenance_request_id"/>
-                <field name="repair_product_id"/>
                 <field name="product_id"/>
                 <field name="product_uom_qty"/>
                 <field name="quantity"/>
