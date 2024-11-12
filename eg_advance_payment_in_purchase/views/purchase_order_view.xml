@@ -5,7 +5,8 @@
         <field name="inherit_id" ref="purchase.purchase_order_form"/>
         <field name="arch" type="xml">
             <xpath expr="//header" position="inside">
-                <button string="Advance Payment" type="object" name="action_advance_payment" invisible="state not in ['draft', 'sent', 'to approve']" groups="eg_advance_payment_in_purchase.advance_payment_in_purchase"/>
+<!--                <button string="Advance Payment" type="object" name="action_advance_payment" invisible="state not in ['draft', 'sent', 'to approve']" groups="eg_advance_payment_in_purchase.advance_payment_in_purchase"/>-->
+                <button string="Advance Payment" type="object" name="action_advance_payment" groups="eg_advance_payment_in_purchase.advance_payment_in_purchase"/>
             </xpath>
             <xpath expr="//notebook" position="inside">
                 <page string="Account Payment" groups="eg_advance_payment_in_purchase.advance_payment_in_purchase">
