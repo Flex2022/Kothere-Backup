@@ -27,64 +27,40 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="row mt-5 p-2">
-                                    <div class="col-4 text-start">
-                                        <t t-if="o.name">
-                                            <strong class="text-start">Serial No</strong>
-                                        </t>
-                                        <t t-if="o.h_date">
-                                            <br/>
-                                            <strong>H</strong>
-                                        </t>
-                                        <t t-if="o.date">
-                                            <br/>
-                                            <strong>Date</strong>
-                                        </t>
-                                        <t t-if="o.partner_code">
-                                            <br/>
-                                            <strong>Partner Code</strong>
-                                        </t>
-
-                                    </div>
-                                    <div class="col-4 text-center">
-                                        <t t-if="o.name">
-                                            <strong class="fw-bold text-center" t-field="o.name"/>
-                                        </t>
-                                        <t t-if="o.h_date">
-                                            <br/>
-                                            <strong class="fw-bold" t-field="o.h_date"
-                                                    t-field-options="{&quot;format&quot;: &quot;dd/MM/yyyy&quot;}"/>
-                                        </t>
-                                        <t t-if="o.date">
-                                            <br/>
-                                            <strong class="fw-bold" t-field="o.date"
-                                                    t-field-options="{&quot;format&quot;: &quot;dd/MM/yyyy&quot;}"/>
-                                        </t>
-                                        <t t-if="o.partner_code">
-                                            <br/>
-                                            <strong class="fw-bold" t-field="o.partner_code"/>
-                                        </t>
-                                    </div>
-                                    <div class="col-4 text-end">
-                                        <t t-if="o.name">
-                                            <strong dir="rtl">الرقم التسلسلي </strong>
-                                        </t>
-                                        <t t-if="o.h_date">
-                                            <br/>
-                                            <strong dir="rtl">التاريخ</strong>
-                                        </t>
-                                        <t t-if="o.date">
-                                            <br/>
-                                            <strong dir="rtl">الموافق ل</strong>
-                                        </t>
-                                        <t t-if="o.partner_code">
-                                            <br/>
-                                            <strong dir="rtl">رقم العميل</strong>
-                                        </t>
-                                    </div>
+                            <div class="row mt-5 ">
+                                <div class="col-4 p-2">
+                                    <strong>Serial No</strong>
+                                    <br/>
+                                    <strong>H</strong>
+                                    <br/>
+                                    <strong>Date</strong>
+                                    <br/>
+                                    <strong>Partner Code</strong>
+                                    <br/>
+                                </div>
+                                <div class="col-4 p-2">
+                                    <strong class="fw-bold text-center" t-field="o.name"/>
+                                    <br/>
+                                    <strong class="fw-bold" t-field="o.h_date"
+                                            t-field-options="{&quot;format&quot;: &quot;dd/MM/yyyy&quot;}"/>
+                                    <br/>
+                                    <strong class="fw-bold" t-field="o.date"
+                                            t-field-options="{&quot;format&quot;: &quot;dd/MM/yyyy&quot;}"/>
+                                    <br/>
+                                    <strong class="fw-bold" t-field="o.partner_code"/>
+                                    <br/>
+                                </div>
+                                <div class="col-4 p-2" dir="rtl">
+                                    <strong dir="rtl">الرقم التسلسلي</strong>
+                                    <br/>
+                                    <strong dir="rtl">التاريخ</strong>
+                                    <br/>
+                                    <strong dir="rtl">الموافق ل</strong>
+                                    <br/>
+                                    <strong dir="rtl">رقم العميل</strong>
                                 </div>
                             </div>
+
 
                             <div class="row mt-5 ">
                                 <div class="col-4 p-2">
