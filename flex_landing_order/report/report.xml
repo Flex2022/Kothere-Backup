@@ -31,9 +31,9 @@
                             <div class="col-12 text-center">
 
                                 <t t-if="o.name">
-                                    <span class="text-left">Serial No :</span>
+                                    <span class="text-start">Serial No :</span>
                                     <strong class="fw-bold text-center" t-field="o.name"/>
-                                    <span dir="rtl text-right">الرقم التسلسلي :</span>
+                                    <span dir="rtl text-end">الرقم التسلسلي :</span>
                                 </t>
                                 <t t-if="o.h_date">
                                     <br/>
