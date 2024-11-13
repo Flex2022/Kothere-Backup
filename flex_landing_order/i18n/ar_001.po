@@ -709,7 +709,7 @@ msgstr "تحويل المخزون"
 #. module: flex_landing_order
 #: model_terms:ir.ui.view,arch_db:flex_landing_order.flex_landing_order_report
 msgid "إذن التحميل"
-msgstr "Landing Permit"
+msgstr "Landing Order"
 
 #. module: flex_landing_order
 #: model_terms:ir.ui.view,arch_db:flex_landing_order.flex_landing_order_report
@@ -739,14 +739,14 @@ msgstr "Bag"
 #. module: flex_landing_order
 #: model_terms:ir.ui.view,arch_db:flex_landing_order.flex_landing_order_report
 msgid "محرر الإذن"
-msgstr "Permit Issuer"
+msgstr ""
 
 #. module: flex_landing_order
 #: model_terms:ir.ui.view,arch_db:flex_landing_order.flex_landing_order_report
 msgid "مشرف الامدادات"
-msgstr "Supply Supervisor"
+msgstr ""
 
 #. module: flex_landing_order
 #: model:ir.model.fields.selection,name:flex_landing_order.selection__landing_order__kind__kind2
 msgid "مقاوم"
-msgstr "Resistant"
+msgstr ""

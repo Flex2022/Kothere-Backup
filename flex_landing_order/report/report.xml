@@ -16,163 +16,165 @@
             <t t-call="web.html_container">
                 <t t-foreach="docs" t-as="o">
                     <t t-call="web.external_layout">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="col-6 text-center float-start" dir="ltr">
-                                    <h3>Landing Order</h3>
-                                </div>
-                                <div class="col-6 text-center float-end" dir="rtl">
-                                    <h3>إذن التحميل</h3>
+                        <div class="page" dir="ltr">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="col-6 text-center float-start" dir="ltr">
+                                        <h3>Landing Order</h3>
+                                    </div>
+                                    <div class="col-6 text-center float-end" dir="rtl">
+                                        <h3>إذن التحميل</h3>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="row mt-5 p-2">
-                                <div class="col-4 text-start">
-                                    <t t-if="o.name">
-                                        <strong class="text-start">Serial No :</strong>
-                                    </t>
-                                    <t t-if="o.h_date">
-                                        <br/>
-                                        <strong>H :</strong>
-                                    </t>
-                                    <t t-if="o.date">
-                                        <br/>
-                                        <strong>Date</strong>
-                                    </t>
-                                    <t t-if="o.partner_code">
-                                        <br/>
-                                        <strong>Partner Code :</strong>
-                                    </t>
+                            <div class="row">
+                                <div class="row mt-5 p-2">
+                                    <div class="col-4 text-start">
+                                        <t t-if="o.name">
+                                            <strong class="text-start">Serial No</strong>
+                                        </t>
+                                        <t t-if="o.h_date">
+                                            <br/>
+                                            <strong>H</strong>
+                                        </t>
+                                        <t t-if="o.date">
+                                            <br/>
+                                            <strong>Date</strong>
+                                        </t>
+                                        <t t-if="o.partner_code">
+                                            <br/>
+                                            <strong>Partner Code</strong>
+                                        </t>
 
+                                    </div>
+                                    <div class="col-4 text-center">
+                                        <t t-if="o.name">
+                                            <strong class="fw-bold text-center" t-field="o.name"/>
+                                        </t>
+                                        <t t-if="o.h_date">
+                                            <br/>
+                                            <strong class="fw-bold" t-field="o.h_date"
+                                                    t-field-options="{&quot;format&quot;: &quot;dd/MM/yyyy&quot;}"/>
+                                        </t>
+                                        <t t-if="o.date">
+                                            <br/>
+                                            <strong class="fw-bold" t-field="o.date"
+                                                    t-field-options="{&quot;format&quot;: &quot;dd/MM/yyyy&quot;}"/>
+                                        </t>
+                                        <t t-if="o.partner_code">
+                                            <br/>
+                                            <strong class="fw-bold" t-field="o.partner_code"/>
+                                        </t>
+                                    </div>
+                                    <div class="col-4 text-end">
+                                        <t t-if="o.name">
+                                            <strong dir="rtl">الرقم التسلسلي </strong>
+                                        </t>
+                                        <t t-if="o.h_date">
+                                            <br/>
+                                            <strong dir="rtl">التاريخ</strong>
+                                        </t>
+                                        <t t-if="o.date">
+                                            <br/>
+                                            <strong dir="rtl">الموافق ل</strong>
+                                        </t>
+                                        <t t-if="o.partner_code">
+                                            <br/>
+                                            <strong dir="rtl">رقم العميل</strong>
+                                        </t>
+                                    </div>
                                 </div>
-                                <div class="col-4 text-center">
-                                    <t t-if="o.name">
-                                        <strong class="fw-bold text-center" t-field="o.name"/>
-                                    </t>
-                                    <t t-if="o.h_date">
-                                        <br/>
-                                        <strong class="fw-bold" t-field="o.h_date"
-                                                t-field-options="{&quot;format&quot;: &quot;dd/MM/yyyy&quot;}"/>
-                                    </t>
-                                    <t t-if="o.date">
-                                        <br/>
-                                        <strong class="fw-bold" t-field="o.date"
-                                                t-field-options="{&quot;format&quot;: &quot;dd/MM/yyyy&quot;}"/>
-                                    </t>
-                                    <t t-if="o.partner_code">
-                                        <br/>
-                                        <strong class="fw-bold" t-field="o.partner_code"/>
-                                    </t>
-                                </div>
-                                <div class="col-4 text-end">
-                                    <t t-if="o.name">
-                                        <strong dir="rtl">الرقم التسلسلي :</strong>
-                                    </t>
-                                    <t t-if="o.h_date">
-                                        <br/>
-                                        <strong dir="rtl">التاريخ :</strong>
-                                    </t>
-                                    <t t-if="o.date">
-                                        <br/>
-                                        <strong dir="rtl">الموافق ل :</strong>
-                                    </t>
-                                    <t t-if="o.partner_code">
-                                        <br/>
-                                        <strong dir="rtl">رقم العميل :</strong>
-                                    </t>
-                                </div>
                             </div>
-                        </div>
 
-                        <div class="row mt-5 ">
-                            <div class="col-4 p-2">
-                                <strong>Cement Company:</strong>
-                                <br/>
-                                <strong>Driver Name:</strong>
-                                <br/>
-                                <strong>Car No:</strong>
-                                <br/>
-                                <strong>Qty:</strong>
-                                <br/>
-                                <strong>Kind:</strong>
-                            </div>
-                            <div class="col-4 p-2 text-center">
-                                <strong class="m-0" t-field="o.partner_id.name">/</strong>
-                                <br/>
-                                <strong class="m-0" t-field="o.driver_id.name">/</strong>
-                                <br/>
-                                <strong class="m-0" t-field="o.car_id">/</strong>
-                                <br/>
-                                <strong class="m-0" t-field="o.quantity">/</strong>
-                                <br/>
-                                <strong class="m-0" t-field="o.kind">/</strong>
-                            </div>
-                            <div class="col-4 p-2" dir="rtl">
-                                <strong>السادة/ شركة الاسمنت:</strong>
-                                <br/>
-                                <strong>ارجو تسليم السائق:</strong>
-                                <br/>
-                                <strong>سيارة رقم:</strong>
-                                <br/>
-                                <strong>الكمية(طن-كيس):</strong>
-                                <br/>
-                                <strong>النوع اسمنت(عادي-مقاوم-سايب):</strong>
-                            </div>
-                        </div>
-
-                        <div class="row mt-5">
-                            <div class="col-12">
-
-                                <div class="col-4 float-end text-center">
-                                    <p>
-                                        <span>
-                                            <h6>محرر الإذن</h6>
-                                        </span>
-                                    </p>
+                            <div class="row mt-5 ">
+                                <div class="col-4 p-2">
+                                    <strong>Cement Company</strong>
                                     <br/>
-                                    <div>
-                                        <img src="/flex_landing_order/static/img/sign1.png"
-                                             id="sign1"
-                                             width="220 px;"
-                                        />
-                                    </div>
+                                    <strong>Driver Name</strong>
+                                    <br/>
+                                    <strong>Car No</strong>
+                                    <br/>
+                                    <strong>Qty</strong>
+                                    <br/>
+                                    <strong>Kind</strong>
                                 </div>
-                                <div class="col-4 float-end text-center">
-                                    <p>
-                                        <span>
-                                            <h6>الختم الرسمي</h6>
-                                        </span>
-                                    </p>
-                                    <div>
-                                        <img src="/flex_landing_order/static/img/sign3.png"
-                                             id="sign3"
-                                             width="220 px;"
-                                        />
-                                    </div>
+                                <div class="col-4 p-2 text-center">
+                                    <strong class="m-0" t-field="o.partner_id.name">/</strong>
+                                    <br/>
+                                    <strong class="m-0" t-field="o.driver_id.name">/</strong>
+                                    <br/>
+                                    <strong class="m-0" t-field="o.car_id">/</strong>
+                                    <br/>
+                                    <strong class="m-0" t-field="o.quantity">/</strong>
+                                    <br/>
+                                    <strong class="m-0" t-field="o.kind">/</strong>
                                 </div>
-                                <div class="col-4 float-start text-center">
-                                    <p>
-                                        <span>
-                                            <h6>مشرف الامدادات</h6>
-                                        </span>
-                                    </p>
-                                    <div>
-                                        <img src="/flex_landing_order/static/img/sign2.png"
-                                             id="sign2"
-                                             width="220 px;"
-                                        />
+                                <div class="col-4 p-2" dir="rtl">
+                                    <strong>السادة/ شركة الاسمنت</strong>
+                                    <br/>
+                                    <strong>ارجو تسليم السائق</strong>
+                                    <br/>
+                                    <strong>سيارة رقم</strong>
+                                    <br/>
+                                    <strong>الكمية(طن-كيس)</strong>
+                                    <br/>
+                                    <strong>النوع اسمنت(عادي-مقاوم-سايب)</strong>
+                                </div>
+                            </div>
+
+                            <div class="row mt-5">
+                                <div class="col-12">
+
+                                    <div class="col-4 float-end text-center">
+                                        <p>
+                                            <span>
+                                                <h6>محرر الإذن</h6>
+                                            </span>
+                                        </p>
+                                        <br/>
+                                        <div>
+                                            <img src="/flex_landing_order/static/img/sign1.png"
+                                                 id="sign1"
+                                                 width="220 px;"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div class="col-4 float-end text-center">
+                                        <p>
+                                            <span>
+                                                <h6>الختم الرسمي</h6>
+                                            </span>
+                                        </p>
+                                        <div>
+                                            <img src="/flex_landing_order/static/img/sign3.png"
+                                                 id="sign3"
+                                                 width="220 px;"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div class="col-4 float-start text-center">
+                                        <p>
+                                            <span>
+                                                <h6>مشرف الامدادات</h6>
+                                            </span>
+                                        </p>
+                                        <div>
+                                            <img src="/flex_landing_order/static/img/sign2.png"
+                                                 id="sign2"
+                                                 width="220 px;"
+                                            />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row mt-5">
-                            <div class="col-12 p-2">
-                                <p t-if="o.qr_code">
-                                    <img style="display:block;"
-                                         t-att-src="'/report/barcode/?barcode_type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('QR', quote_plus(o.qr_code), 130, 130)"
-                                         alt="QR Code"/>
-                                </p>
+                            <div class="row mt-5">
+                                <div class="col-12 p-2">
+                                    <p t-if="o.qr_code">
+                                        <img style="display:block;"
+                                             t-att-src="'/report/barcode/?barcode_type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('QR', quote_plus(o.qr_code), 130, 130)"
+                                             alt="QR Code"/>
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </t>
