@@ -155,7 +155,7 @@
                                     </p>
                                     <br/>
                                     <div>
-                                        <img src="/flex_landing_order/static/src/img/sign1.png"
+                                        <img src="/flex_landing_order/static/img/sign1.png"
                                              id="sign1"
                                              class="top-50 start-50 position-absolute bg-white border border-white border-3 rounded-circle"
                                         />
@@ -168,7 +168,7 @@
                                         </span>
                                     </p>
                                      <div>
-                                        <img src="/flex_landing_order/static/src/img/sign2.png"
+                                        <img src="/flex_landing_order/static/img/sign2.png"
                                              id="sign1"
                                              width="220 px;"
                                         />
@@ -181,7 +181,7 @@
                                         </span>
                                     </p>
                                      <div>
-                                        <img src="/flex_landing_order/static/src/img/sign3.png"
+                                        <img src="/flex_landing_order/static/img/sign3.png"
                                              id="sign1"
                                         />
                                     </div>
