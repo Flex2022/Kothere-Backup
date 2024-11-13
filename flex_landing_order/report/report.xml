@@ -38,8 +38,8 @@
                                     <strong>Partner Code</strong>
                                     <br/>
                                 </div>
-                                <div class="col-4 p-2">
-                                    <strong class="fw-bold text-center" t-field="o.name"/>
+                                <div class="col-4 p-2  text-center">
+                                    <strong class="fw-bold" t-field="o.name"/>
                                     <br/>
                                     <strong class="fw-bold" t-field="o.h_date"
                                             t-field-options="{&quot;format&quot;: &quot;dd/MM/yyyy&quot;}"/>
