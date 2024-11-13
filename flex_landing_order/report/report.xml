@@ -27,11 +27,11 @@
                                         <strong>H :</strong>
                                     </t>
                                     <t t-if="o.date">
-                                         <br/>
+                                        <br/>
                                         <strong>Date</strong>
                                     </t>
                                     <t t-if="o.partner_code">
-                                         <br/>
+                                        <br/>
                                         <strong>Partner Code :</strong>
                                     </t>
 
@@ -41,17 +41,17 @@
                                         <strong class="fw-bold text-center" t-field="o.name"/>
                                     </t>
                                     <t t-if="o.h_date">
-                                         <br/>
+                                        <br/>
                                         <strong class="fw-bold" t-field="o.h_date"
                                                 t-field-options="{&quot;format&quot;: &quot;dd/MM/yyyy&quot;}"/>
                                     </t>
                                     <t t-if="o.date">
-                                         <br/>
+                                        <br/>
                                         <strong class="fw-bold" t-field="o.date"
                                                 t-field-options="{&quot;format&quot;: &quot;dd/MM/yyyy&quot;}"/>
                                     </t>
                                     <t t-if="o.partner_code">
-                                         <br/>
+                                        <br/>
                                         <strong class="fw-bold" t-field="o.partner_code"/>
                                     </t>
                                 </div>
@@ -60,15 +60,15 @@
                                         <strong dir="rtl">الرقم التسلسلي :</strong>
                                     </t>
                                     <t t-if="o.h_date">
-                                         <br/>
+                                        <br/>
                                         <strong dir="rtl">التاريخ :</strong>
                                     </t>
                                     <t t-if="o.date">
-                                         <br/>
+                                        <br/>
                                         <strong dir="rtl">الموافق ل :</strong>
                                     </t>
                                     <t t-if="o.partner_code">
-                                         <br/>
+                                        <br/>
                                         <strong dir="rtl">رقم العميل :</strong>
                                     </t>
                                 </div>
@@ -154,9 +154,12 @@
                                         </span>
                                     </p>
                                     <br/>
-                                    <p>
-                                        <hr/>
-                                    </p>
+                                    <div>
+                                        <img src="/flex_landing_order/static/src/img/sign1.png"
+                                             id="sign1"
+                                             class="top-50 start-50 position-absolute bg-white border border-white border-3 rounded-circle"
+                                        />
+                                    </div>
                                 </div>
                                 <div class="col-4 float-end text-center">
                                     <p>
@@ -164,6 +167,12 @@
                                             <h6>الختم الرسمي</h6>
                                         </span>
                                     </p>
+                                     <div>
+                                        <img src="/flex_landing_order/static/src/img/sign2.png"
+                                             id="sign1"
+                                             width="220 px;"
+                                        />
+                                    </div>
                                 </div>
                                 <div class="col-4 float-start text-center">
                                     <p>
@@ -171,10 +180,11 @@
                                             <h6>مشرف الامدادات</h6>
                                         </span>
                                     </p>
-                                    <br/>
-                                    <p>
-                                        <hr/>
-                                    </p>
+                                     <div>
+                                        <img src="/flex_landing_order/static/src/img/sign3.png"
+                                             id="sign1"
+                                        />
+                                    </div>
                                 </div>
                             </div>
                         </div>
