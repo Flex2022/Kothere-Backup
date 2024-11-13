@@ -1,0 +1,752 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* flex_landing_order
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-11-13 02:39+0000\n"
+"PO-Revision-Date: 2024-11-13 02:39+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: flex_landing_order
+#: model:ir.actions.report,print_report_name:flex_landing_order.landing_order_report
+msgid "'Landing Order'"
+msgstr "'إذن التحميل'"
+
+#. module: flex_landing_order
+#: model_terms:ir.ui.view,arch_db:flex_landing_order.landing_order_form_view
+msgid "/Hours"
+msgstr "/ساعات"
+
+#. module: flex_landing_order
+#: model_terms:ir.ui.view,arch_db:flex_landing_order.flex_landing_order_report
+msgid ""
+"<br/>\n"
+"                                        <strong dir=\"rtl\">التاريخ :</strong>"
+msgstr ""
+
+#. module: flex_landing_order
+#: model_terms:ir.ui.view,arch_db:flex_landing_order.flex_landing_order_report
+msgid ""
+"<br/>\n"
+"                                        <strong dir=\"rtl\">الموافق ل :</strong>"
+msgstr ""
+
+#. module: flex_landing_order
+#: model_terms:ir.ui.view,arch_db:flex_landing_order.flex_landing_order_report
+msgid ""
+"<br/>\n"
+"                                        <strong dir=\"rtl\">رقم العميل :</strong>"
+msgstr ""
+
+#. module: flex_landing_order
+#: model_terms:ir.ui.view,arch_db:flex_landing_order.flex_landing_order_report
+msgid ""
+"<br/>\n"
+"                                        <strong>Date</strong>"
+msgstr ""
+
+#. module: flex_landing_order
+#: model_terms:ir.ui.view,arch_db:flex_landing_order.flex_landing_order_report
+msgid ""
+"<br/>\n"
+"                                        <strong>H :</strong>"
+msgstr ""
+
+#. module: flex_landing_order
+#: model_terms:ir.ui.view,arch_db:flex_landing_order.flex_landing_order_report
+msgid ""
+"<br/>\n"
+"                                        <strong>Partner Code :</strong>"
+msgstr ""
+
+#. module: flex_landing_order
+#: model_terms:ir.ui.view,arch_db:flex_landing_order.flex_landing_order_report
+msgid "<strong class=\"text-start\">Serial No :</strong>"
+msgstr ""
+
+#. module: flex_landing_order
+#: model_terms:ir.ui.view,arch_db:flex_landing_order.flex_landing_order_report
+msgid "<strong dir=\"rtl\">الرقم التسلسلي :</strong>"
+msgstr ""
+
+#. module: flex_landing_order
+#: model_terms:ir.ui.view,arch_db:flex_landing_order.flex_landing_order_report
+msgid ""
+"<strong>Cement Company:</strong>\n"
+"                                <br/>\n"
+"                                <strong>Driver Name:</strong>\n"
+"                                <br/>\n"
+"                                <strong>Car No:</strong>\n"
+"                                <br/>\n"
+"                                <strong>Qty:</strong>\n"
+"                                <br/>\n"
+"                                <strong>Kind:</strong>"
+msgstr ""
+
+#. module: flex_landing_order
+#: model_terms:ir.ui.view,arch_db:flex_landing_order.flex_landing_order_report
+msgid ""
+"<strong>السادة/ شركة الاسمنت:</strong>\n"
+"                                <br/>\n"
+"                                <strong>ارجو تسليم السائق:</strong>\n"
+"                                <br/>\n"
+"                                <strong>سيارة رقم:</strong>\n"
+"                                <br/>\n"
+"                                <strong>الكمية(طن-كيس):</strong>\n"
+"                                <br/>\n"
+"                                <strong>النوع اسمنت(عادي-مقاوم-سايب):</strong>"
+msgstr ""
+
+#. module: flex_landing_order
+#: model:ir.model.fields,field_description:flex_landing_order.field_landing_order__access_warning
+msgid "Access warning"
+msgstr "تحذير وصول"
+
+#. module: flex_landing_order
+#: model:ir.model.fields,field_description:flex_landing_order.field_landing_order__message_needaction
+msgid "Action Needed"
+msgstr "الإجراء المطلوب"
+
+#. module: flex_landing_order
+#: model:ir.model.fields,field_description:flex_landing_order.field_landing_order__activity_ids
+msgid "Activities"
+msgstr "أنشطة"
+
+#. module: flex_landing_order
+#: model:ir.model.fields,field_description:flex_landing_order.field_landing_order__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr "تزيين النشاط الاستثنائي"
+
+#. module: flex_landing_order
+#: model:ir.model.fields,field_description:flex_landing_order.field_landing_order__activity_state
+msgid "Activity State"
+msgstr "حالة النشاط"
+
+#. module: flex_landing_order
+#: model:ir.model.fields,field_description:flex_landing_order.field_landing_order__activity_type_icon
+msgid "Activity Type Icon"
+msgstr "رمز نوع النشاط"
+
+#. module: flex_landing_order
+#: model:res.groups,name:flex_landing_order.flex_landing_order_group_landing_order_manager
+msgid "Admin"
+msgstr "مدير النظام"
+
+#. module: flex_landing_order
+#: model:ir.model.fields,field_description:flex_landing_order.field_landing_order__message_attachment_count
+msgid "Attachment Count"
+msgstr "عدد المرفقات"
+
+#. module: flex_landing_order
+#: model:ir.model.fields,field_description:flex_landing_order.field_landing_order__campaign_id
+msgid "Campaign"
+msgstr "الحملة"
+
+#. module: flex_landing_order
+#: model:res.groups,name:flex_landing_order.flex_landing_order_group_landing_order_done
+msgid "Can Close Landing Order"
+msgstr "يمكن إغلاق إذن التحميل"
+
+#. module: flex_landing_order
+#: model_terms:ir.ui.view,arch_db:flex_landing_order.landing_order_form_view
+msgid "Cancel"
+msgstr "إلغاء"
+
+#. module: flex_landing_order
+#: model_terms:ir.ui.view,arch_db:flex_landing_order.view_cancel_reason_wizard_form
+msgid "Cancel Order"
+msgstr "إلغاء الأمر"
+
+#. module: flex_landing_order
+#: model:ir.model,name:flex_landing_order.model_cancel_reason_wizard
+msgid "Cancel Reason Wizard"
+msgstr "معالج سبب الإلغاء"
+
+#. module: flex_landing_order
+#: model_terms:ir.ui.view,arch_db:flex_landing_order.landing_order_form_view
+msgid "Cancelation Information"
+msgstr "معلومات الإلغاء"
+
+#. module: flex_landing_order
+#: model:ir.model.fields,field_description:flex_landing_order.field_landing_order__cancelation_reason
+msgid "Cancelation Reason"
+msgstr "سبب الإلغاء"
+
+#. module: flex_landing_order
+#: model:ir.model.fields.selection,name:flex_landing_order.selection__landing_order__state__canceled
+msgid "Canceled"
+msgstr "ملغي"
+
+#. module: flex_landing_order
+#: model:ir.model.fields,field_description:flex_landing_order.field_landing_order__car_id
+msgid "Car ID"
+msgstr "معرف السيارة"
+
+#. module: flex_landing_order
+#: model:ir.model.fields,field_description:flex_landing_order.field_landing_order__car_model_id
+msgid "Car Model"
+msgstr "طراز السيارة"
+
+#. module: flex_landing_order
+#: model_terms:ir.ui.view,arch_db:flex_landing_order.view_cancel_reason_wizard_form
+msgid "Close"
+msgstr "إغلاق"
+#. module: flex_landing_order
+#: model:ir.model.fields,field_description:flex_landing_order.field_landing_order__company_id
+msgid "Company"
+msgstr "الشركة"
+
+#. module: flex_landing_order
+#: model_terms:ir.ui.view,arch_db:flex_landing_order.landing_order_form_view
+msgid "Create Sale Order"
+msgstr "إنشاء أمر بيع"
+
+#. module: flex_landing_order
+#: model_terms:ir.ui.view,arch_db:flex_landing_order.flex_landing_order_stock_picking_form_inherit
+#: model_terms:ir.ui.view,arch_db:flex_landing_order.flex_landing_orders_purchase_order_form
+#: model_terms:ir.ui.view,arch_db:flex_landing_order.flex_landing_orders_sale_order_form
+msgid "Create landing order"
+msgstr "إنشاء إذن تحميل"
+
+#. module: flex_landing_order
+#: model:ir.model.fields,field_description:flex_landing_order.field_cancel_reason_wizard__create_uid
+#: model:ir.model.fields,field_description:flex_landing_order.field_landing_order__create_uid
+msgid "Created by"
+msgstr "أنشأه"
+
+#. module: flex_landing_order
+#: model:ir.model.fields,field_description:flex_landing_order.field_cancel_reason_wizard__create_date
+#: model:ir.model.fields,field_description:flex_landing_order.field_landing_order__create_date
+msgid "Created on"
+msgstr "تم الإنشاء في"
+
+#. module: flex_landing_order
+#: model:ir.model.fields,help:flex_landing_order.field_landing_order__access_url
+msgid "Customer Portal URL"
+msgstr "رابط بوابة العميل"
+
+#. module: flex_landing_order
+#: model:ir.model.fields,field_description:flex_landing_order.field_landing_order__date
+msgid "Date"
+msgstr "التاريخ"
+
+#. module: flex_landing_order
+#: model_terms:ir.ui.view,arch_db:flex_landing_order.landing_order_form_view
+msgid "Date Information"
+msgstr "معلومات التاريخ"
+
+#. module: flex_landing_order
+#: model:ir.model.fields.selection,name:flex_landing_order.selection__landing_order__state__delivery
+#: model_terms:ir.ui.view,arch_db:flex_landing_order.landing_order_form_view
+msgid "Delivery"
+msgstr "تسليم"
+
+#. module: flex_landing_order
+#: model:ir.model.fields,field_description:flex_landing_order.field_landing_order__delivery_date
+msgid "Delivery Date"
+msgstr "تاريخ التسليم"
+
+#. module: flex_landing_order
+#: model:ir.model.fields,field_description:flex_landing_order.field_cancel_reason_wizard__display_name
+#: model:ir.model.fields,field_description:flex_landing_order.field_landing_order__display_name
+msgid "Display Name"
+msgstr "اسم العرض"
+
+#. module: flex_landing_order
+#: model:ir.model.fields.selection,name:flex_landing_order.selection__landing_order__state__done
+#: model_terms:ir.ui.view,arch_db:flex_landing_order.landing_order_form_view
+msgid "Done"
+msgstr "منجز"
+
+#. module: flex_landing_order
+#: model:ir.model.fields,field_description:flex_landing_order.field_landing_order__driver_id
+msgid "Driver"
+msgstr "السائق"
+
+#. module: flex_landing_order
+#: model:ir.model.fields,field_description:flex_landing_order.field_fleet_vehicle__employee_id_dr
+#: model:ir.model.fields,field_description:flex_landing_order.field_landing_order__driver_employee
+msgid "Driver Employee"
+msgstr "موظف السائق"
+
+#. module: flex_landing_order
+#: model_terms:ir.ui.view,arch_db:flex_landing_order.view_cancel_reason_wizard_form
+msgid "Enter Cancellation Reason"
+msgstr "أدخل سبب الإلغاء"
+
+#. module: flex_landing_order
+#. odoo-python
+#: code:addons/flex_landing_order/models/landing_order.py:0
+#, python-format
+msgid "Error while creating sale order: %s"
+msgstr "خطأ أثناء إنشاء أمر البيع: %s"
+
+#. module: flex_landing_order
+#: model:ir.model.fields,field_description:flex_landing_order.field_landing_order__message_follower_ids
+msgid "Followers"
+msgstr "متابعون"
+
+#. module: flex_landing_order
+#: model:ir.model.fields,field_description:flex_landing_order.field_landing_order__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "المتابعون (الشركاء)"
+
+#. module: flex_landing_order
+#: model:ir.model.fields,help:flex_landing_order.field_landing_order__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr "رمز Font awesome مثل fa-tasks"
+
+#. module: flex_landing_order
+#: model:ir.model.fields,field_description:flex_landing_order.field_landing_order__from_receive_to_delivery_d
+#: model:ir.model.fields,field_description:flex_landing_order.field_landing_order__from_receive_to_delivery_h
+#: model:ir.model.fields,field_description:flex_landing_order.field_landing_order__from_receive_to_delivery_h_hour
+msgid "From Receive To Delivery"
+msgstr "من الاستلام إلى التسليم"
+
+#. module: flex_landing_order
+#: model_terms:ir.ui.view,arch_db:flex_landing_order.landing_order_form_view
+msgid "General Information"
+msgstr "معلومات عامة"
+
+#. module: flex_landing_order
+#: model:ir.model.fields,field_description:flex_landing_order.field_landing_order__has_message
+msgid "Has Message"
+msgstr "لديه رسالة"
+
+#. module: flex_landing_order
+#: model:ir.model.fields,field_description:flex_landing_order.field_cancel_reason_wizard__id
+#: model:ir.model.fields,field_description:flex_landing_order.field_landing_order__id
+msgid "ID"
+msgstr "المعرف"
+
+#. module: flex_landing_order
+#: model:ir.model.fields,field_description:flex_landing_order.field_landing_order__activity_exception_icon
+msgid "Icon"
+msgstr "رمز"
+
+#. module: flex_landing_order
+#: model:ir.model.fields,help:flex_landing_order.field_landing_order__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr "رمز يشير إلى نشاط استثنائي."
+
+#. module: flex_landing_order
+#: model:ir.model.fields,help:flex_landing_order.field_landing_order__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "إذا تم التحقق، تتطلب الرسائل الجديدة انتباهك."
+
+#. module: flex_landing_order
+#: model:ir.model.fields,help:flex_landing_order.field_landing_order__message_has_error
+#: model:ir.model.fields,help:flex_landing_order.field_landing_order__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr "إذا تم التحقق، بعض الرسائل بها خطأ في التسليم."
+
+#. module: flex_landing_order
+#: model:ir.model.fields,field_description:flex_landing_order.field_landing_order__message_is_follower
+msgid "Is Follower"
+msgstr "هو متابع"
+
+#. module: flex_landing_order
+#: model:ir.model.fields,field_description:flex_landing_order.field_landing_order__kind
+msgid "Kind"
+msgstr "النوع"
+
+#. module: flex_landing_order
+#: model:ir.actions.act_window,name:flex_landing_order.landing_order_act_window
+#: model:ir.actions.report,name:flex_landing_order.landing_order_report
+#: model:ir.model.fields,field_description:flex_landing_order.field_purchase_order__landing_order_id
+#: model:ir.model.fields,field_description:flex_landing_order.field_sale_order__landing_order_id
+#: model:ir.model.fields,field_description:flex_landing_order.field_stock_picking__landing_order_id
+#: model:ir.model.fields.selection,name:flex_landing_order.selection__purchase_order__order_type__landing
+#: model:ir.model.fields.selection,name:flex_landing_order.selection__sale_order__order_type__landing
+#: model:ir.ui.menu,name:flex_landing_order.landing_order
+#: model_terms:ir.ui.view,arch_db:flex_landing_order.flex_landing_order_report
+#: model_terms:ir.ui.view,arch_db:flex_landing_order.landing_order_form_view
+#: model_terms:ir.ui.view,arch_db:flex_landing_order.landing_order_graph_view
+#: model_terms:ir.ui.view,arch_db:flex_landing_order.landing_order_tree_view
+msgid "Landing Order"
+msgstr "أمر التحميل"
+#. module: flex_landing_order
+#: model:ir.module.category,name:flex_landing_order.flex_landing_order_category
+msgid "Landing Order Access rules"
+msgstr "قواعد الوصول لأمر التحميل"
+
+#. module: flex_landing_order
+#: model:ir.model.fields,field_description:flex_landing_order.field_purchase_order__landing_orders_count
+#: model:ir.model.fields,field_description:flex_landing_order.field_sale_order__landing_orders_count
+#: model:ir.model.fields,field_description:flex_landing_order.field_stock_picking__landing_orders_count
+#: model_terms:ir.ui.view,arch_db:flex_landing_order.flex_landing_order_stock_picking_form_inherit
+#: model_terms:ir.ui.view,arch_db:flex_landing_order.flex_landing_orders_purchase_order_form
+#: model_terms:ir.ui.view,arch_db:flex_landing_order.flex_landing_orders_sale_order_form
+msgid "Landing Orders"
+msgstr "أوامر التحميل"
+
+#. module: flex_landing_order
+#: model:ir.model,name:flex_landing_order.model_landing_order
+msgid "LandingOrder"
+msgstr "أمر تحميل"
+
+#. module: flex_landing_order
+#: model:ir.model.fields,field_description:flex_landing_order.field_cancel_reason_wizard__write_uid
+#: model:ir.model.fields,field_description:flex_landing_order.field_landing_order__write_uid
+msgid "Last Updated by"
+msgstr "آخر تحديث بواسطة"
+
+#. module: flex_landing_order
+#: model:ir.model.fields,field_description:flex_landing_order.field_cancel_reason_wizard__write_date
+#: model:ir.model.fields,field_description:flex_landing_order.field_landing_order__write_date
+msgid "Last Updated on"
+msgstr "آخر تحديث في"
+
+#. module: flex_landing_order
+#: model_terms:ir.ui.view,arch_db:flex_landing_order.ModelName_form_inherit
+msgid "Loading Order"
+msgstr "أمر التحميل"
+
+#. module: flex_landing_order
+#: model:ir.model.fields,field_description:flex_landing_order.field_fleet_vehicle__loading_order_count
+msgid "Loading Orders"
+msgstr "أوامر التحميل"
+
+#. module: flex_landing_order
+#: model:ir.model.fields,field_description:flex_landing_order.field_landing_order__medium_id
+msgid "Medium"
+msgstr "الوسيط"
+
+#. module: flex_landing_order
+#: model:ir.model.fields,field_description:flex_landing_order.field_landing_order__message_has_error
+msgid "Message Delivery error"
+msgstr "خطأ في تسليم الرسالة"
+
+#. module: flex_landing_order
+#: model:ir.model.fields,field_description:flex_landing_order.field_landing_order__message_ids
+msgid "Messages"
+msgstr "رسائل"
+
+#. module: flex_landing_order
+#: model:ir.model.fields,field_description:flex_landing_order.field_landing_order__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr "موعد نهائي لنشاطي"
+
+#. module: flex_landing_order
+#: model:ir.model.fields.selection,name:flex_landing_order.selection__landing_order__state__new
+msgid "New"
+msgstr "جديد"
+
+#. module: flex_landing_order
+#: model:ir.model.fields,field_description:flex_landing_order.field_landing_order__activity_calendar_event_id
+msgid "Next Activity Calendar Event"
+msgstr "الحدث القادم في التقويم"
+
+#. module: flex_landing_order
+#: model:ir.model.fields,field_description:flex_landing_order.field_landing_order__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr "الموعد النهائي للنشاط التالي"
+
+#. module: flex_landing_order
+#: model:ir.model.fields,field_description:flex_landing_order.field_landing_order__activity_summary
+msgid "Next Activity Summary"
+msgstr "ملخص النشاط القادم"
+
+#. module: flex_landing_order
+#: model:ir.model.fields,field_description:flex_landing_order.field_landing_order__activity_type_id
+msgid "Next Activity Type"
+msgstr "نوع النشاط القادم"
+
+#. module: flex_landing_order
+#: model:ir.model.fields,field_description:flex_landing_order.field_landing_order__message_needaction_counter
+msgid "Number of Actions"
+msgstr "عدد الإجراءات"
+
+#. module: flex_landing_order
+#: model:ir.model.fields,field_description:flex_landing_order.field_landing_order__message_has_error_counter
+msgid "Number of errors"
+msgstr "عدد الأخطاء"
+
+#. module: flex_landing_order
+#: model:ir.model.fields,help:flex_landing_order.field_landing_order__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr "عدد الرسائل التي تتطلب إجراء"
+
+#. module: flex_landing_order
+#: model:ir.model.fields,help:flex_landing_order.field_landing_order__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "عدد الرسائل التي تحتوي على خطأ في التسليم"
+
+#. module: flex_landing_order
+#: model_terms:ir.ui.view,arch_db:flex_landing_order.landing_order_form_view
+msgid "Order Information"
+msgstr "معلومات الطلب"
+
+#. module: flex_landing_order
+#: model:ir.model.fields,field_description:flex_landing_order.field_purchase_order__order_type
+#: model:ir.model.fields,field_description:flex_landing_order.field_sale_order__order_type
+msgid "Order Type"
+msgstr "نوع الطلب"
+
+#. module: flex_landing_order
+#: model:ir.model.fields,field_description:flex_landing_order.field_landing_order__name
+msgid "Partner Reference"
+msgstr "مرجع الشريك"
+
+#. module: flex_landing_order
+#: model:ir.model,name:flex_landing_order.model_hr_payslip
+msgid "Pay Slip"
+msgstr "قسيمة الراتب"
+
+#. module: flex_landing_order
+#: model:ir.model.fields,field_description:flex_landing_order.field_landing_order__access_url
+msgid "Portal Access URL"
+msgstr "رابط الوصول إلى البوابة"
+
+#. module: flex_landing_order
+#: model:ir.model,name:flex_landing_order.model_purchase_order
+#: model:ir.model.fields,field_description:flex_landing_order.field_landing_order__purchase_order_id
+#: model:ir.model.fields.selection,name:flex_landing_order.selection__purchase_order__order_type__purchase
+#: model_terms:ir.ui.view,arch_db:flex_landing_order.landing_order_form_view
+msgid "Purchase Order"
+msgstr "أمر شراء"
+
+#. module: flex_landing_order
+#: model:ir.model.fields,field_description:flex_landing_order.field_landing_order__purchase_product_ids
+msgid "Purchase Product"
+msgstr "منتج الشراء"
+
+#. module: flex_landing_order
+#: model:ir.model.fields,field_description:flex_landing_order.field_landing_order__qr_code
+#: model_terms:ir.ui.view,arch_db:flex_landing_order.flex_landing_order_report
+msgid "QR Code"
+msgstr "رمز الاستجابة السريعة"
+
+#. module: flex_landing_order
+#: model:ir.model.fields,field_description:flex_landing_order.field_landing_order__quantity
+msgid "Quantity"
+msgstr "الكمية"
+
+#. module: flex_landing_order
+#: model:ir.model.fields,field_description:flex_landing_order.field_landing_order__rating_ids
+msgid "Ratings"
+msgstr "التقييمات"
+
+#. module: flex_landing_order
+#: model:ir.model.fields,field_description:flex_landing_order.field_cancel_reason_wizard__reason
+msgid "Reason"
+msgstr "السبب"
+
+#. module: flex_landing_order
+#: model:ir.model.fields.selection,name:flex_landing_order.selection__landing_order__state__receive
+#: model_terms:ir.ui.view,arch_db:flex_landing_order.landing_order_form_view
+msgid "Receive"
+msgstr "الاستلام"
+
+#. module: flex_landing_order
+#: model:ir.model.fields,field_description:flex_landing_order.field_landing_order__receive_date
+msgid "Receive Date"
+msgstr "تاريخ الاستلام"
+
+#. module: flex_landing_order
+#: model:ir.model.fields,field_description:flex_landing_order.field_landing_order__activity_user_id
+msgid "Responsible User"
+msgstr "المستخدم المسؤول"
+
+#. module: flex_landing_order
+#: model:ir.model.fields,field_description:flex_landing_order.field_hr_payslip__reward_amount
+#: model:ir.model.fields,field_description:flex_landing_order.field_landing_order__reward_amount
+msgid "Reward Amount"
+msgstr "قيمة المكافأة"
+
+#. module: flex_landing_order
+#: model:ir.model.fields,field_description:flex_landing_order.field_landing_order__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr "خطأ في تسليم الرسالة النصية"
+
+#. module: flex_landing_order
+#: model:ir.model.fields,field_description:flex_landing_order.field_landing_order__order_id
+#: model:ir.model.fields.selection,name:flex_landing_order.selection__sale_order__order_type__sale
+#: model_terms:ir.ui.view,arch_db:flex_landing_order.landing_order_form_view
+msgid "Sale Order"
+msgstr "أمر بيع"
+
+#. module: flex_landing_order
+#: model:ir.model,name:flex_landing_order.model_sale_order
+msgid "Sales Order"
+msgstr "أمر مبيعات"
+
+#. module: flex_landing_order
+#: model:ir.model.fields,field_description:flex_landing_order.field_landing_order__access_token
+msgid "Security Token"
+msgstr "رمز الأمان"
+
+#. module: flex_landing_order
+#: model_terms:ir.ui.view,arch_db:flex_landing_order.landing_order_form_view
+msgid "Set to New"
+msgstr "تعيين إلى جديد"
+
+#. module: flex_landing_order
+#: model:ir.model.fields,field_description:flex_landing_order.field_landing_order__size
+msgid "Size"
+msgstr "الحجم"
+
+#. module: flex_landing_order
+#: model:ir.model.fields,field_description:flex_landing_order.field_landing_order__source_id
+msgid "Source"
+msgstr "المصدر"
+
+#. module: flex_landing_order
+#: model:ir.model.fields,field_description:flex_landing_order.field_landing_order__state
+msgid "State"
+msgstr "الحالة"
+
+#. module: flex_landing_order
+#: model:ir.model.fields,help:flex_landing_order.field_landing_order__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr "الحالة بناءً على الأنشطة\n متأخر: تم تجاوز تاريخ الاستحقاق\n اليوم: تاريخ النشاط اليوم\n مخطط: أنشطة مستقبلية."
+
+#. module: flex_landing_order
+#: model:ir.model.fields,field_description:flex_landing_order.field_landing_order__stock_picking_id
+#: model_terms:ir.ui.view,arch_db:flex_landing_order.landing_order_form_view
+msgid "Stock Picking"
+msgstr "انتقاء المخزون"
+
+#. module: flex_landing_order
+#: model_terms:ir.actions.act_window,help:flex_landing_order.landing_order_act_window
+msgid "There is no examples click here to add new Landing Order."
+msgstr "لا توجد أمثلة، انقر هنا لإضافة أمر تحميل جديد."
+
+#. module: flex_landing_order
+#: model:ir.model.fields,help:flex_landing_order.field_landing_order__campaign_id
+msgid ""
+"This is a name that helps you keep track of your different campaign efforts,"
+" e.g. Fall_Drive, Christmas_Special"
+msgstr "هذا اسم يساعدك في تتبع جهود حملاتك المختلفة، مثل حملة الخريف، حملة عيد الميلاد."
+
+#. module: flex_landing_order
+#: model:ir.model.fields,help:flex_landing_order.field_landing_order__medium_id
+msgid "This is the method of delivery, e.g. Postcard, Email, or Banner Ad"
+msgstr "هذه هي وسيلة التوصيل، مثل بطاقة بريدية، بريد إلكتروني، أو إعلان بانر."
+
+#. module: flex_landing_order
+#: model:ir.model.fields,help:flex_landing_order.field_landing_order__source_id
+msgid ""
+"This is the source of the link, e.g. Search Engine, another domain, or name "
+"of email list"
+msgstr "هذا هو مصدر الرابط، مثل محرك البحث، نطاق آخر، أو اسم قائمة البريد الإلكتروني."
+
+#. module: flex_landing_order
+#: model_terms:ir.ui.view,arch_db:flex_landing_order.flex_landing_order_hr_payslip_form
+msgid "Total Rewards Employee"
+msgstr "إجمالي المكافآت للموظف"
+
+#. module: flex_landing_order
+#: model:ir.model.fields,help:flex_landing_order.field_landing_order__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr "نوع النشاط الاستثنائي المسجل."
+
+#. module: flex_landing_order
+#: model:res.groups,name:flex_landing_order.flex_landing_order_group_landing_order_users
+msgid "User"
+msgstr "مستخدم"
+
+#. module: flex_landing_order
+#: model:ir.model,name:flex_landing_order.model_fleet_vehicle
+msgid "Vehicle"
+msgstr "مركبة"
+
+#. module: flex_landing_order
+#: model:ir.model.fields,field_description:flex_landing_order.field_landing_order__partner_id
+msgid "Vendor/Customer"
+msgstr "المورد/العميل"
+
+#. module: flex_landing_order
+#: model:ir.model.fields,field_description:flex_landing_order.field_landing_order__partner_code
+msgid "Vendor/Customer Code"
+msgstr "كود المورد/العميل"
+
+#. module: flex_landing_order
+#: model:ir.model.fields,field_description:flex_landing_order.field_landing_order__website_message_ids
+msgid "Website Messages"
+msgstr "رسائل الموقع"
+
+#. module: flex_landing_order
+#: model:ir.model.fields,help:flex_landing_order.field_landing_order__website_message_ids
+msgid "Website communication history"
+msgstr "تاريخ التواصل عبر الموقع"
+
+#. module: flex_landing_order
+#: odoo-python
+#: code:addons/flex_landing_order/models/purchase_order.py:0
+#, python-format
+msgid ""
+"You can not change the order type to landing order because there is landing "
+"orders related to this purchase order"
+msgstr "لا يمكنك تغيير نوع الطلب إلى إذن تحميل لأنه توجد أوامر تحميل مرتبطة بهذا الأمر الشرائي."
+
+#. module: flex_landing_order
+#: odoo-python
+#: code:addons/flex_landing_order/models/sale_order.py:0
+#, python-format
+msgid ""
+"You can not change the order type to landing order because there is landing "
+"orders related to this sale order"
+msgstr "لا يمكنك تغيير نوع الطلب إلى إذن تحميل لأنه توجد أوامر تحميل مرتبطة بهذا أمر البيع."
+
+#. module: flex_landing_order
+#: model:ir.model,name:flex_landing_order.model_stock_picking
+msgid "stock_picking"
+msgstr "تحويل المخزون"
+
+#. module: flex_landing_order
+#: model_terms:ir.ui.view,arch_db:flex_landing_order.flex_landing_order_report
+msgid "إذن التحميل"
+msgstr "Landing Permit"
+
+#. module: flex_landing_order
+#: model_terms:ir.ui.view,arch_db:flex_landing_order.flex_landing_order_report
+msgid "الختم الرسمي"
+msgstr "Official Seal"
+
+#. module: flex_landing_order
+#: model:ir.model.fields.selection,name:flex_landing_order.selection__landing_order__kind__kind3
+msgid "سايب"
+msgstr "Loose"
+
+#. module: flex_landing_order
+#: model:ir.model.fields.selection,name:flex_landing_order.selection__landing_order__size__size1
+msgid "طن"
+msgstr "Ton"
+
+#. module: flex_landing_order
+#: model:ir.model.fields.selection,name:flex_landing_order.selection__landing_order__kind__kind1
+msgid "عادي"
+msgstr "Standard"
+
+#. module: flex_landing_order
+#: model:ir.model.fields.selection,name:flex_landing_order.selection__landing_order__size__size2
+msgid "كيس"
+msgstr "Bag"
+
+#. module: flex_landing_order
+#: model_terms:ir.ui.view,arch_db:flex_landing_order.flex_landing_order_report
+msgid "محرر الإذن"
+msgstr "Permit Issuer"
+
+#. module: flex_landing_order
+#: model_terms:ir.ui.view,arch_db:flex_landing_order.flex_landing_order_report
+msgid "مشرف الامدادات"
+msgstr "Supply Supervisor"
+
+#. module: flex_landing_order
+#: model:ir.model.fields.selection,name:flex_landing_order.selection__landing_order__kind__kind2
+msgid "مقاوم"
+msgstr "Resistant"
