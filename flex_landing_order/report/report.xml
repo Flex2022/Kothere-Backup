@@ -27,7 +27,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="row mt-3 p-2">
+                            <div class="row mt-5 p-2">
                                 <div class="col-4 text-start">
                                     <t t-if="o.name">
                                         <strong class="text-start">Serial No :</strong>
@@ -85,40 +85,7 @@
                             </div>
                         </div>
 
-                        <div class="row mt-3 p-2">
-                            <div class="col-12 text-center">
-
-                                <t t-if="o.name">
-                                    <span class="text-start">Serial No :</span>
-                                    <strong class="fw-bold text-center" t-field="o.name"/>
-                                    <span dir="rtl text-end">الرقم التسلسلي :</span>
-                                </t>
-                                <t t-if="o.h_date">
-                                    <br/>
-                                    <span>H :</span>
-                                    <strong class="fw-bold" t-field="o.h_date"
-                                            t-field-options='{"format": "dd/MM/yyyy"}'/>
-                                    <span dir="rtl">التاريخ :</span>
-                                </t>
-                                <t t-if="o.date">
-                                    <br/>
-                                    <span>Date</span>
-                                    <strong class="fw-bold" t-field="o.date"
-                                            t-field-options='{"format": "dd/MM/yyyy"}'/>
-                                    <span dir="rtl">الموافق ل :</span>
-                                </t>
-
-                                <t t-if="o.partner_code">
-                                    <br/>
-                                    <span>Partner Code :</span>
-                                    <strong class="fw-bold" t-field="o.partner_code"/>
-                                    <span dir="rtl">رقم العميل :</span>
-                                </t>
-
-                            </div>
-                        </div>
-
-                        <div class="row mt-3 ">
+                        <div class="row mt-5 ">
                             <div class="col-4 p-2">
                                 <strong>Cement Company:</strong>
                                 <br/>
@@ -154,7 +121,7 @@
                             </div>
                         </div>
 
-                        <div class="row mt-3">
+                        <div class="row mt-5">
                             <div class="col-12">
 
                                 <div class="col-4 float-end text-center">
@@ -199,7 +166,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row mt-5">
                             <div class="col-12 p-2">
                                 <p t-if="o.qr_code">
                                     <img style="display:block;"
