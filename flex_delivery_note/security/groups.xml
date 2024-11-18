@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <data noupdate="0">
+            <record id="module_category_delivery_note" model="ir.module.category">
+                <field name="name">Delivery Note</field>
+            </record>
+            <record id="group_delivery" model="res.groups">
+                <field name="name">Delivery</field>
+                <field name="category_id" ref="module_category_delivery_note"/>
+                <field name="users" eval="[(4, ref('base.user_root')),(4, ref('base.user_admin'))]"/>
+            </record>
+            <record id="group_manufacture" model="res.groups">
+                <field name="name">Manufacture</field>
+                <field name="category_id" ref="module_category_delivery_note"/>
+<!--                <field name="implied_ids" eval="[(4, ref('flex_delivery_note.group_delivery'))]"/>-->
+                <field name="users" eval="[(4, ref('base.user_root')),(4, ref('base.user_admin'))]"/>
+            </record>
+            <record id="group_output" model="res.groups">
+                <field name="name">Stock Output</field>
+                <field name="category_id" ref="module_category_delivery_note"/>
+                <field name="users" eval="[(4, ref('base.user_root')),(4, ref('base.user_admin'))]"/>
+            </record>
+        </data>
+        <record id="ir_rule_delivery_note_multi_company" model="ir.rule">
+            <field name="name">Stock Transfer: Multi-Company</field>
+            <field name="model_id" ref="model_delivery_note"/>
+            <field name="domain_force">['|',('company_id','=',False),('company_id','in', company_ids)]</field>
+        </record>
+    </data>
+</odoo>

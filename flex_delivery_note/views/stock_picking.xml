@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="flex_landing_order_stock_picking_form_inherit" model="ir.ui.view">
+            <field name="name">flex_landing_order.stock.picking.form</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header" position="inside">
+                    <button name="action_new_delivery_note" type="object" string="New Delivery Note"/>
+                </xpath>
+                <xpath expr="//div[@name='button_box']" position="inside">
+                    <button name="action_view_delivery_notes" type="object" class="oe_stat_button" icon="fa-file-text-o">
+                        <field name="delivery_note_count" widget="statinfo" string="Delivery Notes"/>
+                    </button>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

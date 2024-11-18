@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <template id="report_delivery_note_document">
+            <style>
+                * { font-size: 12px !important; }
+                .datetime { max-width: 1in !important; }
+            </style>
+            <div style="position: relative; width: 7.9in; height: 0.92in;">
+
+            </div>
+            <div style="position: relative; width: 7.9in; height: 4.1in;">
+                <div style="position: absolute; top: 0.42in; left: 0.3in;">
+                    <span class="fa fa-check" t-if="o.screed"/>
+                </div>
+                <div style="position: absolute; top: 1.03in; left: 0.3in;">
+                    <span class="fa fa-check" t-if="o.substructures"/>
+                </div>
+                <div style="position: absolute; top: 1.37in; left: 0.3in;">
+                    <span class="fa fa-check" t-if="o.columns"/>
+                </div>
+                <div style="position: absolute; top: 1.70in; left: 0.3in;">
+                    <span class="fa fa-check" t-if="o.slab"/>
+                </div>
+                <div style="position: absolute; top: 2.16in; left: 0.3in;">
+                    <span class="fa fa-check" t-if="o.others"/>
+                </div>
+                <div style="position: absolute; top: 3.00in; left: 0.3in;">
+                    <span t-field="o.license_plate"/>
+                </div>
+
+
+                <div style="position: absolute; top: 0.42in; left: 1.2in;">
+                    <span t-field="o.picking_id.name"/>
+                </div>
+                <div style="position: absolute; top: 1.03in; left: 1.2in;">
+                    <span t-field="o.cement_in_truck"/>
+                </div>
+                <div style="position: absolute; top: 1.70in; left: 1.2in;">
+                    <span t-field="o.cement_content"/>
+                </div>
+                <div style="position: absolute; top: 2.16in; left: 1.2in;">
+                    <span t-field="o.max_aggr_size"/>
+                </div>
+                <div style="position: absolute; top: 3.00in; left: 1.2in;">
+                    <span t-field="o.driver_id.name"/>
+                </div>
+
+
+                <div style="position: absolute; top: 0.42in; left: 2.60in;">
+                    <span t-field="o.partner_id.name"/>
+                </div>
+                <div style="position: absolute; top: 1.03in; left: 2.60in;">
+                    <span t-field="o.project_name"/>
+                </div>
+                <div style="position: absolute; top: 1.70in; left: 2.60in;">
+                    <span t-esc="', '.join(o.product_ids.mapped('name'))"/>
+                </div>
+                <div style="position: absolute; top: 2.16in; left: 2.60in;"> <span t-field="o.admixtures"/> </div>
+                <div style="position: absolute; top: 2.16in; left: 4.01in;"> <span t-field="o.plant_no"/> </div>
+                <div style="position: absolute; top: 3.00in; left: 3.00in;" class="datetime">
+                    <span t-field="o.time_out_plant"/>
+                </div>
+                <div style="position: absolute; top: 3.00in; left: 4.14in;" class="datetime">
+                    <span t-field="o.time_on_site"/>
+                </div>
+                <div style="position: absolute; top: 3.00in; left: 5.31in;" class="datetime">
+                    <span t-field="o.time_off_site"/>
+                </div>
+
+
+                <div style="position: absolute; top: 0.42in; left: 5.61in;">
+                    <span t-field="o.delivery_date"/>
+                </div>
+                <div style="position: absolute; top: 1.03in; left: 5.61in;">
+                    <span t-field="o.quantity"/>
+                </div>
+                <div style="position: absolute; top: 1.70in; left: 5.61in;">
+                    <span t-field="o.specified_slump"/>
+                </div>
+                <div style="position: absolute; top: 2.16in; left: 5.61in;">
+                    <span t-field="o.pump_no"/>
+                </div>
+                <div style="position: absolute; top: 3.00in; left: 6.48in;" class="datetime">
+                    <span t-field="o.time_in_pant"/>
+                </div>
+
+
+                <div style="position: absolute; top: 3.80in; left: 6.48in;">
+                    <span t-field="o.quantity"/>
+                </div>
+            </div>
+        </template>
+
+
+        <template id="report_delivery_note">
+            <t t-call="web.basic_layout">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="flex_delivery_note.report_delivery_note_document"/>
+                </t>
+            </t>
+        </template>
+
+        <record id="paperformat_delivery_note" model="report.paperformat">
+            <field name="name">Delivery Note</field>
+            <field name="format">custom</field>
+            <field name="page_height">105</field>
+            <field name="page_width">167</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">0</field>
+            <field name="margin_bottom">0</field>
+            <field name="margin_left">0</field>
+            <field name="margin_right">0</field>
+            <field name="header_spacing">0</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <record id="action_report_delivery_note" model="ir.actions.report">
+            <field name="name">Delivery Note</field>
+            <field name="model">delivery.note</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">flex_delivery_note.report_delivery_note</field>
+            <field name="report_file">flex_delivery_note.report_delivery_note</field>
+            <field name="print_report_name">'Delivery Note %s' %(object.name)</field>
+            <field name="binding_model_id" ref="model_delivery_note"/>
+            <field name="binding_type">report</field>
+            <field name="paperformat_id" ref="paperformat_delivery_note"/>
+        </record>
+
+    </data>
+</odoo>

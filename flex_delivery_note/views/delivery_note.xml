@@ -1,0 +1,103 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data>
+        <record id="delivery_note_tree" model="ir.ui.view">
+            <field name="name">delivery_note_tree</field>
+            <field name="model">delivery.note</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="partner_street" optional="hide"/>
+                    <field name="product_ids" widget="many2many_tags" optional="show"/>
+                    <field name="quantity" optional="show"/>
+                    <field name="delivery_date" optional="show"/>
+                    <field name="vehicle_id" optional="hide"/>
+                    <field name="license_plate" optional="hide"/>
+                    <field name="driver_id" optional="hide"/>
+                    <field name="driver_phone" optional="hide"/>
+                    <field name="picking_id" column_invisible="1"/>
+                    <field name="company_id" column_invisible="1"/>
+                    <field name="state" widget="badge"
+                           decoration-success="state == 'done'"
+                           decoration-info="state in ('deliver', 'manufacture', 'output')"
+                           decoration-danger="state == 'cancel'"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="delivery_note_form" model="ir.ui.view">
+            <field name="name">delivery_note_form</field>
+            <field name="model">delivery.note</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="action_draft" type="object" string="Reset To Draft" invisible="state != 'cancel'"/>
+                        <button name="action_deliver" type="object" string="Delivered" class="oe_highlight"
+                                invisible="state != 'draft'" groups="flex_delivery_note.group_delivery"/>
+                        <button name="action_manufacture" type="object" string="Manufactured" class="oe_highlight"
+                                invisible="state != 'deliver'" groups="flex_delivery_note.group_manufacture"/>
+                        <button name="action_output" type="object" string="Stock Output" class="oe_highlight"
+                                invisible="state != 'manufacture'" groups="flex_delivery_note.group_output"/>
+                        <button name="action_done" type="object" string="Receive" class="oe_highlight"
+                                invisible="state != 'output'" groups="flex_delivery_note.group_output"/>
+                        <button name="action_cancel" type="object" string="Cancel" invisible="state in ('cancel')"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,deliver,manufacture,output,done"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="partner_id" readonly="state != 'draft'"/>
+                                <field name="partner_street"/>
+                                <field name="product_ids" widget="many2many_tags" readonly="state != 'draft'"/>
+                                <field name="quantity" readonly="state != 'draft'"/>
+                                <field name="delivery_date" readonly="state != 'draft'"/>
+                            </group>
+                            <group>
+                                <field name="vehicle_id" readonly="state != 'draft'"/>
+                                <field name="license_plate"/>
+                                <field name="driver_id"/>
+                                <field name="driver_phone"/>
+                                <field name="picking_id" readonly="state != 'draft'"/>
+                                <field name="company_id" invisible="1"/>
+                            </group>
+                        </group>
+                        <group string="">
+                            <group>
+                                <field name="project_name" readonly="state != 'draft'"/>
+                                <field name="cement_in_truck" readonly="state != 'draft'"/>
+                                <field name="cement_content" readonly="state != 'draft'"/>
+                                <field name="specified_slump" readonly="state != 'draft'"/>
+                                <field name="pump_no" readonly="state != 'draft'"/>
+                                <field name="plant_no" readonly="state != 'draft'"/>
+                                <field name="admixtures" readonly="state != 'draft'"/>
+                                <field name="max_aggr_size" readonly="state != 'draft'"/>
+                            </group>
+                            <group>
+                                <field name="time_in_pant" readonly="state != 'draft'"/>
+                                <field name="time_off_site" readonly="state != 'draft'"/>
+                                <field name="time_on_site" readonly="state != 'draft'"/>
+                                <field name="time_out_plant" readonly="state != 'draft'"/>
+                                <field name="screed" readonly="state != 'draft'"/>
+                                <field name="substructures" readonly="state != 'draft'"/>
+                                <field name="columns" readonly="state != 'draft'"/>
+                                <field name="slab" readonly="state != 'draft'"/>
+                                <field name="others" readonly="state != 'draft'"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

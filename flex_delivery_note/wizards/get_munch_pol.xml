@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="get_munch_pol_form" model="ir.ui.view">
+            <field name="name">get.munch.pol.form</field>
+            <field name="model">get.munch.pol</field>
+            <field name="arch" type="xml">
+                <form string="Omega Filters">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="order_no"/>
+                            </group>
+                            <group>
+                                <field name="product_by" widget="radio"/>
+                                <field name="purchase_id" invisible="1"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button name="action_confirm" type="object" string="Confirm" class="btn-primary"/>
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>
