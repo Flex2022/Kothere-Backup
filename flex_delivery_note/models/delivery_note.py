@@ -89,13 +89,38 @@ class DeliveryNote(models.Model):
         self.write({'state': 'cancel'})
 
     def action_deliver(self):
+        self._make_activity(groups='flex_delivery_note.group_manufacture')
         self.write({'state': 'deliver', 'delivery_date': fields.Datetime.now()})
 
     def action_manufacture(self):
+        # self.activity_ids.action_feedback()
+        self.activity_ids.action_done()
+        self._make_activity(groups='flex_delivery_note.group_output')
         self.write({'state': 'manufacture'})
 
     def action_output(self):
+        self.activity_ids.action_done()
         self.write({'state': 'output'})
 
     def action_done(self):
         self.write({'state': 'done'})
+
+    def _make_activity(self, groups=False):
+        if not groups:
+            return
+        if not isinstance(groups, list):
+            groups = [groups]
+        users = self.env['res.users'].sudo()
+        for group in groups:
+            users |= self.env.ref(group).users
+        activities = [{
+            'activity_type_id': self.env.ref('mail.mail_activity_data_todo').id,
+            'res_id': rec.id,
+            'res_model_id': self.env['ir.model'].search([('model', '=', self._name)], limit=1).id,
+            'icon': 'fa-pencil-square-o',
+            'date_deadline': fields.Date.today(),
+            'user_id': user.id,
+            'note': 'Kindly review and approve'
+        } for user in users for rec in self]
+        self.env['mail.activity'].create(activities)
+
