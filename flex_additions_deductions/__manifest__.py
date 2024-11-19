@@ -7,7 +7,7 @@
     'author': 'Abdalrahman Shahrour',
     'website': 'https://flex-ops.com',
     'license': 'AGPL-3',
-    'depends': ['account', 'sale', 'project', 'purchase'],
+    'depends': ['account', 'sale', 'project', 'purchase', 'flex_employee_sales'],
     'data': ['security/ir.model.access.csv',
              'security/groups.xml',
              'views/conf_country.xml',
@@ -17,6 +17,7 @@
              'views/invoice.xml',
              'reports/layout.xml',
              'reports/report.xml',
+
              ],
     'installable': True,
     'auto_install': False,
