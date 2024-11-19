@@ -65,7 +65,6 @@
                                 <field name="name"/>
                                 <field name="is_percentage"/>
                                 <field name="tax_id"/>
-                                <field name="amount_deductions"/>
                                 <field name="percentage_or_value"/>
                                 <field name="amount"/>
                             </tree>
@@ -87,7 +86,6 @@
                                 <field name="name"/>
                                 <field name="is_percentage"/>
                                 <field name="tax_id"/>
-                                <!--                                <field name="amount_deductions"/>-->
                                 <field name="percentage_or_value"/>
                                 <field name="amount"/>
                             </tree>
