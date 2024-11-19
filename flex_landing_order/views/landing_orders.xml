@@ -39,7 +39,7 @@
                             <group string="General Information">
                                 <field name="qr_code" invisible="0"/>
                                 <field name="partner_id"/>
-                                <field name="partner_code"/>
+                                <field name="partner_code" readonly="0"/>
                                 <field name="car_model_id"/>
                                 <field name="driver_id"/>
                                 <field name="driver_employee" invisible="1"/>
