@@ -16,6 +16,7 @@
         'security/ir.model.access.csv',
         'views/sale_order.xml',
         'views/res_company.xml',
+        'views/stock.xml',
         'reports/sale_order_report_templates.xml',
         'reports/sale_price_arabic_report.xml',
         'reports/sale_price_english_report.xml',

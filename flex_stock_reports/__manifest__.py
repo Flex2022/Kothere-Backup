@@ -16,6 +16,7 @@
         'wizards/stock_slack_report_wizard.xml',
         'reports/purchase_costs_report.xml',
         'views/purchase_views.xml',
+        'views/stock.xml',
     ],
     'installable': True,
     'application': False,

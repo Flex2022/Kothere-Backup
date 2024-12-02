@@ -10,6 +10,8 @@ class SaleOrder(models.Model):
     tac_en_delivery_location = fields.Char('Delivery Location (English)', placeholder="Delivery location (English)")
     tac_ar_delivery_location = fields.Char('Delivery Location (Arabic)', placeholder="مككان التسليم باللغة العربية")
 
+
+
     # sale_order_cancel_reason.py
     def action_cancel(self):
         # Call the original cancel action
@@ -28,6 +30,16 @@ class SaleOrder(models.Model):
             'target': 'new',
         }
 
+    def action_confirm(self):
+        # Call the original confirm action
+        result = super(SaleOrder, self).action_confirm()
+
+        #transfer trilla_load_per_pill to stock move
+        for line in self.order_line:
+            for move in line.move_ids_without_package:
+                move.trilla_load_per_pill = line.trilla_load_per_pill
+        return result
+
 
 class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
@@ -39,3 +51,4 @@ class SaleOrderLine(models.Model):
     def compute_product_id_arabic(self):
         for line in self:
             line.product_id_arabic = line.product_id.with_context(lang='ar_001').name
+
