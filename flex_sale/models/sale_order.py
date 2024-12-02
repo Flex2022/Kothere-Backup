@@ -36,7 +36,7 @@ class SaleOrder(models.Model):
 
         #transfer trilla_load_per_pill to stock move
         for line in self.order_line:
-            for move in line.move_ids_without_package:
+            for move in line.move_ids:
                 move.trilla_load_per_pill = line.trilla_load_per_pill
         return result
 
