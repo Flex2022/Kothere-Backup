@@ -42,7 +42,7 @@ class StockMoves(models.Model):
     _inherit = 'stock.move'
 
     # New fields related to repair order
-    repair_vehicle_id = fields.Many2one('fleet.vehicle', string='Vehicle', related="repair_id.vehicle_id")
+    repair_vehicle_id = fields.Many2one('fleet.vehicle', string='Vehicle', related="repair_id.vehicle_id", store=True)
     repair_license_plate = fields.Char(string='License Plate', related="repair_id.license_plate")
     repair_driver_id = fields.Many2one('res.partner', string='Driver', related="repair_id.driver_id")
     repair_maintenance_request_id = fields.Many2one('maintenance.request', string='Maintenance Request', related="repair_id.maintenance_request_id")

@@ -41,7 +41,7 @@
                 <field name="repair_vehicle_id"/>
             </xpath>
             <xpath expr="//filter[@name='by_product']" position="after">
-                <filter string="By Vehicle" name="by_vehicle" domain="[]" context="{'group_by':'repair_vehicle_id'}"/>
+                <filter string="By Vehicle" name="repair_vehicle_id" domain="[]" context="{'group_by':'repair_vehicle_id'}"/>
             </xpath>
 
         </field>
