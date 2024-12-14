@@ -65,6 +65,11 @@ class AccountMove(models.Model):
     projects_manager = fields.Many2one('res.partner', string='Projects Manager',
                                        compute='_compute_projects_manager', store=True)
 
+    def create(self, vals):
+        res = super(AccountMove, self).create(vals)
+        print('create', vals)
+        return res
+
     @api.depends('line_ids')
     def compute_amount_before_deductions(self):
         for move in self:
@@ -212,12 +217,14 @@ class AccountMove(models.Model):
     # smart Button Functions
     def open_created_journal(self):
         tree_view_id = self.env.ref('account.view_move_tree').id
+        form_view_id = self.env.ref('account.view_move_form').id
         return {
             'name': 'Deductions Lines',
             'view_mode': 'tree,form',
             'res_model': 'account.move',
             'type': 'ir.actions.act_window',
-            'views': [(tree_view_id, 'tree')],
+            'views': [(tree_view_id, 'tree'),
+                        (form_view_id, 'form')],
             'domain': [('source_Document_for_smart_button', '=', self.name), ('move_type', '=', 'entry')],
             'context': {'default_source_Document_for_smart_button': self.name,
                         'default_move_type': 'entry'
@@ -241,7 +248,7 @@ class AccountMove(models.Model):
     def _compute_there_is_access_from_company_id(self):
         for record in self:
             record.there_is_access_from_company_id = False
-            if record.move_type == 'out_invoice' or record.move_type == 'in_invoice':
+            if record.move_type == 'out_invoice' or record.move_type == 'in_invoice' or record.move_type == 'out_refund' or record.move_type == 'in_refund':
                 if record.company_id.flex_additions_deductions_ids:
                     record.there_is_access_from_company_id = True
 
@@ -275,13 +282,14 @@ class AccountMove(models.Model):
         for record in self:
             if record.there_is_access_from_company_id:
                 property_account = record.partner_id.property_account_receivable_id.id
-                if record.move_type == 'out_invoice':
+                if record.move_type == 'out_invoice' or record.move_type == 'out_refund':
                     property_account = record.partner_id.property_account_receivable_id.id
-                if record.move_type == 'in_invoice':
+                if record.move_type == 'in_invoice' or record.move_type == 'in_refund':
                     property_account = record.partner_id.property_account_payable_id.id
                 if record.flex_deductions_ids:
+                    print('record.flex_deductions_ids', record.flex_deductions_ids)
                     for line in record.flex_deductions_ids:
-                        if record.move_type == 'in_invoice':
+                        if record.move_type == 'in_invoice' or record.move_type == 'in_refund':
                             journal = self.env['account.move'].create({
                                 'ref': line.name,
                                 'move_type': 'entry',
@@ -302,7 +310,7 @@ class AccountMove(models.Model):
                                 ],
 
                             }).action_post()
-                        if record.move_type == 'out_invoice':
+                        if record.move_type == 'out_invoice' or record.move_type == 'out_refund':
                             journal = self.env['account.move'].create({
                                 'ref': line.name,
                                 'move_type': 'entry',
@@ -349,9 +357,12 @@ class AccountMove(models.Model):
     # deductions_no
 
     def action_post(self):
+        print('action_post')
         res = super(AccountMove, self).action_post()
         for move in self:
+            print('action_post 01')
             if move.there_is_access_from_company_id:
+                print('action_post 02')
                 move.create_journal_entry_when_confirm()
         return res
 
