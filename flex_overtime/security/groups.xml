@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+     <record model="ir.module.category" id="module_overtime">
+            <field name="name">Overtime</field>
+            <field name="sequence">40</field>
+     </record>
+    <record id="group_overtime" model="res.groups">
+        <field name="name">Show OverTime</field>
+        <field name="category_id" ref="module_overtime"/>
+    </record>
+    <record id="group_overtime_submit" model="res.groups">
+        <field name="name">Submit OverTime</field>
+        <field name="category_id" ref="module_overtime"/>
+    </record>
+    <record id="group_overtime_approve_line" model="res.groups">
+        <field name="name">Approve Line Manager OverTime</field>
+        <field name="category_id" ref="module_overtime"/>
+    </record>
+    <record id="group_overtime_approve" model="res.groups">
+        <field name="name">Approve HR OverTime</field>
+        <field name="category_id" ref="module_overtime"/>
+    </record>
+</odoo>

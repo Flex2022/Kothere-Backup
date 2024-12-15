@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="overtime_view_tree" model="ir.ui.view">
+        <field name="name">overtime_view_tree</field>
+        <field name="model">flex.overtime</field>
+        <field name="arch" type="xml">
+            <tree string="Overtime">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+    <record id="overtime_view_form" model="ir.ui.view">
+        <field name="name">overtime_view_form</field>
+        <field name="model">flex.overtime</field>
+        <field name="arch" type="xml">
+            <form string="overtime_form">
+                <header>
+                    <button name="submit" string="Submit" type="object" class="oe_highlight" groups="flex_overtime.group_overtime_submit" invisible="state != 'draft'"/>
+                    <button name="approve_line" string="Approve Line Manager" type="object" class="oe_highlight" groups="flex_overtime.group_overtime_approve_line" invisible="state != 'submit'"/>
+                    <button name="approve" string="Approve" type="object" class="oe_highlight" groups="flex_overtime.group_overtime_approve" invisible="state != 'approve_line_manager'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,submit,approve_line_manager,approve"/>
+                </header>
+                <sheet>
+                        <h1>
+                            <field name="name" placeholder="Date From - Date To"/>
+                        </h1>
+                    <group>
+                        <group><field name="date_from"/> - <field name="date_to"/>
+                        </group>
+                    </group>
+                     <field name="overtime_lines">
+                         <tree>
+                                <field name="employee_id"/>
+                                <field name="overtime" widget="float_time" />
+                         </tree>
+                     </field>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" groups="base.group_user"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+    <record id="overtime_view_search" model="ir.ui.view">
+        <field name="name">overtime_view_search</field>
+        <field name="model">flex.overtime</field>
+        <field name="arch" type="xml">
+            <search string="Overtime">
+                <field name="name"/>
+            </search>
+        </field>
+    </record>
+    <record id="overtime_action" model="ir.actions.act_window">
+        <field name="name">Overtime</field>
+        <field name="res_model">flex.overtime</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem id="menu_overtime" name="Overtime" action="overtime_action" sequence="10" groups="flex_overtime.group_overtime" web_icon="flex_overtime,static/overtime.png"/>
+</odoo>

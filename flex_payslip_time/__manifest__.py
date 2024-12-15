@@ -1,0 +1,15 @@
+{
+    'name': 'Flex Payslip Time',
+    'version': '1.0',
+    'summary': '',
+    'description': '',
+    'category': '',
+    'author': 'Sohaib Alamleh',
+    'website': 'https://www.flex-ops.com',
+    'license': '',
+    'depends': ['hr','hr_payroll', 'hr_attendance','flex_overtime'],
+    'data': ['views/payslip.xml'],
+    'demo': [''],
+    'installable': True,
+    'auto_install': False,
+}

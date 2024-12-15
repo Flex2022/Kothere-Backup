@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_flex_overtime,access_flex_overtime,model_flex_overtime,,1,1,1,1
+access_flex_overtime_line,access_flex_overtime_line,model_flex_overtime_line,,1,1,1,1
