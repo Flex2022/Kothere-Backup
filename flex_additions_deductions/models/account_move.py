@@ -289,7 +289,7 @@ class AccountMove(models.Model):
                 if record.flex_deductions_ids:
                     print('record.flex_deductions_ids', record.flex_deductions_ids)
                     for line in record.flex_deductions_ids:
-                        if record.move_type == 'in_invoice' or record.move_type == 'in_refund':
+                        if record.move_type == 'in_invoice' or record.move_type == 'out_refund':
                             journal = self.env['account.move'].create({
                                 'ref': line.name,
                                 'move_type': 'entry',
@@ -310,7 +310,7 @@ class AccountMove(models.Model):
                                 ],
 
                             }).action_post()
-                        if record.move_type == 'out_invoice' or record.move_type == 'out_refund':
+                        if record.move_type == 'out_invoice' or record.move_type == 'in_refund':
                             journal = self.env['account.move'].create({
                                 'ref': line.name,
                                 'move_type': 'entry',
