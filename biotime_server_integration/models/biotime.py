@@ -1,3 +1,6 @@
+from odoo import fields, models
+from datetime import datetime, time
+from dateutil.relativedelta import relativedelta
 from socket import socket, AF_INET, SOCK_STREAM
 import requests as req
 
@@ -100,15 +103,20 @@ class Biotime(object):
         else:
             return False
 
-    def get_transactions(self, req_params=None) -> list:
+    def get_transactions(self, req_params=None, date_from=False, date_to=False) -> list:
         """
         Get list of transactions using the Biotime transaction API
         :param request_params: Object containing keys/values of parameters to be passed to the url
         """
-        uri = '/iclock/api/transactions/'
+        date_from = date_from and fields.Date.from_string(date_from) or fields.Date.today()
+        date_to = date_to and fields.Date.from_string(date_to) or fields.Date.today()
+        start_time = datetime.combine(date_from, time.min)
+        end_time = datetime.combine(date_to, time.max).strftime("%Y-%m-%d %H:%M:%S")
+        uri = f'/iclock/api/transactions/?start_time={start_time}&end_time={end_time}'
+        # uri = f'/iclock/api/transactions/'
         url = self._base_url + uri
         custom_headers = {"Content-Type": "application/json",
-                          f"Authorization": "JWT {self._jwt_token}"}
+                          "Authorization": f"JWT {self._jwt_token}"}
         res = req.get(url, params=req_params, headers=custom_headers)
 
         transactions_data = self._handle_biotime_data_fetch(

@@ -3,3 +3,4 @@ access_biotime_server,biotime.server,model_biotime_server,,1,1,1,1
 access_biotime_transaction,biotime.transaction,model_biotime_transaction,,1,1,1,1
 access_biotime_shift,biotime.shift,model_biotime_shift,,1,1,1,1
 access_biotime_shift_line,biotime_shift_line,model_biotime_shift_line,,1,1,1,1
+biotime_period,biotime_period,model_biotime_period,,1,1,1,1

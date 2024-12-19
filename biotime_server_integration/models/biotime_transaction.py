@@ -17,7 +17,8 @@ class BiotimeTransaction(models.Model):
         ('2', 'Break out'),
         ('3', 'Break in'),
         ('4', 'Overtime in'),
-        ('5', 'Overtime out')
+        ('5', 'Overtime out'),
+        ('255', 'Unknown'),
     ], string='Punch state')
     verify_type = fields.Selection([
         ('0', 'Password'),

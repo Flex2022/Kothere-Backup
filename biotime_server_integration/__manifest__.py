@@ -12,6 +12,8 @@
         'views/biotime_shift.xml',
         'views/hr_employee.xml',
         'views/hr_attendance.xml',
+
+        'wizards/biotime_period.xml',
     ],
     'images': ['static/description/banner.gif'],
     'demo': [],

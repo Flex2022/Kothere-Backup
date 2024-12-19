@@ -143,7 +143,20 @@ class BiotimeServer(models.Model):
                 raise UserError(
                     _('Unable to connect, please check the parameters and network connections.'))
 
-    def download_transactions(self):
+    def action_download_transactions_period(self):
+        return {
+            'name': _('Set Period'),
+            'type': 'ir.actions.act_window',
+            'res_model': 'biotime.period',
+            'view_mode': 'form',
+            'target': 'new',
+            'context': {
+                'default_method_name': 'download_transactions',
+                'default_biotime_server_id': self.id,
+            },
+        }
+
+    def download_transactions(self, date_from=False, date_to=False):
         _logger.info(
             "++++++++++++ Cron job 'download_transactions' executed ++++++++++++++++++++++")
 
@@ -161,7 +174,7 @@ class BiotimeServer(models.Model):
                     server.username, server.password)
                 if token_res:
                     # Biotime attendances
-                    transaction_list = biotime.get_transactions()
+                    transaction_list = biotime.get_transactions(date_from=date_from, date_to=date_to)
                     if isinstance(transaction_list, list):
                         for transaction in transaction_list:
                             punch_time = fields.Datetime.to_datetime(
@@ -342,8 +355,21 @@ class BiotimeServer(models.Model):
             }
         }
 
+    def action_download_generate_attendances_period(self):
+        return {
+            'name': _('Set Period'),
+            'type': 'ir.actions.act_window',
+            'res_model': 'biotime.period',
+            'view_mode': 'form',
+            'target': 'new',
+            'context': {
+                'default_method_name': 'download_generate_attendances',
+                'default_biotime_server_id': self.id,
+            },
+        }
+
     # TODO: Recheck algo and verify code
-    def download_generate_attendances(self):
+    def download_generate_attendances(self, date_from=False, date_to=False):
         _logger.info(
             "++++++++++++ Cron job 'download_generate_attendances' executed ++++++++++++++++++++++")
 
@@ -361,7 +387,7 @@ class BiotimeServer(models.Model):
                     server.username, server.password)
                 if token_res:
                     # Biotime attendances
-                    transaction_list = biotime.get_transactions()
+                    transaction_list = biotime.get_transactions(date_from=date_from, date_to=date_to)
                     if isinstance(transaction_list, list):
                         for transaction in transaction_list:
                             # Creating transaction record
@@ -424,5 +450,7 @@ class BiotimeServer(models.Model):
     def cron_download(self):
         servers = self.env['biotime.serve'].search([])
         for server in servers:
-            server.download_transactions()
+            date_from = fields.Date.today().strftime('%Y-%m-%d')
+            date_to = fields.Date.today().strftime('%Y-%m-%d')
+            server.download_transactions(date_from=date_from, date_to=date_to)
             server.generate_attendances()
