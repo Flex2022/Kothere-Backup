@@ -61,13 +61,13 @@
                 <div style="position: absolute; top: 2.16in; left: 2.60in;"> <span t-field="o.admixtures"/> </div>
                 <div style="position: absolute; top: 2.16in; left: 4.01in;"> <span t-field="o.plant_no"/> </div>
                 <div style="position: absolute; top: 3.10in; left: 3.00in;" class="datetime">
-                    <span t-esc="o.time_out_plant.strftime('%H:%M')"/>
+                    <span t-if="o.time_out_plant" t-esc="o.time_out_plant.strftime('%H:%M')"/>
                 </div>
                 <div style="position: absolute; top: 3.10in; left: 4.14in;" class="datetime">
-                    <span t-esc="o.time_on_site.strftime('%H:%M')"/>
+                    <span t-if="o.time_on_site" t-esc="o.time_on_site.strftime('%H:%M')"/>
                 </div>
                 <div style="position: absolute; top: 3.10in; left: 5.31in;" class="datetime">
-                    <span t-esc="o.time_off_site.strftime('%H:%M')"/>
+                    <span t-if="o.time_off_site" t-esc="o.time_off_site.strftime('%H:%M')"/>
                 </div>
 
 
@@ -84,7 +84,7 @@
                     <span t-field="o.pump_no"/>
                 </div>
                 <div style="position: absolute; top: 3.10in; left: 6.48in;" class="datetime">
-                    <span t-esc="o.time_in_pant.strftime('%H:%M')"/>
+                    <span t-if="o.time_in_pant" t-esc="o.time_in_pant.strftime('%H:%M')"/>
                 </div>
 
 
