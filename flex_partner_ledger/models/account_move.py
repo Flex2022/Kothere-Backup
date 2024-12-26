@@ -14,6 +14,39 @@ class AccountMove(models.Model):
         ,compute='_compute_total_quantity',
         store=True
     )
+    all_product_lines = fields.Char(
+        string="All Product Lines",
+        help="All product lines in the move."
+        ,compute='_compute_all_product_lines',
+        store=True
+    )
+    product_price = fields.Char(
+        string="Product Price",
+        help="Product price in the move."
+        ,compute='_compute_product_price',
+        store=True
+    )
+
+    @api.depends('invoice_line_ids')
+    def _compute_product_price(self):
+        for rec in self:
+            # Filter the lines with a product of type 'product'
+            product_lines = rec.invoice_line_ids.filtered(lambda line: line.product_id.detailed_type == 'product')
+
+            # Extract the product prices and format each one with parentheses
+            product_prices = []
+            for line in product_lines:
+                price = line.product_price_not_monetary
+                if isinstance(price, list):
+                    # If it's a list, join its elements into a single string
+                    price = ''.join(map(str, price))
+
+                # Add parentheses around each price
+                formatted_price = f"({price})"
+                product_prices.append(formatted_price)
+
+            # Join all formatted prices with a space and a comma between them
+            rec.product_price = ', '.join(product_prices)
 
     @api.depends('invoice_line_ids')
     def _compute_total_quantity(self):
@@ -21,6 +54,15 @@ class AccountMove(models.Model):
             # Filter the lines with a product of type 'product'
             product_lines = rec.invoice_line_ids.filtered(lambda line: line.product_id.detailed_type == 'product')
             rec.total_quantity = sum(product_lines.mapped('quantity'))
+
+    @api.depends('invoice_line_ids')
+    def _compute_all_product_lines(self):
+        for rec in self:
+            # Filter the lines with a product of type 'product'
+            product_lines = rec.invoice_line_ids.filtered(lambda line: line.product_id.detailed_type == 'product')
+
+            # Reverse the order of the product names and join them with commas
+            rec.all_product_lines = ','.join(reversed(product_lines.mapped('product_id.name')))
 
 
 class AccountMoveLine(models.Model):
@@ -32,6 +74,17 @@ class AccountMoveLine(models.Model):
         ,compute='_compute_total_quantity_line',
         store=True
     )
+    product_price_not_monetary = fields.Char(
+        string="Product Price",
+        help="Product price in the move line."
+        ,compute='_compute_product_price_not_monetary',
+        store=True
+    )
+
+    @api.depends('price_total')
+    def _compute_product_price_not_monetary(self):
+        for rec in self:
+            rec.product_price_not_monetary = rec.price_total
 
     @api.depends('move_id')
     def _compute_total_quantity_line(self):
@@ -103,6 +156,8 @@ class PartnerLedgerCustomHandler(models.AbstractModel):
                     ROUND(account_move_line.credit * currency_table.rate, currency_table.precision)  AS credit,
                     ROUND(account_move_line.balance * currency_table.rate, currency_table.precision) AS balance,
                     account_move.name                                                                AS move_name,
+                    account_move.all_product_lines                                                   AS all_product_lines,
+                    account_move.product_price                                                       AS product_price,
                     account_move.move_type                                                           AS move_type,
                     account.code                                                                     AS account_code,
                     account_move.total_quantity                                                      AS total_quantity,
@@ -122,6 +177,7 @@ class PartnerLedgerCustomHandler(models.AbstractModel):
                 WHERE {where_clause} AND {directly_linked_aml_partner_clause}
                 ORDER BY account_move_line.date, account_move_line.id
             ''')
+
 
             # For the move lines linked to no partner, but reconciled with this partner. They will appear in grey in the report
             queries.append(f'''
@@ -149,6 +205,8 @@ class PartnerLedgerCustomHandler(models.AbstractModel):
                         partial.amount * currency_table.rate, currency_table.precision
                     )                                                                                   AS balance,
                     account_move.name                                                                   AS move_name,
+                    account_move.all_product_lines                                                      AS all_product_lines,
+                    account_move.product_price                                                     AS product_price,
                     account_move.move_type                                                              AS move_type,
                     account.code                                                                        AS account_code,
                     account_move.total_quantity                                                         AS total_quantity,
@@ -177,6 +235,7 @@ class PartnerLedgerCustomHandler(models.AbstractModel):
                     AND partial.max_date BETWEEN %s AND %s
                 ORDER BY account_move_line.date, account_move_line.id
             ''')
+
 
         query = '(' + ') UNION ALL ('.join(queries) + ')'
 
