@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="material_purchase_requisition_form_view_inherit" model="ir.ui.view">
+            <field name="name">material_purchase_requisition_form_view_inherit</field>
+            <field name="model">material.purchase.requisition</field>
+            <field name="inherit_id" ref="material_purchase_requisitions.material_purchase_requisition_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='requisiton_responsible_id']" position="after">
+                    <field name="purchase_type_id" options="{'no_create': 1}" required="1" readonly="state != 'draft' and purchase_type_id"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

@@ -6,11 +6,13 @@
     'author': "Hossam Zaki, Flex-Ops",
     'website': "https://flex-ops.com",
     'depends': ['purchase',
+                'material_purchase_requisitions'
                 ],
     'data': [
         # security
         'security/ir.model.access.csv',
         # views
+        'views/material_purchase_requisition.xml',
         'views/purchase_order.xml',
         'views/purchase_type.xml',
         'views/res_users.xml',

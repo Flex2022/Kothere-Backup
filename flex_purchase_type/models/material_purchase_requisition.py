@@ -3,10 +3,15 @@ from odoo import fields, models, api, _, SUPERUSER_ID
 from odoo.exceptions import UserError, AccessError
 
 
-class PurchaseOrder(models.Model):
-    _inherit = "purchase.order"
+class MaterialPurchaseRequisition(models.Model):
+    _inherit = "material.purchase.requisition"
 
     purchase_type_id = fields.Many2one(comodel_name='purchase.type', string='Purchase Type')
+
+    def _prepare_po_vals(self, partner):
+        res = super(MaterialPurchaseRequisition, self)._prepare_po_vals(partner)
+        res['purchase_type_id'] = self.purchase_type_id.id
+        return res
 
     @api.model
     def _search(self, domain, offset=0, limit=None, order=None, access_rights_uid=None):
@@ -15,7 +20,7 @@ class PurchaseOrder(models.Model):
         current_user = self.env.user
         if current_user.allowed_purchase_types and not self._context.get('force_list_all', False):
             domain += [('purchase_type_id', 'in', current_user.allowed_purchase_types.ids + [False])]
-        return super(PurchaseOrder, self)._search(domain, offset=offset, limit=limit, order=order, access_rights_uid=access_rights_uid)
+        return super(MaterialPurchaseRequisition, self)._search(domain, offset=offset, limit=limit, order=order, access_rights_uid=access_rights_uid)
 
     @api.model
     def read_group(self, domain, fields, groupby, offset=0, limit=None, orderby=False, lazy=True):
@@ -24,7 +29,7 @@ class PurchaseOrder(models.Model):
             if not domain:
                 domain = []
             domain += [('purchase_type_id', 'in', current_user.allowed_purchase_types.ids + [False])]
-        return super(PurchaseOrder, self).read_group(domain, fields, groupby, offset=offset, limit=limit, orderby=orderby, lazy=lazy)
+        return super(MaterialPurchaseRequisition, self).read_group(domain, fields, groupby, offset=offset, limit=limit, orderby=orderby, lazy=lazy)
 
     @api.model
     def _check_can_read(self):
@@ -38,9 +43,9 @@ class PurchaseOrder(models.Model):
             for rec in self.sudo():
                 if rec.purchase_type_id.id not in purchase_types:
                     raise AccessError(_("Sorry, you are not allowed to access records for (%s): \n- %s")
-                                      % (rec._name, rec.name))
+                                          % (rec._name, rec.name))
 
     def _read(self, fields):
         self._check_can_read()
-        return super(PurchaseOrder, self)._read(fields)
+        return super(MaterialPurchaseRequisition, self)._read(fields)
 

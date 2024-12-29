@@ -264,6 +264,19 @@ class MaterialPurchaseRequisition(models.Model):
         }
         return po_line_vals
 
+    def _prepare_po_vals(self, partner):
+        self.ensure_one()
+        return {
+            'partner_id': partner and partner.id,
+            'currency_id': self.env.user.company_id.currency_id.id,
+            'date_order': fields.Date.today(),
+            #                                'company_id':rec.env.user.company_id.id,
+            # 'project_invoice': self.project_id.id,
+            'company_id': self.company_id.id,
+            'custom_requisition_id': self.id,
+            'origin': self.name,
+        }
+
     # @api.multi
     def request_stock(self):
         stock_obj = self.env['stock.picking']
@@ -321,16 +334,17 @@ class MaterialPurchaseRequisition(models.Model):
                     #                        raise Warning(_('Please enter atleast one vendor on Requisition Lines for Requisition Action Purchase'))
                     for partner in line.partner_id:
                         if partner not in po_dict:
-                            po_vals = {
-                                'partner_id': partner.id,
-                                'currency_id': rec.env.user.company_id.currency_id.id,
-                                'date_order': fields.Date.today(),
-                                #                                'company_id':rec.env.user.company_id.id,
-                                'project_invoice': rec.project_id.id,
-                                'company_id': rec.company_id.id,
-                                'custom_requisition_id': rec.id,
-                                'origin': rec.name,
-                            }
+                            po_vals = rec._prepare_po_vals(partner)
+                            # po_vals = {
+                            #     'partner_id': partner.id,
+                            #     'currency_id': rec.env.user.company_id.currency_id.id,
+                            #     'date_order': fields.Date.today(),
+                            #     #                                'company_id':rec.env.user.company_id.id,
+                            #     'project_invoice': rec.project_id.id,
+                            #     'company_id': rec.company_id.id,
+                            #     'custom_requisition_id': rec.id,
+                            #     'origin': rec.name,
+                            # }
                             purchase_order = purchase_obj.create(po_vals)
                             po_dict.update({partner: purchase_order})
                             po_line_vals = rec._prepare_po_line(line, purchase_order)
