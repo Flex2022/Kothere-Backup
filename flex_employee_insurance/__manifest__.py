@@ -1,0 +1,15 @@
+{
+    'name': 'Flex Employee Insurance',
+    'version': '1.0',
+    'summary': '',
+    'description': '',
+    'category': '',
+    'author': 'Sohaib Alamleh||Flex-ops',
+    'website': '',
+    'license': '',
+    'depends': ['base','hr','hr_appraisal'],
+    'data': ['views/employee.xml'],
+    'demo': [''],
+    'installable': True,
+    'auto_install': False,
+}
