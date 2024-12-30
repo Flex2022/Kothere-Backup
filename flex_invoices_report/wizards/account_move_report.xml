@@ -21,6 +21,7 @@
                                 <field name="currency_id" column_invisible="1"/>
                                 <field name="move_type"/>
                                 <field name="partner_id"/>
+                                <field name="tax_number"/>
                                 <field name="invoice_date"/>
                                 <field name="invoice_name"/>
                                 <field name="line_description"/>
