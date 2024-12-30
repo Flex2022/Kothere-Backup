@@ -10,6 +10,8 @@
                     <field name="partner_id"/>
                     <field name="partner_street" optional="hide"/>
                     <field name="product_ids" widget="many2many_tags" optional="show"/>
+                    <field name="previous_qty" optional="show"/>
+                    <field name="cement_in_truck" optional="show"/>
                     <field name="quantity" optional="show"/>
                     <field name="delivery_date" optional="show"/>
                     <field name="vehicle_id" optional="hide"/>
@@ -55,7 +57,8 @@
                                 <field name="partner_id" readonly="state != 'draft'"/>
                                 <field name="partner_street"/>
                                 <field name="product_ids" widget="many2many_tags" readonly="state != 'draft'"/>
-                                <field name="quantity" readonly="state != 'draft'"/>
+                                <field name="quantity"/>
+                                <field name="previous_qty"/>
                                 <field name="delivery_date" readonly="state != 'draft'"/>
                             </group>
                             <group>

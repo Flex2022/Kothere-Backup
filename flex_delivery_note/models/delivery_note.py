@@ -36,7 +36,8 @@ class DeliveryNote(models.Model):
         string='Products',
         tracking=2
     )
-    quantity = fields.Float(string='Quantity', digits='Product Unit of Measure', tracking=2)
+    quantity = fields.Float(string='Quantity', digits='Product Unit of Measure', tracking=2, compute='_compute_quantity', store=True)
+    previous_qty = fields.Float(string='Previous Quantity', digits='Product Unit of Measure', tracking=2, compute='_compute_previous_qty', store=True)
     delivery_date = fields.Datetime(string='Delivery Date', tracking=3)
 
     vehicle_id = fields.Many2one('fleet.vehicle', string='Car Model', tracking=2)
@@ -69,6 +70,16 @@ class DeliveryNote(models.Model):
     slab = fields.Boolean(string='Slab')
     others = fields.Boolean(string='Others')
 
+    @api.depends('picking_id', 'create_date')
+    def _compute_previous_qty(self):
+        for rec in self:
+            previous_notes = rec.picking_id.delivery_note_ids.filtered(lambda n: not rec.create_date or n.create_date < rec.create_date)
+            rec.previous_qty = sum(previous_notes.mapped('cement_in_truck'))
+
+    @api.depends('previous_qty', 'cement_in_truck')
+    def _compute_quantity(self):
+        for rec in self:
+            rec.quantity = rec.previous_qty + rec.cement_in_truck
 
     @api.model_create_multi
     def create(self, vals_list):
