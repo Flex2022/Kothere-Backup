@@ -70,6 +70,9 @@ class DeliveryNote(models.Model):
     slab = fields.Boolean(string='Slab')
     others = fields.Boolean(string='Others')
 
+    workcenter_id = fields.Many2one('mrp.workcenter')
+
+
     @api.depends('picking_id', 'create_date')
     def _compute_previous_qty(self):
         for rec in self:

@@ -7,7 +7,7 @@
     'author': "Hossam Zaki, Flex-Ops",
     'website': "https://flex-ops.com",
     'license': 'OPL-1',
-    'depends': ['stock'],
+    'depends': ['stock', 'mrp'],
     'data': [
         # security
         'security/groups.xml',

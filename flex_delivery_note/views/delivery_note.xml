@@ -13,6 +13,7 @@
                     <field name="previous_qty" optional="show"/>
                     <field name="cement_in_truck" optional="show"/>
                     <field name="quantity" optional="show"/>
+                    <field name="workcenter_id" optional="show"/>
                     <field name="delivery_date" optional="show"/>
                     <field name="vehicle_id" optional="hide"/>
                     <field name="license_plate" optional="hide"/>
@@ -67,6 +68,7 @@
                                 <field name="driver_id"/>
                                 <field name="driver_phone"/>
                                 <field name="picking_id" readonly="state != 'draft'"/>
+                                <field name="workcenter_id" readonly="state != 'draft'"/>
                                 <field name="company_id" invisible="1"/>
                             </group>
                         </group>
