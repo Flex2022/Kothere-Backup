@@ -84,7 +84,7 @@ class AccountMoveLine(models.Model):
     @api.depends('price_total')
     def _compute_product_price_not_monetary(self):
         for rec in self:
-            rec.product_price_not_monetary = rec.price_total
+            rec.product_price_not_monetary = rec.price_unit
 
     @api.depends('move_id')
     def _compute_total_quantity_line(self):
