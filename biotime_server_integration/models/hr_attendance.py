@@ -86,7 +86,7 @@ class HrAttendance(models.Model):
                 rec.overtime = 0
 
     check_in = fields.Datetime(
-        string="Check In", default=False, required=False)  # Overide
+        string="Check In", required=False)  # Overide
     undertime = fields.Float(string="Lateness", compute="_compute_undertime")
     hours_deduction = fields.Float(string="Deducted Hours", compute="_compute_hours_deduction", store=True, readonly=False)
     overtime = fields.Float(string='Extra hours', compute="_compute_overtime")
