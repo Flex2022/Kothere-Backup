@@ -3,7 +3,7 @@
     'version': '0.1',
     'category': 'Generic Modules/Human Resources',
     'author': 'Ryad Abderrahim',
-    'depends': ['hr', 'hr_attendance', 'resource', 'hr_work_entry', 'hr_work_entry_contract'],
+    'depends': ['hr', 'hr_attendance', 'resource', 'hr_work_entry', 'hr_work_entry_contract', 'hr_payroll'],
     'data': [
         'security/ir.model.access.csv',
 
@@ -12,6 +12,7 @@
         'views/biotime_shift.xml',
         'views/hr_employee.xml',
         'views/hr_attendance.xml',
+        'views/hr_payslip.xml',
 
         'wizards/biotime_period.xml',
     ],

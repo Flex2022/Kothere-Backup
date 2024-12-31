@@ -8,6 +8,7 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='worked_hours']" position="after">
                 <field name="undertime" widget="float_time"/>
+                <field name="hours_deduction" widget="float_time"/>
                 <!-- <button string="Confirmer" name="confirm_undertime" type="object" attrs="{'invisible': [('undertime', '=', 0)]}"/> -->
                 <field name="overtime" widget="float_time"/>
                 <!-- <button string="Confirmer" name="confirm_overtime" type="object" attrs="{'invisible': [('overtime', '=', 0)]}"/> -->
@@ -15,6 +16,19 @@
 
             <xpath expr="/tree" position="attributes">
                 <attribute name="default_order">check_out desc</attribute>
+            </xpath>
+            <xpath expr="//tree" position="inside">
+                <field name="state" widget="badge" decoration-success="state == 'confirm'"/>
+                <button invisible="state != 'draft'" name="action_confirm" string="Confirm" type="object" icon="fa-check"/>
+                <button invisible="state != 'confirm'" name="action_draft" string="Set Draft" type="object" icon="fa-times"
+                        groups="hr_attendance.group_hr_attendance_manager"/>
+            </xpath>
+            <xpath expr="//tree/field[1]" position="before">
+                <header>
+                    <button name="action_confirm" string="Confirm" type="object" icon="fa-check" class="btn-primary ms-1"/>
+                    <button name="action_draft" string="Set Draft" type="object" icon="fa-times" class="ms-1"
+                            groups="hr_attendance.group_hr_attendance_manager"/>
+                </header>
             </xpath>
         </field>
     </record>
