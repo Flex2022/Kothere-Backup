@@ -13,6 +13,9 @@
                 <field name="overtime" widget="float_time"/>
                 <!-- <button string="Confirmer" name="confirm_overtime" type="object" attrs="{'invisible': [('overtime', '=', 0)]}"/> -->
             </xpath>
+            <xpath expr="//field[@name='check_in']" position="attributes">
+                <attribute name="required">1</attribute>
+            </xpath>
 
             <xpath expr="/tree" position="attributes">
                 <attribute name="default_order">check_out desc</attribute>
