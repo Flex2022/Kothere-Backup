@@ -20,7 +20,8 @@ class Payslip(models.Model):
                 domain = [
                     ('employee_id', '=', payslip.employee_id.id),
                     ('check_in', '>=',start_time),
-                    ('check_in', '<=', end_time)
+                    ('check_in', '<=', end_time),
+                    ('state', '=', 'confirm')
                 ]
                 attendances = self.env['hr.attendance'].search(domain)
                 payslip.attendance_hours_deduction = sum(attendances.mapped('hours_deduction'))
