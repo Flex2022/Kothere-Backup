@@ -62,6 +62,7 @@
                             <table class="table">
                                 <tr>
                                     <th>Customer/Vendor</th>
+                                    <th>Customer/Vendor Tax</th>
                                     <th>Date</th>
                                     <th>Invoice Number</th>
                                     <th>Description</th>
@@ -73,6 +74,9 @@
                                 <tr t-foreach="o.line_ids" t-as="line">
                                     <td>
                                         <span t-field="line.partner_id"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="line.tax_number"/>
                                     </td>
                                     <td>
                                         <span t-field="line.invoice_date"/>

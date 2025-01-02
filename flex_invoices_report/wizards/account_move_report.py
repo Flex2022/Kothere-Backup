@@ -107,7 +107,7 @@ class FlexInvoicesLinesReport(models.TransientModel):
     currency_id = fields.Many2one('res.currency', related="move_line_id.currency_id")
     partner_id = fields.Many2one('res.partner', 'Customer/Vendor', related="move_line_id.move_id.partner_id")
     invoice_date = fields.Date('Date', related="move_line_id.move_id.invoice_date")
-    tax_number = fields.Char('Tax Number')
+    tax_number = fields.Char('Tax Number',related="partner_id.vat")
     invoice_name = fields.Char('Invoice Number', related="move_line_id.move_id.name")
     line_description = fields.Char('Description', related="move_line_id.name")
     line_product_id = fields.Many2one('product.product', 'Product', related="move_line_id.product_id")
