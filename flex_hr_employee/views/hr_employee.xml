@@ -16,6 +16,18 @@
                         <field name="end_of_iqama"/>
                     </group>
                 </xpath>
+                <xpath expr="//field[@name='bank_account_id']" position="replace">
+                    <field name="bank_account_id" invisible="1"/>
+                    <field name="type_of_insurance"/>
+                    <field name="bank_name"/>
+                    <field name="bank_number"/>
+                </xpath>
+                <xpath expr="//field[@name='identification_id']" position="after">
+                    <field name="identification_expiry"/>
+                </xpath>
+                <xpath expr="//field[@name='passport_id']" position="after">
+                    <field name="passport_expiry"/>
+                </xpath>
             </field>
         </record>
     </data>
