@@ -18,6 +18,9 @@ class MaintenanceRequest(models.Model):
     odometer_unit = fields.Selection([('kilometers', 'km'), ('miles', 'mi')], 'Odometer Unit', default='kilometers',
                                      required=True, related="vehicle_id.odometer_unit", readonly=False)
 
+    recurring_maintenance = fields.Boolean(string="Recurrent", readonly=False)
+
+
     def _compute_repair_count(self):
         for rec in self:
             rec.repair_count = self.env['repair.order'].search_count([('maintenance_request_id', '=', rec.id)])
@@ -49,3 +52,5 @@ class MaintenanceRequest(models.Model):
             'view_id': False,
             'target': 'current',
         }
+
+

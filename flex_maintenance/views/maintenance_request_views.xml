@@ -19,6 +19,15 @@
                     <attribute name="invisible">maintenance_for != 'equipment'</attribute>
                     <attribute name="required">maintenance_for != 'equipment'</attribute>
                 </xpath>
+                <xpath expr="//div[@class='d-inline-flex']" position="replace">
+                     <div class="d-inline-flex">
+                         <field name="recurring_maintenance" nolabel="1" class="ms-0" style="width: fit-content;"/>
+                     </div>
+                </xpath>
+                <xpath expr="//label[@for='recurring_maintenance']" position="replace">
+                    <label for="recurring_maintenance"/>
+                </xpath>
+
                 <xpath expr="//field[@name='priority']" position="before">
                     <label for="hours_number" string="Repair every" invisible="not recurring_maintenance"/>
                     <div class="o_inline" invisible="not recurring_maintenance">
