@@ -36,8 +36,9 @@ class AccountPayment(models.Model):
 
     def action_post(self):
         res = super(AccountPayment, self).action_post()
-        if self.advance_payment and self.advance_payment_account_id:
-            self._update_item_lines()
+        for rec in self:
+            if rec.advance_payment and rec.advance_payment_account_id:
+                rec._update_item_lines()
         return res
 
     def _update_item_lines(self):
