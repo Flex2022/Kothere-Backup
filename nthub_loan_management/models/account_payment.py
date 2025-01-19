@@ -9,33 +9,56 @@ class AccountPayment(models.Model):
 
     def action_post(self):
         re = super(AccountPayment, self).action_post()
-        res = self.env['hr.loan'].search([('state', '=', 'approve'),
-                                          ('employee_id.related_partner', '=', self.partner_id.id),
-                                          ('name', '=', self.loan_id.name)])
-        for rec in res:
-            rec.write({'payment': True,
-                       'payment_id': self.id,
-                       'state': 'paid'
-                       })
-
+        for payment in self:  # Iterate over each payment record
+            res = self.env['hr.loan'].search([
+                ('state', '=', 'approve'),
+                ('employee_id.related_partner', '=', payment.partner_id.id),
+                ('name', '=', payment.loan_id.name)
+            ])
+            for rec in res:
+                rec.write({
+                    'payment': True,
+                    'payment_id': payment.id,
+                    'state': 'paid'
+                })
         return re
+
+    # def action_cancel(self):
+    #     re = super(AccountPayment, self).action_cancel()
+    #     res = self.env['hr.loan'].search([('state', '=', 'approve'),
+    #                                       ('employee_id.related_partner', '=', self.partner_id.id),
+    #                                       ('name', '=', self.loan_id.name)])
+    #     for rec in res:
+    #         rec.write({'payment': False,
+    #                    'payment_id': []})
+    #     return re
 
     def action_cancel(self):
         re = super(AccountPayment, self).action_cancel()
-        res = self.env['hr.loan'].search([('state', '=', 'approve'),
-                                          ('employee_id.related_partner', '=', self.partner_id.id),
-                                          ('name', '=', self.loan_id.name)])
-        for rec in res:
-            rec.write({'payment': False,
-                       'payment_id': []})
+        for payment in self:  # Iterate over each payment record
+            res = self.env['hr.loan'].search([
+                ('state', '=', 'approve'),
+                ('employee_id.related_partner', '=', payment.partner_id.id),
+                ('name', '=', payment.loan_id.name)
+            ])
+            for rec in res:
+                rec.write({
+                    'payment': False,
+                    'payment_id': False  # Set payment_id to False instead of an empty list
+                })
         return re
 
     def action_draft(self):
+        self.ensure_one()  # Ensure that self is a singleton
         re = super(AccountPayment, self).action_draft()
-        res = self.env['hr.loan'].search([('state', '=', 'approve'),
-                                          ('employee_id.related_partner', '=', self.partner_id.id),
-                                          ('payment_id', '=', self.id)])
+        res = self.env['hr.loan'].search([
+            ('state', '=', 'approve'),
+            ('employee_id.related_partner', '=', self.partner_id.id),
+            ('payment_id', '=', self.id)
+        ])
         for rec in res:
-            rec.write({'payment': False,
-                       'payment_id': []})
+            rec.write({
+                'payment': False,
+                'payment_id': False  # Set payment_id to False instead of an empty list
+            })
         return re
