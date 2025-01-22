@@ -4,6 +4,7 @@ from odoo.exceptions import ValidationError
 
 class ResPartner(models.Model):
     _inherit = 'res.partner'
+    _rec_names_search = ['complete_name', 'email', 'ref', 'vat', 'company_registry', 'arabic_name']
 
     arabic_name = fields.Char(string='Arabic Name')
     partner_code = fields.Char(string="Partner Code", required=False, copy=False, readonly=True,
