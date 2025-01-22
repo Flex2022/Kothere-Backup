@@ -8,11 +8,12 @@
     'website': "https://flex-ops.com",
     'license': '',
     'depends': ['base', 'fleet', 'repair', 'maintenance', 'mrp_maintenance', 'purchase'],
-    'data': ['views/fleet_vehicle_views.xml',
-             'views/maintenance_request_views.xml',
-             'views/repair_order_views.xml',
-             ],
-    'demo': [''],
+    'data': [
+        'views/fleet_vehicle_views.xml',
+        'views/maintenance_request_views.xml',
+        'views/repair_order_views.xml',
+        'views/maintenance_stage.xml',
+    ],
     'installable': True,
     'auto_install': False,
     'application': True

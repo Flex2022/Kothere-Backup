@@ -13,6 +13,8 @@
                     <field name="license_plate"/>
                     <field name="driver_id"/>
                     <field name="maintenance_request_id" readonly="1"/>
+                    <field name="actual_hours_number" readonly="1"/>
+                    <field name="actual_kilometres_number" readonly="1"/>
                 </xpath>
             </field>
         </record>

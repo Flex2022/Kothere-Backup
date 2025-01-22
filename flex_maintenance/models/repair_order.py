@@ -10,6 +10,16 @@ class RepairOrder(models.Model):
     license_plate = fields.Char(string='License Plate', related='vehicle_id.license_plate')
     maintenance_request_id = fields.Many2one('maintenance.request', string='Maintenance Request')
     purchase_count = fields.Integer(string='Purchase Count', compute='_compute_purchase_count')
+    actual_hours_number = fields.Float(string='Actual Hours Number')
+    actual_kilometres_number = fields.Float(string='Actual Kilometres Number')
+
+    def action_repair_done(self):
+        res = super(RepairOrder, self).action_repair_done()
+        if self.maintenance_request_id:
+            maintenance_stage_auto_trigger = self.env['maintenance.stage'].search([('repair_auto_trigger', '=', True)], limit=1)
+            if maintenance_stage_auto_trigger:
+                self.maintenance_request_id.write({'stage_id': maintenance_stage_auto_trigger.id})
+        return res
 
     @api.depends('move_ids')
     def _compute_purchase_count(self):

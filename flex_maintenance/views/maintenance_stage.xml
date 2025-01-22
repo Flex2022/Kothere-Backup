@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="hr_equipment_stage_view_tree_inherit" model="ir.ui.view">
+            <field name="name">hr_equipment_stage_view_tree_inherit</field>
+            <field name="model">maintenance.stage</field>
+            <field name="inherit_id" ref="maintenance.hr_equipment_stage_view_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='done']" position="after">
+                    <field name="repair_auto_trigger"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

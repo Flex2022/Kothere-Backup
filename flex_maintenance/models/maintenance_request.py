@@ -36,6 +36,8 @@ class MaintenanceRequest(models.Model):
                 'maintenance_request_id': rec.id,
                 'picking_type_id': default_warehouse.repair_type_id.id,
                 'location_dest_id': default_warehouse.repair_type_id.default_location_dest_id.id,
+                'actual_hours_number': rec.actual_hours_number,
+                'actual_kilometres_number': rec.actual_kilometres_number,
             }
             if repair_order_vals:
                 repair = self.env['repair.order'].sudo().create(repair_order_vals)
