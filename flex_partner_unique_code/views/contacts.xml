@@ -14,15 +14,21 @@
 
             </field>
         </record>
+
         <record id="view_partner_form_inherit_sd" model="ir.ui.view">
             <field name="name">res.partner.form.sd</field>
             <field name="model">res.partner</field>
             <field name="inherit_id" ref="base.view_partner_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='function']" position="before">
-                        <field name="partner_code" readonly="1" />
+                    <field name="partner_code" readonly="1" />
                 </xpath>
-
+                <xpath expr="//field[@id='company']/.." position="after">
+                    <label for="arabic_name"/>
+                    <h2>
+                        <field class="text-break" name="arabic_name" placeholder="الاسم باللغة العربية"/>
+                    </h2>
+                </xpath>
             </field>
         </record>
 
