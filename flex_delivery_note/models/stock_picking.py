@@ -24,7 +24,8 @@ class StockPicking(models.Model):
             'context': {
                 'default_picking_id': self.id,
                 'default_partner_id': self.partner_id.id,
-                'default_product_ids': self.move_ids_without_package.product_id.ids,
+                'default_product_id': self.move_ids_without_package[:1].product_id.id,
+                # 'default_product_ids': self.move_ids_without_package.product_id.ids,
                 # 'default_quantity': sum(self.move_ids_without_package.mapped('quantity')),
             },
         }

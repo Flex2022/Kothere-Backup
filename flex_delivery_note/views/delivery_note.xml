@@ -1,6 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <odoo>
     <data>
+
         <record id="delivery_note_tree" model="ir.ui.view">
             <field name="name">delivery_note_tree</field>
             <field name="model">delivery.note</field>
@@ -9,7 +10,9 @@
                     <field name="name"/>
                     <field name="partner_id"/>
                     <field name="partner_street" optional="hide"/>
-                    <field name="product_ids" widget="many2many_tags" optional="show"/>
+                    <!--                    <field name="product_ids" widget="many2many_tags" optional="show"/>-->
+                    <field name="product_domain" column_invisible="1"/>
+                    <field name="product_id" optional="show"/>
                     <field name="previous_qty" optional="show"/>
                     <field name="cement_in_truck" optional="show"/>
                     <field name="quantity" optional="show"/>
@@ -57,7 +60,9 @@
                             <group>
                                 <field name="partner_id" readonly="state != 'draft'"/>
                                 <field name="partner_street"/>
-                                <field name="product_ids" widget="many2many_tags" readonly="state != 'draft'"/>
+                                <!--                                <field name="product_ids" widget="many2many_tags" readonly="state != 'draft'"/>-->
+                                <field name="product_domain" invisible="1"/>
+                                <field name="product_id" readonly="state != 'draft'"/>
                                 <field name="quantity"/>
                                 <field name="previous_qty"/>
                                 <field name="delivery_date" readonly="state != 'draft'"/>
@@ -104,5 +109,25 @@
                 </form>
             </field>
         </record>
+
+        <record id="delivery_note_search" model="ir.ui.view">
+            <field name="name">delivery_note_search</field>
+            <field name="model">delivery.note</field>
+            <field name="arch" type="xml">
+                <search string="Notes">
+                    <field name="name"/>
+                    <field name="product_id"/>
+                    <field name="picking_id"/>
+                    <field name="partner_id"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Status" name="state" context="{'group_by':'state'}"/>
+                        <filter string="Product" name="product" context="{'group_by':'product_id'}"/>
+                        <filter string="Transfer" name="picking" context="{'group_by':'picking_id'}"/>
+                        <filter string="Customer" name="partner" context="{'group_by':'partner_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
     </data>
 </odoo>

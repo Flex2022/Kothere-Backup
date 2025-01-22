@@ -30,11 +30,20 @@ class DeliveryNote(models.Model):
     )
     partner_id = fields.Many2one(comodel_name='res.partner', string='Customer', tracking=1)
     partner_street = fields.Char(string='Address', related='partner_id.street')
+    # todo: remove field (product_ids)  <we just left it to keep data after changing field from m2m to m2o>
     product_ids = fields.Many2many(
         comodel_name='product.product',
         relation='delivery_note_product_rel',
         string='Products',
         tracking=2
+    )
+    product_domain = fields.Binary(compute='_compute_product_domain')
+    product_id = fields.Many2one(
+        comodel_name='product.product',
+        string='Product',
+        required=True,
+        tracking=2,
+        domain='product_domain'
     )
     quantity = fields.Float(string='Quantity', digits='Product Unit of Measure', tracking=2, compute='_compute_quantity', store=True)
     previous_qty = fields.Float(string='Previous Quantity', digits='Product Unit of Measure', tracking=2, compute='_compute_previous_qty', store=True)
@@ -72,11 +81,15 @@ class DeliveryNote(models.Model):
 
     workcenter_id = fields.Many2one('mrp.workcenter')
 
+    @api.depends('picking_id')
+    def _compute_product_domain(self):
+        for rec in self:
+            rec.product_domain = [('id', 'in', rec.picking_id.move_ids_without_package.product_id.ids),]
 
-    @api.depends('picking_id', 'create_date')
+    @api.depends('picking_id', 'product_id', 'create_date')
     def _compute_previous_qty(self):
         for rec in self:
-            previous_notes = rec.picking_id.delivery_note_ids.filtered(lambda n: not rec.create_date or n.create_date < rec.create_date)
+            previous_notes = rec.picking_id.delivery_note_ids.filtered(lambda n: (not rec.create_date or n.create_date < rec.create_date) and rec.product_id == n.product_id)
             rec.previous_qty = sum(previous_notes.mapped('cement_in_truck'))
 
     @api.depends('previous_qty', 'cement_in_truck')

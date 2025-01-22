@@ -56,7 +56,8 @@
                     <span t-field="o.project_name"/>
                 </div>
                 <div style="position: absolute; top: 1.70in; left: 2.60in;">
-                    <span t-esc="', '.join(o.product_ids.mapped('name'))"/>
+<!--                    <span t-esc="', '.join(o.product_ids.mapped('name'))"/>-->
+                    <span t-field="o.product_id.name"/>
                 </div>
                 <div style="position: absolute; top: 2.16in; left: 2.60in;"> <span t-field="o.admixtures"/> </div>
                 <div style="position: absolute; top: 2.16in; left: 4.01in;"> <span t-field="o.plant_no"/> </div>
