@@ -4,18 +4,18 @@ from odoo.exceptions import ValidationError
 
 class ResPartner(models.Model):
     _inherit = 'res.partner'
-    _rec_names_search = ['complete_name', 'email', 'ref', 'vat', 'company_registry', 'arabic_name']
+    _rec_names_search = ['complete_name', 'email', 'ref', 'vat', 'company_registry', 'other_name']
 
-    arabic_name = fields.Char(string='Arabic Name')
+    other_name = fields.Char(string='English Name')
     partner_code = fields.Char(string="Partner Code", required=False, copy=False, readonly=True,
                            default=lambda self: _('New'))
 
     @api.depends('complete_name', 'email', 'vat', 'state_id', 'country_id', 'commercial_company_name')
     @api.depends_context('show_address', 'partner_show_db_id', 'address_inline', 'show_email', 'show_vat', 'lang')
     def _compute_display_name(self):
-        if self.env.lang == 'ar_001':
+        if self.env.lang == 'en_US':
             for partner in self:
-                partner.display_name = (partner.arabic_name or partner.with_context(lang=self.env.lang)._get_complete_name()).strip()
+                partner.display_name = (partner.other_name or partner.with_context(lang=self.env.lang)._get_complete_name()).strip()
         else:
             super(ResPartner, self)._compute_display_name()
 

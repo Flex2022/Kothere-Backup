@@ -24,9 +24,9 @@
                     <field name="partner_code" readonly="1" />
                 </xpath>
                 <xpath expr="//field[@id='company']/.." position="after">
-                    <label for="arabic_name"/>
+                    <label for="other_name"/>
                     <h2>
-                        <field class="text-break" name="arabic_name" placeholder="الاسم باللغة العربية"/>
+                        <field class="text-break" name="other_name"/>
                     </h2>
                 </xpath>
             </field>
