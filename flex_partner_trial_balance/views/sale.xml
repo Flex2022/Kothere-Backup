@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_order_form_inherit" model="ir.ui.view">
+            <field name="name">view_order_form_inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="is_company" invisible="1"/>
+                </xpath>
+
+                <xpath expr="//button[@name='action_confirm'][2]" position="replace"></xpath>
+                <xpath expr="//button[@name='action_confirm'][1]" position="attributes">
+                    <attribute name="invisible">state not in ('draft','sent') or is_company == True</attribute>
+<!--                    <attribute name="groups">flex_sale_confirm.group_sale_confirm</attribute>-->
+                </xpath>
+                <xpath expr="//button[@name='action_confirm'][1]" position="before">
+                    <button name="action_submit" type="object" string="Submit Approval"
+                            groups="flex_sale_confirm.group_sale_submit" class="oe_highlight" invisible="state not in ('draft','sent') or is_company == False"/>
+                    <button name="action_finance" type="object" string="Sales manager"
+                            groups="flex_sale_confirm.group_sale_finance" class="oe_highlight"
+                            invisible="state not in 'submit'"/>
+                    <button name="action_gm" type="object" string="GM Manager"
+                            groups="flex_sale_confirm.group_sale_gm" class="oe_highlight"
+                            invisible="state not in 'finance'"/>
+                    <button name="action_confirm2" type="object" string="Confirm Order"
+                            groups="flex_sale_confirm.group_sale_confirm" class="oe_highlight"
+                            invisible="state not in 'gm'"/>
+                </xpath>
+                <xpath expr="//button[@name='action_cancel']" position="attributes">
+                    <attribute name="invisible" groups="flex_sale_confirm.group_cancel_sale_order">state not in ('draft', 'sent','submit' ,'finance', 'gm', 'sale') or id == False</attribute>
+
+                </xpath>
+                <xpath expr="//button[@name='action_cancel']" position="replace">
+                    <button name="action_cancel" type="object" string="Cancel"
+                            groups="flex_sale_confirm.group_cancel_sale_order"
+                            invisible="state == 'cancel'"/>
+                </xpath>
+<!--                <xpath expr="//header/field[@name='state']" position="attributes">-->
+<!--                    <attribute name="statusbar_visible">draft,sent,submit,finance,gm,sale</attribute>-->
+<!--                </xpath>-->
+            </field>
+
+
+<!--                <field name="partner_id" position="attributes">-->
+<!--                    <attribute name="attrs">{'readonly': [('state', 'in', ('sale', 'to approve','done',-->
+<!--                        'cancel','finance','gm'))]}-->
+<!--                    </attribute>-->
+<!--                </field>-->
+<!--                <xpath expr="//field[@name='partner_id']" position="after">-->
+<!--                    <field name="po_version" readonly="1"/>-->
+<!--                </xpath>-->
+
+
+<!--                <field name="validity_date" position="attributes">-->
+<!--                    <attribute name="attrs">{'readonly': [('state', 'in', ('sale', 'to approve','done',-->
+<!--                        'cancel','finance','gm'))]}-->
+<!--                    </attribute>-->
+<!--                </field>-->
+
+
+<!--                <field name="date_order" position="attributes">-->
+<!--                    <attribute name="attrs">{'readonly': [('state', 'in', ('sale', 'to approve','done',-->
+<!--                        'cancel','finance','gm'))]}-->
+<!--                    </attribute>-->
+<!--                </field>-->
+
+
+<!--                <field name="pricelist_id" position="attributes">-->
+<!--                    <attribute name="attrs">{'readonly': [('state', 'in', ('sale', 'to approve','done',-->
+<!--                        'cancel','finance','gm'))]}-->
+<!--                    </attribute>-->
+<!--                </field>-->
+
+
+<!--                <field name="payment_term_id" position="attributes">-->
+<!--                    <attribute name="attrs">{'readonly': [('state', 'in', ('sale', 'to approve','done',-->
+<!--                        'cancel','finance','gm'))]}-->
+<!--                    </attribute>-->
+<!--                </field>-->
+
+
+<!--                <field name="order_line" position="attributes">-->
+<!--                    <attribute name="attrs">{'invisible': [('state', 'in', ('sale', 'to approve','done',-->
+<!--                        'cancel','finance','gm'))]}-->
+<!--                    </attribute>-->
+
+
+<!--                    <xpath expr="//field[@name='order_line']/tree/field[@name='product_id']" position="attributes">-->
+<!--                        <attribute name="attrs">{'readonly': [('state', 'in', ('sale', 'to approve','done',-->
+<!--                            'cancel','finance','gm'))]}-->
+<!--                        </attribute>-->
+<!--                    </xpath>-->
+<!--                    <xpath expr="//field[@name='order_line']/tree/field[@name='name']" position="attributes">-->
+<!--                        <attribute name="attrs">{'readonly': [('state', 'in', ('sale', 'to approve','done',-->
+<!--                            'cancel','finance','gm'))]}-->
+<!--                        </attribute>-->
+<!--                    </xpath>-->
+<!--                    <xpath expr="//field[@name='order_line']/tree/field[@name='product_uom_qty']" position="attributes">-->
+<!--                        <attribute name="attrs">{'readonly': [('state', 'in', ('sale', 'to approve','done',-->
+<!--                            'cancel','finance','gm'))]}-->
+<!--                        </attribute>-->
+<!--                    </xpath>-->
+<!--                    <xpath expr="//field[@name='order_line']/tree/field[@name='product_uom']" position="attributes">-->
+<!--                        <attribute name="attrs">{'readonly': [('state', 'in', ('sale', 'to approve','done',-->
+<!--                            'cancel','finance','gm'))]}-->
+<!--                        </attribute>-->
+<!--                    </xpath>-->
+
+<!--                    <xpath expr="//field[@name='order_line']/tree/field[@name='price_unit']" position="attributes">-->
+<!--                        <attribute name="attrs">{'readonly': [('state', 'in', ('sale', 'to approve','done',-->
+<!--                            'cancel','finance','gm'))]}-->
+<!--                        </attribute>-->
+<!--                    </xpath>-->
+
+<!--                    <xpath expr="//field[@name='order_line']/tree/field[@name='tax_id']" position="attributes">-->
+<!--                        <attribute name="attrs">{'readonly': [('state', 'in', ('sale', 'to approve','done',-->
+<!--                            'cancel','finance','gm'))]}-->
+<!--                        </attribute>-->
+<!--                    </xpath>-->
+
+<!--                    <xpath expr="//field[@name='order_line']/tree/field[@name='discount']" position="attributes">-->
+<!--                        <attribute name="attrs">{'readonly': [('state', 'in', ('sale', 'to approve','done',-->
+<!--                            'cancel','finance','gm'))]}-->
+<!--                        </attribute>-->
+<!--                    </xpath>-->
+<!--                    <xpath expr="//field[@name='order_line']/tree/field[@name='price_subtotal']" position="attributes">-->
+<!--                        <attribute name="attrs">{'readonly': [('state', 'in', ('sale', 'to approve','done',-->
+<!--                            'cancel','finance','gm'))]}-->
+<!--                        </attribute>-->
+<!--                    </xpath>-->
+<!--                </field>-->
+<!--            </field>-->
+
+<!--        </record>-->
+
+
+<!--        <record id="sale_view_inherit123_inherit" model="ir.ui.view">-->
+<!--            <field name="name">sale_view_inherit123_inherit</field>-->
+<!--            <field name="model">sale.order</field>-->
+<!--            <field name="inherit_id" ref="sale_crm.sale_view_inherit123"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <xpath expr="//field[@name='opportunity_id']" position="replace">-->
+<!--                    <field name="opportunity_id" required="1"/>-->
+<!--                </xpath>-->
+<!--                <xpath expr="//field[@name='payment_term_id']" position="after">-->
+
+<!--                    <field name="opportunity_id" position="move"/>-->
+<!--                    <field name="quotation_number" attrs-->
+<!--                            ="{'invisible': [('state', 'not in', ('sale'))]}"/>-->
+<!--                </xpath>-->
+
+
+<!--                <xpath expr="//field[@name='origin']" position="attributes">-->
+<!--                    <attribute name="invisible">1</attribute>-->
+<!--                </xpath>-->
+
+<!--            </field>-->
+<!--        </record>-->
+<!--        <record id="sale_order_search_inherit_quotation_flex" model="ir.ui.view">-->
+<!--            <field name="name">sale.order.search.inherit.quotation.flex</field>-->
+<!--            <field name="model">sale.order</field>-->
+<!--            <field name="inherit_id" ref="sale.sale_order_view_search_inherit_quotation"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <xpath expr="//search" position="inside">-->
+<!--                    <field name="opportunity_id"/>-->
+<!--                    <field name="opportunity_number"/>-->
+<!--                    <field name="quotation_number"/>-->
+<!--                </xpath>-->
+<!--            </field>-->
+<!--        </record>-->
+
+<!--        <record id="sale_order_tree_inherit_quotation_flex" model="ir.ui.view">-->
+<!--            <field name="name">sale.order.tree.inherit.quotation.flex</field>-->
+<!--            <field name="model">sale.order</field>-->
+<!--            <field name="inherit_id" ref="sale.view_quotation_tree_with_onboarding"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <xpath expr="//field[@name='name']" position="before">-->
+<!--                    <field name="opportunity_number"/>-->
+<!--                    <field name="quotation_number"/>-->
+<!--                </xpath>-->
+<!--            </field>-->
+<!--        </record>-->
+<!--        &lt;!&ndash;Changed Action Name&ndash;&gt;-->
+<!--        <record id="sale.action_quotations_with_onboarding" model="ir.actions.act_window">-->
+<!--            <field name="name">Quotations And Sales Orders</field>-->
+        </record>
+
+    </data>
+</odoo>
