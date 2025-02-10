@@ -62,7 +62,7 @@
                             </p>
                             <p>
                                 <span>الرصيد الإفتتاحي : </span>
-                                <span dir="ltr" t-esc="initial_balance"/>
+                                <span dir="ltr" t-esc="'{:,.2f}'.format(initial_balance)"/>
                             </p>
                         </div>
                     </div>
@@ -102,11 +102,12 @@
                                     <td> <span t-esc="first_line['quantity']"/> </td>
                                     <td> <span t-esc="first_line['price_unit']"/> </td>
                                     <td> <span t-esc="first_line['price_total']"/> </td>
-                                    <td t-att-rowspan="lines_count"> <span t-esc="group['total_debit']"/> </td>
-                                    <td t-att-rowspan="lines_count"> <span t-esc="group['total_credit']"/> </td>
+                                    <td t-att-rowspan="lines_count"> <span t-esc="'{:,.2f}'.format(group['total_debit'])"/> </td>
+                                    <td t-att-rowspan="lines_count"> <span t-esc="'{:,.2f}'.format(group['total_credit'])"/> </td>
                                     <td t-att-rowspan="lines_count">
                                         <t t-set="accumulated_balance" t-value="accumulated_balance + group['total_balance']"/>
-                                        <span dir="ltr" t-esc="accumulated_balance"/>
+<!--                                        <span dir="ltr" t-esc="'%.2f' % accumulated_balance"/>-->
+                                        <span dir="ltr" t-esc="'{:,.2f}'.format(accumulated_balance)"/>
                                     </td>
 
                                 </tr>
