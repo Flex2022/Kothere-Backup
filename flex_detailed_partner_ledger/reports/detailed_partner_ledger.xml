@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--Template for Payslip Details Report-->
+    <template id="report_detailed_partner_ledger">
+        <t t-call="web.html_container">
+            <t t-call="web.internal_layout">
+                <div class="page" dir="rtl">
+                    <style>
+                        .font_13 { font-size: 13px !important }
+                    </style>
+                    <div class="row mb-4">
+                        <div class="col-4 font_13">
+                            <p>
+                                <span>الشركة : </span>
+                                <span t-esc="company_name"/>
+                            </p>
+                            <p>
+                                <span>من تاريخ : </span>
+                                <span t-esc="date_from"/>
+                            </p>
+                            <p>
+                                <span>إلي تاريخ : </span>
+                                <span t-esc="date_to"/>
+                            </p>
+                            <!--                            <div class="row">-->
+                            <!--                                <div class="col-6">-->
+                            <!--                                    <p>-->
+                            <!--                                        <span>من تاريخ : </span>-->
+                            <!--                                        <span t-esc="date_from"/>-->
+                            <!--                                    </p>-->
+                            <!--                                </div>-->
+                            <!--                                <div class="col-6">-->
+                            <!--                                    <p>-->
+                            <!--                                        <span>إلي تاريخ : </span>-->
+                            <!--                                        <span t-esc="date_to"/>-->
+                            <!--                                    </p>-->
+                            <!--                                </div>-->
+                            <!--                            </div>-->
+
+                            <!--                            <p>-->
+                            <!--                                <span>التاريخ : </span>-->
+                            <!--                                <span t-esc="current_date"/>-->
+                            <!--                            </p>-->
+                            <!--                            <p>-->
+                            <!--                                <span>الوقت : </span>-->
+                            <!--                                <span t-esc="current_time"/>-->
+                            <!--                            </p>-->
+                        </div>
+                        <div class="col-4 text-center">
+                            <h6>
+                                كشف حساب عميل - أصناف
+                            </h6>
+                        </div>
+                        <div class="col-4 font_13">
+                            <p>
+                                <span>اسم العميل : </span>
+                                <span t-esc="partner_name"/>
+                            </p>
+                            <p>
+                                <span>كود العميل : </span>
+                                <span t-esc="partner_code"/>
+                            </p>
+                            <p>
+                                <span>الرصيد الإفتتاحي : </span>
+                                <span t-esc="initial_balance"/>
+                            </p>
+                        </div>
+                    </div>
+                    <table class="table table-sm mb32">
+                        <thead>
+                            <tr>
+                                <th style="text-align: right;">
+                                    <span> مستنــــــــد </span>
+                                    <hr class="m-0"/>
+                                    <span> تاريــــــــــخ </span>
+                                    <hr class="m-0"/>
+                                    <span> حركـــــــــة </span>
+                                </th>
+                                <th style="text-align: right;"> <span> اســــــم الصنــــــــف </span> </th>
+                                <th> <span> الكمية </span> </th>
+                                <th> <span> السعر </span> </th>
+                                <th> <span> القيمة </span> </th>
+                                <th> <span> مدين </span> </th>
+                                <th> <span> دائن </span> </th>
+                                <th> <span> رصيد </span> </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-set="accumulated_balance" t-value="initial_balance"/>
+                            <t t-foreach="line_groups" t-as="group">
+                                <t t-set="first_line" t-value="group['lines'][0]"/>
+                                <t t-set="lines_count" t-value="len(group['lines'])"/>
+                                <tr style="border-top: 2px solid black !important;">
+                                    <td t-att-rowspan="lines_count">
+                                        <span t-esc="first_line['move_name']"/>
+                                        <hr class="m-0"/>
+                                        <span t-esc="first_line['date']"/>
+                                        <hr class="m-0"/>
+                                        <span t-esc="first_line['journal_name']"/>
+                                    </td>
+                                    <td> <span t-esc="first_line['name']"/> </td>
+                                    <td> <span t-esc="first_line['quantity']"/> </td>
+                                    <td> <span t-esc="first_line['price_unit']"/> </td>
+                                    <td> <span t-esc="first_line['price_total']"/> </td>
+                                    <td t-att-rowspan="lines_count"> <span t-esc="group['total_debit']"/> </td>
+                                    <td t-att-rowspan="lines_count"> <span t-esc="group['total_credit']"/> </td>
+                                    <td t-att-rowspan="lines_count">
+                                        <t t-set="accumulated_balance" t-value="accumulated_balance + group['total_balance']"/>
+                                        <span t-esc="accumulated_balance"/>
+                                    </td>
+
+                                </tr>
+                                <tr t-foreach="group['lines'][1:]" t-as="line">
+                                    <!--                                    <td> <span t-esc="line['move_name']"/> </td>-->
+                                    <!--                                <td> <span t-esc="line['name']"/> </td>-->
+                                    <td> <span t-esc="line['name']"/> </td>
+                                    <td> <span t-esc="line['quantity']"/> </td>
+                                    <td> <span t-esc="line['price_unit']"/> </td>
+                                    <td> <span t-esc="line['price_total']"/> </td>
+                                    <!--                                    <td> <span t-esc="line['debit']"/> </td>-->
+                                    <!--                                    <td> <span t-esc="line['credit']"/> </td>-->
+                                    <!--                                    <td> <span t-esc="line['balance']"/> </td>-->
+                                </tr>
+                            </t>
+                        </tbody>
+
+                        <!--                        <tbody>-->
+                        <!--                            <t t-foreach="lines_by_move_id" t-as="move_id">-->
+                        <!--                                <t t-set="first_line" t-value="lines_by_move_id[move_id]['lines'][0]"/>-->
+                        <!--                                <t t-set="lines_count" t-value="len(lines_by_move_id[move_id]['lines'])"/>-->
+                        <!--                                <tr>-->
+                        <!--                                    <td t-att-rowspan="lines_count">-->
+                        <!--                                        <span t-esc="first_line['move_name']"/>-->
+                        <!--                                        <br/>-->
+                        <!--                                        <span t-esc="first_line['date']"/>-->
+                        <!--                                        <br/>-->
+                        <!--                                        <span t-esc="first_line['journal_name']"/>-->
+                        <!--                                    </td>-->
+                        <!--                                    <td> <span t-esc="first_line['name']"/> </td>-->
+                        <!--                                    <td> <span t-esc="first_line['quantity']"/> </td>-->
+                        <!--                                    <td> <span t-esc="first_line['price_unit']"/> </td>-->
+                        <!--                                    <td> <span t-esc="first_line['price_total']"/> </td>-->
+                        <!--                                    <td t-att-rowspan="lines_count"> <span t-esc="lines_by_move_id[move_id]['total_debit']"/> </td>-->
+                        <!--                                    <td t-att-rowspan="lines_count"> <span t-esc="lines_by_move_id[move_id]['total_credit']"/> </td>-->
+                        <!--                                    <td t-att-rowspan="lines_count"> <span t-esc="lines_by_move_id[move_id]['total_balance']"/> </td>-->
+                        <!--                                </tr>-->
+                        <!--                                <tr t-foreach="lines_by_move_id[move_id]['lines'][1:]" t-as="line">-->
+                        <!--                                    &lt;!&ndash;                                    <td> <span t-esc="line['move_name']"/> </td>&ndash;&gt;-->
+                        <!--                                    &lt;!&ndash;                                <td> <span t-esc="line['name']"/> </td>&ndash;&gt;-->
+                        <!--                                    <td> <span t-esc="line['name']"/> </td>-->
+                        <!--                                    <td> <span t-esc="line['quantity']"/> </td>-->
+                        <!--                                    <td> <span t-esc="line['price_unit']"/> </td>-->
+                        <!--                                    <td> <span t-esc="line['price_total']"/> </td>-->
+                        <!--                                    &lt;!&ndash;                                    <td> <span t-esc="line['debit']"/> </td>&ndash;&gt;-->
+                        <!--                                    &lt;!&ndash;                                    <td> <span t-esc="line['credit']"/> </td>&ndash;&gt;-->
+                        <!--                                    &lt;!&ndash;                                    <td> <span t-esc="line['balance']"/> </td>&ndash;&gt;-->
+                        <!--                                </tr>-->
+                        <!--                            </t>-->
+                        <!--                        </tbody>-->
+
+                    </table>
+
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <record id="action_report_detailed_partner_ledger" model="ir.actions.report">
+        <field name="name">Detailed Partner Ledger</field>
+        <field name="model">detailed.partner.ledger</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">flex_detailed_partner_ledger.report_detailed_partner_ledger</field>
+        <field name="report_file">flex_detailed_partner_ledger.report_detailed_partner_ledger</field>
+        <field name="binding_type">report</field>
+        <field name="binding_model_id" eval="False"/>
+    </record>
+</odoo>

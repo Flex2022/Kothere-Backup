@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+detailed_partner_ledger,detailed_partner_ledger,model_detailed_partner_ledger,account.group_account_manager,1,1,1,1
