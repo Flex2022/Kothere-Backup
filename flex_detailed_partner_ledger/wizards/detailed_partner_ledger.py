@@ -39,7 +39,7 @@ class DetailedPartnerLedger(models.TransientModel):
             base_domain += [('date', '<=', self.date_to)]
         domain_inv = base_domain + [
             ('move_id.partner_id', '=', self.partner_id.id),
-            ('move_id.move_type', 'in', ['out_invoice', 'out_refund', 'out_refund', 'in_refund']),
+            ('move_id.move_type', 'in', ['out_invoice', 'out_refund', 'in_invoice', 'in_refund']),
             ('display_type', '=', 'product')
         ]
         move_lines = self.env['account.move.line'].search(domain_inv)
