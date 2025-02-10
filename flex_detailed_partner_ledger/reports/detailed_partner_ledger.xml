@@ -62,7 +62,7 @@
                             </p>
                             <p>
                                 <span>الرصيد الإفتتاحي : </span>
-                                <span t-esc="initial_balance"/>
+                                <span dir="ltr" t-esc="initial_balance"/>
                             </p>
                         </div>
                     </div>
@@ -106,7 +106,7 @@
                                     <td t-att-rowspan="lines_count"> <span t-esc="group['total_credit']"/> </td>
                                     <td t-att-rowspan="lines_count">
                                         <t t-set="accumulated_balance" t-value="accumulated_balance + group['total_balance']"/>
-                                        <span t-esc="accumulated_balance"/>
+                                        <span dir="ltr" t-esc="accumulated_balance"/>
                                     </td>
 
                                 </tr>
