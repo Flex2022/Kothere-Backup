@@ -55,9 +55,9 @@ class DetailedPartnerLedger(models.TransientModel):
                 'quantity': line.quantity,
                 'price_unit': line.price_unit,
                 'price_total': line.price_total,
-                'debit': line.debit,
-                'credit': line.credit,
-                'balance': line.balance,
+                'debit': line.credit,
+                'credit': line.debit,
+                'balance': -line.balance,
             })
         domain_entry = base_domain + [
             ('partner_id', '=', self.partner_id.id),
