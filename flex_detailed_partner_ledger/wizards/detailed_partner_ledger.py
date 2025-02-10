@@ -55,9 +55,12 @@ class DetailedPartnerLedger(models.TransientModel):
                 'quantity': line.quantity,
                 'price_unit': line.price_unit,
                 'price_total': line.price_total,
-                'debit': line.credit,
-                'credit': line.debit,
-                'balance': -line.balance,
+                # 'debit': line.credit,
+                # 'credit': line.debit,
+                # 'balance': -line.balance,
+                'debit': line.price_total if line.move_type in ('out_invoice', 'in_refund') else 0,
+                'credit': line.price_total if line.move_type in ('in_invoice', 'out_refund') else 0,
+                'balance': line.price_total * (1 if line.move_type in ('out_invoice', 'in_refund') else -1),
             })
         domain_entry = base_domain + [
             ('partner_id', '=', self.partner_id.id),
