@@ -1,5 +1,9 @@
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError
+import io
+import base64
+import xlsxwriter
+from datetime import datetime
 
 
 class FlexInvoicesReport(models.TransientModel):
@@ -95,6 +99,93 @@ class FlexInvoicesReport(models.TransientModel):
         data = {}
         return self.env.ref('flex_invoices_report.flex_invoices_pdf_report_action').report_action(self, data=data)
 
+    def generate_report_xlsx(self):
+        self.generate_report()  # استدعاء التقرير قبل التصدير
+
+        if not self.line_ids:
+            raise UserError('No data to generate the report')
+
+        output = io.BytesIO()
+        workbook = xlsxwriter.Workbook(output)
+        sheet = workbook.add_worksheet('Invoices Report')
+
+        # تنسيقات التقرير
+        title_format = workbook.add_format({'bold': True, 'align': 'center', 'font_size': 14})
+        header_format = workbook.add_format({'bold': True, 'bg_color': '#D3D3D3', 'border': 1})
+        data_format = workbook.add_format({'border': 1})
+        date_format = workbook.add_format({'border': 1, 'num_format': 'yyyy-mm-dd'})
+        number_format = workbook.add_format({'border': 1, 'num_format': '#,##0.00'})
+
+        # عنوان التقرير
+        sheet.merge_range('A1:I1', 'Invoices Report', title_format)
+
+        # ضبط عرض الأعمدة
+        sheet.set_column('A:A', 20)  # Customer/Vendor
+        sheet.set_column('B:B', 15)  # Tax Number
+        sheet.set_column('C:C', 15)  # Date
+        sheet.set_column('D:D', 20)  # Invoice Number
+        sheet.set_column('E:E', 30)  # Description
+        sheet.set_column('F:F', 20)  # Product
+        sheet.set_column('G:G', 10)  # Quantity
+        sheet.set_column('H:H', 15)  # Tax incl.
+        sheet.set_column('I:I', 15)  # Taxes
+
+        # فلاتر التقرير
+        filters = [
+            ('Date From', self.start_date.strftime('%Y-%m-%d')),
+            ('Date To', self.end_date.strftime('%Y-%m-%d')),
+            ('Customer/Vendor', self.partner_id.name if self.partner_id else ''),
+            ('Invoice Type', dict(self._fields['type'].selection).get(self.type, '') if self.type else ''),
+            ('Printing Date', datetime.today().strftime('%Y-%m-%d'))
+        ]
+
+        row = 2  # البدء من الصف الثالث
+        for label, value in filters:
+            sheet.write(row, 0, label, header_format)
+            sheet.write(row, 1, value, date_format if isinstance(value, datetime) else data_format)
+            row += 1
+
+        # رؤوس الأعمدة
+        headers = ['Customer/Vendor', 'Tax Number', 'Date', 'Invoice Number',
+                   'Description', 'Product', 'Quantity', 'Tax incl.', 'Taxes']
+        sheet.write_row(row, 0, headers, header_format)
+
+        # تعبئة البيانات
+        row += 1
+        for line in self.line_ids:
+            sheet.write(row, 0, line.partner_id.name or '', data_format)
+            sheet.write(row, 1, line.tax_number or '', data_format)
+            sheet.write(row, 2, line.invoice_date, date_format)
+            sheet.write(row, 3, line.invoice_name or '', data_format)
+            sheet.write(row, 4, line.line_description or '', data_format)
+            sheet.write(row, 5, line.line_product_id.name if line.line_product_id else '', data_format)
+            sheet.write(row, 6, line.line_quantity, number_format)
+            sheet.write(row, 7, line.price_total, number_format)
+            sheet.write(row, 8, line.tax_value, number_format)
+            row += 1
+
+        # إغلاق ملف الإكسل
+        workbook.close()
+        output.seek(0)
+
+        # تشفير الملف وتخزينه كمرفق
+        file_data = base64.b64encode(output.read())
+        output.close()
+
+        attachment = self.env['ir.attachment'].create({
+            'name': f'Invoices_Report_{datetime.now().strftime("%Y-%m-%d")}.xlsx',
+            'type': 'binary',
+            'datas': file_data,
+            'store_fname': f'Invoices_Report_{datetime.now().strftime("%Y-%m-%d")}.xlsx',
+            'res_model': self._name,
+            'res_id': self.id,
+        })
+
+        return {
+            'type': 'ir.actions.act_url',
+            'url': f'/web/content/{attachment.id}?download=true',
+            'target': 'new',
+        }
 
 class FlexInvoicesLinesReport(models.TransientModel):
     _name = 'flex.account.move.line.report'

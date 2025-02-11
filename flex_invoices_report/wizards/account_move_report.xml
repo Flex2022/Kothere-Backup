@@ -39,6 +39,7 @@
                 <footer>
                     <button name="generate_report" string="Generate Report" type="object" class="btn-primary"/>
                     <button name="generate_report_pdf" string="Generate PDF Report" type="object" class="btn-primary"/>
+                    <button name="generate_report_xlsx" string="Generate Excel Report" type="object" class="btn-primary"/>
                     <button string="Cancel" class="btn-secondary" special="cancel"/>
                 </footer>
             </form>
