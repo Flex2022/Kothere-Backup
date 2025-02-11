@@ -100,7 +100,7 @@ class FlexInvoicesReport(models.TransientModel):
         return self.env.ref('flex_invoices_report.flex_invoices_pdf_report_action').report_action(self, data=data)
 
     def generate_report_xlsx(self):
-        self.generate_report()  # استدعاء التقرير قبل التصدير
+        self.generate_report()
 
         if not self.line_ids:
             raise UserError('No data to generate the report')
@@ -109,17 +109,14 @@ class FlexInvoicesReport(models.TransientModel):
         workbook = xlsxwriter.Workbook(output)
         sheet = workbook.add_worksheet('Invoices Report')
 
-        # تنسيقات التقرير
         title_format = workbook.add_format({'bold': True, 'align': 'center', 'font_size': 14})
         header_format = workbook.add_format({'bold': True, 'bg_color': '#D3D3D3', 'border': 1})
         data_format = workbook.add_format({'border': 1})
         date_format = workbook.add_format({'border': 1, 'num_format': 'yyyy-mm-dd'})
         number_format = workbook.add_format({'border': 1, 'num_format': '#,##0.00'})
 
-        # عنوان التقرير
         sheet.merge_range('A1:I1', 'Invoices Report', title_format)
 
-        # ضبط عرض الأعمدة
         sheet.set_column('A:A', 20)  # Customer/Vendor
         sheet.set_column('B:B', 15)  # Tax Number
         sheet.set_column('C:C', 15)  # Date
@@ -130,7 +127,6 @@ class FlexInvoicesReport(models.TransientModel):
         sheet.set_column('H:H', 15)  # Tax incl.
         sheet.set_column('I:I', 15)  # Taxes
 
-        # فلاتر التقرير
         filters = [
             ('Date From', self.start_date.strftime('%Y-%m-%d')),
             ('Date To', self.end_date.strftime('%Y-%m-%d')),
@@ -139,18 +135,16 @@ class FlexInvoicesReport(models.TransientModel):
             ('Printing Date', datetime.today().strftime('%Y-%m-%d'))
         ]
 
-        row = 2  # البدء من الصف الثالث
+        row = 2
         for label, value in filters:
             sheet.write(row, 0, label, header_format)
             sheet.write(row, 1, value, date_format if isinstance(value, datetime) else data_format)
             row += 1
 
-        # رؤوس الأعمدة
         headers = ['Customer/Vendor', 'Tax Number', 'Date', 'Invoice Number',
                    'Description', 'Product', 'Quantity', 'Tax incl.', 'Taxes']
         sheet.write_row(row, 0, headers, header_format)
 
-        # تعبئة البيانات
         row += 1
         for line in self.line_ids:
             sheet.write(row, 0, line.partner_id.name or '', data_format)
@@ -164,11 +158,10 @@ class FlexInvoicesReport(models.TransientModel):
             sheet.write(row, 8, line.tax_value, number_format)
             row += 1
 
-        # إغلاق ملف الإكسل
+
         workbook.close()
         output.seek(0)
 
-        # تشفير الملف وتخزينه كمرفق
         file_data = base64.b64encode(output.read())
         output.close()
 
