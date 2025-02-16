@@ -128,8 +128,8 @@ class FlexInvoicesReport(models.TransientModel):
         sheet.set_column('I:I', 15)  # Taxes
 
         filters = [
-            ('Date From', self.start_date.strftime('%Y-%m-%d')),
-            ('Date To', self.end_date.strftime('%Y-%m-%d')),
+            ('Date From', self.start_date.strftime('%Y-%m-%d') if self.start_date else ''),
+            ('Date To', self.end_date.strftime('%Y-%m-%d') if self.end_date else ''),
             ('Customer/Vendor', self.partner_id.name if self.partner_id else ''),
             ('Invoice Type', dict(self._fields['type'].selection).get(self.type, '') if self.type else ''),
             ('Printing Date', datetime.today().strftime('%Y-%m-%d'))
@@ -158,7 +158,6 @@ class FlexInvoicesReport(models.TransientModel):
             sheet.write(row, 8, line.tax_value, number_format)
             row += 1
 
-
         workbook.close()
         output.seek(0)
 
@@ -180,6 +179,7 @@ class FlexInvoicesReport(models.TransientModel):
             'target': 'new',
         }
 
+
 class FlexInvoicesLinesReport(models.TransientModel):
     _name = 'flex.account.move.line.report'
     _description = 'Account Move Report Line Wizard'
@@ -191,7 +191,7 @@ class FlexInvoicesLinesReport(models.TransientModel):
     currency_id = fields.Many2one('res.currency', related="move_line_id.currency_id")
     partner_id = fields.Many2one('res.partner', 'Customer/Vendor', related="move_line_id.move_id.partner_id")
     invoice_date = fields.Date('Date', related="move_line_id.move_id.invoice_date")
-    tax_number = fields.Char('Tax Number',related="partner_id.vat")
+    tax_number = fields.Char('Tax Number', related="partner_id.vat")
     invoice_name = fields.Char('Invoice Number', related="move_line_id.move_id.name")
     line_description = fields.Char('Description', related="move_line_id.name")
     line_product_id = fields.Many2one('product.product', 'Product', related="move_line_id.product_id")
