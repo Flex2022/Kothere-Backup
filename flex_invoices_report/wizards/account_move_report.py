@@ -124,8 +124,9 @@ class FlexInvoicesReport(models.TransientModel):
         sheet.set_column('E:E', 30)  # Description
         sheet.set_column('F:F', 20)  # Product
         sheet.set_column('G:G', 10)  # Quantity
-        sheet.set_column('H:H', 15)  # Tax incl.
-        sheet.set_column('I:I', 15)  # Taxes
+        sheet.set_column('H:H', 15)  # Price Unit
+        sheet.set_column('I:I', 15)  # Tax incl.
+        sheet.set_column('J:J', 15)  # Taxes
 
         filters = [
             ('Date From', self.start_date.strftime('%Y-%m-%d') if self.start_date else ''),
@@ -142,7 +143,7 @@ class FlexInvoicesReport(models.TransientModel):
             row += 1
 
         headers = ['Customer/Vendor', 'Tax Number', 'Date', 'Invoice Number',
-                   'Description', 'Product', 'Quantity', 'Tax incl.', 'Taxes']
+                   'Description', 'Product', 'Quantity', 'Price Unit', 'Tax incl.', 'Taxes']
         sheet.write_row(row, 0, headers, header_format)
 
         row += 1
@@ -154,8 +155,9 @@ class FlexInvoicesReport(models.TransientModel):
             sheet.write(row, 4, line.line_description or '', data_format)
             sheet.write(row, 5, line.line_product_id.name if line.line_product_id else '', data_format)
             sheet.write(row, 6, line.line_quantity, number_format)
-            sheet.write(row, 7, line.price_total, number_format)
-            sheet.write(row, 8, line.tax_value, number_format)
+            sheet.write(row, 7, line.price_unit, number_format)
+            sheet.write(row, 8, line.price_total, number_format)
+            sheet.write(row, 9, line.tax_value, number_format)
             row += 1
 
         workbook.close()

@@ -68,6 +68,7 @@
                                     <th>Description</th>
                                     <th>Product</th>
                                     <th>Quantity</th>
+                                    <th>Price Unit</th>
                                     <th>Tax incl.</th>
                                     <th>Taxes</th>
                                 </tr>
@@ -93,6 +94,9 @@
                                     <td>
                                         <span t-field="line.line_quantity"
                                               t-options='{"widget": "float", "decimal_precision": "Product Unit of Measure"}'/>
+                                    </td>
+                                    <td>
+                                        <span t-field="line.price_unit"/>
                                     </td>
                                     <td class="text-end">
                                         <span t-field="line.price_total"/>
