@@ -26,6 +26,10 @@ class DetailedPartnerLedger(models.TransientModel):
         )
         return initial_balance and initial_balance[0]['balance'] or 0
 
+    def action_print_xlsx(self):
+        data = {'form': self.read(['date_from', 'date_to', 'partner_id'])[0]}
+        return self.env.ref('flex_detailed_partner_ledger.action_report_dpl_xlsx').report_action(self, data=data)
+
     def action_print_pdf(self):
         base_domain = [
             ('move_id.company_id', '=', self.env.company.id),
