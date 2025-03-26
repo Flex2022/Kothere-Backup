@@ -1,0 +1,15 @@
+{
+    'name': 'Flex Leave Allocation',
+    'version': '1.0',
+    'summary': '',
+    'description': '',
+    'category': '',
+    'author': '',
+    'website': '',
+    'license': '',
+    'depends': ['hr_holidays'],
+    'data': [],
+    'demo': [''],
+    'installable': True,
+    'auto_install': False,
+}
