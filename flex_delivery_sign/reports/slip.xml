@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="flex_report_delivery_document" inherit_id="stock.report_delivery_document">
+        <xpath expr="//table[@name='stock_move_line_table']" position="after">
+            <br/>
+            <div class="row" dir="rtl">
+                <div class="col-4 text-center">
+                    <span>اسم السائق</span>
+                    <br/>
+                    <span t-field="o.driver_name"/>
+                </div>
+                <div class="col-4">
+
+                </div>
+                 <div class="col-4 text-center">
+                    <span>التوقيع</span>
+                    <br/>
+                     <span>...................</span>
+
+                </div>
+            </div>
+        </xpath>
+    </template>
+</odoo>
