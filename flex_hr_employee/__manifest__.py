@@ -7,8 +7,11 @@
     'author': 'Abdalrahman Shahrour',
     'website': 'https://flex-ops.com',
     'license': 'AGPL-3',
-    'depends': ['hr'],
-    'data': ['views/hr_employee.xml'],
+    'depends': ['hr','mail'],
+    'data': [
+        'data/ir_corn.xml',
+        'views/hr_employee.xml'
+    ],
     'installable': True,
     'auto_install': False,
 }
