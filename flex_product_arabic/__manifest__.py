@@ -1,0 +1,15 @@
+{
+    'name': 'Flex Product Arabic',
+    'version': '1.0',
+    'summary': '',
+    'description': '',
+    'category': '',
+    'author': '',
+    'website': '',
+    'license': '',
+    'depends': ['product','purchase','repair'],
+    'data': ['views/product.xml','views/purchase.xml'],
+    'demo': [''],
+    'installable': True,
+    'auto_install': False,
+}
