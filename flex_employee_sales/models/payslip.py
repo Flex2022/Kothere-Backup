@@ -40,6 +40,7 @@ class Payslip(models.Model):
 
             all_invoice_based_on_date_range = self.env['account.move'].search(
                 [
+                    ('sale_employee_id', '=', payslip.employee_id.id),
                     ('state', '=', 'posted'),
                     ('invoice_date', '>=', payslip.date_from),
                     ('invoice_date', '<=', payslip.date_to)
