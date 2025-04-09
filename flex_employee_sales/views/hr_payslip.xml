@@ -14,6 +14,11 @@
                         <field name="currency_id" class="oe_inline"/>
                         <button name="update_sale_total" string="" type="object" class="inline" icon="fa-refresh"/>
                     </div>
+                    <label for="total_sale_employee_quantity" string="Total Sales Quantities Employee: " groups="hr.group_hr_user"/>
+                    <div groups="hr.group_hr_user">
+                        <field name="total_sale_employee_quantity" class="oe_inline"/>
+                        <button name="update_sale_total" string="" type="object" class="inline" icon="fa-refresh"/>
+                    </div>
                     <label for="total_all_sales" string="Total Sales : " groups="hr.group_hr_user"/>
                     <div groups="hr.group_hr_user">
                         <field name="total_all_sales" class="oe_inline"/>
