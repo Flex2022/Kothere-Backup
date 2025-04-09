@@ -75,6 +75,7 @@ class Payslip(models.Model):
         for payslip in self:
             all_invoice_for_employee = self.env['account.move'].search(
                 [
+                    ('sale_employee_id', '=', payslip.employee_id.id),
                     ('state', '=', 'posted'),
                     ('invoice_date', '>=', payslip.date_from),
                     ('invoice_date', '<=', payslip.date_to)
