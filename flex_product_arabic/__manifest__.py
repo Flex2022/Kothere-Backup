@@ -7,7 +7,7 @@
     'author': '',
     'website': '',
     'license': '',
-    'depends': ['product','purchase','repair'],
+    'depends': ['product','purchase','repair','material_purchase_requisitions'],
     'data': ['views/product.xml','views/purchase.xml'],
     'demo': [''],
     'installable': True,
