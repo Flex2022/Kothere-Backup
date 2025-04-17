@@ -114,9 +114,9 @@ class EmpPayslipReport(models.TransientModel):
                                         dict[i].append(r)
             
             for line in lines:
-                start_col = 5
+                start_col = 6
                 row = 3
-                col = 5
+                col = 6
                 
                 if 'BASIC' in line.keys():
                     val = len(line.get('BASIC'))
@@ -262,7 +262,7 @@ class EmpPayslipReport(models.TransientModel):
             
             total_row = end_row + 1
             list = ['BASIC', 'ALW', 'GROSS', 'DED', 'NET']
-            coln = 5
+            coln = 6
             for l in list:
                 lst = []
                 for mn  in main:
@@ -272,9 +272,8 @@ class EmpPayslipReport(models.TransientModel):
                 for r in lst:
                     worksheet.write(total_row,coln, r, cell_wrap_format_bold)
                     coln +=1
-            
-            worksheet.merge_range(total_row, 3, total_row, 4, 'Total', cell_wrap_format_bold)
 
+            worksheet.merge_range(total_row, 4, total_row, 5, 'Total', cell_wrap_format_bold)
             workbook.close()
             export_id = base64.b64encode(open('/tmp/' + file_path, 'rb+').read())
             result_id = self.env['emp.payslip.report'].create({'file': export_id, 'file_name': name_of_file})
