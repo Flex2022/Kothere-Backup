@@ -52,7 +52,7 @@
         # 'report/experience_certificate.xml',
         # 'report/disclaimer.xml',
         # 'report/salary_definition.xml',
-        # 'report/end_service_liquidation_form.xml',
+        'report/end_service_liquidation_form.xml',
     ],
     'assets': {
         'web.assets_backend': [

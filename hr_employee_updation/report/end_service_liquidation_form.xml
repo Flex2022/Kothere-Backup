@@ -41,8 +41,8 @@
 
                                 <td style="text-align:center">
                                     <span t-field="o.employee_id.name"/>
-                                    <br/>
-                                    <span t-field="o.employee_id.english_name"/>
+<!--                                    <br/>-->
+<!--                                    <span t-field="o.employee_id.english_name"/>-->
                                 </td>
 
                                 <td style="text-align:right">
