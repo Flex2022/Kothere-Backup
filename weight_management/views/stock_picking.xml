@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="hr_stock_view_form_inherited_id" model="ir.ui.view">
+            <field name="name">stock.picking.inherit</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_assign']" position="before">
+                    <button name='open_weight_mgnt_wizard_form'
+                            type="object"
+                            groups="weight_management.user_assigned_for_weigh_bridge" string="Weigh Bridge"
+                            invisible="picking_type_code == 'incoming' or state == 'done' or method == 'yes' or method == False or wizard != False"
+                            class="oe_highlight"/>
+                </xpath>
+                <xpath expr="//field[@name='origin']" position="after">
+                    <field name="wizard" invisible="1"/>
+                </xpath>
+                <xpath expr="//button[@name='button_validate']" position="after">
+                    <button name="open_new_wb_wizard"
+                            type="object"
+                            string="Validation Setup"
+                            class="oe_highlight"
+                            invisible="picking_type_code == 'incoming' or state == 'done' or validation_done == True"/>
+                </xpath>
+                <xpath expr="//button[@name='button_validate'][1]" position="replace">
+                    <button name="button_validate" invisible="1" type="object" class="oe_highlight" groups="stock.group_stock_user" data-hotkey="v"/>
+                </xpath>
+                <xpath expr="//button[@name='button_validate'][2]" position="replace">
+                    <button name="button_validate" invisible="state in ('draft','waiting_for_delivery_approval','confirmed', 'done', 'cancel')
+                            or validation_done == False or picking_type_code == 'incoming' or method == 'no'"
+                            string="Validate1" type="object" class="oe_highlight" groups="stock.group_stock_user"
+                            data-hotkey="v"/>
+                    <button name="button_validate" invisible="state in ('draft','waiting_for_delivery_approval','confirmed', 'done', 'cancel')
+                            or validation_done == False or picking_type_code == 'incoming' or method == 'yes' or
+                            method == False or remarks == False or approve == True"
+                            string="Validate2" type="object" class="oe_highlight" groups="stock.group_stock_user"
+                            data-hotkey="v"/>
+                    <button name="button_validate"
+                            invisible="state in ('waiting','waiting_for_delivery_approval', 'assigned', 'done', 'cancel') or validation_done == False or picking_type_code == 'incoming' or method == 'yes' or
+                            method == False or remarks == False or approve == True"
+                            string="Validate3" type="object" groups="stock.group_stock_user" class="o_btn_validate"
+                            data-hotkey="v"/>
+                    <button name="button_validate" invisible="state not in ('approved_for_delivery')
+                            or waiting_for_delivery_approval == False and delivery_approved == False and wizard == False
+                            and method == 'no' and approve == False and approved == False and validation_done == False"
+                            string="Validate4" type="object" class="oe_highlight" groups="stock.group_stock_user"
+                            data-hotkey="v"/>
+                    <button name="button_validate" invisible="state in ('draft', 'confirmed', 'done', 'cancel')
+                             or picking_type_code == 'outgoing'"
+                            string="Validate5" type="object" class="oe_highlight" groups="stock.group_stock_user"
+                            data-hotkey="v"/>
+                    <button name="button_validate" invisible="state in ('waiting', 'assigned', 'done', 'cancel')
+                             or picking_type_code == 'outgoing'"
+                            string="Validate6" type="object" groups="stock.group_stock_user" class="o_btn_validate"
+                            data-hotkey="v"/>
+                </xpath>
+                <xpath expr="//notebook" position="inside">
+                    <page string="Weight Bridge Status">
+                        <group>
+                            <group>
+                                <field name="method" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="remarks" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="approve" readonly="1"/>
+                                <field name="approved" readonly="1" invisible="1"/>
+                                <field name="validation_done" readonly="1" invisible="1"/>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+                <field name="origin" position="after">
+                    <field name="waiting_for_delivery_approval"
+                           invisible="1"/>
+                    <field name="delivery_approved"
+                           invisible="1"/>
+                </field>
+                <xpath expr="//button[@name='button_validate']" position="before">
+                    <button name="action_sale_approve" string="Approve Delivery" type="object" class='oe_highlight'
+                            invisible="state not in 'waiting_for_delivery_approval'"
+                            groups="weight_management.group_delivery_approval"/>
+                    <button name="action_sale_refuse"
+                            string="Refuse Delivery" type="object" class='oe_highlight'
+                            invisible="state not in 'waiting_for_delivery_approval'"
+                            groups="weight_management.group_delivery_approval"/>
+                </xpath>
+                <div class="oe_button_box" position="inside">
+                    <button name="new_sale_approval_create_request" class="oe_stat_button"
+                            invisible="picking_type_code == 'incoming' or sale_approval_count == 0"
+                            icon="fa-book" type="object">
+                        <field name="sale_approval_count" widget="statinfo"
+                               options="{'reload_on_button': true}"/>
+                    </button>
+                </div>
+                <button name="button_validate" position="before">
+                    <button string="Submit For Approval" class="btn-primary" name="get_approval" type="object"
+                            invisible="picking_type_code != 'outgoing' or waiting_for_delivery_approval != False or
+                            wizard == False or state == 'done' or approve == False"/>
+                </button>
+            </field>
+        </record>
+
+
+        <record id="view_weigh_bridge_alert_remarks_wizard" model="ir.ui.view">
+            <field name="name">weigh.bridge.alert.wizard.view</field>
+            <field name="model">weigh.bridge.alert.wizard</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <field name="name" readonly="1"/>
+                        <group>
+                            <group>
+                                <field name="remarks" readonly="1"/>
+                                <field name="method" widget="radio" options="{'horizontal': true}"/>
+                            </group>
+                            <group>
+                                <field name="approve" invisible="method == 'yes'"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                    <footer>
+                        <button name="tick_ok" type='object' string="Submit" class="oe_highlight"
+                                icon="fa-check-circle"/>
+                        <button name="tick_cancel" type='object' string="Cancel" class="oe_highlight" special="cancel"
+                                icon="fa-times-circle"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>
+

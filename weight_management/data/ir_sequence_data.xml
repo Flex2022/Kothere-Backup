@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Sequences for Weigh Bridge wizard -->
+        <record id="seq_sale_approval" model="ir.sequence">
+            <field name="name">Weigh Bridge Sequence</field>
+            <field name="code">weight.management.wizard</field>
+<!--            <field name="prefix">Appr</field>-->
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+    </data>
+    <data noupdate="1">
+        <!-- Sequences for Weigh Bridge form -->
+        <record id="seq_sale_approval" model="ir.sequence">
+            <field name="name">Weigh Bridge Sequence</field>
+            <field name="code">weight.management</field>
+<!--            <field name="prefix">Appr</field>-->
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+    </data>
+</odoo>

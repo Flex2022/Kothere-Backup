@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="paperformat_weight_management" model="report.paperformat">
+            <field name="name">Weight Management Report paper format</field>
+            <field name="default" eval="True"/>
+            <field name="format">A4</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">7</field>
+            <field name="margin_bottom">10</field>
+            <field name="margin_left">7</field>
+            <field name="margin_right">7</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">30</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <record id="weight_management_report" model="ir.actions.report">
+            <field name="name">Weight Report</field>
+            <field name="model">weight.management</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">weight_management.weight_management_report_template</field>
+            <field name="report_file">weight_management.weight_management_report_template</field>
+            <field name="print_report_name">"Equipment QR"</field>
+            <field name="binding_model_id" ref="weight_management.model_weight_management"/>
+            <field name="paperformat_id" ref="paperformat_weight_management"/>
+        </record>
+
+        <template id="weight_management_report_template">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="rec">
+                    <t t-call="web.basic_layout">
+                        <div style="width: 45%;float: top;">
+                            <img src='/web/binary/company_logo' style="width:50%"/>
+                        </div>
+                        <div class="page">
+                            <table class="table table-condensed">
+                                <header>
+                                    <tr>
+                                        <td colspan="15" style="border:4px double Black;">
+                                            <div style="font-size:12px">
+                                                <center>
+                                                    <h4>
+                                                        <strong>
+                                                            <span t-field="res_company.name"/>
+                                                        </strong>
+                                                    </h4>
+                                                </center>
+                                            </div>
+                                            <div style="font-size:10px">
+                                                <h5>
+                                                    <center><span t-field="res_company.street"/>,
+                                                        <span t-field="res_company.street2"/>
+                                                    </center>
+                                                </h5>
+                                            </div>
+                                            <div style="font-size:10px">
+                                                <h5>
+                                                    <center>
+                                                        <span t-field="res_company.city"/>
+                                                        <span t-field="res_company.state_id.name"/>
+                                                        <span t-field="res_company.country_id.name"/>
+                                                    </center>
+                                                </h5>
+                                            </div>
+                                            <div style="font-size:10px">
+                                                <h5>
+                                                    <center>Ph.no:
+                                                        <span t-field="res_company.phone"/>
+                                                    </center>
+                                                </h5>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </header>
+                                <thead>
+                                    <table>
+                                        <tbody>
+                                            <br/>
+                                            <div class="row">
+                                                <div class="col-1">
+                                                </div>
+                                                <div class="col-4">
+                                                    <strong>
+                                                        <b>Driver Name</b>
+                                                    </strong>
+                                                    <strong class="px-2">:</strong>
+                                                    <t t-esc="rec.driver_id.name"/>
+                                                </div>
+                                                <div class="col-4">
+                                                    <strong>
+                                                        <b>Truck No</b>
+                                                    </strong>
+                                                    <strong class="px-2">:</strong>
+                                                    <t t-esc="rec.name.name"/>
+                                                </div>
+                                                <div class="col-3">
+                                                    <strong>
+                                                        <b>Temperature</b>
+                                                    </strong>
+                                                    <strong class="px-2">:</strong>
+                                                    <t t-esc="rec.temperature"/>
+                                                </div>
+                                            </div>
+                                        </tbody>
+                                    </table>
+                                    <br/>
+                                    <br/>
+                                    <table class="table table-bordered" style=" width:100%;">
+                                        <tbody>
+                                            <tr>
+                                                <td style="vertical-align: left; width:20%;">
+                                                    <strong style="text-align:left;">
+                                                        <b>Product :</b>
+                                                    </strong>
+                                                </td>
+                                                <td style="width:30%">
+                                                    <t t-esc="rec.product_id.name"/>
+                                                    <br/>
+                                                </td>
+                                                <td style="vertical-align: right; width: 20%;">
+                                                    <b>First Weight :</b>
+                                                </td>
+                                                <td style="width:20%" class="text-right">
+                                                    <span t-esc="rec.weight"/>
+                                                    <span class="px-2">Ton</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="vertical-align: left;">
+                                                    <b>
+                                                        <strong style="text-align:left;">Date and Time :</strong>
+                                                    </b>
+                                                </td>
+                                                <td>
+                                                    <t t-esc="rec.date_order.strftime('%m-%d-%y   %H:%M-%S')"/>
+                                                    <br/>
+                                                </td>
+                                                <td style="vertical-align: right;">
+                                                    <b>Second Weight :</b>
+                                                </td>
+                                                <td class="text-right">
+                                                    <span t-esc="rec.weight1"/>
+                                                    <span class="px-2">Ton</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="vertical-align: left;">
+                                                    <b>
+                                                        <strong style="text-align:left;">Source Document :</strong>
+                                                    </b>
+                                                </td>
+                                                <td>
+                                                    <t t-esc="rec.picking_orgin"/>
+                                                    <br/>
+                                                </td>
+                                                <td style="vertical-align: right; width: 546px;">
+                                                    <b>Net Weight:</b>
+                                                </td>
+                                                <td class="text-right">
+                                                    <span t-esc="rec.weight2"/>
+                                                    <span class="px-2">Ton</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="vertical-align: left;">
+                                                    <b>
+                                                        <strong style="text-align:left;">Supplier :</strong>
+                                                    </b>
+                                                </td>
+                                                <td>
+                                                    <t t-esc="rec.approver.name"/>
+                                                    <br/>
+                                                </td>
+                                                <td style="vertical-align: right;">
+                                                    <b>Order Quantity :</b>
+                                                </td>
+                                                <td class="text-right">
+                                                    <span t-esc="rec.order_quantity"/>
+                                                    <span class="px-2">Ton</span>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <br/>
+                                    <br/>
+                                    <table class="table" style="text-align: left;" border="0"
+                                           cellpadding="0"
+                                           cellspacing="0" padding="0" margin="0">
+                                        <tbody>
+                                            <tr>
+                                                <td style="vertical-align: top;">
+                                                    <b>Description :</b>
+                                                    <t t-esc="rec.notes"/>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <br/>
+                                    <br/>
+                                    <table class="table table-sm table-borderless" style="text-align: left; width:100%;">
+                                        <tbody>
+                                            <tr>
+                                                <td style="width:5%"></td>
+                                                <td>
+                                                    <b>Acknowledgement :</b>
+                                                    <t t-esc="rec.remarks"/>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <br/>
+                                    <br/>
+                                    <table class="table table-sm table-borderless" style="width: 100%;">
+                                        <tbody>
+                                            <tr>
+                                                <td width="5%">
+                                                </td>
+                                                <td>
+                                                    <b>
+                                                        <strong>Name :</strong>
+                                                    </b>
+                                                    <br/>
+                                                </td>
+                                                <td width="30%">
+                                                </td>
+                                                <td>
+                                                    <b>Signature</b>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td width="5%">
+                                                </td>
+                                                <td>
+                                                    <br/>
+                                                    <br/>
+                                                    <b>
+                                                        <strong>Designation :</strong>
+                                                    </b>
+                                                </td>
+                                                <td width="35%">
+                                                </td>
+                                                <td>
+                                                    <br/>
+                                                    <br/>
+                                                    <b>_________________________________</b>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <br/>
+                                </thead>
+                            </table>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>
+
+
+

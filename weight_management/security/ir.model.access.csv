@@ -1,0 +1,11 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_vehicle_details,access.vehicle.details,model_vehicle_details,,1,1,1,1
+access_vehicle_types,access.vehicle.types,model_vehicle_types,,1,1,1,1
+access_weight_management,access.weight.management,model_weight_management,,1,1,1,1
+access_driver_details,access.driver.details,model_driver_details,,1,1,1,1
+access_weight_management_wizard,access.weight.management.wizard,model_weight_management_wizard,,1,1,1,1
+access_weight.management.wizard.line,access.weight.management.wizard.line,model_weight_management_wizard_line,,1,1,1,1
+access_weigh_bridge_alert_wizard_manager_id,access_weigh_bridge_alert_wizard_manager,model_weigh_bridge_alert_wizard,base.group_erp_manager,1,1,1,1
+
+
+

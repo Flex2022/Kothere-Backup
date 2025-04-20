@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="user_assigned_for_weigh_bridge" model="res.groups">
+            <field name="name">Weigh Bridge User</field>
+        </record>
+    </data>
+    <data>
+        <record id="group_delivery_approval" model="res.groups">
+            <field name="name">Delivery Approver</field>
+            <field name="comment">the user will have access to all records of everyone in the sales application.</field>
+        </record>
+    </data>
+</odoo>

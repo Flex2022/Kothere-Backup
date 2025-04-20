@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <!--           weight -->
+        <record id="driver_detail_form_view" model="ir.ui.view">
+            <field name="name">driver.details.form</field>
+            <field name="model">driver.details</field>
+            <field name="priority" eval="6"/>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group string="weight Details">
+                            <group>
+                                <field name="name"/>
+                                <field name="driver_license"/>
+                                <field name="native"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="driver_detail_action" model="ir.actions.act_window">
+            <field name="name">driver.details</field>
+            <field name="res_model">driver.details</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!--vehicle-->
+
+        <record id="view_vehicle_form" model="ir.ui.view">
+            <field name="name">vehicle.details.form</field>
+            <field name="model">vehicle.details</field>
+            <field name="priority" eval="6"/>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group string="vehicle Details">
+                            <group>
+                                <field name="name"/>
+                                <field name="number_plate"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="vehicle_detail_action" model="ir.actions.act_window">
+            <field name="name">Vehicle Details</field>
+            <field name="res_model">vehicle.details</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!--vehicle Types-->
+
+        <record id="view_vehicle_type_form" model="ir.ui.view">
+            <field name="name">vehicle.types.form</field>
+            <field name="model">vehicle.types</field>
+            <field name="priority" eval="6"/>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group string="vehicle Types">
+                            <group>
+                                <field name="name"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="vehicle_Types_action" model="ir.actions.act_window">
+            <field name="name">Vehicle Types</field>
+            <field name="res_model">vehicle.types</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+        <menuitem id="vehicle_details_root"
+                  name="Vehicle"
+                  sequence="2"
+                  parent="sale.menu_sale_config"
+                  action="vehicle_detail_action"/>
+
+        <menuitem id="weight_detail_root"
+                  name="Driver details"
+                  sequence="3"
+                  parent="sale.menu_sale_config"
+                  action="driver_detail_action"/>
+
+<!--        <menuitem id="vehicle_types_root"-->
+<!--                  name="Vehicle Types"-->
+<!--                  sequence="4"-->
+<!--                  parent="sale.menu_sale_config"-->
+<!--                  action="vehicle_Types_action"/>-->
+
+    </data>
+</odoo>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="seq_weight_management" model="ir.sequence">
+            <field name="name">Weight Bridge Calculations</field>
+            <field name="code">weight.management</field>
+            <field name="prefix">WB/</field>
+            <field name="padding">5</field>
+            <field name="number_increment">1</field>
+            <field name="company_id" eval="False"/>
+            <field name="implementation">standard</field>
+        </record>
+
+        <record id="view_sale_approval_form" model="ir.ui.view">
+            <field name="name">sale.order.approval.form</field>
+            <field name="model">weight.management</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <h1>
+                            <field name="sequenceid" readonly="1"/>
+                        </h1>
+                        <group>
+                            <group>
+                                <field name="name" required="0"/>
+                                <field name="picking_orgin"/>
+                                <field name="product_id"/>
+                                <field name="temperature"/>
+                                <field name="date_order"/>
+                                <field name="vehicle" invisible="1"/>
+                                <field name="vehicle_type" invisible="1"/>
+                            </group>
+                            <group>
+                                <field name="approver"/>
+                                <label for="weight"/>
+                                <div class="o_row no-gutters d-flex">
+                                    <field name="weight" class="oe_inline"/>
+                                    <label for="product_uom" string="" class="oe_inline"/>
+                                    <field name="product_uom" options="{'no_open': True, 'no_create': True}"
+                                           force_save="1"
+                                           class="oe_inline"/>
+                                </div>
+                                <label for="weight1"/>
+                                <div class="o_row no-gutters d-flex">
+                                    <field name="weight1" class="oe_inline"/>
+                                    <label for="product_uom" string="" class="oe_inline"/>
+                                    <field name="product_uom" options="{'no_open': True, 'no_create': True}"
+                                           force_save="1"
+                                           class="oe_inline"/>
+                                </div>
+                                <label for="weight2"/>
+                                <div class="o_row no-gutters d-flex">
+                                    <field name="weight2" class="oe_inline"/>
+                                    <label for="product_uom" string="" class="oe_inline"/>
+                                    <field name="product_uom" options="{'no_open': True, 'no_create': True}"
+                                           force_save="1"
+                                           class="oe_inline" readonly="1"/>
+                                </div>
+                                <field name="order_quantity"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="notes"/>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="driver_id"/>
+                            </group>
+                            <group>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Driver Acknowledgement">
+                                <group>
+                                    <field name="remarks"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_follower_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!--Tree View-->
+        <record id="view_sale_approval_tree" model="ir.ui.view">
+            <field name="name">weight.management.tree</field>
+            <field name="model">weight.management</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="referenceid"/>
+                    <field name="name"/>
+                    <field name="picking_orgin"/>
+                    <field name="driver_id"/>
+                    <field name="native_id"/>
+                    <field name="drv_id"/>
+                    <field name="date_order"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model='ir.actions.act_window' id='weight_management_action'>
+            <field name="name">Weight Bridge Calculations</field>
+            <field name="res_model">weight.management</field>
+            <!-- <field name="view_type">form</field> -->
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+
+        <menuitem id="menu_sale_quotations"
+                  action="weight_management_action" parent="sale.sale_order_menu"
+                  name="Weigh Bridge Details"
+                  groups="weight_management.user_assigned_for_weigh_bridge"
+                  sequence="100"/>
+    </data>
+</odoo>
+

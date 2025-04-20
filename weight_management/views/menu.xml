@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <menuitem id="vehicle_details_root"
+                  name="Vehicle"
+                  sequence="2"
+                  parent="sale.menu_sale_config"
+                  action="vehicle_detail_action"/>
+
+        <menuitem id="weight_detail_root"
+                  name="Driver details"
+                  sequence="3"
+                  parent="sale.menu_sale_config"
+                  action="driver_detail_action"/>
+
+        <menuitem id="vehicle_types_root"
+                  name="Vehicle Types"
+                  sequence="4"
+                  parent="sale.menu_sale_config"
+                  action="vehicle_Types_action"/>
+    </data>
+</odoo>

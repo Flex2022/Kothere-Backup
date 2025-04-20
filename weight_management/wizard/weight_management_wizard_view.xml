@@ -1,0 +1,88 @@
+<?xml version="1.0" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="wizard_weight_management_wizard_view_form">
+            <field name="name">weight.management.wizard.form</field>
+            <field name="model">weight.management.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Weight Bridge Calculations">
+                    <div class="oe_title">
+                        <h1>
+                            <field name="referenceid"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="name" required="1"/>
+                            <field name="picking_orgin" readonly="1"/>
+                            <field name="product_id" readonly="1" options="{'no_open': True, 'no_create': True}"/>
+                            <field name="temperature"/>
+                            <field name="driver_id" invisible="1"/>
+                            <field name="date_order" readonly="1"/>
+                            <field name="vehicle" invisible="1"/>
+                            <field name="vehicle_type" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="approver" readonly="1"/>
+                            <label for="weight"/>
+                            <div class="o_row no-gutters d-flex">
+                                <field name="weight" class="oe_inline"/>
+                                <label for="product_uom" string="" class="oe_inline"/>
+                                <field name="product_uom" options="{'no_open': True, 'no_create': True}" force_save="1"
+                                       class="oe_inline" readonly="1"/>
+                            </div>
+                            <label for="weight1"/>
+                            <div class="o_row no-gutters d-flex">
+                                <field name="weight1" class="oe_inline"/>
+                                <label for="product_uom" string="" class="oe_inline"/>
+                                <field name="product_uom" options="{'no_open': True, 'no_create': True}" force_save="1"
+                                       class="oe_inline" readonly="1"/>
+                            </div>
+                            <label for="weight2"/>
+                            <div class="o_row no-gutters d-flex">
+                                <field name="weight2" class="oe_inline"/>
+                                <label for="product_uom" string="" class="oe_inline"/>
+                                <field name="product_uom" options="{'no_open': True, 'no_create': True}" force_save="1"
+                                       class="oe_inline" readonly="1"/>
+                            </div>
+                            <field name="order_quantity"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="notes" required="1"/>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="driver_id" required="1" class="oe_inline"/>
+                            <field name="remarks_open"/>
+                        </group>
+                        <group>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Driver Acknowledgement" invisible="remarks_open == False">
+                            <group>
+                                <field name="remarks" required="remarks_open == True"/>
+                            </group>
+                        </page>
+                    </notebook>
+                    <footer>
+                        <button string="WB Validate" name="action_split" type="object" class="oe_highlight"/>
+                        or
+                        <button string="Close" special="cancel" class="oe_link"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_wizard_weight_management_wizard_view" model="ir.actions.act_window">
+            <field name="name">Weight Bridge Calculations Wizard</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">weight.management.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="context">{'record_id' : active_id}</field>
+            <field name="target">new</field>
+        </record>
+
+    </data>
+</odoo>
