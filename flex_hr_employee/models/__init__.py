@@ -41,8 +41,7 @@ class NewModule(models.Model):
 
     def notify_iqama_expiry(self):
         for record in self:
-            if record.end_of_iqama and fields.Date.today() < record.end_of_iqama <= fields.Date.today() + timedelta(
-                    days=30):
+            if record.end_of_iqama and fields.Date.today() < record.end_of_iqama <= fields.Date.today() + timedelta(days=30):
                 email_cc = ','.join(filter(None, [
                     record.parent_id.work_email if record.parent_id else '',
                     record.contract_hr_person.partner_id.email if record.contract_hr_person and record.contract_hr_person.partner_id else ''

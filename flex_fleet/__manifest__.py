@@ -10,6 +10,7 @@
     'depends': ['base', 'fleet', 'stock'],
     'data': [
         'security/ir.model.access.csv',
+        'data/ir_corn.xml',
         'views/fleet_vehicle.xml',
         'views/stock_picking.xml',
         'wizards/vehicle_report_wizard.xml',

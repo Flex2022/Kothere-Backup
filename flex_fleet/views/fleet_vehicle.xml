@@ -11,6 +11,7 @@
                     <field name="date_of_examination"/>
                     <field name="insurance_date"/>
                     <field name="operation_date"/>
+                    <field name="periodic_inspection"/>
                 </xpath>
             </field>
         </record>
