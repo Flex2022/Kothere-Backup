@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+        <record model="ir.module.category" id="flex_confirm_po">
+            <field name="name">Weight Po Management</field>
+            <field name="sequence">30</field>
+        </record>
+
+
+
+        <record id="flex_weight_po_menu" model="res.groups">
+            <field name="name">Weight Po</field>
+            <field name="category_id" ref="flex_confirm_po"/>
+        </record>
+
+        <record id="flex_weight_po_group" model="res.groups">
+            <field name="name">Confirm/Cancel Weight Po</field>
+            <field name="category_id" ref="flex_confirm_po"/>
+        </record>
+</odoo>

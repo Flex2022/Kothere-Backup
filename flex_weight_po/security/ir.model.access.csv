@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_flex_purchase_weight,access_flex_purchase_weight,model_flex_purchase_weight,,1,1,1,1
+access_flex_driver_details,access_flex_driver_details,model_flex_driver_details,,1,1,1,1

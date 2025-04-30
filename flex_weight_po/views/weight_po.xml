@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_weight_management_po_tree" model="ir.ui.view">
+            <field name="name">weight.management.po.tree</field>
+            <field name="model">flex.purchase.weight</field>
+            <field name="arch" type="xml">
+                <tree string="Weight Po Management">
+                    <field name="referenceId"/>
+                    <field name="truck_no"/>
+                    <field name="product_id"/>
+                    <field name="date_order"/>
+                    <field name="weight"/>
+                    <field name="weight1"/>
+                    <field name="weight2"/>
+                    <field name="notes"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="wizard_weight_management_po_view_form">
+            <field name="name">weight.management.po.form</field>
+            <field name="model">flex.purchase.weight</field>
+            <field name="arch" type="xml">
+                <form string="Weight Po Calculations">
+
+                    <header>
+                        <button name="action_confirm" string="Confirm" type="object" class="oe_highlight"
+                                groups="flex_weight_po.flex_weight_po_group" invisible="state != 'draft'"/>
+                        <button name="action_cancel" string="Cancel" type="object" class="oe_highlight"
+                                groups="flex_weight_po.flex_weight_po_group" invisible="state != 'confirm'"/>
+                        <button name="action_draft" string="Reset To Draft" type="object" class="oe_highlight"
+                                 invisible="state != 'cancel'"/>
+
+                        <field name="state" widget="statusbar"
+                               statusbar_visible="draft,confirm,cancel"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="action_view_purchase_order" string="Purchase Orders"
+                                    type="object" class="oe_stat_button" icon="fa-list" invisible="purchase_order_count == 0">
+                                <field name="purchase_order_count" invisible="1"/>
+
+                            </button>
+                        </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="referenceId"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="company_id" invisible="1"/>
+                            <field name="truck_no" required="1"/>
+                            <field name="po_number" readonly="1"/>
+                            <field name="product_id" required="1" options="{'no_open': True, 'no_create': True}"/>
+                            <field name="temperature"/>
+                            <field name="driver_id" invisible="1"/>
+                            <field name="date_order" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="approver" required="1" widget="res_partner_many2one" context="{'res_partner_search_mode': 'supplier', 'show_vat': True}"/>
+                            <label for="weight"/>
+                            <div class="o_row no-gutters d-flex">
+                                <field name="weight" class="oe_inline"/>
+                                <label for="product_uom" string="" class="oe_inline"/>
+                                <field name="product_uom" options="{'no_open': True, 'no_create': True}" force_save="1"
+                                       class="oe_inline" readonly="1"/>
+                            </div>
+                            <label for="weight1"/>
+                            <div class="o_row no-gutters d-flex">
+                                <field name="weight1" class="oe_inline"/>
+                                <label for="product_uom" string="" class="oe_inline"/>
+                                <field name="product_uom" options="{'no_open': True, 'no_create': True}" force_save="1"
+                                       class="oe_inline" readonly="1"/>
+                            </div>
+                            <label for="weight2"/>
+                            <div class="o_row no-gutters d-flex">
+                                <field name="weight2" class="oe_inline"/>
+                                <label for="product_uom" string="" class="oe_inline"/>
+                                <field name="product_uom" options="{'no_open': True, 'no_create': True}" force_save="1"
+                                       class="oe_inline" readonly="1"/>
+                            </div>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="notes" required="1"/>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="driver_id" required="1" class="oe_inline"/>
+                            <field name="remarks_open"/>
+                        </group>
+                        <group>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Driver Acknowledgement" invisible="remarks_open == False">
+                            <group>
+                                <field name="remarks" required="remarks_open == True"/>
+                            </group>
+                        </page>
+                    </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" groups="base.group_user"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_po_weight_management_view" model="ir.actions.act_window">
+            <field name="name">Weight Po Management</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">flex.purchase.weight</field>
+            <field name="domain">[('state', '!=', 'cancel')]</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <record id="weight_po_comp_rule" model="ir.rule">
+            <field name="name">weight po multi-company</field>
+            <field name="model_id" ref="model_flex_purchase_weight"/>
+            <field name="domain_force">['|', ('company_id', 'in', company_ids), ('company_id', '=', False)]</field>
+        </record>
+
+        <menuitem id="menu_weight_management_po" name="Po Weight"
+                  action="action_po_weight_management_view"
+                  web_icon="flex_weight_po,static/img.png"
+                   sequence="30"
+                  groups="flex_weight_po.flex_weight_po_menu"/>
+
+    </data>
+</odoo>
