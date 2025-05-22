@@ -48,6 +48,15 @@ class DeliveryNote(models.Model):
     quantity = fields.Float(string='Quantity', digits='Product Unit of Measure', tracking=2, compute='_compute_quantity', store=True)
     previous_qty = fields.Float(string='Previous Quantity', digits='Product Unit of Measure', tracking=2, compute='_compute_previous_qty', store=True)
     delivery_date = fields.Datetime(string='Delivery Date', tracking=3)
+    delivery_date_without_time = fields.Date(string='Delivery Date Without Time', compute='_compute_delivery_date_without_time', store=True)
+
+    @api.depends('delivery_date')
+    def _compute_delivery_date_without_time(self):
+        for rec in self:
+            if rec.delivery_date:
+                rec.delivery_date_without_time = fields.Date.from_string(rec.delivery_date).strftime('%Y-%m-%d')
+            else:
+                rec.delivery_date_without_time = False
 
     vehicle_id = fields.Many2one('fleet.vehicle', string='Car Model', tracking=2)
     driver_id = fields.Many2one(comodel_name='res.partner', string='Driver', related='vehicle_id.driver_id', store=True)
@@ -65,7 +74,7 @@ class DeliveryNote(models.Model):
     cement_in_truck = fields.Float(string='Cement In Truck')
     cement_content = fields.Float(string='Cement Content')
     specified_slump = fields.Float(string='Specified slump')
-    pump_no = fields.Char(string='Pump No')
+    pump_no = fields.Integer(string='Pump No')
     plant_no = fields.Char(string='Plant No')
     admixtures = fields.Char(string='Admixtures')
     max_aggr_size = fields.Char(string='Max Aggr Size')
@@ -80,6 +89,7 @@ class DeliveryNote(models.Model):
     others = fields.Boolean(string='Others')
 
     workcenter_id = fields.Many2one('mrp.workcenter')
+    workers_ids = fields.Many2many('hr.employee', string='Workers')
 
     @api.depends('picking_id')
     def _compute_product_domain(self):

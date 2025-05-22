@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_payslip_form_inherit_note" model="ir.ui.view">
+        <field name="name">view.payslip.form.inherit.note</field>
+        <field name="model">hr.payslip</field>
+        <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='struct_id']" position="before">
+                <field name="pump_driver_no" />
+                <field name="pump_workers_no" />
+            </xpath>
+            <xpath expr="//field[@name='payslip_run_id']" position="after">
+                <field name="pump_driver_id" readonly="state in ['cancel', 'done', 'paid']"/>
+                <field name="pump_workers_ids" widget="many2many_tags" readonly="state in ['cancel', 'done', 'paid']"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

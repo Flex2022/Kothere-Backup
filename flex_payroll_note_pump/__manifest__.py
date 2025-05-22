@@ -1,0 +1,15 @@
+{
+    'name': 'Flex Payroll Note Pump',
+    'version': '1.0',
+    'summary': '',
+    'description': '',
+    'category': '',
+    'author': 'Sohaib Alamleh||Flex-ops',
+    'website': 'https://www.flex-ops.com',
+    'license': '',
+    'depends': ['hr_payroll', 'flex_delivery_note'],
+    'data': ['views/payslip.xml'],
+    'demo': [''],
+    'installable': True,
+    'auto_install': False,
+}
