@@ -8,11 +8,12 @@
             <xpath expr="//field[@name='struct_id']" position="before">
                 <field name="pump_driver_no" />
                 <field name="pump_workers_no" />
+                <field name="delivery_note_count"/>
             </xpath>
-            <xpath expr="//field[@name='payslip_run_id']" position="after">
-                <field name="pump_driver_id" readonly="state in ['cancel', 'done', 'paid']"/>
-                <field name="pump_workers_ids" widget="many2many_tags" readonly="state in ['cancel', 'done', 'paid']"/>
-            </xpath>
+<!--            <xpath expr="//field[@name='payslip_run_id']" position="after">-->
+<!--                <field name="pump_driver_id" readonly="state in ['cancel', 'done', 'paid']"/>-->
+<!--                <field name="pump_workers_ids" widget="many2many_tags" readonly="state in ['cancel', 'done', 'paid']"/>-->
+<!--            </xpath>-->
         </field>
     </record>
 </odoo>

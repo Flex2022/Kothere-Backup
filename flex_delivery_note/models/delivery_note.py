@@ -49,6 +49,7 @@ class DeliveryNote(models.Model):
     previous_qty = fields.Float(string='Previous Quantity', digits='Product Unit of Measure', tracking=2, compute='_compute_previous_qty', store=True)
     delivery_date = fields.Datetime(string='Delivery Date', tracking=3)
     delivery_date_without_time = fields.Date(string='Delivery Date Without Time', compute='_compute_delivery_date_without_time', store=True)
+    employee_id_dr = fields.Many2one('hr.employee', string='Driver Employee', related='vehicle_id.employee_id_dr', store=True)
 
     @api.depends('delivery_date')
     def _compute_delivery_date_without_time(self):
@@ -127,7 +128,9 @@ class DeliveryNote(models.Model):
 
     def action_deliver(self):
         self._make_activity(groups='flex_delivery_note.group_manufacture')
-        self.write({'state': 'deliver', 'delivery_date': fields.Datetime.now()})
+        self.write({'state': 'deliver'
+                       # , 'delivery_date': fields.Datetime.now()
+                    })
 
     def action_manufacture(self):
         # self.activity_ids.action_feedback()
