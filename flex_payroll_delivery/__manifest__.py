@@ -1,0 +1,15 @@
+{
+    'name': 'Flex Payroll Delivery',
+    'version': '1.0',
+    'summary': '',
+    'description': '',
+    'category': '',
+    'author': 'Sohaib Alamleh||Flex-ops',
+    'website': '',
+    'license': '',
+    'depends': ['stock', 'hr_payroll'],
+    'data': ['views/stock.xml', 'views/res_company.xml', 'views/payroll.xml'],
+    'demo': [''],
+    'installable': True,
+    'auto_install': False,
+}

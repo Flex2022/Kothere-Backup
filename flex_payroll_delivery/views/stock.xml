@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+<record id="view_picking_form_inherit_flex_payroll_delivery" model="ir.ui.view">
+    <field name="name">view.picking.form.inherit.flex_payroll_delivery</field>
+    <field name="model">stock.picking</field>
+    <field name="inherit_id" ref="stock.view_picking_form"/>
+    <field name="arch" type="xml">
+
+       <xpath expr="//field[@name='date_stock']" position="after">
+        <field name="employee_id" widget="many2one" options="{'no_create': True}" invisible="picking_type_code != 'outgoing' or is_apply_distance != True"/>
+           <field name="distance_per_km" string="Distance per KM" invisible="picking_type_code != 'outgoing' or is_apply_distance != True"/>
+           <field name="is_apply_distance" invisible="1"/>
+        </xpath>
+
+    </field>
+</record>
+    </odoo>
