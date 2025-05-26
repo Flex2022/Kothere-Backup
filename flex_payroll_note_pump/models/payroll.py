@@ -8,7 +8,7 @@ class HrPayroll(models.Model):
     # pump_driver_id = fields.Many2one('res.partner', string='Pump Driver')
     # pump_workers_ids = fields.Many2many('hr.employee', string='Pump Workers')
     pump_driver_no = fields.Integer(string='Pump Driver No',compute='_compute_pump_driver_no')
-    pump_workers_no = fields.Char(string='Pump Workers No',compute='_compute_pump_workers_no')
+    pump_workers_no = fields.Integer(string='Pump Workers No',compute='_compute_pump_workers_no')
     delivery_note_count = fields.Integer(string='Delivery Note Count', compute='_compute_delivery_note_count')
 
     @api.depends('employee_id', 'date_from', 'date_to')
