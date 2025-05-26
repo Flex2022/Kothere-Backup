@@ -21,6 +21,7 @@
         'views/fleet_vehicle.xml',
         'views/hr_payslip.xml',
         'views/stock_picking.xml',
+        'views/landing_source.xml',
     ],
     'installable': True,
     'auto_install': False,

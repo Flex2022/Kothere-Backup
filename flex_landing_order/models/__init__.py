@@ -5,3 +5,4 @@ from . import landing_order
 from . import fleet_vehicle
 from . import hr_payslip
 from . import stock_picking
+from . import landing_source

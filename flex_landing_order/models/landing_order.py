@@ -27,6 +27,16 @@ class LandingOrder(models.Model):
     h_date = fields.Date(string='H', default=fields.Date.today())
     partner_id = fields.Many2one('res.partner', string='Vendor/Customer', )
     partner_code = fields.Char(string='Vendor/Customer Code', related='partner_id.partner_code', store=True)
+    landing_source_id = fields.Many2one('landing.source', string='Landing Source/desition',
+                                        help='The source of the landing order, e.g., a specific factory or supplier.')
+    landing_source_source = fields.Char(
+        string='Landing Source',
+        related='landing_source_id.source',
+    )
+    landing_source_desition = fields.Char(
+        string='Landing Source Desition',
+        related='landing_source_id.desition',
+    )
 
     # Fleet
     car_model_id = fields.Many2one('fleet.vehicle', string='Car Model')
@@ -58,7 +68,7 @@ class LandingOrder(models.Model):
     from_receive_to_delivery_h_hour = fields.Float(string='From Receive To Delivery',
                                                    compute='_compute_from_receive_to_delivery', digits=(6, 2),
                                                    store=True)
-    reward_amount = fields.Float(string='Reward Amount')
+    reward_amount = fields.Float(string='Reward Amount',related='landing_source_id.amount', store=True,readonly=False)
     qr_code = fields.Char(string="QR Code", compute='_compute_qr_code', store=True)
     company_id = fields.Many2one(
         comodel_name='res.company',

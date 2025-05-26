@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="landing_source_view_tree" model="ir.ui.view">
+        <field name="name">landing_source_view_tree</field>
+        <field name="model">landing.source</field>
+        <field name="arch" type="xml">
+            <tree string="landing_source_tree" editable="bottom">
+                <field name="name"/>
+                <field name="desition"/>
+                <field name="source"/>
+                <field name="amount"/>
+            </tree>
+        </field>
+    </record>
+    <record id="landing_source_action" model="ir.actions.act_window">
+        <field name="name">Landing Source</field>
+        <field name="res_model">landing.source</field>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="landing_source_view_tree"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first landing source
+            </p>
+        </field>
+    </record>
+    <menuitem id="landing_source_menu" name="Landing Source/desitions"
+              parent="sale.menu_sale_config"
+              action="landing_source_action" sequence="40"/>
+
+</odoo>
