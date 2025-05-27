@@ -27,13 +27,13 @@ class Payslip(models.Model):
                     total_sales += invoice.amount_total
             payslip.total_sales = total_sales
 
-            total_sale_quantity = 0
+            total_sale_employee_quantity = 0
             if all_invoice_for_employee:
                 for invoice in all_invoice_for_employee:
                     lines = invoice.invoice_line_ids
                     for line in lines:
-                        total_sale_quantity += line.quantity
-            payslip.total_sale_employee_quantity = total_sale_quantity
+                        total_sale_employee_quantity += line.quantity
+            payslip.total_sale_employee_quantity = total_sale_employee_quantity
 
 
     def update_sale_total(self):
@@ -88,7 +88,7 @@ class Payslip(models.Model):
 
 
 
-    @api.depends('employee_id', 'date_from', 'date_to')
+    @api.depends('date_from', 'date_to')
     def _compute_all_total_sales(self):
         for payslip in self:
             all_invoice_for_employee = self.env['account.move'].search(
@@ -100,11 +100,11 @@ class Payslip(models.Model):
                 ]
             )
 
-            total_sales = 0
+            total_sales_2 = 0
             if all_invoice_for_employee:
                 for invoice in all_invoice_for_employee:
-                    total_sales += invoice.amount_total
-            payslip.total_all_sales = total_sales
+                    total_sales_2 += invoice.amount_total
+            payslip.total_all_sales = total_sales_2
 
             total_sale_quantity = 0
             if all_invoice_for_employee:

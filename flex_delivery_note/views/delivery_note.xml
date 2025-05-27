@@ -85,6 +85,7 @@
                                 <field name="cement_in_truck" readonly="state != 'draft'"/>
                                 <field name="cement_content" readonly="state != 'draft'"/>
                                 <field name="specified_slump" readonly="state != 'draft'"/>
+                                <field name="operator_ids" widget="many2many_tags" readonly="state != 'draft'"/>
                                 <field name="pump_no" readonly="state != 'draft'"/>
                                 <field name="plant_no" readonly="state != 'draft'"/>
                                 <field name="admixtures" readonly="state != 'draft'"/>

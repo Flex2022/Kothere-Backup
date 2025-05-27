@@ -91,6 +91,13 @@ class DeliveryNote(models.Model):
 
     workcenter_id = fields.Many2one('mrp.workcenter')
     workers_ids = fields.Many2many('hr.employee', string='Workers')
+    operator_ids = fields.Many2many(
+        'hr.employee',
+        'delivery_note_operators_rel',
+        'delivery_note_id',
+        'employee_id',
+        string='Operator Name'
+    )
 
     @api.depends('picking_id')
     def _compute_product_domain(self):
