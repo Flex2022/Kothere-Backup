@@ -4,10 +4,10 @@ from odoo import api, fields, models
 class Payslip(models.Model):
     _inherit = 'hr.payslip'
 
-    total_sales = fields.Float(string='Total Sales Employee', compute='_compute_total_sales', store=True)
-    total_sale_employee_quantity = fields.Float(string='Total Sale Employee Quantity', compute='_compute_total_sales', store=True)
-    total_all_sales = fields.Float(string='Total Sales', compute='_compute_all_total_sales', store=True)
-    total_sale_quantity = fields.Float(string='Total Sale Quantity', compute='_compute_all_total_sales', store=True)
+    total_sales = fields.Float(string='Total Sales Employee', compute='_compute_total_sales')
+    total_sale_employee_quantity = fields.Float(string='Total Sale Employee Quantity', compute='_compute_total_sales')
+    total_all_sales = fields.Float(string='Total Sales', compute='_compute_all_total_sales')
+    total_sale_quantity = fields.Float(string='Total Sale Quantity', compute='_compute_all_total_sales')
 
     @api.depends('employee_id', 'date_from', 'date_to')
     def _compute_total_sales(self):
