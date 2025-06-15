@@ -30,6 +30,8 @@
                                 groups="flex_weight_po.flex_weight_po_group" invisible="state != 'confirm'"/>
                         <button name="action_draft" string="Reset To Draft" type="object" class="oe_highlight"
                                  invisible="state != 'cancel'"/>
+                        <button name="get_last_base_weight" string="Get Weight" type="object" class="oe_highlight"
+                                 />
 
                         <field name="state" widget="statusbar"
                                statusbar_visible="draft,confirm,cancel"/>

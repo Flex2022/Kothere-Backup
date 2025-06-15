@@ -33,6 +33,32 @@ class FlexPurchaseWeight(models.Model):
                                 string="Status", default='draft', tracking=True)
     purchase_order_count = fields.Integer(string="Purchase Order Count", compute='_compute_purchase_order_count')
 
+    def get_last_base_weight(self):
+        """
+        This method retrieves the last base weight record for the current user.
+        :return: The last base weight record or None if no records exist.
+        """
+        for rec in self:
+            last_base_weight = self.env['base.weight.po'].search([
+                ('user_id', '=', self.env.user.id),
+                ('active', '=', True)
+                                                                  ], limit=1, order='id desc')
+            if last_base_weight:
+                if rec.weight == 0.0:
+                    rec.weight = last_base_weight.weight
+                else:
+                    if rec.weight1 == 0.0:
+                        rec.weight1 = last_base_weight.weight
+                    else:
+                        raise UserError('You Have Already Loaded The Vehicle Weight')
+
+                last_base_weight.active = False
+
+            else:
+                raise UserError(f'Dose Not Found Any Weight Record For {self.env.user.name}')
+
+
+
 
     @api.onchange('weight1')
     def _compute_total(self):
