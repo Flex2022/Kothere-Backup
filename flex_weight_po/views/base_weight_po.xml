@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+
+        <record id="flex_weight_po_base_weight_po_list_view" model="ir.ui.view">
+            <field name="name">flex_weight_po.base.weight.po.tree</field>
+            <field name="model">base.weight.po</field>
+            <field name="arch" type="xml">
+                <tree string="PO Weight" create="false" edit="false">
+                    <field name="user_id"/>
+                    <field name="weight"/>
+                    <field name="create_date"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="flex_weight_po_flex_weight_po_flex_device_user_po_act_window" model="ir.actions.act_window">
+            <field name="name">PO Weight</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">base.weight.po</field>
+            <field name="view_mode">tree</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Dose Not There Any PO Weight Yet.
+                </p>
+            </field>
+        </record>
+
+        <menuitem name="Po Weight"
+                  id="flex_weight_po_flex_weight_po_base_user_menu"
+                  parent="menu_weight_configuration"
+                  action="flex_weight_po_flex_weight_po_flex_device_user_po_act_window"
+                    groups="flex_weight_po.flex_can_config_device"/>
+
+    </data>
+</odoo>

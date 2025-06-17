@@ -12,7 +12,9 @@
              'security/ir.model.access.csv',
              'data/ir_sequence_data.xml',
              'views/weight_po.xml',
-             'views/purchase.xml'
+             'views/purchase.xml',
+             'views/device_user.xml',
+             'views/base_weight_po.xml',
              ],
     'installable': True,
     'auto_install': False,

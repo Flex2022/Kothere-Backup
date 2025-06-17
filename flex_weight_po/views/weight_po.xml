@@ -125,11 +125,19 @@
             <field name="domain_force">['|', ('company_id', 'in', company_ids), ('company_id', '=', False)]</field>
         </record>
 
-        <menuitem id="menu_weight_management_po" name="Po Weight"
-                  action="action_po_weight_management_view"
+        <menuitem id="menu_weight_management_po_main" name="Po Weight"
                   web_icon="flex_weight_po,static/img.png"
                    sequence="30"
-                  groups="flex_weight_po.flex_weight_po_menu"/>
+                  groups="flex_weight_po.flex_weight_po_menu"
+        />
+
+        <menuitem id="menu_weight_management_po" name="Po Weight"
+                  action="action_po_weight_management_view"
+                  sequence="1"
+                    parent="menu_weight_management_po_main"/>
+        <menuitem id="menu_weight_configuration" name="Configurations"
+                    parent="menu_weight_management_po_main"
+                  groups="flex_weight_po.flex_can_config_device"/>
 
     </data>
 </odoo>

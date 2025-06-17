@@ -16,8 +16,12 @@ class GetWeigh(http.Controller):
         try:
 
             weight = kwargs.get('weight')
-            user_id = kwargs.get('user_id')
-            if not weight or not user_id:
+            device_id = kwargs.get('device_id')
+            device_object = request.env['flex.device.user'].sudo().search([('device_id', '=', device_id)], limit=1)
+            user_id = device_object.user_id.id if device_object else None
+            if not user_id:
+                return json.dumps({"error": "User not found for the provided device ID."})
+            if not weight or not device_id:
                 return json.dumps({"error": "Weight and User ID are required."})
 
             request.env['base.weight.po'].create({

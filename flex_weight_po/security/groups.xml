@@ -17,4 +17,9 @@
             <field name="name">Confirm/Cancel Weight Po</field>
             <field name="category_id" ref="flex_confirm_po"/>
         </record>
+
+        <record id="flex_can_config_device" model="res.groups">
+            <field name="name">Can Configure Device</field>
+            <field name="category_id" ref="flex_confirm_po"/>
+        </record>
 </odoo>

@@ -41,18 +41,20 @@ class FlexPurchaseWeight(models.Model):
         for rec in self:
             last_base_weight = self.env['base.weight.po'].search([
                 ('user_id', '=', self.env.user.id),
-                ('active', '=', True)
-                                                                  ], limit=1, order='id desc')
-            if last_base_weight:
+                ('active', '=', True)], order='id desc')
+            last_record_in_last_base_weight = last_base_weight[0] if last_base_weight else None
+
+            if last_record_in_last_base_weight:
                 if rec.weight == 0.0:
-                    rec.weight = last_base_weight.weight
+                    rec.weight = last_record_in_last_base_weight.weight
                 else:
                     if rec.weight1 == 0.0:
-                        rec.weight1 = last_base_weight.weight
+                        rec.weight1 = last_record_in_last_base_weight.weight
                     else:
                         raise UserError('You Have Already Loaded The Vehicle Weight')
 
-                last_base_weight.active = False
+                for rec in last_base_weight:
+                    rec.active = False
 
             else:
                 raise UserError(f'Dose Not Found Any Weight Record For {self.env.user.name}')
@@ -60,7 +62,7 @@ class FlexPurchaseWeight(models.Model):
 
 
 
-    @api.onchange('weight1')
+    @api.depends('weight', 'weight1')
     def _compute_total(self):
         for rec in self:
             if rec.weight >= rec.weight1:
@@ -114,7 +116,7 @@ class FlexPurchaseWeight(models.Model):
     def _compute_purchase_order_count(self):
         for rec in self:
             purchase_order = self.env['purchase.order'].search([('weight_po', '=', rec.id)])
-            rec.purchase_order_count = len(purchase_order)
+            rec.purchase_order_count = 4
 
 
 
