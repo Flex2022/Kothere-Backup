@@ -6,7 +6,7 @@
             <field name="model">flex.purchase.weight</field>
             <field name="arch" type="xml">
                 <tree string="Weight Po Management">
-                    <field name="referenceId"/>
+                    <field name="name"/>
                     <!--                    <field name="truck_no"/>-->
                     <field name="truck_number"/>
                     <field name="product_id"/>
@@ -49,7 +49,7 @@
                         </div>
                         <div class="oe_title">
                             <h1>
-                                <field name="referenceId"/>
+                                <field name="name"/>
                             </h1>
                         </div>
                         <group>

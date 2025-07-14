@@ -15,6 +15,7 @@
              'views/purchase.xml',
              'views/device_user.xml',
              'views/base_weight_po.xml',
+             'views/stock_picking.xml',
              ],
     'installable': True,
     'auto_install': False,

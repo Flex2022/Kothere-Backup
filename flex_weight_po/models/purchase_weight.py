@@ -6,16 +6,14 @@ class FlexPurchaseWeight(models.Model):
     _name = 'flex.purchase.weight'
     _description = 'Flex Purchase Weight'
     _inherit = ['mail.thread', 'mail.activity.mixin']
-    _rec_name = 'referenceId'
 
-    referenceId = fields.Char(string='Reference', copy=False, readonly=True, tracking=True,
-                              default=lambda self: _('New'))
+    name = fields.Char(string='Reference', copy=False, readonly=True, tracking=True, default=lambda self: _('New'))
 
     company_id = fields.Many2one(comodel_name='res.company', string='Company',
                                   default=lambda self: self.env.company)
 
-    # todo: remove the following field (truck_no) once ensure that there is no live data will affected
-    truck_no = fields.Many2one('fleet.vehicle', string='Truck No', tracking=1)
+    # todo: remove the following field (truck_no) once ensure that there is no live data will affected (done)
+    # truck_no = fields.Many2one('fleet.vehicle', string='Truck No', tracking=1)
     truck_number = fields.Char(string='Truck No')
     product_id = fields.Many2one('product.product', string="Product Id")
     product_domain = fields.Binary(string="Product Domain", compute="_compute_product_domain")
@@ -25,8 +23,8 @@ class FlexPurchaseWeight(models.Model):
     temperature = fields.Integer(string="Temperature°C")
     date_order = fields.Datetime(string='Date', tracking=True, default=fields.Datetime.now())
     notes = fields.Text(string='Description')
-    # todo: remove the following field (driver_id) once ensure that there is no live data will affected
-    driver_id = fields.Many2one('flex.driver.details', string="Driver Name", tracking=True)
+    # todo: remove the following field (driver_id) once ensure that there is no live data will affected (done)
+    # driver_id = fields.Many2one('flex.driver.details', string="Driver Name", tracking=True)
     driver_name = fields.Char(string="Driver Name", tracking=1)
     remarks = fields.Text(string="Acknowledge",
                           default='I have received the above goods in good quality & above weight')
@@ -102,8 +100,8 @@ class FlexPurchaseWeight(models.Model):
 
     @api.model
     def create(self, vals):
-        if vals.get('referenceId', _('New')) == _('New'):
-            vals['referenceId'] = self.env['ir.sequence'].next_by_code('weigh.po') or _('New')
+        if vals.get('name', _('New')) == _('New'):
+            vals['name'] = self.env['ir.sequence'].next_by_code('weigh.po') or _('New')
             return super(FlexPurchaseWeight, self).create(vals)
 
     def action_confirm(self):
@@ -121,7 +119,7 @@ class FlexPurchaseWeight(models.Model):
                 target_move_lines[0].quantity = rec.weight2
                 target_move_lines[0].write({'quantity': rec.weight2, 'picked': True})
                 picking.write({'purchase_weight_id': rec.id})
-                return picking.button_validate()
+                return picking.with_context(skip_backorder=True).button_validate()
             # remaining_qty = rec.weight2
             # for line in target_move_lines:
             #     if remaining_qty <= 0:
