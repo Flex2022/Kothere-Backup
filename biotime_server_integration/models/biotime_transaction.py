@@ -25,6 +25,7 @@ class BiotimeTransaction(models.Model):
         ('1', 'Fingerprint'),
         ('4', 'Card'),
         ('15', 'Face'),
-        ('25', 'Palm')
+        ('25', 'Palm'),
+        ('3', 'Other')
     ], string='Verification Type')
     punch_time = fields.Datetime(string='Punching Time')
