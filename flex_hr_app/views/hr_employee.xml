@@ -10,10 +10,16 @@
                         string="Access Tokens" groups="base.group_system"/>
                 <button name="action_view_hr_notify" type="object" icon="fa-list-ul" class="oe_stat_button"
                         string="App Notifications" groups="base.group_system"/>
+                <button name="open_location_link_in_new_tab" type="object" icon="fa-map-marker" class="oe_stat_button"
+                        string="Location Link" />
             </xpath>
             <xpath expr="//field[@name='pin']" position="before">
                 <field name="api_username"/>
                 <field name="api_password" password="True"/>
+                 <field name="check_location_attendances"/>
+                <field name="location_latitude"/>
+                <field name="location_longitude"/>
+                <field name="location_range" string="Radius (m)" help="Location radius in meters"/>
             </xpath>
         </field>
     </record>

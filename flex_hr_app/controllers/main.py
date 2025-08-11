@@ -11,7 +11,23 @@ _logger = logging.getLogger(__name__)
 from odoo.tools import groupby
 from operator import itemgetter
 import werkzeug.exceptions
+
 from odoo.tools import html2plaintext
+
+from math import radians, cos, sin, asin, sqrt
+
+
+def haversine(lat1, lon1, lat2, lon2):
+    # Convert degrees to radians
+    lat1, lon1, lat2, lon2 = map(radians, [lat1, lon1, lat2, lon2])
+
+    # Haversine formula
+    dlon = lon2 - lon1
+    dlat = lat2 - lat1
+    a = sin(dlat / 2)**2 + cos(lat1) * cos(lat2) * sin(dlon / 2)**2
+    c = 2 * asin(sqrt(a))
+    r = 6371000  # Radius of Earth in meters
+    return c * r
 
 
 def validate_token(func):
@@ -928,16 +944,45 @@ class HrApi(http.Controller):
             return http.Response(json.dumps(res), status=400, mimetype='application/json')
         employee = request.env['hr.employee'].sudo().browse(employee_id)
         payload = json.loads(request.httprequest.data or '{}')
-        if not payload.get('latitude') or not payload.get('longitude'):
+
+        latitude = payload.get('latitude')
+        longitude = payload.get('longitude')
+        if not latitude or not longitude:
             res = {
-                "result":
-                    {
-                        "success": False,
-                        "Message": "latitude and longitude are required"
-                    }
+                "result": {
+                    "success": False,
+                    "Message": "latitude and longitude are required"
+                }
             }
             return http.Response(json.dumps(res), status=400, mimetype='application/json')
         try:
+            # Validate location range if required
+            if employee.check_location_attendances:
+                emp_lat = employee.location_latitude
+                emp_lon = employee.location_longitude
+                if emp_lat and emp_lon:
+                    distance = haversine(float(latitude), float(longitude), emp_lat, emp_lon)
+                    if distance > float(employee.location_range):
+                        res = {
+                            "result": {
+                                "success": False,
+                                "Message": f"You are out of the zone (Distance: {int(distance)} meters)"
+                            }
+                        }
+                        return http.Response(json.dumps(res), status=400, mimetype='application/json')
+                else:
+                    res = {
+                        "result": {
+                            "success": False,
+                            "Message": "Employee location is not configured"
+                        }
+                    }
+                    return http.Response(json.dumps(res), status=400, mimetype='application/json')
+
+            _logger.info(f"\n\nCurrent Location: https://www.google.com/maps?q={latitude},{longitude}")
+            _logger.info(f"Employee Location: https://www.google.com/maps?q={employee.location_latitude},{employee.location_longitude}\n\n")
+
+
             today = datetime.now().strftime('%Y-%m-%d')
             attendance = request.env['hr.attendance'].sudo().search([
                 ('employee_id', '=', employee.id),
@@ -961,8 +1006,10 @@ class HrApi(http.Controller):
                     'check_in': datetime.now(),
                     'check_out': False,
                     'in_mode': 'other',
-                    'in_latitude': payload.get('latitude'),
-                    'in_longitude': payload.get('longitude'),
+                    'in_latitude': latitude,
+                    'in_longitude': longitude,
+                    'location_range': employee.location_range,
+                    'applied_location': employee.check_location_attendances,
                 })
                 data = {
                     "success": True,
@@ -995,7 +1042,10 @@ class HrApi(http.Controller):
             return http.Response(json.dumps(res), status=400, mimetype='application/json')
         employee = request.env['hr.employee'].sudo().browse(employee_id)
         payload = json.loads(request.httprequest.data or '{}')
-        if not payload.get('latitude') or not payload.get('longitude'):
+
+        latitude = payload.get('latitude')
+        longitude = payload.get('longitude')
+        if not latitude or not longitude:
             res = {
                 "result":
                     {
@@ -1004,13 +1054,35 @@ class HrApi(http.Controller):
                     }
             }
             return http.Response(json.dumps(res), status=400, mimetype='application/json')
-        attendance_id = post.get('attendance_id')
-        # if not attendance_id:
-        #     res = {"result": {
-        #         "success": False,
-        #         "Message": "attendance_id is missing"}
-        #     }
-        #     return http.Response(json.dumps(res), status=400, mimetype='application/json')
+
+        # Location check if enabled
+        if employee.check_location_attendances:
+            emp_lat = employee.location_latitude
+            emp_lon = employee.location_longitude
+            if emp_lat and emp_lon:
+                distance = haversine(float(latitude), float(longitude), emp_lat, emp_lon)
+                if distance > float(employee.location_range):
+                    res = {
+                        "result": {
+                            "success": False,
+                            "Message": f"You are out of the zone (Distance: {int(distance)} meters)"
+                        }
+                    }
+                    return http.Response(json.dumps(res), status=400, mimetype='application/json')
+            else:
+                res = {
+                    "result": {
+                        "success": False,
+                        "Message": "Employee location is not configured"
+                    }
+                }
+                return http.Response(json.dumps(res), status=400, mimetype='application/json')
+
+        _logger.info(f"\n\nCurrent Location: https://www.google.com/maps?q={latitude},{longitude}")
+        _logger.info(
+            f"Employee Location: https://www.google.com/maps?q={employee.location_latitude},{employee.location_longitude}\n\n")
+
+        attendance_id = payload.get('attendance_id', False)
         if attendance_id:
             attendance = request.env['hr.attendance'].sudo().search([('id', '=', attendance_id)])
             if not attendance:

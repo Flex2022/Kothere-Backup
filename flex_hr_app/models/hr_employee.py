@@ -13,10 +13,32 @@ class HrEmployee(models.Model):
     api_username = fields.Char(string='Username', groups='hr.group_hr_user')
     api_password = fields.Char(string='Password', groups='hr.group_hr_user')
     token_ids = fields.One2many(comodel_name="hr.token", inverse_name='employee_id', string="Tokens")
+    location_latitude = fields.Float(string='Location Latitude', tracking=True)
+    location_longitude = fields.Float(string='Location Longitude', tracking=True)
+    check_location_attendances = fields.Boolean(string='Check Location Attendances', default=False, tracking=True)
+    location_range = fields.Float(string='Range m', default=150.0, tracking=True)
 
     _sql_constraints = [
         ('unique_api_username', 'UNIQUE(api_username)', 'Username must be unique!'),
     ]
+
+    def get_location_link(self):
+        self.ensure_one()
+        if self.location_latitude and self.location_longitude:
+            return f"https://www.google.com/maps/search/?api=1&query={self.location_latitude},{self.location_longitude}"
+        else:
+            raise UserError(_("Location not set for this employee."))
+
+    def open_location_link_in_new_tab(self):
+        self.ensure_one()
+        location_link = self.get_location_link()
+        if not location_link:
+            raise UserError(_("Location not set for this employee."))
+        return {
+            'type': 'ir.actions.act_url',
+            'url': location_link,
+            'target': 'new',
+        }
 
     def _get_employee_timeoff_data(self):
         self.ensure_one()
