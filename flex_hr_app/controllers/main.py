@@ -7,6 +7,7 @@ import functools
 import base64
 import logging
 from datetime import datetime
+
 _logger = logging.getLogger(__name__)
 from odoo.tools import groupby
 from operator import itemgetter
@@ -24,7 +25,7 @@ def haversine(lat1, lon1, lat2, lon2):
     # Haversine formula
     dlon = lon2 - lon1
     dlat = lat2 - lat1
-    a = sin(dlat / 2)**2 + cos(lat1) * cos(lat2) * sin(dlon / 2)**2
+    a = sin(dlat / 2) ** 2 + cos(lat1) * cos(lat2) * sin(dlon / 2) ** 2
     c = 2 * asin(sqrt(a))
     r = 6371000  # Radius of Earth in meters
     return c * r
@@ -68,6 +69,7 @@ def validate_token(func):
 
         # Proceed with the original function
         return func(self, *args, **kwargs)
+
     return wrap
 
 
@@ -109,7 +111,8 @@ class HrApi(http.Controller):
         if employee.api_password != password:
             res = {"result": {"error": f"incorrect password"}}
             return http.Response(json.dumps(res), status=406, mimetype='application/json')
-        valid_token = request.env['hr.token'].sudo().get_valid_token(employee_id=employee.id, device_token=device_token, create=True)
+        valid_token = request.env['hr.token'].sudo().get_valid_token(employee_id=employee.id, device_token=device_token,
+                                                                     create=True)
         # contract = employee.contract_id
         # salary = contract.wage
         # allowance_fields = ['call_allowance', 'food_allowance', 'position_allowance']
@@ -148,6 +151,18 @@ class HrApi(http.Controller):
                 "basic_salary": employee.contract_id.total_wage_amount,
                 # =================================
                 "token": valid_token,
+                "permissions": {
+                    "Payroll": employee.can_access_payroll,
+                    "Loan": employee.can_access_loan,
+                    # "Overtime": employee.can_access_overtime,
+                    "Vacations": employee.can_access_vacations,
+                    "Resignation": employee.can_access_resignation,
+                    "RenewIqama": employee.can_access_renew_iqama,
+                    "BusinessTrip": employee.can_access_business_trip,
+                    "Expense": employee.can_access_expense,
+                    "Book": employee.can_access_book,
+                    "Dashboard": employee.can_access_dashboard
+                }
             }
         }
         return http.Response(json.dumps(res), status=200, mimetype='application/json')
@@ -228,6 +243,18 @@ class HrApi(http.Controller):
                 "basic_salary": employee.contract_id.total_wage_amount,
                 # =================================
                 "image_url": f"/web/force/image/hr.employee.public/{employee.id}/image_1920",
+                "permissions": {
+                    "Payroll": employee.can_access_payroll,
+                    "Loan": employee.can_access_loan,
+                    # "Overtime": employee.can_access_overtime,
+                    "Vacations": employee.can_access_vacations,
+                    "Resignation": employee.can_access_resignation,
+                    "RenewIqama": employee.can_access_renew_iqama,
+                    "BusinessTrip": employee.can_access_business_trip,
+                    "Expense": employee.can_access_expense,
+                    "Book": employee.can_access_book,
+                    "Dashboard": employee.can_access_dashboard
+                }
             }
         }
         return http.Response(json.dumps(res), status=200, mimetype='application/json')
@@ -549,7 +576,8 @@ class HrApi(http.Controller):
 
         expense_list = request.env['hr.expense'].sudo().search(domain)
         EXPENSE = request.env['hr.expense'].sudo()
-        expense_by_state = [(state, EXPENSE.concat(*expenses)) for state, expenses in groupby(expense_list, itemgetter('state'))]
+        expense_by_state = [(state, EXPENSE.concat(*expenses)) for state, expenses in
+                            groupby(expense_list, itemgetter('state'))]
         data = {}
 
         state_info = self._get_field_selections('hr.expense', 'state')
@@ -643,7 +671,6 @@ class HrApi(http.Controller):
             # 406: not acceptable
             return http.Response(json.dumps(res), status=406, mimetype='application/json')
 
-
     # resignation
     @validate_token
     @http.route("/api-hr/my-resignation", methods=["GET"], type="http", auth="none", csrf=False)
@@ -657,7 +684,8 @@ class HrApi(http.Controller):
 
         resignation_list = request.env['flex.approval.resignation'].sudo().search(domain)
         RESIGNATION = request.env['flex.approval.resignation'].sudo()
-        resignation_by_state = [(state, RESIGNATION.concat(*resignations)) for state, resignations in groupby(resignation_list, itemgetter('state'))]
+        resignation_by_state = [(state, RESIGNATION.concat(*resignations)) for state, resignations in
+                                groupby(resignation_list, itemgetter('state'))]
         data = {}
         state_info = self._get_field_selections('flex.approval.resignation', 'state')
         for state, resignations in resignation_by_state:
@@ -689,7 +717,8 @@ class HrApi(http.Controller):
                         "id": resignation.approval_request_id.id,
                         "name": resignation.approval_request_id.name,
                         # "state": resignation.approval_request_id.name,
-                        "state": self._get_field_selections('approval.request', 'request_status')[resignation.approval_request_id.request_status],
+                        "state": self._get_field_selections('approval.request', 'request_status')[
+                            resignation.approval_request_id.request_status],
                         "date_confirmed": resignation.approval_request_id.date_confirmed and resignation.approval_request_id.date_confirmed.isoformat(),
                         "reason": html2plaintext(resignation.approval_request_id.reason)
                     },
@@ -743,7 +772,6 @@ class HrApi(http.Controller):
             # 406: not acceptable
             return http.Response(json.dumps(res), status=406, mimetype='application/json')
 
-
     # renew_iqama
     @validate_token
     @http.route("/api-hr/my-renew_iqama", methods=["GET"], type="http", auth="none", csrf=False)
@@ -757,7 +785,8 @@ class HrApi(http.Controller):
 
         renew_iqama_list = request.env['flex.approval.renew_iqama'].sudo().search(domain)
         IQAMA = request.env['flex.approval.renew_iqama'].sudo()
-        renew_iqama_by_state = [(state, IQAMA.concat(*renew_iqamas)) for state, renew_iqamas in groupby(renew_iqama_list, itemgetter('state'))]
+        renew_iqama_by_state = [(state, IQAMA.concat(*renew_iqamas)) for state, renew_iqamas in
+                                groupby(renew_iqama_list, itemgetter('state'))]
         data = {}
         state_info = self._get_field_selections('flex.approval.renew_iqama', 'state')
         for state, renew_iqamas in renew_iqama_by_state:
@@ -846,7 +875,8 @@ class HrApi(http.Controller):
 
         business_trip_list = request.env['flex.approval.business_trip'].sudo().search(domain)
         IQAMA = request.env['flex.approval.business_trip'].sudo()
-        business_trip_by_state = [(state, IQAMA.concat(*business_trips)) for state, business_trips in groupby(business_trip_list, itemgetter('state'))]
+        business_trip_by_state = [(state, IQAMA.concat(*business_trips)) for state, business_trips in
+                                  groupby(business_trip_list, itemgetter('state'))]
         data = {}
         state_info = self._get_field_selections('flex.approval.business_trip', 'state')
         for state, business_trips in business_trip_by_state:
@@ -925,12 +955,6 @@ class HrApi(http.Controller):
             # 406: not acceptable
             return http.Response(json.dumps(res), status=406, mimetype='application/json')
 
-
-
-
-
-
-
     @validate_token
     @http.route("/api-hr/check-in", methods=["POST"], type="http", auth="none", csrf=False)
     def api_hr_check_in(self, **post):
@@ -939,7 +963,7 @@ class HrApi(http.Controller):
             res = {"result": {
                 "success": False,
                 "Message": "employee_id is missing in context"
-                }
+            }
             }
             return http.Response(json.dumps(res), status=400, mimetype='application/json')
         employee = request.env['hr.employee'].sudo().browse(employee_id)
@@ -980,8 +1004,8 @@ class HrApi(http.Controller):
                     return http.Response(json.dumps(res), status=400, mimetype='application/json')
 
             _logger.info(f"\n\nCurrent Location: https://www.google.com/maps?q={latitude},{longitude}")
-            _logger.info(f"Employee Location: https://www.google.com/maps?q={employee.location_latitude},{employee.location_longitude}\n\n")
-
+            _logger.info(
+                f"Employee Location: https://www.google.com/maps?q={employee.location_latitude},{employee.location_longitude}\n\n")
 
             today = datetime.now().strftime('%Y-%m-%d')
             attendance = request.env['hr.attendance'].sudo().search([
@@ -1022,10 +1046,10 @@ class HrApi(http.Controller):
             return http.Response(json.dumps(res), status=200, mimetype='application/json')
         except Exception as ex:
             res = {"result":
-                       {
-                            "success": False,
-                           "Message": f"{ex}"
-                       }
+                {
+                    "success": False,
+                    "Message": f"{ex}"
+                }
             }
             # 406: not acceptable
             return http.Response(json.dumps(res), status=406, mimetype='application/json')
@@ -1115,15 +1139,16 @@ class HrApi(http.Controller):
             data = {
                 "result": {
                     "success": True,
-                    "Message": "check-out created successfully", "id": attendance.id, "worked_hours": attendance.worked_hours, "overtime_hours": attendance.overtime_hours
+                    "Message": "check-out created successfully", "id": attendance.id,
+                    "worked_hours": attendance.worked_hours, "overtime_hours": attendance.overtime_hours
                 }
             }
             res = {"result": data}
             return http.Response(json.dumps(res), status=200, mimetype='application/json')
         except Exception as ex:
             res = {"result": {
-                    "success": False,
-                    "Message": f"{ex}"}
+                "success": False,
+                "Message": f"{ex}"}
             }
             # 406: not acceptable
             return http.Response(json.dumps(res), status=406, mimetype='application/json')
@@ -1140,7 +1165,8 @@ class HrApi(http.Controller):
             return http.Response(json.dumps(res), status=400, mimetype='application/json')
         employee = request.env['hr.employee'].sudo().browse(employee_id)
         now = datetime.now()
-        domain = [('employee_id', '=', employee.id), ('check_in', '>=', now.strftime('%Y-%m-%d 00:00:00')), ('check_in', '<=', now.strftime('%Y-%m-%d 23:59:59'))]
+        domain = [('employee_id', '=', employee.id), ('check_in', '>=', now.strftime('%Y-%m-%d 00:00:00')),
+                  ('check_in', '<=', now.strftime('%Y-%m-%d 23:59:59'))]
         attendance = request.env['hr.attendance'].sudo().search(domain)
         if attendance:
             attendance_check_in_status = []
@@ -1233,7 +1259,6 @@ class HrApi(http.Controller):
         }
         return http.Response(json.dumps(res), status=200, mimetype='application/json')
 
-
     @validate_token
     @http.route("/api-hr/change-password", methods=["POST"], type="http", auth="none", csrf=False)
     def change_password(self, **post):
@@ -1241,8 +1266,8 @@ class HrApi(http.Controller):
         if not employee_id:
             res = {
                 "result": {
-                "success": False,
-                "Message": "employee_id is missing"
+                    "success": False,
+                    "Message": "employee_id is missing"
                 }
             }
             return http.Response(json.dumps(res), status=400, mimetype='application/json')
@@ -1257,9 +1282,9 @@ class HrApi(http.Controller):
             return http.Response(json.dumps(res), status=400, mimetype='application/json')
         if not employee.api_password:
             res = {"result":
-                       {
-                            "success": False,
-                           "Message": "password not set"}}
+                {
+                    "success": False,
+                    "Message": "password not set"}}
             return http.Response(json.dumps(res), status=400, mimetype='application/json')
         if employee.api_password == old_password:
             employee.api_password = new_password
@@ -1296,7 +1321,8 @@ class HrApi(http.Controller):
             return http.Response(json.dumps(res), status=400, mimetype='application/json')
 
         now = datetime.now()
-        domain = [('employee_id', '=', employee.id), ('check_in', '>=', now.strftime('%Y-%m-%d 00:00:00')), ('check_in', '<=', now.strftime('%Y-%m-%d 23:59:59'))]
+        domain = [('employee_id', '=', employee.id), ('check_in', '>=', now.strftime('%Y-%m-%d 00:00:00')),
+                  ('check_in', '<=', now.strftime('%Y-%m-%d 23:59:59'))]
         attendance = request.env['hr.attendance'].sudo().search(domain, order='check_in desc', limit=1)
         if not attendance:
             res = {

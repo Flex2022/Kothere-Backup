@@ -17,6 +17,15 @@ class HrEmployee(models.Model):
     location_longitude = fields.Float(string='Location Longitude', tracking=True)
     check_location_attendances = fields.Boolean(string='Check Location Attendances', default=False, tracking=True)
     location_range = fields.Float(string='Range m', default=150.0, tracking=True)
+    can_access_payroll = fields.Boolean(string='Can Access Payroll', default=False, tracking=True)
+    can_access_loan = fields.Boolean(string='Can Access Loan', default=False, tracking=True)
+    can_access_vacations = fields.Boolean(string='Can Access Vacations', default=False, tracking=True)
+    can_access_resignation = fields.Boolean(string='Can Access Resignation', default=False, tracking=True)
+    can_access_renew_iqama = fields.Boolean(string='Can Access Renew Iqama', default=False, tracking=True)
+    can_access_business_trip = fields.Boolean(string='Can Access Business Trip', default=False, tracking=True)
+    can_access_expense = fields.Boolean(string='Can Access Expense', default=False, tracking=True)
+    can_access_dashboard = fields.Boolean(string='Can Access Dashboard', default=False, tracking=True)
+    can_access_book = fields.Boolean(string='Can Access Book', default=False, tracking=True)
 
     _sql_constraints = [
         ('unique_api_username', 'UNIQUE(api_username)', 'Username must be unique!'),
