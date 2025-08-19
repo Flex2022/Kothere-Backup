@@ -26,10 +26,10 @@
                            <t t-raw="user.company_id.partner_id.sudo().with_context(show_address=True, html_format=True).name_get()[0][1]"/>
                        </span>
                        <t t-if="user.company_id.phone">
-                           <div>Phone:&nbsp;<t t-esc="object.company_id.phone"/></div>
+                           <div>Phone: <t t-esc="object.company_id.phone"/></div>
                        </t>
                        <t t-if="user.company_id.website">
-                           <div>Web :&nbsp;<a t-att-href="object.company_id.website"><t t-esc="user.company_id.website"/></a></div>
+                           <div>Web : <a t-att-href="object.company_id.website"><t t-esc="user.company_id.website"/></a></div>
                        </t>
                        <p></p>
                    </div>
@@ -61,10 +61,10 @@
                            <t t-raw="user.company_id.partner_id.sudo().with_context(show_address=True, html_format=True).name_get()[0][1]"/>
                        </span>
                        <t t-if="user.company_id.phone">
-                           <div>Phone:&nbsp;<t t-esc="object.company_id.phone"/></div>
+                           <div>Phone: <t t-esc="object.company_id.phone"/></div>
                        </t>
                        <t t-if="user.company_id.website">
-                           <div>Web :&nbsp;<a t-att-href="object.company_id.website"><t t-esc="user.company_id.website"/></a></div>
+                           <div>Web : <a t-att-href="object.company_id.website"><t t-esc="user.company_id.website"/></a></div>
                        </t>
                        <p></p>
                    </div>
