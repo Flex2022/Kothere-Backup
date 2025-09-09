@@ -1072,8 +1072,8 @@ class HrApi(http.Controller):
                     'in_mode': 'other',
                     'in_latitude': latitude,
                     'in_longitude': longitude,
-                    'location_range': employee.location_range,
-                    'applied_location': employee.check_location_attendances,
+                    # 'location_range': employee.location_range,
+                    # 'applied_location': employee.check_location_attendances,
                 })
                 data = {
                     "success": True,
