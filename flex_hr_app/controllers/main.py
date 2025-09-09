@@ -300,12 +300,47 @@ class HrApi(http.Controller):
         context = {'employee_id': employee_id, 'allowed_company_ids': employee.company_id.ids}
         contextual_leave_type_obj = request.env['hr.leave.type'].sudo().with_context(context)
         allocation_data = contextual_leave_type_obj.get_allocation_data_request()
+        all_time_off_types = contextual_leave_type_obj.search(
+            [('company_id', 'in', employee.company_id.ids), ('active', '=', True)], order='sequence')
+
         data = [{
             "leave_type_name": leave_data[0],
             "leave_type_id": leave_data[3],
             "details": leave_data[1],
             "requires_allocation": leave_data[2],
+            "is_attach_required": contextual_leave_type_obj.browse(leave_data[3]).is_attach_required,
         } for leave_data in allocation_data]
+        allocation_data_type_ids = [leave_data[3] for leave_data in allocation_data]
+        all_type_ont_in_allocation = all_time_off_types.filtered(lambda l: l.id not in allocation_data_type_ids)
+        for leave_type in all_type_ont_in_allocation:
+            data.append({
+                "leave_type_name": leave_type.name,
+                "leave_type_id": leave_type.id,
+                "details": {
+                    "remaining_leaves": 0,
+                    "virtual_remaining_leaves": 0,
+                    "max_leaves": 0,
+                    "accrual_bonus": 0,
+                    "leaves_taken": 0,
+                    "virtual_leaves_taken": 0,
+                    "leaves_requested": 0,
+                    "leaves_approved": 0,
+                    "closest_allocation_remaining": 0,
+                    "closest_allocation_expire": False,
+                    "holds_changes": False,
+                    "total_virtual_excess": 0,
+                    "virtual_excess_data": {},
+                    "exceeding_duration": 0,
+                    "request_unit": leave_type.request_unit,
+                    "icon": leave_type.sudo().icon_id.url if leave_type.icon_id else '/hr_holidays/static/src/img/icons/Unpaid_Time_Off.svg',
+                    "allows_negative": False,
+                    "max_allowed_negative": 0,
+                    "closest_allocation_duration": False,
+                    "overtime_deductible": False
+                },
+                "requires_allocation": False,
+                "is_attach_required": leave_type.is_attach_required,
+            })
         res = {"result": data}
         return http.Response(json.dumps(res), status=200, mimetype='application/json')
 
@@ -319,6 +354,11 @@ class HrApi(http.Controller):
         employee = request.env['hr.employee'].sudo().browse(employee_id)
         # data = request.get_json_data()
         payload = json.loads(request.httprequest.data or '{}')
+        time_off_type = request.env['hr.leave.type'].sudo().browse(payload.get('holiday_status_id'))
+        is_attach_required = time_off_type.is_attach_required
+        if is_attach_required and not payload.get('document'):
+            res = {"result": {"error": "document is required for this timeoff type"}}
+            return http.Response(json.dumps(res), status=406, mimetype='application/json')
         try:
             leave = request.env['hr.leave'].sudo().with_context(leave_skip_date_check=True).create({
                 'employee_id': employee.id,

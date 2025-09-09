@@ -26,6 +26,7 @@
         'views/hr_token.xml',
         'views/hr_employee.xml',
         'views/hr_notify.xml',
+        'views/hr_leave_type.xml',
         # reports
         'reports/report.xml',
     ],
