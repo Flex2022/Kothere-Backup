@@ -7,3 +7,4 @@ class HrAttendance(models.Model):
 
     in_mode = fields.Selection(selection_add=[('other', 'Other')], string='In Mode')
     out_mode = fields.Selection(selection_add=[('other', 'Other')], string='Out Mode')
+    location_range = fields.Float("Allowed Range (m)")
