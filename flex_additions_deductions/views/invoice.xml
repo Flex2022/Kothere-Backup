@@ -59,7 +59,7 @@
                         <h2>Deductions</h2>
                         <!--                       there_is_access_from_company_id == False-->
                         <field name="flex_deductions_ids" widget="one2many_list"
-                               invisible="move_type not in ['in_invoice']" readonly="state == 'posted'">>
+                               invisible="move_type not in ['out_invoice', 'in_invoice', 'out_refund', 'in_refund']" readonly="state == 'posted'">
                             <tree editable="bottom">
                                 <field name="deductions_id" options="{'no_create': True}"/>
                                 <field name="name"/>
@@ -79,48 +79,48 @@
                                 </group>
                             </form>
                         </field>
-                        <field name="flex_deductions_ids" widget="one2many_list"
-                               invisible="move_type not in ['out_invoice']" readonly="state == 'posted'">>
-                            <tree editable="bottom">
-                                <field name="deductions_id" options="{'no_create': True}"/>
-                                <field name="name"/>
-                                <field name="is_percentage"/>
-                                <field name="tax_id"/>
-                                <field name="percentage_or_value"/>
-                                <field name="amount"/>
-                            </tree>
-                            <form>
-                                <group>
-                                    <field name="deductions_id" options="{'no_create': True}"/>
-                                    <field name="name"/>
-                                    <field name="is_percentage"/>
-                                    <field name="tax_id" options="{'no_create': True}"/>
-                                    <field name="percentage_or_value"/>
-                                    <field name="amount"/>
-                                </group>
-                            </form>
-                        </field>
-                        <field name="flex_deductions_ids" widget="one2many_list" readonly="state == 'posted'">
-                               invisible="move_type not in ['out_refund', 'in_refund']">
-                            <tree editable="bottom">
-                                <field name="deductions_id" options="{'no_create': True}"/>
-                                <field name="name"/>
-                                <field name="is_percentage"/>
-                                <field name="tax_id"/>
-                                <field name="percentage_or_value"/>
-                                <field name="amount"/>
-                            </tree>
-                            <form>
-                                <group>
-                                    <field name="deductions_id" options="{'no_create': True}"/>
-                                    <field name="name"/>
-                                    <field name="is_percentage"/>
-                                    <field name="tax_id" options="{'no_create': True}"/>
-                                    <field name="percentage_or_value"/>
-                                    <field name="amount"/>
-                                </group>
-                            </form>
-                        </field>
+<!--                        <field name="flex_deductions_ids" widget="one2many_list"-->
+<!--                               invisible="move_type not in ['out_invoice']" readonly="state == 'posted'">>-->
+<!--                            <tree editable="bottom">-->
+<!--                                <field name="deductions_id" options="{'no_create': True}"/>-->
+<!--                                <field name="name"/>-->
+<!--                                <field name="is_percentage"/>-->
+<!--                                <field name="tax_id"/>-->
+<!--                                <field name="percentage_or_value"/>-->
+<!--                                <field name="amount"/>-->
+<!--                            </tree>-->
+<!--                            <form>-->
+<!--                                <group>-->
+<!--                                    <field name="deductions_id" options="{'no_create': True}"/>-->
+<!--                                    <field name="name"/>-->
+<!--                                    <field name="is_percentage"/>-->
+<!--                                    <field name="tax_id" options="{'no_create': True}"/>-->
+<!--                                    <field name="percentage_or_value"/>-->
+<!--                                    <field name="amount"/>-->
+<!--                                </group>-->
+<!--                            </form>-->
+<!--                        </field>-->
+<!--                        <field name="flex_deductions_ids" widget="one2many_list" readonly="state == 'posted'">-->
+<!--                               invisible="move_type not in ['out_refund', 'in_refund']">-->
+<!--                            <tree editable="bottom">-->
+<!--                                <field name="deductions_id" options="{'no_create': True}"/>-->
+<!--                                <field name="name"/>-->
+<!--                                <field name="is_percentage"/>-->
+<!--                                <field name="tax_id"/>-->
+<!--                                <field name="percentage_or_value"/>-->
+<!--                                <field name="amount"/>-->
+<!--                            </tree>-->
+<!--                            <form>-->
+<!--                                <group>-->
+<!--                                    <field name="deductions_id" options="{'no_create': True}"/>-->
+<!--                                    <field name="name"/>-->
+<!--                                    <field name="is_percentage"/>-->
+<!--                                    <field name="tax_id" options="{'no_create': True}"/>-->
+<!--                                    <field name="percentage_or_value"/>-->
+<!--                                    <field name="amount"/>-->
+<!--                                </group>-->
+<!--                            </form>-->
+<!--                        </field>-->
                         <h2>Additions</h2>
                         <field name="flex_additions_ids" widget="one2many_list" readonly="state == 'posted'">
                             <tree editable="bottom">
