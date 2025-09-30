@@ -37,6 +37,7 @@ class FlexPurchaseWeight(models.Model):
     state = fields.Selection([('draft', 'Draft'), ('confirm', 'Confirmed'), ('cancel', 'Cancelled')],
                                 string="Status", default='draft', tracking=True)
     purchase_order_count = fields.Integer(string="Purchase Order Count", compute='_compute_purchase_order_count')
+    receipt_number = fields.Char(string="Receipt Number", tracking=1)
 
     @api.onchange('po_number')
     def onchange_po_number(self):

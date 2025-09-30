@@ -96,6 +96,7 @@
                                     <field name="product_uom" options="{'no_open': True, 'no_create': True}" force_save="1"
                                            class="oe_inline" readonly="1"/>
                                 </div>
+                                <field name="receipt_number" placeholder="Receipt Number..."/>
                             </group>
                         </group>
                         <group>

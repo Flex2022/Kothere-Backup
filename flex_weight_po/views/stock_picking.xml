@@ -9,6 +9,7 @@
                 <field name="purchase_weight_id" readonly="1"/>
                 <field name="truck_number"/>
                 <field name="driver_name"/>
+                <field name="receipt_number"/>
             </xpath>
         </field>
     </record>
