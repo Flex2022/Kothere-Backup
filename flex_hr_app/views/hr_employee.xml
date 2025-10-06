@@ -22,7 +22,6 @@
                 <field name="location_range" string="Radius (m)" help="Location radius in meters"/>
             </xpath>
             <xpath expr="//page[@name='hr_settings']" position="inside">
-
                 <group string="Permissions">
                     <group>
                         <field name="can_access_payroll"/>
@@ -38,9 +37,7 @@
                         <field name="can_access_book"/>
                     </group>
                 </group>
-
             </xpath>
-
         </field>
     </record>
 </odoo>

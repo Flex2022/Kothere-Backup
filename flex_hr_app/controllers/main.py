@@ -241,6 +241,8 @@ class HrApi(http.Controller):
                 "salary_type": employee.contract_id.wage_type,
                 # "basic_salary": employee.contract_id._get_contract_wage(),
                 "basic_salary": employee.contract_id.total_wage_amount,
+                "housing_allowance": employee.contract_id.l10n_sa_housing_allowance,
+                "transportation_allowance": employee.contract_id.l10n_sa_transportation_allowance,
                 # =================================
                 "image_url": f"/web/force/image/hr.employee.public/{employee.id}/image_1920",
                 "permissions": {
